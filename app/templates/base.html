@@ -37,11 +37,24 @@
           <a class="navbar-brand" href="#">SmartNinja</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
+
+          <!-- Left links -->
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+
+            <!-- Right links -->
+            <ul class="nav navbar-nav pull-right">
+                {% if user %}
+                    <li><a href="#">{{ user }}</a></li>
+                    <li><a href="/logout">Logout</a></li>
+
+                {% else %}
+                    <li><a href="/login">Login</a></li>
+                {% endif %}
+            </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

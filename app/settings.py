@@ -1,4 +1,10 @@
-__author__ = 'matej'
+"""
+    App settings file
+"""
 
-
-# TODO: list of admins
+ADMINS = [
+    "matej.ramuta@gmail.com",
+    "besal.ziga@gmail.com",
+    "miha@start-up.si",
+    "matt@ramuta.me"
+]

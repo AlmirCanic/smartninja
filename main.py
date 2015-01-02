@@ -15,9 +15,12 @@
 # limitations under the License.
 #
 import webapp2
+from app.handlers.auth import LoginHandler, LogoutHandler
 from app.handlers.base import MainHandler
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/login', LoginHandler),
+    ('/logout', LogoutHandler),
 ], debug=True)
