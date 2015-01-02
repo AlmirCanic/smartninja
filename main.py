@@ -15,12 +15,14 @@
 # limitations under the License.
 #
 import webapp2
-from app.handlers.auth import LoginHandler, LogoutHandler
-from app.handlers.base import MainHandler
+from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler
+from app.handlers.base import MainHandler, SecuredSiteHandler
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/login', LoginHandler),
-    ('/logout', LogoutHandler),
+    webapp2.Route('/', MainHandler, name="main"),
+    webapp2.Route('/login', LoginHandler, name="login"),
+    webapp2.Route('/logout', LogoutHandler, name="logout"),
+    webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
+    webapp2.Route('/secured', SecuredSiteHandler, name="secured"),
 ], debug=True)

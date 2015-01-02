@@ -2,6 +2,7 @@ import os
 import jinja2
 import webapp2
 from google.appengine.api import users
+from app.utils.decorators import admin_required
 
 template_dir = os.path.join(os.path.dirname(__file__), '../templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
@@ -33,3 +34,9 @@ class Handler(webapp2.RequestHandler):
 class MainHandler(Handler):
     def get(self):
         self.render_template("admin/main.html")
+
+
+class SecuredSiteHandler(Handler):
+    @admin_required
+    def get(self):
+        self.render_template("admin/secured.html")
