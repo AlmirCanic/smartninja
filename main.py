@@ -15,11 +15,8 @@
 # limitations under the License.
 #
 import webapp2
+from app.handlers.base import MainHandler
 
-
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello SmartNinja!')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
