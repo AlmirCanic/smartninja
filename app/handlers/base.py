@@ -36,6 +36,11 @@ class MainHandler(Handler):
         self.render_template("public/main.html")
 
 
+class TempMainHandler(Handler):
+    def get(self):
+        self.render_template("public/main2.html")
+
+
 class AdminHandler(Handler):
     @admin_required
     def get(self):

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+  	<meta charset="utf-8">
+    <title>{% block title %}Hello{% endblock title %} | SmartNinja tečaji programiranja</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <meta name="google-site-verification" content="eIZPTeiYfR0rel0-2qy_a1-x1MQg910ZZreuNh_kFDw" />
+
+    <!-- START FACEBOOK OPEN GRAPH -->
+    <meta name="og:url" content="http://www.smartninja.org">
+    <meta name="og:title" content="Tečaji programiranja">
+    <meta name="og:description" content="Nauči se veščine, ki je v današnjem svetu ena najbolj iskanih in najbolj cenjenih. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://www.smartninja.org/img/facebook.jpg">
+    <!-- END FACEBOOK OPEN GRAPH -->
+
+    <!-- START TWITTER CARDS -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="Tečaji programiranja">
+    <meta name="twitter:description" content="Nauči se veščine, ki je v današnjem svetu ena najbolj iskanih in najbolj cenjenih. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="twitter:creator" content="@NmStartUP">
+    <meta name="twitter:image:src" content="http://www.smartninja.org/img/facebook.jpg">
+    <meta name="twitter:domain" content="smartninja.org">
+    <!-- END TWITTER CARDS -->
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assets/img/public/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="/assets/img/public/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="/assets/img/public/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="/assets/img/public/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/public/superfish.css" rel="stylesheet">
+    <link href="/assets/css/public/temp.css" rel="stylesheet">
+    <link href="/assets/css/public/timeline.css" rel="stylesheet">
+    <link href="/assets/css/public/fontello/css/fontello.css" rel="stylesheet">
+
+    <!-- Toggle Switch -->
+    <link rel="stylesheet" href="css/jquery.switch.css">
+    <link href="check_radio/skins/square/aero.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50813177-1', 'smartninja.org');
+        ga('send', 'pageview');
+
+    </script>
+
+  </head>
+
+  <body>
+
+  {% if error %}
+    <script>
+        alert("{{error}}");
+    </script>
+  {% endif %}
+
+  <header class="navbar navbar-fixed-top">
+      <div class="container">
+          <div class="row" id="row-fix">
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                  <a href="/" id="logo">SmartNinja</a>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                  <div class="navbar-collapse collapse">
+
+                      <ul class="sf-menu">
+                          <li>
+                              <a href="#o-soli" id="o-soli">O tečajih programiranja</a>
+                              <!--
+                              <div class="mobnav-subarrow">
+                              </div>
+                              <ul>
+                                  <li><a href="contacts.html">Lokacija</a></li>
+                              </ul> -->
+                          </li>
+                          <!-- <li><a href="#potek" id="potek">Potek</a></li> -->
+                          <li><a href="#stopnje" id="stopnje">Stopnje</a></li>
+                          <li><a href="#mentorji" id="mentorji">Mentorji</a></li>
+                          <li><a href="#prijava" class="prijava">Prijava</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                  <div class="pull-right"><a href="#" class="button_top hidden-xs prijava" id="apply">Prijavi se (97,00 €)</a></div>
+
+                  <ul id="top_nav" class="hidden-xs">
+                      <li><a href="#" data-toggle="modal" data-target="#aboutSM">O SmartNinja</a></li>
+                  </ul>
+
+                  <div class="navbar-header pull-right">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-menu-3" style="color: #ffffff;"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header><!-- End header -->
+
+  <!-- Modal O SmartNinja -->
+  <div class="modal fade" id="aboutSM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="sm-title">O SmartNinja</h4>
+              </div>
+              <div class="modal-body">
+                  <p><strong>Učimo uporabne IT veščine</strong></p>
+
+                  <p>
+                      V vsakem izmed nas se skrivajo talenti, ki jih mnogokrat tradicionalni izobraževalni sistem
+                      ne prepozna. Misija SmartNinja je ljudem pomagati odkriti in razviti talente ter veščine na sodobnem
+                      IT področju. Veščine, ki ti bodo pomagale lažje najti službo - ali pa jo ustvariti! V ta namen
+                      organiziramo tečaje spletnega in mobilnega programiranja, grafičnega gitoblikovanja ter interneta stvari (IoT).
+                  </p>
+
+                  <p>
+                      Če želiš odkriti IT ninjo v sebi, nas obišči. Več znaš, več veljaš!
+                  </p>
+
+                  <hr>
+
+                  <h4>Kontakt</h4>
+
+                  <div class="row">
+                      <div class="col-md-4">
+                          <strong>Email</strong><br>
+                          info@smartninja.org
+                      </div>
+                  </div>
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!--
+<nav>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="mobnav-btn"></div>
+			<ul class="sf-menu">
+				<li>
+				<a href="#o-soli" id="o-soli">O poletni šoli</a>
+
+				<div class="mobnav-subarrow">
+				</div>
+				<ul>
+					<li><a href="contacts.html">Lokacija</a></li>
+				</ul>
+				</li>
+				 <li><a href="#potek" id="potek">Potek</a></li>
+				<li><a href="#stopnje" id="stopnje">Stopnje</a></li>
+				<li><a href="#mentorji" id="mentorji">Mentorji</a></li>
+				<li><a href="#prijava" class="prijava">Prijava</a></li>
+			</ul>
+
+            <!--
+            <div class="col-md-4 pull-right hidden-sm hidden-xs">
+                    <div id="sb-search" class="sb-search">
+						<form>
+							<input class="sb-search-input" placeholder="Enter your search term..." type="text" value="" name="search" id="search">
+							<input class="sb-search-submit" type="submit" value="">
+							<span class="sb-icon-search"></span>
+						</form>
+					</div>
+              </div> End search
+
+		</div>
+	</div>
+</div>
+</nav>-->
+
+<!-- Banner -->
+<section id="sub-header" >
+  	<div class="container">
+    	<div class="row">
+        	<div class="col-md-12 text-center">
+            	<h1>Tečaji osnov programiranja</h1>
+            </div>
+
+
+        </div><!-- End row -->
+
+        <div class="row">
+            <div class="col-md-1">
+                <div class="feature2">
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="feature2">
+                    <h2>7.-8. februar 2015, Ljubljana</h2>
+                    <h2>14.-15. februar 2015, Nova Gorica</h2>
+                    <h2>28. februar - 1. marec 2015, Maribor</h2>
+
+                    <!--
+                    <ul class="list_ok">
+                        <li><strong>Programiranje</strong> - veščina za 21. stoletje</li>
+                        <li><strong>Izkušeni</strong> mentorji</li>
+                        <li><strong>Učenje programiranja</strong> na zabaven način</li>
+                        <li><strong>Nauči se programirati</strong> v dveh dneh</li>
+                    </ul>
+                    -->
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="feature2 text-center">
+                    <h2>Več znaš, več veljaš</h2>
+                    <a href="#prijava" class="button_top button_big_red prijava">Prijavi se <sub>(le 97,00 €)</sub></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </section><!-- End sub-header -->
+
+<!-- O poletni šoli -->
+    <section id="main-features">
+    <div class="divider_top_black"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-10 col-md-offset-1 text-center">
+                <h2>O tečajih programiranja SmartNinja</h2>
+                <p class="lead">
+                    Nauči se veščine, ki je v današnjem svetu ena najbolj iskanih in najbolj cenjenih. <br>
+                    Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="feature">
+                    <i class="icon-code"></i>
+                    <h3>Nauči se programirati</h3>
+                    <p>
+                        V dveh dneh te bomo skozi intenzivne delavnice popeljali v svet
+                        programiranja. Udeleženci se boste naučili osnov front-end programiranja
+                        s HTML in CSS.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature">
+                    <i class=" icon-book"></i>
+                    <h3>Tudi za tiste s predznanjem</h3>
+                    <p>
+                        V kolikor že imaš nekaj predznanja, ne skrbi! Velik del šole poteka individualno,
+                        in mentorji se bodo prilagodili tvojemu predznanju ter tako poskrbeli, da ga boš
+                        ustrezno nagradil/a.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature">
+                    <i class="icon-users"></i>
+                    <h3>Izkušeni mentorji</h3>
+                    <p>
+                        Skozi delavnice vas bodo vodili izkušeni mentorji programiranja iz organizacije StartUP Novo mesto.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature">
+                    <i class="icon-home"></i>
+                    <h3>Programiramo od zore do mraka</h3>
+                    <p>
+                        Tečaj bo potekal dva dni, od 10.00 zjutraj do 18.00 ure zvečer. Programirali bomo od zore do
+                        mraka! ;) ps.: Ne skrbi, tudi pavza bo vmes!
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature">
+                    <i class="icon-food"></i>
+                    <h3>Kosila in pikniki</h3>
+                    <p>
+                        Za vse udeležence bodo na voljo en topel obrok dnevno. Neprestano pa bo na voljo sveže
+                        sadje in nekaj lažjih prigrizkov. Prav tako pa nas bo vedno čakala sveža limonada. ;)
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature">
+                    <i class="icon-location"></i>
+                    <h3>Na treh lokacijah</h3>
+                    <p>
+                        Februarski tečaji bodo potekali na treh lokacijah: v Ljubljani, Mariboru in v Novi Gorici.
+                        Prostori bodo primerno opremljeni ter imeli brezžični dostop do interneta.
+                    </p>
+                </div>
+            </div>
+        </div><!-- End row -->
+    </div><!-- End container -->
+    </section><!-- End main-features -->
+
+<!-- Potek
+    <section id="main_content_gray">
+        <div class="container">
+            <div class="row add_bottom_30">
+                <div class="col-md-12 text-center">
+                    <h2>Potek poletne šole</h2>
+                </div>
+            </div>
+
+            <ul class="cbp_tmtimeline">
+                <li>
+                    <time class="cbp_tmtime" datetime="09:30"><span>2014</span> <span>7. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_audio"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>1. dan</span>Prihod</h2>
+
+                        <p>Omeni tudi kosila in večerje... </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime="11:30"><span>2014</span> <span>8. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_video"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>2. dan</span>Chapter one</h2>
+                        <p>Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce.
+                        Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil.
+                        Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.</p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime="13:30"><span>1 hour</span> <span>9. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_break"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>3. dan</span>Lunch and coffee break</h2>
+                        <p>Parsnip lotus root celery yarrow seakale tomato collard greens tigernut epazote ricebean melon tomatillo
+                        soybean chicory broccoli beet greens peanut salad. </p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime="14:30"><span>2 hours</span> <span>10. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_doc"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>4. dan</span>Chapter two</h2>
+                        <p>Peanut gourd nori welsh onion rock melon mustard jícama. Desert raisin amaranth kombu aubergine kale seakale
+                        brussels sprout pea. Black-eyed pea celtuce bamboo shoot salad kohlrabi leek squash prairie turnip catsear rock
+                        melon chard taro broccoli turnip greens. Fennel quandong potato watercress ricebean swiss chard garbanzo. Endive
+                        daikon brussels sprout lotus root silver beet epazote melon shallot.</p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime="16:30"><span>2 hours</span> <span>11. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_test"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>5. dan</span>Exercises</h2>
+                        <p>Parsley amaranth tigernut silver beet maize fennel spinach. Ricebean black-eyed pea maize scallion green bean
+                        spinach cabbage jícama bell pepper carrot onion corn plantain garbanzo. Sierra leone bologi komatsuna celery
+                        peanut swiss chard silver beet squash dandelion maize chicory burdock tatsoi dulse radish wakame beetroot.</p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime="11:30"><span>2014</span> <span>12. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_video"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>6. dan</span>Chapter one</h2>
+                        <p>Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce.
+                        Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil.
+                        Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.</p>
+                    </div>
+                </li>
+                <li>
+                    <time class="cbp_tmtime" datetime="11:30"><span>2014</span> <span>13. julij</span></time>
+                    <div class="cbp_tmicon timeline_icon_video"></div>
+                    <div class="cbp_tmlabel">
+                        <h2><span>7. dan</span>Chapter one</h2>
+                        <p>Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce.
+                        Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil.
+                        Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.</p>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        </section>
+
+  Konec Poteka -->
+
+<!-- Stopnje -->
+  <section id="main_content" class="style_2">
+      <div class="row add_bottom_30">
+          <div class="col-md-12 text-center">
+              <h2>2-DNEVNI TEČAJ PROGRAMIRANJA</h2>
+              <p class="lead">Izberi kraj, ki ti je najbližje.</p>
+          </div>
+      </div>
+
+      <div class="container">
+          <article class="row">
+              <div class="col-md-3 col-sm-3 hidden-xs text-center"><img src="/assets/img/public/html5_small.png" alt="" ></div>
+              <div class="col-md-9 col-sm-9">
+                  <h3>
+                      <!-- <em>Začetni nivo</em> -->
+
+                      Osnove izdelave spletnih strani</h3>
+                  <p>Skoraj vsakdo je svoje prve korake v svet programiranja začel s <strong>HTML in CSS</strong>.
+                      To sta jezika, s katerima
+                  se oblikuje izgled (front-end) spletnih strani. Ta nivo je <strong>primeren za popolne začetnike</strong>,
+                      ki bi radi naredili prvi korak v svet izdelovanja spletnih strani.</p>
+
+                  <ul class="data-lessons">
+                      <li class="po-markup">
+                          HTML5
+                      </li>
+                      <li class="po-markup">
+                          CSS3
+                      </li>
+                      <li class="po-markup">
+                          Ljubljana
+                      </li>
+                      <li class="po-markup">
+                          Maribor
+                      </li>
+                      <li class="po-markup">
+                          Nova Gorica
+                      </li>
+                  </ul>
+                  <a href="#prijava" class="button_medium_red prijava">Prijavi se!</a>
+              </div>
+
+          </article><!-- End strip-program  -->
+        </div><!-- End container -->
+    </section><!-- End main_content -->
+
+
+<!-- Testimonials/Priporočila -->
+    <section id="testimonials">
+        <div class="container">
+            <div class="row">
+                <div class='col-md-offset-2 col-md-8 text-center'>
+                    <h2>Kaj pravijo drugi</h2>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-md-offset-2 col-md-8'>
+                    <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                        <!-- Bottom Carousel Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#quote-carousel" data-slide-to="1"></li>
+                            <li data-target="#quote-carousel" data-slide-to="2"></li>
+                        </ol>
+                        <!-- Carousel Slides / Quotes -->
+                        <div class="carousel-inner">
+                            <!-- Quote 1 -->
+                            <div class="item active">
+                                <blockquote>
+                                    <div class="row">
+                                        <div class="col-sm-3 text-center">
+                                            <img class="img-circle" src="/assets/img/public/mitja.jpg" alt="">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p>
+                                                Na tečajih SmartNinja spoznavam osnove
+                                                programiranja v Pythonu in izdelovanja spletnih strani s HTML, CSS in jQuery.
+                                                Pomoč mentorjev mi pomaga hitreje napredovati pri učenju, kot
+                                                pa če bi se učil čisto sam.
+                                            </p>
+                                            <small>Mitja Kastelic</small>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </div>
+
+                            <!-- Quote 2 -->
+                            <div class="item">
+                                <blockquote>
+                                    <div class="row">
+                                        <div class="col-sm-3 text-center">
+                                            <img class="img-circle" src="/assets/img/public/gregor.jpg" alt="Gregor Nanger">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p>
+                                                Na tečaj programiranja SmartNinja smo poslali našega pripravnika. V kratkem času je zelo
+                                                hitro napredoval in zdaj že dela na enem izmed naših večjih projektov. Tečaje
+                                                programiranja SmartNinja zato močno priporočam!
+                                            </p>
+                                            <small>Gregor Nanger, Voco</small>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </div>
+
+                            <!-- Quote 3 -->
+                            <div class="item">
+                                <blockquote>
+                                    <div class="row">
+                                        <div class="col-sm-3 text-center">
+                                            <img class="img-circle" src="/assets/img/public/uros.jpg" alt="">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p>
+                                                Programerski tečaj SmartNinja mi je pomagal izboljšati svoje znanje izdelave spletnih
+                                                strani. Naučil sem se ogrodja Bootstrap, uporabe GIT-a ter osnov JavaScripta.
+                                                Vse našteto zdaj že uporabljam pri delu v novi službi.
+                                            </p>
+                                            <small>Uroš Plavec</small>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </section><!-- End testimonials -->
+
+  <!-- Mentorji -->
+  <section id="mentor_content" class="style-2">
+
+      <div class="row add_bottom_30">
+          <div class="col-md-12 text-center">
+              <h2>Ekipa</h2>
+          </div>
+      </div>
+
+      <div class="container">
+
+          <div class="row">
+              <div class="col-md-4 col-sm-6">
+                  <div class=" box_style_3">
+                      <p><img src="/assets/img/public/matej2.jpg" alt="Matej Ramuta" class="img-circle styled"></p>
+                      <h4 class="p-title">Matej Ramuta<br> <small>Vodja tečajev</small></h4>
+                      <p></p>
+                      <ul class="social_team">
+                          <li><a href="http://www.linkedin.com/in/ramuta"><i class="icon-linkedin"></i></a></li>
+                          <li><a href="http://github.com/ramuta"><i class="icon-github"></i></a></li>
+                          <li><a href="http://www.facebook.com/matej.ramuta"><i class="icon-facebook"></i></a></li>
+
+                      </ul>
+                  </div>
+              </div>
+
+
+              <!--
+              <div class="col-md-4 col-sm-6">
+                  <div class=" box_style_3">
+                      <p><img src="img/gm.png" alt="Gašper Mlakar" class="img-circle styled"></p>
+                      <h4 class="p-title">Gašper Mlakar <br> <small>Design in organizacija</small></h4>
+                      <p></p>
+                      <ul class="social_team">
+                          <li><a href="http://twitter.com/spagr88"><i class="icon-twitter"></i></a></li>
+                          <li><a href="http://www.facebook.com/gasper.mlakar.3"><i class="icon-facebook"></i></a></li>
+
+                          <li><a href="http://www.linkedin.com/pub/ga%C5%A1per-mlakar/91/a60/920"><i class="icon-linkedin"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+              -->
+
+
+              <div class="col-md-4 col-sm-6">
+                  <div class=" box_style_3">
+                      <p><img src="/assets/img/public/ziga.jpg" alt="Žiga Besal" class="img-circle styled"></p>
+                      <h4 class="p-title">Žiga Besal <br> <small>Mentor programiranja</small></h4>
+                      <p></p>
+                      <ul class="social_team">
+                          <li><a href="http://github.com/ekranac"><i class="icon-github"></i></a></li>
+                          <li><a href="http://www.linkedin.com/in/besal"><i class="icon-linkedin"></i></a></li>
+                          <li><a href="http://www.facebook.com/zigabesal21"><i class="icon-facebook"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                  <div class=" box_style_3">
+                      <p><img src="/assets/img/public/miha.jpg" alt="Miha Fabjan" class="img-circle styled"></p>
+                      <h4 class="p-title">Miha Fabjan<br> <small>Organizacija</small></h4>
+                      <p></p>
+                      <ul class="social_team">
+                          <li><a href="http://www.linkedin.com/pub/miha-fabjan/52/583/b05"><i class="icon-linkedin"></i></a></li>
+                          <li><a href="http://www.facebook.com/miha.fabjan"><i class="icon-facebook"></i></a></li>
+                          <li><a href="http://twitter.com/miha_fabjan"><i class="icon-twitter"></i></a></li>
+
+                      </ul>
+                  </div>
+              </div>
+          </div><!-- End row -->
+
+      </div><!-- End container -->
+  </section><!-- End mentor_content-->
+
+<!-- Prijavni obrazec -->
+  <section id="wizard_bg">
+      <div class="container">
+          <!-- Start Survey container -->
+          <div id="survey_container">
+
+
+              <div id="top-wizard">
+                  <strong>Prijavni obrazec</strong>
+                  <div class="shadow"></div>
+              </div><!-- end top-wizard -->
+
+              <form name="example-1" id="wizard" action="/prijava" method="POST" >
+                  <div id="middle-wizard">
+                      <div class="step">
+                          <div class="row">
+                              <h3>Prijavi se na tečaje programiranja!</h3>
+
+                              <div class="col-md-6">
+                                  Tečaji bodo potekali v februarju 2015 v Ljubljani, Novi Gorici in Mariboru.
+                                  <ul>
+                                      <li>Ljubljana: 7.2.-8.2.2015</li>
+                                      <li>Nova Gorica: 14.2.-15.2.2015</li>
+                                      <li>Maribor: 28.2.-1.3.2015</li>
+                                  </ul>
+
+                                  POZOR, znižana cena PRIJAVE do <strong>pet dni pred tečajem</strong>:
+                                  <ul>
+                                      <li>Dijaki, študentje in nezaposleni: <s>147,00 EUR</s> 97,00 EUR</li>
+                                      <li>Ostali: <s>197,00 EUR</s> 147,00 EUR</li>
+                                  </ul>
+                                  <br><br>
+                              </div>
+
+                              <div class="col-md-6">
+                                    <p>Zaželjeno je, da si udeleženci zagotovijo prenosni računalnik. Kdor si ga ne
+                                        more, mu ga bomo zagotovili organizatorji.</p>
+
+                                  <p>Prijave po znižani ceni so možne <strong>le do pet dni pred izvedbo tečaja!</strong>
+                                      Kasneje je potrebno plačati polno ceno.</p>
+
+                                  <p>Za dodatne informacije lahko pišete na <strong>info@start-up.si</strong> ali
+                                      pokličete na <strong>031 841 723 (Miha)</strong></p>
+                              </div>
+                          </div>
+
+
+
+                          <input type="hidden" name="hidden">
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                  <ul class="data-list">
+                                      <li><div class="form-group"><input type="text" name="firstname" class="required form-control" placeholder="Ime" id="prijava-name"><span class="input-icon"><i class="icon-user"></i></span></div></li>
+                                      <li><div class="form-group"><input type="text" name="lastname" class="required form-control" placeholder="Priimek" id="prijava-lastname"><span class="input-icon"><i class="icon-user"></i></span></div></li>
+                                      <li><div class="form-group"><input type="email" name="email" class="required form-control" placeholder="Email" id="prijava-email"><span class="input-icon"><i class="icon-email"></i></span></div></li>
+                                      <li><div class="form-group"><input type="text" name="address" class="required form-control" placeholder="Naslov (ulica, hišna št., kraj)" id="prijava-address"><span class="input-icon"><i class="icon-home"></i></span></div></li>
+                                  </ul>
+                              </div><!-- end col-md-6 -->
+
+                              <div class="col-md-6">
+
+
+                                  <ul class="data-list" style="margin:0; padding:0;">
+                                      <li id="age"><div class="form-group"><input type="text" name="age" class="required form-control" placeholder="Rojstni datum" id="prijava-age"><span class="input-icon"><i class="icon-star"></i></span></div></li>
+                                      <li><div class="form-group"><input type="text" name="phone2" class="required form-control" placeholder="Telefonska številka" id="prijava-gsm"><span class="input-icon"><i class="icon-phone"></i></span></div></li>
+                                      <li><div class="styled-select">
+                                          <select class="form-control required" name="country" id="prijava-stopnja">
+                                              <option value="" selected>Izberi kraj</option>
+                                              <option value="Ljubljana">Ljubljana, 7.-8.2.</option>
+                                              <option value="NovaGorica">Nova Gorica, 14.-15.2.</option>
+                                              <option value="Maribor">Maribor, 28.2.-1.3.</option>
+                                          </select>
+                                      </div>
+                                      </li>
+
+                                      <li><div class="styled-select">
+                                          <select class="form-control required" name="sleepover" id="prijava-sleepover">
+                                              <option value="" selected>Višina kotizacije</option>
+                                              <option value="97eur">Dijaki, študentje in nezaposleni (97,00 EUR)</option>
+                                              <option value="147eur">Ostali (147,00 EUR)</option>
+                                          </select>
+                                      </div>
+                                      </li>
+                                  </ul>
+
+                              </div><!-- end col-md-6 -->
+                          </div><!-- end row -->
+
+                          <div class="row">
+                              <div class="col-md-5 col-md-offset-4">
+                                      <strong>S prijavo sprejemaš <a href="#" data-toggle="modal" data-target="#myModal">pravila in pogoje tečajev SmartNinja</a>.</strong>
+                              </div>
+                          </div>
+
+                      </div><!-- end step-->
+
+                      <br>
+
+                    <div class="row">
+                        <div class="submit step" id="complete">
+                            <!--<p>Prijave zaprte</p>-->
+                            <button type="submit" name="process" class="submit" id="prijava-gumb">Oddaj prijavo</button>
+                            <br>
+                            <p style="color: red;">{{ error }}</p>
+                        </div><!-- end submit step -->
+                    </div>
+
+                  </div><!-- end middle-wizard -->
+              </form>
+
+          </div><!-- end Survey container -->
+
+      </div>
+  </section><!-- end section wizard container -->
+
+  <!-- Modal: Terms and conditions -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Pogoji sodelovanja</h4>
+              </div>
+              <div class="modal-body">
+                  <p>Pogoji sodelovanja<br />
+                      PRAVILA IN POGOJI SODELOVANJA V PROGRAMIH SMARTNINJA</p>
+
+                  <p>1. SPLOŠNE DOLOČBE</p>
+
+                  <p>SmartNinja je izobraževalna delavnica (v nadaljevanju: delavnica), ki ga organizira Klub mladih podjetnikov
+                      (StartUP Novo mesto) (v nadaljevanju: organizator).<br />
+                      V imenu organizatorja program vodi organizacijski odbor (v nadaljevanju: odbor).<br />
+                      Udeleženci (v nadaljevanju: udeleženci) so posamezniki, ki so se prijavili na delavnico in sprejemajo pravila
+                      in pogoje sodelovanja v programu.</p>
+
+                  <p>2. POTEK IN POGOJI</p>
+
+                  <p>Na delavnici lahko sodeluje vsak, ki se je prek prijavnega obrazca prijavil v program ter sprejel pravila in
+                      pogoje sodelovanja na delavnici. Prijava mora biti oddana do izteka roka za prijavo ter vsebovati vse zahtevane
+                      podatke. Podatki morajo biti točni.<br />
+                      Organizator si pridržuje pravico do omejitve števila udeležencev. Tolmačenja in pojasnila k določbam in pravilom
+                      daje odbor, njegove odločitve so dokončne in na njih ni mogoča pritožba.</p>
+
+                  <p>Kotizacija za udeležbo na delavnici znaša za dijake, študente ali nezaposlene 97,00 EUR do 5 (pet) dni pred
+                      pričetkom izvajanja in 147,00 EUR do 5 (pet) dni pred pričetkom izvajanja, za ostale. Po tem datumu znaša
+                      kotizacija za dijake, študente ali nezaposlene 147,00 EUR, za ostale pa 197,00.</p>
+
+                  <p>Udeleženci morajo pred iztekom rok za prijavo poravnati kotizacijo v celoti. V primeru odpovedi do 7 dni pred
+                      rokom izteka je organizator dolžan povrniti kotizacijo v celoti. Manj kot 7 dni pred iztekom roka je organizator
+                      dolžan povrniti le 50 % celotne kotizacije. Na zadnji dan roka za prijavo na delavnico organizator ni dolžan
+                      vrniti kotizacije udeležencu.</p>
+
+                  <p>Delavnice SmartNinja se izvajajo na različnih lokacijah. Organizator bo 5 (pet) dni pred pričetkom izvajanja
+                      programa obvestil udeležence o točni lokaciji izvajanja programa.</p>
+
+                  <p>Udeleženec bo:<br />
+                      - v programu aktivno sodeloval,<br />
+                      - se udeležil vseh aktivnosti znotraj delavnice,<br />
+                      - pri delu uporabljal orodja in programe, za katera ima ustrezne pravice,<br />
+                      - skrbel za nemoteno delo in izvajanje delavnice,<br />
+                      - z lastnino, tehničnimi pripomočki in ostalo opremo bo ravnal odgovorno. V primeru škode je udeleženec obvezan
+                      povrnitve škode.<br />
+                      <br />
+                      Organizator bo:<br />
+                      - izvedel vse aktivnosti v programu SmartNinja<br />
+                      - zagotovil kvalitetno izpeljavo delavnico<br />
+                      - zagotovil tehnično infrastrukturo za izvedbo delavnice<br />
+                      - zagotovil ostalo infrastrukturo (hrana, pijača in morebitna prenočitev)<br />
+                      <br />
+                      Udeleženec se bo vzdržal kakršnega koli delovanja, ki bi škodilo ugledu in dobremu imenu organizatorja.</p>
+
+                  <p>Prijava v program poteka od 5.1.2015 dalje. Delavnica traja 2 (dva) dni. Vsak dan od 10.00 do 18.00 ure.</p>
+
+                  <p>3. VARSTVO PODATKOV</p>
+
+                  <p>Organizator pri izvajanju delavnice obdeluje osebne podatke udeležencev, ki mu jih ti posredujejo. Organizator
+                      vse osebne podatke varuje in obdeluje v skladu s predpisi, ki urejajo varstvo osebnih podatkov. Organizator si
+                      pridržuje pravico spremljanja delovanja in aktivnosti udeležencev ter pripravljanja člankov o njihovem delovanju
+                      v programu. Organizator ne bo javno objavljal podatkov ali informacij, ki so poslovna skrivnost.</p>
+
+                  <p>4. KONČNE DOLOČBE</p>
+
+                  <p>V primeru kršitev teh pravil bo odbor udeleženca opozoril ter mu postavil rok za prenehanje ali odpravo kršitve.
+                      V kolikor bo udeleženec s kršitvami nadaljeval, ga lahko odbor izloči iz delavnice.<br /><br />
+                      Udeleženci delavnice z oddajo prijave potrjujejo, da so seznanjeni s temi pravili ter da do organizatorja ne bodo
+                      imeli nikakršnih zahtevkov. V kolikor ni v posameznih pogodbah z udeleženci dogovorjeno drugače, organizator nima
+                      nobenih pravic na produktih ali storitvah udeležencev, ustvarjenih v sklopu delavnice. Organizator pa si pridržuje
+                      pravico pri komuniciranju z javnostjo izpostaviti, da je bil tak produkt ali storitev udeležencev ustvarjen v
+                      sklopu delavnice.<br /><br />
+                      Prijava v delavnico ter sprejetje pogojev sodelovanja v programu ne štejeta kot pogodba o zaposlitvi ali kot
+                      povabilo k sklenitvi pogodbe o zaposlitvi. Udeleženec se za sodelovanje v programu odloči prostovoljno in s tem
+                      ne opravlja nobene vrste dela za organizatorja.<br /><br />
+                      V kolikor bo prijavljenih udeležencev manj kot 5 (pet), program ne bo izveden. Prijavljeni udeleženci bodo dobili
+                      prijavnino povrnjeno.<br /><br />
+                      Pravila in pogoji sodelovanja v programu veljajo od 1. januarja 2015 dalje. Organizator lahko spreminja pogoje in
+                      pravila ter se obvezuje, da bo v tem primeru na ustrezen način obvestil udeležence.</p>
+
+                  <p>Miha Fabjan<br />
+                      predsednik Kluba mladih podjetnikov<br />
+                      (StartUP Novo mesto)<br />
+                  </p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+<footer>
+<div class="container">
+	<div class="row">
+        <div class="col-md-4">
+            <!--<a href="http://www.inkubator-nm.si/"><img src="img/podbreznik.png"></a>-->
+        </div>
+
+		<div class="col-md-4">
+			<h3>Več znaš, več veljaš!</h3>
+		</div>
+
+        <div class="col-md-4">
+
+            <!--<a href="http://www.rc-nm.si/"><img src="img/rc.png"></a>-->
+        </div>
+    </div>
+</div>
+
+<!--
+
+<hr>
+
+<div class="container" id="nav-footer">
+<div class="row text-left">
+<div class="col-md-3 col-sm-3">
+    <h4>Browse</h4>
+    <ul>
+        <li><a href="prices_plans.html">Prices</a></li>
+        <li><a href="courses_grid.html">Courses</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+    </ul>
+</div>
+<div class="col-md-3 col-sm-3">
+    <h4>Next Courses</h4>
+    <ul>
+        <li><a href="course_details_1.html">Biology</a></li>
+        <li><a href="course_details_2.html">Management</a></li>
+        <li><a href="course_details_2.html">History</a></li>
+        <li><a href="course_details_3.html">Litterature</a></li>
+    </ul>
+</div>
+<div class="col-md-3 col-sm-3">
+    <h4>About Learn</h4>
+    <ul>
+        <li><a href="about_us.html">About Us</a></li>
+        <li><a href="apply_2.html">Apply</a></li>
+        <li><a href="#">Terms and conditions</a></li>
+        <li><a href="register.html">Register</a></li>
+    </ul>
+</div>
+<div class="col-md-3 col-sm-3">
+    <ul id="follow_us">
+        <li><a href="#"><i class="icon-facebook"></i></a></li>
+        <li><a href="#"><i class="icon-twitter"></i></a></li>
+        <li><a href="#"><i class=" icon-google"></i></a></li>
+    </ul>
+    <ul>
+        <li><strong class="phone">+0034 43244 44</strong><br><small>Mon - Fri / 9.00AM - 06.00PM</small></li>
+        <li>Questions? <a href="#">questions@domain.com</a></li>
+    </ul>
+</div>
+</div>
+</div>
+-->
+
+</footer>
+
+<div id="copy_right">© 2014 SmartNinja.org</div>
+
+<div id="toTop">Nazaj na vrh</div>
+
+<!-- JQUERY
+<script src="js/jquery-1.10.2.min.js"></script>
+-->
+
+<script src="/assets/js/jquery.js"></script>
+
+<!-- OTHER JS -->
+<script src="/assets/js/public/superfish.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="js/retina.min.js"></script>
+<script src="js/jquery.fitvids.js"></script> <!-- for video responsive-->
+<script src="/assets/js/public/validate.js"></script>
+<script src="js/jquery.placeholder.js"></script>
+<script src="/assets/js/public/functions.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/uisearch.js"></script>
+<script>new UISearch( document.getElementById( 'sb-search' ) );</script>
+<script>$(".video").fitVids();</script>
+
+
+  </body>
+</html>

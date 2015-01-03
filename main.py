@@ -15,13 +15,16 @@
 # limitations under the License.
 #
 import webapp2
+from app.handlers.apply import TempPrijavaHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler
-from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler
+from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler, TempMainHandler
 
 
 app = webapp2.WSGIApplication([
     # PUBLIC
-    webapp2.Route('/', MainHandler, name="main"),
+    webapp2.Route('/main', MainHandler, name="main"),
+    webapp2.Route('/', TempMainHandler, name="temp"),
+    webapp2.Route('/prijava', TempPrijavaHandler, name="prijava"),
 
     # ADMIN
     webapp2.Route('/admin', AdminHandler, name="admin"),
