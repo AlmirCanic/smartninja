@@ -33,6 +33,12 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
     def get(self):
+        self.render_template("public/main.html")
+
+
+class AdminHandler(Handler):
+    @admin_required
+    def get(self):
         self.render_template("admin/main.html")
 
 

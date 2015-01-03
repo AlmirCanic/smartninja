@@ -4,7 +4,7 @@ from google.appengine.api import users
 
 class LoginHandler(Handler):
     def get(self):
-        self.redirect(users.create_login_url("/"))
+        self.redirect(users.create_login_url("/admin"))
 
 
 class LogoutHandler(Handler):

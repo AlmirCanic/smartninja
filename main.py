@@ -16,11 +16,15 @@
 #
 import webapp2
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler
-from app.handlers.base import MainHandler, SecuredSiteHandler
+from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler
 
 
 app = webapp2.WSGIApplication([
+    # PUBLIC
     webapp2.Route('/', MainHandler, name="main"),
+
+    # ADMIN
+    webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/login', LoginHandler, name="login"),
     webapp2.Route('/logout', LogoutHandler, name="logout"),
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
