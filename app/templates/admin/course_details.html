@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ course.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <h1>{{ course.title }}</h1>
+
+    <p>{{course.start_date}} - {{course.end_date}}</p>
+
+    <h2>Student applications</h2>
+    {% if applications %}
+        <ul>
+            {% for application in applications %}
+                <li>{{application.student_name}}, {{application.student_email}}, plačano: {{application.payment_status}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No applications yet :(</p>
+    {% endif %}
+</div>
+{% endblock main_content %}

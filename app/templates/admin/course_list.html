@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Courses{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <h1>Courses</h1>
+
+    {% if courses %}
+        <ul>
+            {% for course in courses %}
+                <li><a href="/admin/course/{{course.get_id}}">{{ course.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No courses</p>
+    {% endif %}
+</div>
+{% endblock main_content %}
