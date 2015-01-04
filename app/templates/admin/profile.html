@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ profile.get_full_name }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <h1>{{ profile.get_full_name }}</h1>
+    <p>Email: {{ profile.email }}</p>
+</div>
+{% endblock main_content %}

@@ -16,7 +16,7 @@
 #
 import webapp2
 from app.handlers.apply import TempPrijavaHandler
-from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler
+from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler
 from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler, TempMainHandler
 from app.handlers.courses import CourseListHandler, CourseDetailsHandler
 
@@ -33,6 +33,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/logout', LogoutHandler, name="logout"),
     webapp2.Route('/admin/courses', CourseListHandler, name="course-list"),
     webapp2.Route('/admin/course/<course_id:\d+>', CourseDetailsHandler, name="course-details"),
+    webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
     webapp2.Route('/secured', SecuredSiteHandler, name="secured"),
 ], debug=True)

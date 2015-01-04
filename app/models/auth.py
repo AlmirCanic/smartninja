@@ -18,7 +18,10 @@ class User(ndb.Model):
 
     @property
     def get_full_name(self):
-        return "{0} {1}".format(self.first_name, self.last_name)
+        if self.first_name and self.last_name:
+            return "{0} {1}".format(self.first_name, self.last_name)
+        else:
+            return self.email
 
     @classmethod
     def get_by_email(cls, email):
