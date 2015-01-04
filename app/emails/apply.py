@@ -10,7 +10,7 @@ def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, 
         Starost: {4}
         Telefon: {5}
         Kraj tecaja: {6}
-        Kotizacija: {7}
+        Kotizacija: {7} EUR
     '''.format(ime.encode('utf-8'),
                priimek.encode('utf-8'),
                email.encode('utf-8'),
@@ -28,7 +28,7 @@ def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, 
         <p>Starost: {4}</p>
         <p>Telefon: {5}</p>
         <p>Kraj tecaja: {6}</p>
-        <p>Kotizacija: {7}</p>
+        <p>Kotizacija: {7} EUR</p>
     '''.format(ime.encode('utf-8'),
                priimek.encode('utf-8'),
                email.encode('utf-8'),
