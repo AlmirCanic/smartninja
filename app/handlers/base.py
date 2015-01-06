@@ -44,7 +44,7 @@ class TempMainHandler(Handler):
 class AdminHandler(Handler):
     @admin_required
     def get(self):
-        self.render_template("admin/main.html")
+        self.redirect_to("course-list")
 
 
 class SecuredSiteHandler(Handler):

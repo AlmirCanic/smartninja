@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Courses{% endblock title %}
+{% block title %}Course Types{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -9,28 +9,28 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-institution"></i> Courses
+                    <i class="fa fa-puzzle-piece"></i>  Course Types
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/admin/courses/add">Add new course</a>
+                    <i class="fa fa-plus-square-o"></i> <a href="/admin/course/type/add">Add new course type</a>
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Courses
+                Course types
             </h1>
         </div>
     </div>
     <!-- Breadcrumb end -->
 
-    {% if courses %}
+    {% if course_types %}
         <ul>
-            {% for course in courses %}
-                <li><a href="/admin/course/{{course.get_id}}">{{ course.title }}</a></li>
+            {% for course_type in course_types %}
+                <li><a href="/admin/course/type/{{course_type.get_id}}">{{ course_type.title }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No courses</p>
+        <p>No course types</p>
     {% endif %}
 </div>
 {% endblock main_content %}
