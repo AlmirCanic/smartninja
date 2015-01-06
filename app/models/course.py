@@ -11,6 +11,12 @@ class CourseType(ndb.Model):
     def get_id(self):
         return self.key.id()
 
+    @classmethod
+    def create(cls, title, curriculum, description):
+        course_type = cls(title=title, curriculum=curriculum, description=description)
+        course_type.put()
+        return course_type
+
 
 class Course(ndb.Model):
     title = ndb.StringProperty()

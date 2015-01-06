@@ -65,3 +65,19 @@ class AdminCourseTypeDetailsHandler(Handler):
         course_type = CourseType.get_by_id(int(course_type_id))
         params = {"course_type": course_type}
         self.render_template("admin/course_type_details.html", params)
+
+
+class AdminCourseTypeAddHandler(Handler):
+    @admin_required
+    def get(self):
+        self.render_template("admin/course_type_add.html")
+
+    @admin_required
+    def post(self):
+        title = self.request.get("title")
+        curriculum = self.request.get("curriculum")
+        description = self.request.get("description")
+
+        if title and curriculum:
+            CourseType.create(title=title, curriculum=curriculum, description=description)
+            self.redirect_to("course-types-list")
