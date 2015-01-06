@@ -1,7 +1,7 @@
 from google.appengine.api import mail
 
 
-def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija):
+def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik):
     message_body = '''
         Nova prijava na Februar 2015!
         Ime in priimek: {0} {1}
@@ -11,6 +11,7 @@ def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, 
         Telefon: {5}
         Kraj tecaja: {6}
         Kotizacija: {7} EUR
+        Svoj prenosnik: {8}
     '''.format(ime.encode('utf-8'),
                priimek.encode('utf-8'),
                email.encode('utf-8'),
@@ -18,7 +19,8 @@ def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, 
                starost.encode('utf-8'),
                telefon.encode('utf-8'),
                kraj_tecaja.encode('utf-8'),
-               kotizacija.encode('utf-8'))
+               kotizacija.encode('utf-8'),
+               prenosnik.encode('utf-8'))
 
     html_message_body = '''
         <p>Nova prijava na Februar 2015!</p>
@@ -29,6 +31,7 @@ def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, 
         <p>Telefon: {5}</p>
         <p>Kraj tecaja: {6}</p>
         <p>Kotizacija: {7} EUR</p>
+        <p>Svoj prenosnik: {8}</p>
     '''.format(ime.encode('utf-8'),
                priimek.encode('utf-8'),
                email.encode('utf-8'),
@@ -36,7 +39,8 @@ def prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, 
                starost.encode('utf-8'),
                telefon.encode('utf-8'),
                kraj_tecaja.encode('utf-8'),
-               kotizacija.encode('utf-8'))
+               kotizacija.encode('utf-8'),
+               prenosnik.encode('utf-8'))
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to="info@smartninja.org",

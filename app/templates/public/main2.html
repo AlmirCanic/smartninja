@@ -132,9 +132,9 @@
 
                   <p>
                       V vsakem izmed nas se skrivajo talenti, ki jih mnogokrat tradicionalni izobraževalni sistem
-                      ne prepozna. Misija SmartNinja je ljudem pomagati odkriti in razviti talente ter veščine na sodobnem
-                      IT področju. Veščine, ki ti bodo pomagale lažje najti službo - ali pa jo ustvariti! V ta namen
-                      organiziramo tečaje spletnega in mobilnega programiranja, grafičnega gitoblikovanja ter interneta stvari (IoT).
+                      ne prepozna. Misija SmartNinje je ljudem pomagati odkriti in razviti talente ter veščine na sodobnem
+                      IT področju. Veščine, ki ti bodo pomagale lažje najti službo - ali pa jo celo ustvariti! V ta namen
+                      organiziramo tečaje spletnega in mobilnega programiranja, grafičnega oblikovanja ter interneta stvari (IoT).
                   </p>
 
                   <p>
@@ -154,7 +154,7 @@
 
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
               </div>
           </div>
       </div>
@@ -296,14 +296,14 @@
                     <h3>Programiramo od zore do mraka</h3>
                     <p>
                         Tečaj bo potekal dva dni, od 10.00 zjutraj do 18.00 ure zvečer. Programirali bomo od zore do
-                        mraka! ;) ps.: Ne skrbi, tudi pavza bo vmes!
+                        mraka! ;) P.S.: Ne skrbi, tudi pavza bo vmes!
                     </p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="feature">
                     <i class="icon-food"></i>
-                    <h3>Kosila in pikniki</h3>
+                    <h3>Za prehrano poskrbljeno</h3>
                     <p>
                         Za vse udeležence bodo na voljo en topel obrok dnevno. Neprestano pa bo na voljo sveže
                         sadje in nekaj lažjih prigrizkov. Prav tako pa nas bo vedno čakala sveža limonada. ;)
@@ -655,7 +655,7 @@
                                   <p>Prijave po znižani ceni so možne <strong>le do pet dni pred izvedbo tečaja!</strong>
                                       Kasneje je potrebno plačati polno ceno.</p>
 
-                                  <p>Za dodatne informacije lahko pišete na <strong>info@start-up.si</strong> ali
+                                  <p>Za dodatne informacije lahko pišete na <strong>info@smartninja.org</strong> ali
                                       pokličete na <strong>031 841 723 (Miha)</strong></p>
                               </div>
                           </div>
@@ -670,7 +670,13 @@
                                       <li><div class="form-group"><input type="text" name="firstname" class="required form-control" placeholder="Ime" id="prijava-name"><span class="input-icon"><i class="icon-user"></i></span></div></li>
                                       <li><div class="form-group"><input type="text" name="lastname" class="required form-control" placeholder="Priimek" id="prijava-lastname"><span class="input-icon"><i class="icon-user"></i></span></div></li>
                                       <li><div class="form-group"><input type="email" name="email" class="required form-control" placeholder="Email" id="prijava-email"><span class="input-icon"><i class="icon-email"></i></span></div></li>
-                                      <li><div class="form-group"><input type="text" name="address" class="required form-control" placeholder="Naslov (ulica, hišna št., kraj)" id="prijava-address"><span class="input-icon"><i class="icon-home"></i></span></div></li>
+                                      <li>
+                                          <div class="form-group">
+                                              <input type="text" name="address" class="required form-control" placeholder="Naslov (ulica, hišna št., kraj)" id="prijava-address"><span class="input-icon"><i class="icon-home"></i></span>
+                                          </div>
+                                      </li>
+
+                                      <li id="age"><div class="form-group"><input type="text" name="age" class="required form-control" placeholder="Rojstni datum" id="prijava-age"><span class="input-icon"><i class="icon-star"></i></span></div></li>
                                   </ul>
                               </div><!-- end col-md-6 -->
 
@@ -678,11 +684,11 @@
 
 
                                   <ul class="data-list" style="margin:0; padding:0;">
-                                      <li id="age"><div class="form-group"><input type="text" name="age" class="required form-control" placeholder="Rojstni datum" id="prijava-age"><span class="input-icon"><i class="icon-star"></i></span></div></li>
+
                                       <li><div class="form-group"><input type="text" name="phone2" class="required form-control" placeholder="Telefonska številka" id="prijava-gsm"><span class="input-icon"><i class="icon-phone"></i></span></div></li>
                                       <li><div class="styled-select">
                                           <select class="form-control required" name="country" id="prijava-stopnja">
-                                              <option value="" selected>Izberi kraj</option>
+                                              <option value="" selected>Izberi kraj tečaja</option>
                                               <option value="Ljubljana">Ljubljana, 7.-8.2.</option>
                                               <option value="NovaGorica">Nova Gorica, 14.-15.2.</option>
                                               <option value="Maribor">Maribor, 28.2.-1.3.</option>
@@ -690,13 +696,24 @@
                                       </div>
                                       </li>
 
-                                      <li><div class="styled-select">
-                                          <select class="form-control required" name="sleepover" id="prijava-sleepover">
-                                              <option value="" selected>Višina kotizacije</option>
-                                              <option value="97">Dijaki, študentje in nezaposleni (97,00 EUR)</option>
-                                              <option value="147">Ostali (147,00 EUR)</option>
-                                          </select>
-                                      </div>
+                                      <li>
+                                          <div class="styled-select">
+                                              <select class="form-control required" name="sleepover" id="prijava-sleepover">
+                                                  <option value="" selected>Višina kotizacije</option>
+                                                  <option value="97">Dijaki, študentje in nezaposleni (97,00 EUR)</option>
+                                                  <option value="147">Ostali (147,00 EUR)</option>
+                                              </select>
+                                          </div>
+                                      </li>
+
+                                      <li>
+                                          <div class="styled-select">
+                                              <select class="form-control required" name="prenosnik" id="prenosnik">
+                                                  <option value="" selected>Imaš na voljo prenosni računalnik?</option>
+                                                  <option value="yes">DA</option>
+                                                  <option value="no">NE</option>
+                                              </select>
+                                          </div>
                                       </li>
                                   </ul>
 

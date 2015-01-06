@@ -20,18 +20,19 @@ class TempPrijavaHandler(Handler):
             telefon = self.request.get("phone2")
             kraj_tecaja = self.request.get("country")
             kotizacija = self.request.get("sleepover")
+            prenosnik = self.request.get("prenosnik")
 
-            if ime and priimek and email and naslov and starost and telefon and kraj_tecaja and kotizacija:
+            if ime and priimek and email and naslov and starost and telefon and kraj_tecaja and kotizacija and prenosnik:
                 user = User.get_by_email(email)
 
                 if not user:
                     # add to database
                     user = User.create(first_name=ime, last_name=priimek, email=email, address=naslov, dob=starost, phone_number=telefon)
 
-                add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija))
+                add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija), prenosnik=prenosnik)
 
                 # send email
-                prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija)
+                prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik)
                 params = {"error": "Prijava oddana! :)"}
             else:
                 params = {"error": "Prosim izpolni vsa polja"}
@@ -39,7 +40,7 @@ class TempPrijavaHandler(Handler):
 
 
 # TODO: just temporary, delete after feb 2015
-def add_user_to_course(user, kraj_tecaja, kotizacija):
+def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik):
     course_type = CourseType.query(CourseType.title == "SmartNinja Vikend Slovenia").get()
     if not course_type:
         course_type = CourseType()
@@ -71,4 +72,5 @@ def add_user_to_course(user, kraj_tecaja, kotizacija):
 
     if course:
         course_app = CourseApplication.create(course_title=course.title, course_id=course.get_id, student_name=user.get_full_name,
-                                              student_id=user.get_id, student_email=user.email, price=kotizacija, currency="EUR")
+                                              student_id=user.get_id, student_email=user.email, price=kotizacija, currency="EUR",
+                                              laptop=prenosnik)
