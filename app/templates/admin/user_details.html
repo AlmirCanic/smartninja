@@ -24,5 +24,7 @@
     <!-- Breadcrumb end -->
 
     <p>Email: {{ this_user.email }}</p>
+
+    <a href="/admin/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
 </div>
 {% endblock main_content %}

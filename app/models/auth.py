@@ -11,6 +11,7 @@ class User(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     student = ndb.StringProperty(repeated=True)  # list of course IDs where this user is student
     instructor = ndb.StringProperty(repeated=True)  # list of course IDs where this user is instructor
+    deleted = ndb.BooleanProperty(default=False)
 
     @property
     def get_id(self):
