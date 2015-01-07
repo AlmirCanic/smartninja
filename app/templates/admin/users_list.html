@@ -20,14 +20,26 @@
     </div>
     <!-- Breadcrumb end -->
 
-    {% if users %}
+    <h3>Admins</h3>
+    {% if admins %}
         <ul>
-            {% for myuser in users %}
-                <li><a href="/admin/user/{{myuser.get_id}}">{{ myuser.get_full_name }}</a></li>
+            {% for admin in admins %}
+                <li><a href="/admin/user/{{admin.get_id}}">{{ admin.get_full_name }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No users yet</p>
+        <p>No admins yet</p>
+    {% endif %}
+
+    <h3>Students</h3>
+    {% if students %}
+        <ul>
+            {% for student in students %}
+                <li><a href="/admin/user/{{student.get_id}}">{{ student.get_full_name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No students yet</p>
     {% endif %}
 </div>
 {% endblock main_content %}
