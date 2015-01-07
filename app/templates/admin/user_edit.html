@@ -1,0 +1,57 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Edit user{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Edit user
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ this_user.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/admin/user/{{this_user.get_id}}/edit" method="post">
+
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" class="form-control" placeholder="{{this_user.first_name}}" name="first_name" id="firstName">
+                </div>
+
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" class="form-control" placeholder="{{this_user.last_name}}" name="last_name" id="lastName">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" placeholder="{{this_user.address}}" name="address" id="address">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone number</label>
+                    <input type="text" class="form-control" placeholder="{{this_user.phone_number}}" name="phone_number" id="phoneNumber">
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

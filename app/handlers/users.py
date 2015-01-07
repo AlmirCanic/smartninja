@@ -26,7 +26,10 @@ class AdminUserDetailsHandler(Handler):
     @admin_required
     def get(self, user_id):
         user = User.get_by_id(int(user_id))
-        params = {"this_user": user}
+        admin = False
+        if user.email in ADMINS:
+            admin = True
+        params = {"this_user": user, "admin": admin}
         self.render_template("admin/user_details.html", params)
 
 
@@ -44,3 +47,21 @@ class AdminUserDeleteHandler(Handler):
             user.deleted = True
             user.put()
         self.redirect_to("users-list")
+
+
+class AdminUserEditHandler(Handler):
+    @admin_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+        params = {"this_user": user}
+        self.render_template("admin/user_edit.html", params)
+
+    @admin_required
+    def post(self, user_id):
+        user = User.get_by_id(int(user_id))
+        user.first_name = self.request.get("first_name")
+        user.last_name = self.request.get("last_name")
+        user.address = self.request.get("address")
+        user.phone_number = self.request.get("phone_number")
+        user.put()
+        self.redirect("/admin/user/{0}".format(user.get_id))

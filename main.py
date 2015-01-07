@@ -20,7 +20,8 @@ from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, Pro
 from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler, TempMainHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler
-from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler
+from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
+    AdminUserEditHandler
 
 
 app = webapp2.WSGIApplication([
@@ -50,6 +51,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/users', AdminUsersListHandler, name="users-list"),
     webapp2.Route('/admin/user/<user_id:\d+>', AdminUserDetailsHandler, name="user-details"),
     webapp2.Route('/admin/user/<user_id:\d+>/delete', AdminUserDeleteHandler, name="user-delete"),
+    webapp2.Route('/admin/user/<user_id:\d+>/edit', AdminUserEditHandler, name="user-edit"),
 
     # other
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),

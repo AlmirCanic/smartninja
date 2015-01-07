@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from app.settings import ADMINS
 
 
 class User(ndb.Model):
@@ -20,7 +21,7 @@ class User(ndb.Model):
     @property
     def get_full_name(self):
         if self.first_name and self.last_name:
-            return "{0} {1}".format(self.first_name, self.last_name)
+            return "%s %s" % (self.first_name, self.last_name)
         else:
             return self.email
 

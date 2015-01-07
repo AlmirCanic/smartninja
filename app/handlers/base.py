@@ -25,6 +25,11 @@ class Handler(webapp2.RequestHandler):
         if not params:
             params = {}
         user = users.get_current_user()
+        #user.auth_domain()
+        #user.federated_identity()
+        #user.federated_provider()
+        #user.nickname()
+        #user.user_id()
         if user:
             params["user"] = user
         t = jinja_env.get_template(view_filename)

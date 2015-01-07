@@ -25,6 +25,13 @@
 
     <p>Email: {{ this_user.email }}</p>
 
-    <a href="/admin/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
+    {% if not admin %}
+        <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit user</button></a>
+        <a href="/admin/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
+    {% else %}
+        {% if user.email() == this_user.email %}
+            <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your profile</button></a>
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock main_content %}
