@@ -40,7 +40,9 @@
                 <div class="form-group">
                     <label>Paid</label>
                     <br>
-                    <input type="checkbox" value="{{application.payment_status}}" placeholder="Paid" name="paid" id="paid"> Check if student has paid
+                    <input type="checkbox" placeholder="Paid" name="paid" id="paid"
+                        {% if application.payment_status %}checked{% endif %}
+                    > Check if student has paid
                 </div>
 
                 <div class="form-group">
