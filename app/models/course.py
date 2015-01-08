@@ -6,6 +6,7 @@ class CourseType(ndb.Model):
     curriculum = ndb.StringProperty()
     description = ndb.TextProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
+    deleted = ndb.BooleanProperty(default=False)
 
     @property
     def get_id(self):
@@ -29,6 +30,7 @@ class Course(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     price = ndb.FloatProperty(repeated=True)
     currency = ndb.StringProperty()
+    deleted = ndb.BooleanProperty(default=False)
 
     @property
     def get_id(self):
@@ -67,6 +69,7 @@ class CourseApplication(ndb.Model):
     currency = ndb.StringProperty()
     laptop = ndb.StringProperty()
     shirt = ndb.StringProperty()
+    deleted = ndb.BooleanProperty(default=False)
 
     @property
     def get_id(self):

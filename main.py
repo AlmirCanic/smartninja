@@ -19,7 +19,8 @@ from app.handlers.apply import TempPrijavaHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler
 from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler, TempMainHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
-    AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler
+    AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
+    AdminCourseDeleteHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler
 
@@ -41,6 +42,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/courses', AdminCourseListHandler, name="course-list"),
     webapp2.Route('/admin/course/<course_id:\d+>', AdminCourseDetailsHandler, name="course-details"),
     webapp2.Route('/admin/course/<course_id:\d+>/edit', AdminCourseEditHandler, name="course-edit"),
+    webapp2.Route('/admin/course/<course_id:\d+>/delete', AdminCourseDeleteHandler, name="course-delete"),
     webapp2.Route('/admin/course/add', AdminCourseAddHandler, name="course-add"),
 
     # course types

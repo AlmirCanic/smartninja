@@ -7,7 +7,7 @@ from app.utils.decorators import admin_required
 class AdminCourseListHandler(Handler):
     @admin_required
     def get(self):
-        courses = Course.query().fetch()
+        courses = Course.query(Course.deleted == False).fetch()
         params = {"courses": courses}
         self.render_template("admin/course_list.html", params)
 
@@ -87,6 +87,21 @@ class AdminCourseEditHandler(Handler):
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency)
             self.redirect_to("course-details", course_id=int(course_id))
+
+
+class AdminCourseDeleteHandler(Handler):
+    @admin_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        params = {"course": course}
+        self.render_template("admin/course_delete.html", params)
+
+    @admin_required
+    def post(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        course.deleted = True
+        course.put()
+        self.redirect_to("course-list")
 
 
 class AdminCourseTypesListHandler(Handler):
