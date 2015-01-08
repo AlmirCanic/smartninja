@@ -29,7 +29,28 @@
     <p>Student name: {{ application.student_name }}</p>
     <p>Course: {{ application.course_title }}</p>
 
-    <a href="/admin/application/{{application.get_id}}/edit"><button class="btn btn-success">Edit application</button></a>
     <a href="/admin/application/{{application.get_id}}/delete"><button class="btn btn-danger">Delete application</button></a>
+
+    <h3 class="page-header">Payment details</h3>
+    <p>Selected price: {{application.price}} {{application.currency}}</p>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/admin/application/{{application.get_id}}" method="post">
+                <div class="form-group">
+                    <label>Paid</label>
+                    <br>
+                    <input type="checkbox" value="{{application.payment_status}}" placeholder="Paid" name="paid" id="paid"> Check if student has paid
+                </div>
+
+                <div class="form-group">
+                    <label>Price paid ({{application.currency}})</label>
+                    <input type="text" class="form-control" value="{{application.price}}" placeholder="Price paid" name="price" id="pricePaid">
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock main_content %}

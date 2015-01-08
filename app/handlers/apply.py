@@ -13,6 +13,14 @@ class AdminCourseApplicationDetailsHandler(Handler):
         params = {"application": application}
         self.render_template("admin/application_details.html", params)
 
+    @admin_required
+    def post(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        application.payment_status = bool(self.request.get("paid"))
+        application.price = float(self.request.get("price"))
+        application.put()
+        self.redirect_to("course-details", course_id=application.course_id)
+
 
 # TODO: just temporary, delete after feb 2015
 class TempPrijavaHandler(Handler):
