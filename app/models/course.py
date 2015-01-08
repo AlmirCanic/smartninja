@@ -52,14 +52,15 @@ class CourseApplication(ndb.Model):
     payment_status = ndb.BooleanProperty(default=False)
     currency = ndb.StringProperty()
     laptop = ndb.StringProperty()
+    shirt = ndb.StringProperty()
 
     @property
     def get_id(self):
         return self.key.id()
 
     @classmethod
-    def create(cls, course_title, course_id, student_name, student_id, student_email, price, currency, laptop):
+    def create(cls, course_title, course_id, student_name, student_id, student_email, price, currency, laptop, shirt):
         course_app = cls(course_title=course_title, course_id=course_id, student_name=student_name, student_id=student_id,
-                         student_email=student_email, price=price, currency=currency, laptop=laptop)
+                         student_email=student_email, price=price, currency=currency, laptop=laptop, shirt=shirt)
         course_app.put()
         return course_app

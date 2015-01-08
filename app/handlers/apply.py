@@ -21,18 +21,19 @@ class TempPrijavaHandler(Handler):
             kraj_tecaja = self.request.get("country")
             kotizacija = self.request.get("sleepover")
             prenosnik = self.request.get("prenosnik")
+            majica = self.request.get("majica")
 
-            if ime and priimek and email and naslov and starost and telefon and kraj_tecaja and kotizacija and prenosnik:
+            if ime and priimek and email and naslov and starost and telefon and kraj_tecaja and kotizacija and prenosnik and majica:
                 user = User.get_by_email(email)
 
                 if not user:
                     # add to database
                     user = User.create(first_name=ime, last_name=priimek, email=email, address=naslov, dob=starost, phone_number=telefon)
 
-                add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija), prenosnik=prenosnik)
+                add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija), prenosnik=prenosnik, majica=majica)
 
                 # send email
-                prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik)
+                prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik, majica)
                 params = {"error": "Prijava oddana! :)"}
             else:
                 params = {"error": "Prosim izpolni vsa polja"}
@@ -40,7 +41,7 @@ class TempPrijavaHandler(Handler):
 
 
 # TODO: just temporary, delete after feb 2015
-def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik):
+def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik, majica):
     course_type = CourseType.query(CourseType.title == "SmartNinja Vikend Slovenia").get()
     if not course_type:
         course_type = CourseType()
@@ -73,4 +74,4 @@ def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik):
     if course:
         course_app = CourseApplication.create(course_title=course.title, course_id=course.get_id, student_name=user.get_full_name,
                                               student_id=user.get_id, student_email=user.email, price=kotizacija, currency="EUR",
-                                              laptop=prenosnik)
+                                              laptop=prenosnik, shirt=majica)
