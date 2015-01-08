@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 import webapp2
-from app.handlers.apply import TempPrijavaHandler
+from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetailsHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler
 from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler, TempMainHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
@@ -44,6 +44,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/course/<course_id:\d+>/edit', AdminCourseEditHandler, name="course-edit"),
     webapp2.Route('/admin/course/<course_id:\d+>/delete', AdminCourseDeleteHandler, name="course-delete"),
     webapp2.Route('/admin/course/add', AdminCourseAddHandler, name="course-add"),
+
+    # course applications
+    webapp2.Route('/admin/application/<application_id:\d+>', AdminCourseApplicationDetailsHandler, name="application-details"),
 
     # course types
     webapp2.Route('/admin/course/types', AdminCourseTypesListHandler, name="course-types-list"),

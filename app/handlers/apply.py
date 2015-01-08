@@ -3,6 +3,15 @@ from app.emails.apply import prijava_februar
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, CourseApplication
+from app.utils.decorators import admin_required
+
+
+class AdminCourseApplicationDetailsHandler(Handler):
+    @admin_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        params = {"application": application}
+        self.render_template("admin/application_details.html", params)
 
 
 # TODO: just temporary, delete after feb 2015

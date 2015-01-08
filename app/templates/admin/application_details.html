@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Course application{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-institution"></i>  <a href="/admin/courses">Courses</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/admin/course/{{application.course_id}}">{{ application.course_title }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Course application
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Application by {{ application.student_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p>Student name: {{ application.student_name }}</p>
+    <p>Course: {{ application.course_title }}</p>
+
+    <a href="/admin/application/{{application.get_id}}/edit"><button class="btn btn-success">Edit application</button></a>
+    <a href="/admin/application/{{application.get_id}}/delete"><button class="btn btn-danger">Delete application</button></a>
+</div>
+{% endblock main_content %}

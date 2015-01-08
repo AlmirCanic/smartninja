@@ -29,7 +29,7 @@
     {% if applications %}
         <ul>
             {% for application in applications %}
-                <li>{{application.student_name}}, {{application.student_email}}, plačano: {{application.payment_status}}</li>
+                <li><a href="/admin/application/{{application.get_id}}">{{application.student_name}}</a>, {{application.student_email}}, plačano: {{application.payment_status}}</li>
             {% endfor %}
         </ul>
     {% else %}
