@@ -35,5 +35,8 @@
     {% else %}
         <p>No applications yet :(</p>
     {% endif %}
+
+    <a href="/admin/course/{{course.get_id}}/edit"><button class="btn btn-success">Edit course</button></a>
+    <a href="/admin/course/{{course.get_id}}/delete"><button class="btn btn-danger">Delete course</button></a>
 </div>
 {% endblock main_content %}

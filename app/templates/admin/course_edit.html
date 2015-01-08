@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Add new course{% endblock title %}
+{% block title %}Edit course{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -12,12 +12,12 @@
                     <i class="fa fa-institution"></i>  <a href="/admin/courses">Courses</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> Add new course
+                    <i class="fa fa-plus-square-o"></i> Edit course
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Add new course
+                Edit {{ course.title }}
             </h1>
         </div>
     </div>
@@ -25,11 +25,12 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/admin/course/add" method="post">
+            <form action="/admin/course/{{course.get_id}}/edit" method="post">
                 <div class="form-group">
                     <label>Type</label>
                     <select class="form-control" name="course-type" id="courseType">
-                        <option value="" selected>Select course type</option>
+                        <option value="{{course.course_type}}" selected>{{ selected_course_type.title }}</option>
+                        <option disabled>------------------------------</option>
                         {% for ctype in course_types %}
                             <option value="{{ ctype.get_id }}">{{ ctype.title }}</option>
                         {% endfor %}
@@ -38,46 +39,47 @@
 
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Title" name="title" id="courseTitle">
+                    <input type="text" class="form-control" value="{{course.title}}" placeholder="Title" name="title" id="courseTitle">
                 </div>
 
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" class="form-control" placeholder="City" name="city" id="courseCity">
+                    <input type="text" class="form-control" value="{{course.city}}" placeholder="City" name="city" id="courseCity">
                 </div>
 
                 <div class="form-group">
                     <label>Place</label>
-                    <input type="text" class="form-control" placeholder="Place" name="place" id="coursePlace">
+                    <input type="text" class="form-control" value="{{course.place}}" placeholder="Place" name="place" id="coursePlace">
                 </div>
 
                 <div class="form-group">
                     <label>Start date</label>
-                    <input type="date" class="form-control" name="start-date" id="courseStartDate">
+                    <input type="date" class="form-control" value="{{course.start_date}}" name="start-date" id="courseStartDate">
                 </div>
 
                 <div class="form-group">
                     <label>End date</label>
-                    <input type="date" class="form-control" name="end-date" id="courseEndDate">
+                    <input type="date" class="form-control" value="{{course.end_date}}" name="end-date" id="courseEndDate">
                 </div>
 
                 <div class="form-group">
                     <label>Price(s)</label>
                     <p><small>Separate multiple prices with a comma, like this: 97.00, 147.00, 197.00 (Use dot for a decimal number!!!)</small></p>
-                    <input type="text" class="form-control" placeholder="Price(s)" name="price" id="coursePrice">
+                    <input type="text" class="form-control" value="{{course_price}}" placeholder="Price(s)" name="price" id="coursePrice">
                 </div>
 
                 <div class="form-group">
                     <label>Currency</label>
                     <select class="form-control" name="currency" id="courseCurrency">
-                        <option value="" selected>Select currency</option>
+                        <option value="{{course.currency}}" selected>{{course.currency}}</option>
+                        <option disabled>------</option>
                         <option value="EUR">EUR</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea class="form-control" name="description" id="courseDescription"></textarea>
+                    <textarea class="form-control" name="description" id="courseDescription">{{course.description}}</textarea>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>

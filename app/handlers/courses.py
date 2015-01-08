@@ -51,6 +51,44 @@ class AdminCourseAddHandler(Handler):
             self.redirect_to("course-list")
 
 
+class AdminCourseEditHandler(Handler):
+    @admin_required
+    def get(self, course_id):
+        course_types = CourseType.query().fetch()
+        course = Course.get_by_id(int(course_id))
+        selected_course_type = CourseType.get_by_id(course.course_type)
+        course_price = str(course.price).replace("[", "").replace("]", "")
+        params = {"course": course,
+                  "course_types": course_types,
+                  "course_price": course_price,
+                  "selected_course_type": selected_course_type}
+        self.render_template("admin/course_edit.html", params)
+
+    @admin_required
+    def post(self, course_id):
+        course_type = self.request.get("course-type")
+        title = self.request.get("title")
+        city = self.request.get("city")
+        place = self.request.get("place")
+        start_date = self.request.get("start-date")
+        end_date = self.request.get("end-date")
+        price = self.request.get("price")
+        currency = self.request.get("currency")
+        description = self.request.get("description")
+
+        course = Course.get_by_id(int(course_id))
+
+        if course_type and title and city and place and start_date and end_date and price and currency:
+            prices = [float(prc) for prc in price.strip().split(",")]
+            start = start_date.split("-")
+            end = end_date.split("-")
+
+            Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place,
+                          description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
+                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency)
+            self.redirect_to("course-details", course_id=int(course_id))
+
+
 class AdminCourseTypesListHandler(Handler):
     @admin_required
     def get(self):

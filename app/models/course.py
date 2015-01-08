@@ -41,6 +41,20 @@ class Course(ndb.Model):
         course.put()
         return course
 
+    @classmethod
+    def update(cls, course, title, course_type, city, place, description, start_date, end_date, price, currency):
+        course.title = title
+        course.course_type = course_type
+        course.city = city
+        course.place = place
+        course.description = description
+        course.start_date = start_date
+        course.end_date = end_date
+        course.price = price
+        course.currency = currency
+        course.put()
+        return course
+
 
 class CourseApplication(ndb.Model):
     course_title = ndb.StringProperty()

@@ -1,5 +1,6 @@
 from app.handlers.base import Handler
 from app.models.auth import User
+from app.models.course import CourseApplication
 from app.settings import ADMINS
 from app.utils.decorators import admin_required
 
@@ -59,9 +60,9 @@ class AdminUserEditHandler(Handler):
     @admin_required
     def post(self, user_id):
         user = User.get_by_id(int(user_id))
-        user.first_name = self.request.get("first_name")
-        user.last_name = self.request.get("last_name")
-        user.address = self.request.get("address")
-        user.phone_number = self.request.get("phone_number")
-        user.put()
-        self.redirect("/admin/user/{0}".format(user.get_id))
+        first_name = self.request.get("first_name")
+        last_name = self.request.get("last_name")
+        address = self.request.get("address")
+        phone_number = self.request.get("phone_number")
+        User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number)
+        self.redirect_to("user-details", user_id=int(user_id))
