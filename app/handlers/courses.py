@@ -39,14 +39,15 @@ class AdminCourseAddHandler(Handler):
         price = self.request.get("price")
         currency = self.request.get("currency")
         description = self.request.get("description")
+        spots = self.request.get("spots")
 
         if course_type and title and city and place and start_date and end_date and price and currency:
             prices = [float(prc) for prc in price.strip().split(",")]
             start = start_date.split("-")
             end = end_date.split("-")
 
-            Course.create(title=title, course_type=int(course_type), city=city, place=place, description=description,
-                          start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
+            Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
+                          description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency)
             self.redirect_to("course-list")
 
@@ -75,6 +76,7 @@ class AdminCourseEditHandler(Handler):
         price = self.request.get("price")
         currency = self.request.get("currency")
         description = self.request.get("description")
+        spots = self.request.get("spots")
 
         course = Course.get_by_id(int(course_id))
 
@@ -83,7 +85,7 @@ class AdminCourseEditHandler(Handler):
             start = start_date.split("-")
             end = end_date.split("-")
 
-            Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place,
+            Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency)
             self.redirect_to("course-details", course_id=int(course_id))
