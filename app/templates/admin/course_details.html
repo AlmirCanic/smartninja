@@ -27,11 +27,36 @@
 
     <h3>Student applications</h3>
     {% if applications %}
-        <ul>
-            {% for application in applications %}
-                <li><a href="/admin/application/{{application.get_id}}">{{application.student_name}}</a>, {{application.student_email}}, plačano: {{application.payment_status}}</li>
-            {% endfor %}
-        </ul>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Email</th>
+                                <th>Laptop</th>
+                                <th>T-shirt</th>
+                                <th>Price</th>
+                                <th>Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for application in applications %}
+                            <tr {% if application.payment_status %} class="success" {% else %} class="danger" {% endif %}>
+                                <td><a href="/admin/application/{{application.get_id}}">{{application.student_name}}</a></td>
+                                <td>{{application.student_email}}</td>
+                                <td>{{application.laptop}}</td>
+                                <td>{{application.shirt}}</td>
+                                <td>{{application.price}} {{application.currency}}</td>
+                                <td>{{application.payment_status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     {% else %}
         <p>No applications yet :(</p>
     {% endif %}

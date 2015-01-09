@@ -34,6 +34,9 @@ class AdminCourseApplicationDeleteHandler(Handler):
         application = CourseApplication.get_by_id(int(application_id))
         application.deleted = True
         application.put()
+        course = Course.get_by_id(int(application.course_id))
+        course.taken -= 1
+        course.put()
         self.redirect_to("course-details", course_id=application.course_id)
 
 
