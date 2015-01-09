@@ -22,6 +22,21 @@ class AdminCourseApplicationDetailsHandler(Handler):
         self.redirect_to("course-details", course_id=application.course_id)
 
 
+class AdminCourseApplicationDeleteHandler(Handler):
+    @admin_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        params = {"application": application}
+        self.render_template("admin/application_delete.html", params)
+
+    @admin_required
+    def post(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        application.deleted = True
+        application.put()
+        self.redirect_to("course-details", course_id=application.course_id)
+
+
 # TODO: just temporary, delete after feb 2015
 class TempPrijavaHandler(Handler):
     def post(self):
