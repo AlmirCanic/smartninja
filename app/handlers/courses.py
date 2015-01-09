@@ -109,7 +109,7 @@ class AdminCourseDeleteHandler(Handler):
 class AdminCourseTypesListHandler(Handler):
     @admin_required
     def get(self):
-        course_types = CourseType.query().fetch()
+        course_types = CourseType.query(CourseType.deleted == False).fetch()
         params = {"course_types": course_types}
         self.render_template("admin/course_types_list.html", params)
 
@@ -136,3 +136,35 @@ class AdminCourseTypeAddHandler(Handler):
         if title and curriculum:
             CourseType.create(title=title, curriculum=curriculum, description=description)
             self.redirect_to("course-types-list")
+
+
+class AdminCourseTypeEditHandler(Handler):
+    @admin_required
+    def get(self, course_type_id):
+        course_type = CourseType.get_by_id(int(course_type_id))
+        params = {"course_type": course_type}
+        self.render_template("admin/course_type_edit.html", params)
+
+    @admin_required
+    def post(self, course_type_id):
+        course_type = CourseType.get_by_id(int(course_type_id))
+        course_type.title = self.request.get("title")
+        course_type.curriculum = self.request.get("curriculum")
+        course_type.description = self.request.get("description")
+        course_type.put()
+        self.redirect_to("course-type-details", course_type_id=int(course_type_id))
+
+
+class AdminCourseTypeDeleteHandler(Handler):
+    @admin_required
+    def get(self, course_type_id):
+        course_type = CourseType.get_by_id(int(course_type_id))
+        params = {"course_type": course_type}
+        self.render_template("admin/course_type_delete.html", params)
+
+    @admin_required
+    def post(self, course_type_id):
+        course_type = CourseType.get_by_id(int(course_type_id))
+        course_type.deleted = True
+        course_type.put()
+        self.redirect_to("course-types-list")
