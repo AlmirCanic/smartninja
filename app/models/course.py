@@ -25,6 +25,7 @@ class Course(ndb.Model):
     city = ndb.StringProperty()
     place = ndb.StringProperty()
     spots = ndb.IntegerProperty()  # Number of spots available for students
+    taken = ndb.IntegerProperty(default=0)  # Number of spots TAKEN
     description = ndb.TextProperty()
     start_date = ndb.DateProperty()
     end_date = ndb.DateProperty()

@@ -107,3 +107,5 @@ def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik, majica):
         course_app = CourseApplication.create(course_title=course.title, course_id=course.get_id, student_name=user.get_full_name,
                                               student_id=user.get_id, student_email=user.email, price=kotizacija, currency="EUR",
                                               laptop=prenosnik, shirt=majica)
+        course.taken += 1
+        course.put()
