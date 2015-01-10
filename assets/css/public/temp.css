@@ -302,10 +302,10 @@ ul.latest_news h5{
 
 /* #Site Footer */
 footer {
-	background:#1c1c1c url(/assets/img/public/logo_footer.png) no-repeat center 60px;
+	background:#1c1c1c url(/assets/img/public/) no-repeat center 60px;
 	color:#fff;
 	width:100%;
-	padding-top:150px;
+	padding-top:30px;
     padding-bottom: 50px;
 	text-align:center;
 	font-size:13px;
