@@ -128,7 +128,8 @@ a#logo {
 	background:#1abc9c url(/assets/img/public/pattern_2.png) repeat center top;
 }
 #sub-header{
-	padding:30px 0 70px 0;
+    height:500px;
+	padding:100px 0 70px 0;
 	color:#fff;
 	position:relative;
 	width:100%;
