@@ -1,20 +1,20 @@
-import urllib2
+from google.appengine.api import urlfetch
 from app.handlers.base import Handler
-from app.utils.secret import get_mailchimp_api
+from app.utils.secret import get_mailchimp_api, get_newsletter_list_id
 
 
 class NewsletterSubscribeHandler(Handler):
     def post(self):
         hidden = self.request.get("hidden")
+        email = self.request.get("email_newsletter1")
         if hidden:
-            return self.redirect_to("temp")
-        else:
-            email = self.request.get("email")
-            m = get_mailchimp_api()
-            req = urllib2.Request("https://us9.api.mailchimp.com/2.0/helper/ping")
+            self.render_template("public/main2.html")
+        elif email:
+            url = "https://us9.api.mailchimp.com/2.0/lists/subscribe.json?apikey="+get_mailchimp_api()+"&id="+get_newsletter_list_id()+"&email[email]="+str(email)
+
             try:
-                resp = urllib2.urlopen(req)
-                params = {"message": resp.read()}
-                return self.write(resp.read())
+                result = urlfetch.fetch(url=url, method=urlfetch.POST, headers={'Content-Type': 'application/json'})
+                params = {"error": "Email oddan! :)"}
             except Exception, e:
-                return self.write("forbidden")
+                params = {"error": "Problem pri prijavi na e-novice. Prosim pisi na info@startup.org."}
+            self.render_template("public/main2.html", params)
