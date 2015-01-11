@@ -6,4 +6,4 @@ SmartNinja web app
 3. Do ```git flow init``` to set up git flow
 4. Do NOT do any development on the master branch
 5. Use git flow features to develop new things (see the Git Flow Cheatsheet above)
-6. Create secret.py file in app/utils and include MailChimp data
+6. Create secret.py file in app/utils and include MailChimp data ([example here](https://github.com/mailchimp/mcapi2-python-examples/blob/master/django/mcapi_python_example/utils.py))

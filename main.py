@@ -22,6 +22,7 @@ from app.handlers.base import MainHandler, SecuredSiteHandler, AdminHandler, Tem
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler
+from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler
 
@@ -31,6 +32,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/main', MainHandler, name="main"),
     webapp2.Route('/', TempMainHandler, name="temp"),
     webapp2.Route('/prijava', TempPrijavaHandler, name="prijava"),
+    webapp2.Route('/newsletter', NewsletterSubscribeHandler, name="newsletter"),
 
     # ADMIN URLS
     # basic
