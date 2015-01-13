@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+  	<meta charset="utf-8">
+    <title>{% block title %}Šola programiranja{% endblock title %} | SmartNinja šola programiranja</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keywords" content="SmartNinja šola programiranja programming school tečaji programiranja courses classes course class tutors instructors">
+    <meta name="keywords" content="Nauči se veščin, ki jih iščejo sodobna IT podjetja. Učimo spletno in mobilno programiranja, grafični design in internet stvari (IoT).">
+
+    <meta name="google-site-verification" content="eIZPTeiYfR0rel0-2qy_a1-x1MQg910ZZreuNh_kFDw" />
+
+    <!-- START FACEBOOK OPEN GRAPH -->
+    <meta name="og:url" content="http://smartninja.org">
+    <meta name="og:title" content="SmartNinja - šola IT veščin">
+    <meta name="og:description" content="Nauči se veščin, ki so v današnjem svetu najbolj iskane in cenjene. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://smartninja.org/assets/img/public/facebook.jpg">
+    <!-- END FACEBOOK OPEN GRAPH -->
+
+    <!-- START TWITTER CARDS -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="SmartNinja - šola IT veščin">
+    <meta name="twitter:description" content="Nauči se veščin, ki so v današnjem svetu najbolj iskane in cenjene. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="twitter:creator" content="@NmStartUP">
+    <meta name="twitter:image" content="http://smartninja.org/assets/img/public/facebook.jpg">
+    <meta name="twitter:url" content="http://smartninja.org">
+    <!-- END TWITTER CARDS -->
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assets/img/public/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="/assets/img/public/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="/assets/img/public/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="/assets/img/public/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/public/superfish.css" rel="stylesheet">
+    <link href="/assets/css/public/temp.css" rel="stylesheet">
+    <link href="/assets/css/public/timeline.css" rel="stylesheet">
+    <link href="/assets/css/public/fontello/css/fontello.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50813177-1', 'smartninja.org');
+        ga('send', 'pageview');
+
+    </script>
+
+    <script src="//load.sumome.com/" data-sumo-site-id="1cb769f2e894175f341541bbcfce32e2ed9323c603a328ead8017c282064837c" async></script>
+
+
+  </head>
+
+  <body>
+
+  <!-- ERROR -->
+  {% if error %}
+    <script>
+        alert("{{error}}");
+    </script>
+  {% endif %}
+  <!-- ERROR END -->
+
+  <!-- NAVBAR -->
+  <header class="navbar navbar-fixed-top">
+      <div class="container">
+          <div class="row" id="row-fix">
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                  <a href="/" id="logo">SmartNinja</a>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                  <div class="navbar-collapse collapse">
+
+                      <ul class="sf-menu">
+                          <li>
+                              <a href="#o-soli" id="o-soli">O šoli programiranja</a>
+                              <!--
+                              <div class="mobnav-subarrow">
+                              </div>
+                              <ul>
+                                  <li><a href="contacts.html">Lokacija</a></li>
+                              </ul> -->
+                          </li>
+                          <!-- <li><a href="#potek" id="potek">Potek</a></li> -->
+                          <li><a href="#stopnje" id="stopnje">Stopnje</a></li>
+                          <li><a href="#mentorji" id="mentorji">Mentorji</a></li>
+                          <li><a href="#prijava" class="prijava">Prijava</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                  <div class="pull-right"><a href="#" class="button_top hidden-xs prijava" id="apply">Prijavi se!</a></div>
+
+                  <ul id="top_nav" class="hidden-xs">
+                      <li><a href="#" data-toggle="modal" data-target="#aboutSM">O SmartNinja</a></li>
+                      <li><a href="https://www.facebook.com/pages/SmartNinja/1563841910494321" target="_blank"><i class="icon-facebook"></i></a></li>
+                  </ul>
+
+                  <div class="navbar-header pull-right">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-menu-3" style="color: #ffffff;"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
+  <!-- End navbar -->
+
+  <!-- Modal O SmartNinja -->
+  <div class="modal fade" id="aboutSM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="sm-title">O SmartNinja</h4>
+              </div>
+              <div class="modal-body">
+                  <p><strong>Učimo uporabne IT veščine</strong></p>
+
+                  <p>
+                      V vsakem izmed nas se skrivajo talenti, ki jih mnogokrat tradicionalni izobraževalni sistem
+                      ne prepozna. Misija SmartNinje je ljudem pomagati odkriti in razviti talente ter veščine na sodobnem
+                      IT področju. Veščine, ki ti bodo pomagale lažje najti službo - ali pa jo celo ustvariti! V ta namen
+                      organiziramo šole spletnega in mobilnega programiranja, grafičnega oblikovanja ter interneta stvari (IoT).
+                  </p>
+
+                  <p>
+                      Če želiš odkriti IT ninjo v sebi, nas obišči. Več znaš, več veljaš!
+                  </p>
+
+                  <hr>
+
+                  <h4>Kontakt</h4>
+
+                  <div class="row">
+                      <div class="col-md-4">
+                          <strong>Email</strong><br>
+                          info@smartninja.org
+                      </div>
+
+                      <div class="col-md-6">
+                          <strong>Podatki o firmi</strong><br>
+                            Klub mladih podjetnikov<br>
+                            Podbreznik 15, 8000 Novo mesto<br>
+                            Davčna št. 85918571<br>
+                            Davčni zavezavec: NE<br>
+                            Matična št: 4054415000
+                      </div>
+                  </div>
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  {% block main_content %}
+  {% endblock main_content %}
+
+  <!-- Modal: Terms and conditions -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Pogoji sodelovanja</h4>
+              </div>
+              <div class="modal-body">
+                  <p>Pogoji sodelovanja<br />
+                      PRAVILA IN POGOJI SODELOVANJA V PROGRAMIH SMARTNINJA</p>
+
+                  <p>1. SPLOŠNE DOLOČBE</p>
+
+                  <p>SmartNinja je izobraževalna delavnica (v nadaljevanju: delavnica), ki ga organizira Klub mladih podjetnikov
+                      (StartUP Novo mesto) (v nadaljevanju: organizator).<br />
+                      V imenu organizatorja program vodi organizacijski odbor (v nadaljevanju: odbor).<br />
+                      Udeleženci (v nadaljevanju: udeleženci) so posamezniki, ki so se prijavili na delavnico in sprejemajo pravila
+                      in pogoje sodelovanja v programu.</p>
+
+                  <p>2. POTEK IN POGOJI</p>
+
+                  <p>Na delavnici lahko sodeluje vsak, ki se je prek prijavnega obrazca prijavil v program ter sprejel pravila in
+                      pogoje sodelovanja na delavnici. Prijava mora biti oddana do izteka roka za prijavo ter vsebovati vse zahtevane
+                      podatke. Podatki morajo biti točni.<br />
+                      Organizator si pridržuje pravico do omejitve števila udeležencev. Tolmačenja in pojasnila k določbam in pravilom
+                      daje odbor, njegove odločitve so dokončne in na njih ni mogoča pritožba.</p>
+
+                  <p>Kotizacija za udeležbo na delavnici znaša za dijake, študente ali nezaposlene 97,00 EUR do 5 (pet) dni pred
+                      pričetkom izvajanja in 147,00 EUR do 5 (pet) dni pred pričetkom izvajanja, za ostale. Po tem datumu znaša
+                      kotizacija za dijake, študente ali nezaposlene 147,00 EUR, za ostale pa 197,00.</p>
+
+                  <p>Udeleženci morajo pred iztekom rok za prijavo poravnati kotizacijo v celoti. V primeru odpovedi do 7 dni pred
+                      rokom izteka je organizator dolžan povrniti kotizacijo v celoti. Manj kot 7 dni pred iztekom roka je organizator
+                      dolžan povrniti le 50 % celotne kotizacije. Na zadnji dan roka za prijavo na delavnico organizator ni dolžan
+                      vrniti kotizacije udeležencu.</p>
+
+                  <p>Delavnice SmartNinja se izvajajo na različnih lokacijah. Organizator bo 5 (pet) dni pred pričetkom izvajanja
+                      programa obvestil udeležence o točni lokaciji izvajanja programa.</p>
+
+                  <p>Udeleženec bo:<br />
+                      - v programu aktivno sodeloval,<br />
+                      - se udeležil vseh aktivnosti znotraj delavnice,<br />
+                      - pri delu uporabljal orodja in programe, za katera ima ustrezne pravice,<br />
+                      - skrbel za nemoteno delo in izvajanje delavnice,<br />
+                      - z lastnino, tehničnimi pripomočki in ostalo opremo bo ravnal odgovorno. V primeru škode je udeleženec obvezan
+                      povrnitve škode.<br />
+                      <br />
+                      Organizator bo:<br />
+                      - izvedel vse aktivnosti v programu SmartNinja<br />
+                      - zagotovil kvalitetno izpeljavo delavnico<br />
+                      - zagotovil tehnično infrastrukturo za izvedbo delavnice<br />
+                      - zagotovil ostalo infrastrukturo (hrana, pijača in morebitna prenočitev)<br />
+                      <br />
+                      Udeleženec se bo vzdržal kakršnega koli delovanja, ki bi škodilo ugledu in dobremu imenu organizatorja.</p>
+
+                  <p>Prijava v program poteka od 5.1.2015 dalje. Delavnica traja 2 (dva) dni. Vsak dan od 10.00 do 18.00 ure.</p>
+
+                  <p>3. VARSTVO PODATKOV</p>
+
+                  <p>Organizator pri izvajanju delavnice obdeluje osebne podatke udeležencev, ki mu jih ti posredujejo. Organizator
+                      vse osebne podatke varuje in obdeluje v skladu s predpisi, ki urejajo varstvo osebnih podatkov. Organizator si
+                      pridržuje pravico spremljanja delovanja in aktivnosti udeležencev ter pripravljanja člankov o njihovem delovanju
+                      v programu. Organizator ne bo javno objavljal podatkov ali informacij, ki so poslovna skrivnost.</p>
+
+                  <p>4. KONČNE DOLOČBE</p>
+
+                  <p>V primeru kršitev teh pravil bo odbor udeleženca opozoril ter mu postavil rok za prenehanje ali odpravo kršitve.
+                      V kolikor bo udeleženec s kršitvami nadaljeval, ga lahko odbor izloči iz delavnice.<br /><br />
+                      Udeleženci delavnice z oddajo prijave potrjujejo, da so seznanjeni s temi pravili ter da do organizatorja ne bodo
+                      imeli nikakršnih zahtevkov. V kolikor ni v posameznih pogodbah z udeleženci dogovorjeno drugače, organizator nima
+                      nobenih pravic na produktih ali storitvah udeležencev, ustvarjenih v sklopu delavnice. Organizator pa si pridržuje
+                      pravico pri komuniciranju z javnostjo izpostaviti, da je bil tak produkt ali storitev udeležencev ustvarjen v
+                      sklopu delavnice.<br /><br />
+                      Prijava v delavnico ter sprejetje pogojev sodelovanja v programu ne štejeta kot pogodba o zaposlitvi ali kot
+                      povabilo k sklenitvi pogodbe o zaposlitvi. Udeleženec se za sodelovanje v programu odloči prostovoljno in s tem
+                      ne opravlja nobene vrste dela za organizatorja.<br /><br />
+                      V kolikor bo prijavljenih udeležencev manj kot 5 (pet), program ne bo izveden. Prijavljeni udeleženci bodo dobili
+                      prijavnino povrnjeno.<br /><br />
+                      Pravila in pogoji sodelovanja v programu veljajo od 1. januarja 2015 dalje. Organizator lahko spreminja pogoje in
+                      pravila ter se obvezuje, da bo v tem primeru na ustrezen način obvestil udeležence.</p>
+
+                  <p>Miha Fabjan<br />
+                      predsednik Kluba mladih podjetnikov<br />
+                      (StartUP Novo mesto)<br />
+                  </p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3>Prijavi se na sveže SmartNinja e-novice!</h3>
+
+                    <div id="message-newsletter">
+                    </div>
+                    <form method="post" action="/newsletter" class="form-inline">
+                        <input type="hidden" name="hidden">
+                        <input name="email_newsletter1" id="email_newsletter" type="email" placeholder="Tvoj email" class="form-control">
+                        <button id="submit-newsletter" class=" button_outline"> Naroči se</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!--
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2">
+                    <h4>Ali bi rad SmartNinjo v svojem kraju?</h4>
+                    <h5>Piši nam na <a href="mailto:info@smartninja.org">info@smartninja.org</a></h5>
+                </div>
+
+                <div class="col-md-4">
+                    <h4>Sledi SmartNinji na Facebooku</h4>
+                    <p><a href="https://www.facebook.com/pages/SmartNinja/1563841910494321"><i class="icon-facebook"></i></a></p>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!--<a href="http://www.inkubator-nm.si/"><img src="img/podbreznik.png"></a>-->
+                </div>
+
+                <div class="col-md-4">
+                    <h3>Nacionalni partner</h3>
+                    <br>
+                    <a href="http://www.startup.si/" target="_blank"><img src="/assets/img/public/iniciativa_startup.png"></a>
+                </div>
+
+                <div class="col-md-4">
+
+                    <!--<a href="http://www.rc-nm.si/"><img src="img/rc.png"></a>-->
+                </div>
+            </div>
+        </div>
+
+        <!--
+
+        <hr>
+
+        <div class="container" id="nav-footer">
+        <div class="row text-left">
+        <div class="col-md-3 col-sm-3">
+            <h4>Browse</h4>
+            <ul>
+                <li><a href="prices_plans.html">Prices</a></li>
+                <li><a href="courses_grid.html">Courses</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <h4>Next Courses</h4>
+            <ul>
+                <li><a href="course_details_1.html">Biology</a></li>
+                <li><a href="course_details_2.html">Management</a></li>
+                <li><a href="course_details_2.html">History</a></li>
+                <li><a href="course_details_3.html">Litterature</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <h4>About Learn</h4>
+            <ul>
+                <li><a href="about_us.html">About Us</a></li>
+                <li><a href="apply_2.html">Apply</a></li>
+                <li><a href="#">Terms and conditions</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <ul id="follow_us">
+                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                <li><a href="#"><i class=" icon-google"></i></a></li>
+            </ul>
+            <ul>
+                <li><strong class="phone">+0034 43244 44</strong><br><small>Mon - Fri / 9.00AM - 06.00PM</small></li>
+                <li>Questions? <a href="#">questions@domain.com</a></li>
+            </ul>
+        </div>
+        </div>
+        </div>
+        -->
+    </footer>
+
+    <div id="copy_right">© 2014 - 2015 SmartNinja.org</div>
+
+    <div id="toTop">Nazaj na vrh</div>
+    <!-- End footer -->
+
+
+    <!-- JQUERY
+    <script src="js/jquery-1.10.2.min.js"></script>
+    -->
+
+    <script src="/assets/js/jquery.js"></script>
+
+    <!-- OTHER JS -->
+    <script src="/assets/js/public/superfish.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/public/validate.js"></script>
+    <script src="/assets/js/public/functions.js"></script>
+    <script type="text/javascript" src="/assets/js/public/jquery.cookiesdirective.js"></script>
+    <script type="text/javascript" src="/assets/js/public/smartninja.js"></script>
+
+
+  </body>
+</html>
