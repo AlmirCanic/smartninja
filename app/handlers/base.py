@@ -31,14 +31,7 @@ class Handler(webapp2.RequestHandler):
         self.write(t.render(params))
 
 
-class MainHandler(Handler):
-    def get(self):
-        self.render_template("public/main3b.html")
 
-
-class TempMainHandler(Handler):
-    def get(self):
-        self.render_template("public/main2.html")
 
 
 class AdminHandler(Handler):

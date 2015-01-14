@@ -24,8 +24,17 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #sub-header{
-    height:400px;
+    height:500px;
 	padding:100px 0 70px 0;
+	position:relative;
+	width:100%;
+    color:#fff;
+	background:#0cbdaa url(/assets/img/public/bg_sub-header.png) repeat 0 0;
+}
+
+#sub-header-small{
+    height:250px;
+	padding:50px 0 70px 0;
 	position:relative;
 	width:100%;
     color:#fff;
@@ -88,8 +97,8 @@ a.button_big_red:hover, .button_big_red:hover {background:#262c2d;}
 
 /* #Testimonials */
 #testimonials {
-	/*background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;*/
-	background: #1abc9c repeat 0 0;
+	background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;
+	/*background: #1abc9c repeat 0 0;*/
 	padding:60px 0;
 	color:#fff;
 }

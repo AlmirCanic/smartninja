@@ -85,7 +85,7 @@ a#logo {
 	left:0;
 }
 .divider_top_black{
-	background:url(../img/top_divider_black.png) repeat-x center bottom;
+	background:url(/assets/img/public/top_divider_black.png) repeat-x center bottom;
 	width:100%;
 	height:37px;
 	position:absolute;
@@ -99,7 +99,7 @@ a#logo {
 	position:relative;
 	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 	width:100%;
-	background:#0cbdaa url(../img/bg_sub-header.png) repeat 0 0;
+	background:#0cbdaa url(/assets/img/public/bg_sub-header.png) repeat 0 0;
 }
 #sub-header_pattern_1{
 	padding:30px 0 60px 0;
@@ -107,7 +107,7 @@ a#logo {
 	position:relative;
 	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 	width:100%;
-	background:#1abc9c url(../img/pattern_1.png) repeat center top;
+	background:#1abc9c url(/assets/img/public/pattern_1.png) repeat center top;
 }
 #sub-header_pattern_2{
 	padding:30px 0 60px 0;
@@ -115,7 +115,7 @@ a#logo {
 	position:relative;
 	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 	width:100%;
-	background:#1abc9c url(../img/pattern_2.png) repeat center top;
+	background:#1abc9c url(/assets/img/public/pattern_2.png) repeat center top;
 }
 
 #main_content{
@@ -288,7 +288,7 @@ ul.latest_news h5{
 
 /* #Site Footer */
 footer {
-	background:#1c1c1c url(../img/logo_footer.png) no-repeat center 60px;
+	background:#1c1c1c url(/assets/img/public/logo_footer.png) no-repeat center 60px;
 	color:#fff;
 	width:100%;
 	padding-top:150px;
@@ -678,7 +678,7 @@ a.button_fullwidth-3:hover, .button_fullwidth-3:hover  {background:#262c2d; colo
 		padding:0;
 }
 .divider_top_black{
-	background:url(../img/top_divider_black.png) repeat-x center bottom;
+	background:url(/assets/img/public/top_divider_black.png) repeat-x center bottom;
 	width:100%;
 	height:37px;
 	position:absolute;
@@ -687,7 +687,7 @@ a.button_fullwidth-3:hover, .button_fullwidth-3:hover  {background:#262c2d; colo
 	z-index:999;
 }
 .divider_top_green{
-	background:url(../img/top_divider_green.png) repeat-x center bottom;
+	background:url(/assets/img/public/top_divider_green.png) repeat-x center bottom;
 	width:100%;
 	height:37px;
 	position:absolute;
@@ -696,14 +696,14 @@ a.button_fullwidth-3:hover, .button_fullwidth-3:hover  {background:#262c2d; colo
 	z-index:999;
 }
 #main-features {
-	background:#1c1c1c url(../img/bg_sub-header_2.png) repeat 0 0;
+	background:#1c1c1c url(/assets/img/public/bg_sub-header_2.png) repeat 0 0;
 	position:relative;
 	color:#8c8c8c;
 	font-weight:600;
 	padding:60px 0;
 }
 #main-features_green {
-	background:#0cbdaa url(../img/bg_sub-header.png) repeat 0 0;
+	background:#0cbdaa url(/assets/img/public/bg_sub-header.png) repeat 0 0;
 	position:relative;
 	color:#fff;
 	font-weight:600;
@@ -751,7 +751,7 @@ a.button_fullwidth-3:hover, .button_fullwidth-3:hover  {background:#262c2d; colo
 	color:#fff;
 }
 #testimonials {
-	background: #1abc9c url(../img/users_bg.jpg) repeat 0 0;
+	background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;
 	padding:60px 0;
 	color:#fff;
 	}
@@ -803,7 +803,7 @@ a.button_fullwidth-3:hover, .button_fullwidth-3:hover  {background:#262c2d; colo
 	display:block;
 	width:99px;
 	height:97px;
-	background:url(../img/ribbon.png) no-repeat;
+	background:url(/assets/img/public/ribbon.png) no-repeat;
 }
 .col-item{
     border: 1px solid #ededed;
@@ -1038,7 +1038,7 @@ position:absolute; left:10px; top:-15px; background-color:#f8f8f8; padding:0px 1
 }
 
 #subscribe {
-	background:url(../img/arrow_hand_1.png) no-repeat center bottom;
+	background:url(/assets/img/public/arrow_hand_1.png) no-repeat center bottom;
 	padding-bottom:70px;
 }
 /* #home with video ========== */
@@ -1165,7 +1165,7 @@ ul.submenu-col li a {
 	margin-bottom:3px;
 }
 ul.submenu-col li a#active {
-	background:#0cbdaa url(../img/arrow.png) no-repeat  96% center;
+	background:#0cbdaa url(/assets/img/public/arrow.png) no-repeat  96% center;
 	color:#fff;
 }
 ul.submenu-col li a:hover {
@@ -1204,11 +1204,11 @@ border-radius: 0;
 /* #login and register
 ================================================ */
  #login_bg{
-	background:#0cbdaa url(../img/bg_sub-header.png) repeat 0 0;
+	background:#0cbdaa url(/assets/img/public/bg_sub-header.png) repeat 0 0;
 	padding:100px 0;
 }
  #wizard_bg{
-	background:#0cbdaa url(../img/bg_sub-header.png) repeat 0 0;
+	background:#0cbdaa url(/assets/img/public/bg_sub-header.png) repeat 0 0;
 	padding:60px 0;
 }
 
@@ -1490,7 +1490,7 @@ ul.data-lessons li a.button_red_small{
 	margin:5px 14px 10px 0;
 	height:33px;
 	line-height:33px;
-	background: #ededed url(../img/tag_bg.png) no-repeat 91% center;
+	background: #ededed url(/assets/img/public/tag_bg.png) no-repeat 91% center;
 	padding:0 28px 0 11px;
 	color:#646464;
 	-webkit-border-top-right-radius: 20px;
@@ -1651,7 +1651,7 @@ ul#follow_us_contacts  li a:hover i{
 	top:-20px;
 	height:45px;
 	width:100%;
-	background:url(../img/tape.png) no-repeat center top;
+	background:url(/assets/img/public/tape.png) no-repeat center top;
 	display:block;
 }
 
@@ -1684,7 +1684,7 @@ ul#follow_us_contacts  li a:hover i{
    width: 100%;
       overflow:hidden;
    height: 44px;
-   background: #fff url(../img/down_arrow_select.png) no-repeat  right center ;
+   background: #fff url(/assets/img/public/down_arrow_select.png) no-repeat  right center ;
 	border:1px solid #ededed;
 	margin-bottom:25px;
    }
@@ -1957,7 +1957,7 @@ ul.plan-features{
 	left:-7px;
 	top:-7px;
 	display:block;
-	background:url(../img/ribbon.png) no-repeat 0 0;
+	background:url(/assets/img/public/ribbon.png) no-repeat 0 0;
 	z-index:101;
 }
 .plan-tall > .plan-title {
@@ -2000,7 +2000,7 @@ text-align:center;
 	left:-5px;
 	top:-5px;
 	display:block;
-	background:url(../img/ribbon.png) no-repeat 0 0;
+	background:url(/assets/img/public/ribbon.png) no-repeat 0 0;
 	z-index:101;
 }
 .pricing-table {
@@ -2193,7 +2193,7 @@ html #boxed  {
 	box-shadow: 0 0 5px #000;
 }
  body#boxed  {
-	 background: #999 url(../img/pattern_1.png) repeat;
+	 background: #999 url(/assets/img/public/pattern_1.png) repeat;
 }
 /**  End Version 1.3 New ====================== **/
 
@@ -2218,7 +2218,7 @@ ul.sliderwrapper { display:none}
 .breadcrumb { background:none; padding:0; font-size:12px; margin-top:-30px;}
 
 #join {
-	background:url(../img/pattern_2.png) repeat 0 0;
+	background:url(/assets/img/public/pattern_2.png) repeat 0 0;
 	padding:60px 0;
 	-moz-box-shadow:    inset 0 0 10px #000000;
    -webkit-box-shadow: inset 0 0 10px #000000;
@@ -2851,7 +2851,7 @@ html #boxed  {width:100%}
 	a#logo {
 	width:37px;
 	height:36px;
-	background:url(../img/logo_mobile.png) no-repeat 0 0;
+	background:url(/assets/img/public/logo_mobile.png) no-repeat 0 0;
 }
 #subscribe {
 	background:none;
