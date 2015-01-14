@@ -25,11 +25,6 @@ class Handler(webapp2.RequestHandler):
         if not params:
             params = {}
         user = users.get_current_user()
-        #user.auth_domain()
-        #user.federated_identity()
-        #user.federated_provider()
-        #user.nickname()
-        #user.user_id()
         if user:
             params["user"] = user
         t = jinja_env.get_template(view_filename)
@@ -38,7 +33,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
     def get(self):
-        self.render_template("public/main.html")
+        self.render_template("public/main3b.html")
 
 
 class TempMainHandler(Handler):

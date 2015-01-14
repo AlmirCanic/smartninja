@@ -72,13 +72,7 @@
 
   <body>
 
-  <!-- ERROR -->
-  {% if error %}
-    <script>
-        alert("{{error}}");
-    </script>
-  {% endif %}
-  <!-- ERROR END -->
+
 
   <!-- NAVBAR -->
   <header class="navbar navbar-fixed-top">
@@ -92,8 +86,9 @@
                   <div class="navbar-collapse collapse">
 
                       <ul class="sf-menu">
+                          <li><a href="#" id="home">Domov</a></li>
                           <li>
-                              <a href="#o-soli" id="o-soli">O šoli programiranja</a>
+                              <a href="#" id="courses">Seznam tečajev</a>
                               <!--
                               <div class="mobnav-subarrow">
                               </div>
@@ -102,9 +97,9 @@
                               </ul> -->
                           </li>
                           <!-- <li><a href="#potek" id="potek">Potek</a></li> -->
-                          <li><a href="#stopnje" id="stopnje">Stopnje</a></li>
-                          <li><a href="#mentorji" id="mentorji">Mentorji</a></li>
-                          <li><a href="#prijava" class="prijava">Prijava</a></li>
+                          <li><a href="#" id="partners">Partnerji</a></li>
+                          <li><a href="#" id="blog">Blog</a></li>
+                          <li><a href="#" id="about">O nas</a></li>
                       </ul>
                   </div>
               </div>
@@ -296,24 +291,6 @@
 
         <hr>
 
-        <!--
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-2">
-                    <h4>Ali bi rad SmartNinjo v svojem kraju?</h4>
-                    <h5>Piši nam na <a href="mailto:info@smartninja.org">info@smartninja.org</a></h5>
-                </div>
-
-                <div class="col-md-4">
-                    <h4>Sledi SmartNinji na Facebooku</h4>
-                    <p><a href="https://www.facebook.com/pages/SmartNinja/1563841910494321"><i class="icon-facebook"></i></a></p>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-        -->
-
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -333,53 +310,6 @@
             </div>
         </div>
 
-        <!--
-
-        <hr>
-
-        <div class="container" id="nav-footer">
-        <div class="row text-left">
-        <div class="col-md-3 col-sm-3">
-            <h4>Browse</h4>
-            <ul>
-                <li><a href="prices_plans.html">Prices</a></li>
-                <li><a href="courses_grid.html">Courses</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contacts.html">Contacts</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <h4>Next Courses</h4>
-            <ul>
-                <li><a href="course_details_1.html">Biology</a></li>
-                <li><a href="course_details_2.html">Management</a></li>
-                <li><a href="course_details_2.html">History</a></li>
-                <li><a href="course_details_3.html">Litterature</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <h4>About Learn</h4>
-            <ul>
-                <li><a href="about_us.html">About Us</a></li>
-                <li><a href="apply_2.html">Apply</a></li>
-                <li><a href="#">Terms and conditions</a></li>
-                <li><a href="register.html">Register</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3 col-sm-3">
-            <ul id="follow_us">
-                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                <li><a href="#"><i class=" icon-google"></i></a></li>
-            </ul>
-            <ul>
-                <li><strong class="phone">+0034 43244 44</strong><br><small>Mon - Fri / 9.00AM - 06.00PM</small></li>
-                <li>Questions? <a href="#">questions@domain.com</a></li>
-            </ul>
-        </div>
-        </div>
-        </div>
-        -->
     </footer>
 
     <div id="copy_right">© 2014 - 2015 SmartNinja.org</div>
@@ -391,6 +321,12 @@
     <!-- JQUERY
     <script src="js/jquery-1.10.2.min.js"></script>
     -->
+
+    <!-- ERROR -->
+    {% if error %}
+        <script>alert("{{error}}");</script>
+    {% endif %}
+    <!-- ERROR END -->
 
     <script src="/assets/js/jquery.js"></script>
 

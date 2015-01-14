@@ -72,12 +72,6 @@
 
   <body>
 
-  {% if error %}
-    <script>
-        alert("{{error}}");
-    </script>
-  {% endif %}
-
   <header class="navbar navbar-fixed-top">
       <div class="container">
           <div class="row" id="row-fix">
@@ -545,7 +539,7 @@
                                         </div>
                                         <div class="col-sm-9">
                                             <p>
-                                                Šola programiranja SmartNinja mi je pomagal izboljšati svoje znanje izdelave spletnih
+                                                Šola programiranja SmartNinja mi je pomagala izboljšati svoje znanje izdelave spletnih
                                                 strani. Naučil sem se ogrodja Bootstrap, uporabe GIT-a ter osnov JavaScripta.
                                                 Vse našteto zdaj že uporabljam pri delu v novi službi.
                                             </p>
@@ -992,6 +986,12 @@
 <!-- JQUERY
 <script src="js/jquery-1.10.2.min.js"></script>
 -->
+
+  {% if error %}
+    <script>
+        alert("{{error}}");
+    </script>
+  {% endif %}
 
 <script src="/assets/js/jquery.js"></script>
 

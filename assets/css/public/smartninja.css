@@ -1,0 +1,131 @@
+@import url('http://fonts.googleapis.com/css?family=Ubuntu:400,600,700,800,900&subset=latin,latin-ext');
+
+body {
+	font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+	font-size:14px;
+	line-height:20px;
+	margin:0;
+    padding-top: 75px;
+	background-color:#fff;
+	color:#2d4050;
+	-webkit-font-smoothing: antialiased !important;
+}
+
+a#logo {
+	width:150px;
+	height:36px;
+	background:url(/assets/img/public/logo.png) no-repeat 0 0;
+	text-indent:-9999px;
+	display:block;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  	font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+}
+
+#sub-header{
+    height:400px;
+	padding:100px 0 70px 0;
+	position:relative;
+	width:100%;
+    color:#fff;
+	background:#0cbdaa url(/assets/img/public/bg_sub-header.png) repeat 0 0;
+}
+
+#main_content, #mentor_content {
+	padding:60px 0;
+}
+
+#main_content h2, #main_content_gray h2, #mentor_content h2 {
+	text-transform:uppercase;
+	font-weight:400;
+	font-size:36px;
+	margin-top:30px;
+}
+
+input.form-control, textarea.form-control {
+    background: none;
+    background-color: #fff;
+    border: 1px solid #ececec;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    color: #a0a0a0;
+    height: 44px;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    font-family: 'Ubuntu', Arial, sans-serif;
+    line-height: 1.428571429;
+    padding: 6px 12px;
+}
+
+a.button_big_red, .button_big_red{
+    border:none;
+    background:#ff6666;
+    color:#fff;
+    font-size:30px;
+    line-height:32px;
+    padding:20px 50px;
+    text-decoration:none;
+    transition: background .5s ease;
+    -moz-transition: background .5s ease;
+    -webkit-transition: background .5s ease;
+    -o-transition: background .5s ease;
+    display:inline-block;
+    cursor:pointer;
+    outline:none;
+    font-weight:800;
+    text-transform:uppercase;
+    -webkit-font-smoothing: antialiased;
+    margin-top: 15px;
+}
+a.button_big_red:hover, .button_big_red:hover {background:#262c2d;}
+
+/* #Testimonials */
+#testimonials {
+	/*background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;*/
+	background: #1abc9c repeat 0 0;
+	padding:60px 0;
+	color:#fff;
+}
+
+#testimonials h2 {
+	font-size:28px;
+}
+
+#testimonials h2 {
+	text-transform:uppercase;
+	color:#fff;
+	font-size:60px;
+	font-weight:normal;
+	letter-spacing:5px;
+}
+
+/* #Site Footer */
+footer {
+	background:#1c1c1c no-repeat center 60px;
+	color:#fff;
+	width:100%;
+	padding-top:30px;
+    padding-bottom: 50px;
+	text-align:center;
+	font-size:13px;
+}
+
+#copy_right{
+	background-color:#202020;
+	padding:10px;
+	color:#555;
+    text-align:center;
+    font-size:13px;
+}
+
+.img-medium {
+    width: 150px;
+    height: 150px;
+}
