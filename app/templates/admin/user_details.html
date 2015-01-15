@@ -24,6 +24,10 @@
     <!-- Breadcrumb end -->
 
     <p>Email: {{ this_user.email }}</p>
+    <p>Phone Number : {{ this_user.phone_number }}</p>
+    <p>Address: {{ this_user.address }}</p>
+    <p>Date of birth: {{ this_user.dob }}</p>
+    <br>
 
     {% if not admin %}
         <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit user</button></a>
