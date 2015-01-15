@@ -1,5 +1,5 @@
 import datetime
-from app.emails.apply import prijava_februar
+from app.emails.apply import prijava_februar, email_course_application_thank_you
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, CourseApplication
@@ -65,10 +65,14 @@ class TempPrijavaHandler(Handler):
                     # add to database
                     user = User.create(first_name=ime, last_name=priimek, email=email, address=naslov, dob=starost, phone_number=telefon)
 
-                add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija), prenosnik=prenosnik, majica=majica)
+                course_app = add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija), prenosnik=prenosnik, majica=majica)
 
-                # send email
+                # send email to info@smartninja.org
                 prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik, majica)
+
+                # send email to the student
+                email_course_application_thank_you(course_app)
+
                 params = {"error": "Prijava oddana! :)"}
             else:
                 params = {"error": "Prosim izpolni vsa polja"}
@@ -112,3 +116,4 @@ def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik, majica):
                                               laptop=prenosnik, shirt=majica)
         course.taken += 1
         course.put()
+        return course_app

@@ -14,11 +14,17 @@ class NewsletterSubscribeHandler(Handler):
         if hidden:
             self.render_template("public/main2.html")
         elif email:
-            url = "https://us9.api.mailchimp.com/2.0/lists/subscribe.json?apikey="+get_mailchimp_api()+"&id="+get_newsletter_list_id()+"&email[email]="+str(email)
-
-            try:
-                result = urlfetch.fetch(url=url, method=urlfetch.POST, headers={'Content-Type': 'application/json'})
-                params = {"error": "Email oddan! :)"}
-            except Exception, e:
-                params = {"error": "Problem pri prijavi na e-novice. Prosim pisi na info@startup.org."}
+            params = subscribe_mailchimp(email=email)
             self.render_template("public/newsletter_thanks.html", params)
+
+
+def subscribe_mailchimp(email):
+    url = "https://us9.api.mailchimp.com/2.0/lists/subscribe.json?apikey="+get_mailchimp_api()+"&id="+get_newsletter_list_id()+"&email[email]="+str(email)
+
+    try:
+        result = urlfetch.fetch(url=url, method=urlfetch.POST, headers={'Content-Type': 'application/json'})
+        params = {"error": "Email oddan! :)"}
+    except Exception, e:
+        params = {"error": "Problem pri prijavi na e-novice. Prosim pisi na info@startup.org."}
+
+    return params

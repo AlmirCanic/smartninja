@@ -1,0 +1,14 @@
+Hvala za prijavo na {0}!
+
+Dodali smo te tudi na mailing listo SmartNinja, zato boš v kratkem prejel/a email, kjer lahko potrdiš prejemanje naših e-novic.
+
+Spodaj so podatki, s katerimi si se prijavil/a na tečaj. V kolikor je kateri od podatkov napačen, nas prosim obvesti na info@smartninja.org.
+
+Ime in priimek: {1}
+Email: {2}
+Kotizacija: {3} EUR
+Imaš laptop: {4}
+Velikost majice: {5}
+
+Lep pozdrav,
+Ekipa SmartNinja

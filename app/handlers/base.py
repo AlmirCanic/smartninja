@@ -31,9 +31,6 @@ class Handler(webapp2.RequestHandler):
         self.write(t.render(params))
 
 
-
-
-
 class AdminHandler(Handler):
     @admin_required
     def get(self):
