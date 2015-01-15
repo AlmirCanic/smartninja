@@ -10,7 +10,9 @@ class AdminCourseApplicationDetailsHandler(Handler):
     @admin_required
     def get(self, application_id):
         application = CourseApplication.get_by_id(int(application_id))
-        params = {"application": application}
+        user_id = application.student_id
+        user = User.get_by_id(user_id)
+        params = {"application": application, "this_user": user}
         self.render_template("admin/application_details.html", params)
 
     @admin_required
