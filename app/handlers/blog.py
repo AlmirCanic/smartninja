@@ -28,6 +28,20 @@ class PublicBlogHandler(Handler):
         self.render_template("public/blog.html", params)
 
 
+class PublicBlogDetailsHandler(Handler):
+    @admin_required
+    def get(self, post_slug):
+        post = BlogPost.query(BlogPost.slug == str(post_slug)).get()
+        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
+
+        # markdown
+        markdowner = markdown2.Markdown()
+        post.text = markdowner.convert(post.text)
+
+        params = {"post": post, "posts": posts}
+        self.render_template("public/blog_post.html", params)
+
+
 class AdminBlogListHandler(Handler):
     @admin_required
     def get(self):

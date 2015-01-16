@@ -20,7 +20,7 @@ from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetails
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
-    AdminBlogEditHandler, AdminBlogDeleteHandler
+    AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler
@@ -43,6 +43,7 @@ app = webapp2.WSGIApplication([
 
     # blog
     webapp2.Route('/blog', PublicBlogHandler, name="blog"),
+    webapp2.Route('/blog/<post_slug:.+>', PublicBlogDetailsHandler, name="blog-details"),
 
 
     # ADMIN URLS

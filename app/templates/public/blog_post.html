@@ -24,15 +24,12 @@
      <aside class="col-md-4">
      	<div class=" box_style_1">
 
-                <!--
 				<div class="widget">
-					<h4>Text widget</h4>
-					<p>
-						 Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-					</p>
-				</div>-->
+					<h4><i class="icon-back"></i><a href="/blog"> BLOG</a></h4>
+				</div>
                 <!-- End widget -->
 
+                <br>
 
 				<div class="widget">
 					<h4>Recent posts</h4>
@@ -67,10 +64,8 @@
      </aside><!-- End aside -->
 
 <div class="col-md-8">
-    {% if posts %}
-        {% for post in posts %}
         <div class="post">
-            <a href="/blog/{{post.slug}}"><img src="{{post.cover_image}}" alt="" class="img-responsive"></a>
+            <img src="{{post.cover_image}}" alt="" class="img-responsive">
             <div class="post_info clearfix">
                 <div class="post-left">
                     <ul>
@@ -80,14 +75,10 @@
                 </div>
             </div>
 
-            <h2><a href="/blog/{{post.slug}}">{{post.title}}</a></h2>
+            <h2>{{post.title}}</h2>
 
             <p>{{post.text}}</p>
-
-            <a href="/blog/{{post.slug}}" class="button_medium">Read more</a>
         </div><!-- end post -->
-        {% endfor %}
-    {% endif %}
 </div><!-- End col-md-8-->
 
 
