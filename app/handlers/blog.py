@@ -29,7 +29,6 @@ class PublicBlogHandler(Handler):
 
 
 class PublicBlogDetailsHandler(Handler):
-    @admin_required
     def get(self, post_slug):
         post = BlogPost.query(BlogPost.slug == str(post_slug)).get()
         posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
