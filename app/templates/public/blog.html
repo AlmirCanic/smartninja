@@ -23,42 +23,35 @@
 	 <div class="row">
      <aside class="col-md-4">
      	<div class=" box_style_1">
-				<div class="widget" style="margin-top:15px;">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search...">
-						<span class="input-group-btn">
-						<button class="btn btn-default" type="button" style="margin-left:0;"><i class="icon-search"></i></button>
-						</span>
-					</div><!-- /input-group -->
-				</div><!-- End Search -->
 
+                <!--
 				<div class="widget">
 					<h4>Text widget</h4>
 					<p>
 						 Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 					</p>
-				</div><!-- End widget -->
+				</div>-->
+                <!-- End widget -->
 
 
 				<div class="widget">
-					<h4>Recent post</h4>
+					<h4>Recent posts</h4>
 
+                    {% if posts %}
 					<ul class="recent_post">
+                        {% for post in posts %}
 						<li>
-						<i class="icon-calendar-empty"></i> 16th July, 2020
-						<div><a href="#">It is a long established fact that a reader will be distracted </a></div>
+						    <i class="icon-calendar-empty"></i> {{post.created.day}}.{{post.created.month}}.{{post.created.year}}
+						    <div><a href="#">{{post.title}}</a></div>
 						</li>
-						<li>
-						<i class="icon-calendar-empty"></i> 16th July, 2020
-						<div><a href="#">It is a long established fact that a reader will be distracted </a></div>
-						</li>
-						<li>
-						<i class="icon-calendar-empty"></i> 16th July, 2020
-						<div><a href="#">It is a long established fact that a reader will be distracted </a></div>
-						</li>
+                        {% endfor %}
 					</ul>
+                    {% else %}
+                        <p>No posts</p>
+                    {% endif %}
 				</div><!-- End widget -->
 
+                <!--
 				<div class="widget tags add_bottom_30">
 					<h4>Tags</h4>
 					<a href="#">Lorem ipsum</a>
@@ -67,70 +60,35 @@
 					<a href="#">Sit amet</a>
 					<a href="#">Latin words</a>
 					<a href="#">Excepteur sint</a>
-				</div><!-- End widget -->
+				</div>-->
+                <!-- End widget -->
 
 			</div><!-- End box-sidebar -->
      </aside><!-- End aside -->
 
-     <div class="col-md-8">
-     		<div class="post">
-					<a href="blog_post.html" title="single_post.html"><img src="img/blog-3.jpg" alt="" class="img-responsive"></a>
-					<div class="post_info clearfix">
-						<div class="post-left">
-							<ul>
-								<li><i class="icon-calendar-empty"></i>On <span>12 Nov 2020</span></li>
-								<li><i class="icon-user"></i>By <a href="#">John Smith</a></li>
-								<li><i class="icon-tags"></i>Tags <a href="#">Works</a> <a href="#">Personal</a></li>
-							</ul>
-						</div>
-						<div class="post-right"><i class="icon-comment"></i><a href="#">25 </a>Comments</div>
-					</div>
-					<h2><a href="single_post.html" title="single_post.html">Duis aute irure dolor in reprehenderit</a></h2>
-					<p>
-						Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem.....
-					</p>
-					<a href="single_post.html" class="button_medium" title="single_post.html">Read more</a>
-				</div><!-- end post -->
+<div class="col-md-8">
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post">
+            <a href="#"><img src="{{post.cover_image}}" alt="" class="img-responsive"></a>
+            <div class="post_info clearfix">
+                <div class="post-left">
+                    <ul>
+                        <li><i class="icon-calendar-empty"></i><span>{{post.created.day}}.{{post.created.month}}.{{post.created.year}}</span></li>
+                        <li><i class="icon-user"></i>By <a href="#">{{post.author_name}}</a></li>
+                    </ul>
+                </div>
+            </div>
 
-				<div class="post">
-					<a href="blog_post.html" title="single_post.html"><img src="img/blog-1.jpg" alt="" class="img-responsive"></a>
-					<div class="post_info clearfix">
-						<div class="post-left">
-							<ul>
-								<li><i class="icon-calendar-empty"></i>On <span>12 Nov 2020</span></li>
-								<li><i class="icon-user"></i>By <a href="#">John Smith</a></li>
-								<li><i class="icon-tags"></i>Tags <a href="#">Works</a> <a href="#">Personal</a></li>
-							</ul>
-						</div>
-						<div class="post-right"><i class="icon-comment"></i><a href="#">25 </a>Comments</div>
-					</div>
-					<h2><a href="single_post.html" title="single_post.html">Duis aute irure dolor in reprehenderit</a></h2>
-					<p>
-						Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem.....
-					</p>
-					<a href="blog_post.html" class="button_medium">Read more</a>
-				</div><!-- end post -->
+            <h2><a href="#">{{post.title}}</a></h2>
 
-				<div class="post">
-					<a href="blog_post.html" title="single_post.html"><img src="img/blog-2.jpg" alt="" class="img-responsive"></a>
-					<div class="post_info clearfix">
-						<div class="post-left">
-							<ul>
-								<li><i class="icon-calendar-empty"></i>On <span>12 Nov 2020</span></li>
-								<li><i class="icon-user"></i>By <a href="#">John Smith</a></li>
-								<li><i class="icon-tags"></i>Tags <a href="#">Works</a> <a href="#">Personal</a></li>
-							</ul>
-						</div>
-						<div class="post-right"><i class="icon-comment"></i><a href="#">25 </a>Comments</div>
-					</div>
-					<h2><a href="blog_post.html" title="single_post.html">Duis aute irure dolor in reprehenderit</a></h2>
-					<p>
-						Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem.....
-					</p>
-					<a href="blog_post.html" class="button_medium" title="single_post.html">Read more</a>
-				</div><!-- end post -->
+            <p>{{post.text}}</p>
 
-     </div><!-- End col-md-8-->
+            <a href="#" class="button_medium">Read more</a>
+        </div><!-- end post -->
+        {% endfor %}
+    {% endif %}
+</div><!-- End col-md-8-->
 
 
   </div>  <!-- End row-->

@@ -13,7 +13,19 @@ import markdown2
 
 class PublicBlogHandler(Handler):
     def get(self):
-        self.render_template("public/blog.html")
+        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
+
+        # convert markdown to html
+        posts2 = []
+        markdowner = markdown2.Markdown()
+
+        for post in posts:
+            post.text = post.text[:500] + "..."
+            post.text = markdowner.convert(post.text)
+            posts2.append(post)
+
+        params = {"posts": posts2}
+        self.render_template("public/blog.html", params)
 
 
 class AdminBlogListHandler(Handler):
