@@ -21,11 +21,6 @@ class PublicPartnersHandler(Handler):
         self.render_template("public/partners.html")
 
 
-class PublicBlogHandler(Handler):
-    def get(self):
-        self.render_template("public/blog.html")
-
-
 class PublicAboutHandler(Handler):
     def get(self):
         self.render_template("public/about.html")

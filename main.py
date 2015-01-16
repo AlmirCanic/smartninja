@@ -19,12 +19,14 @@ from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetails
     AdminCourseApplicationDeleteHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler
+from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
+    AdminBlogEditHandler, AdminBlogDeleteHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.public import MainHandler, TempMainHandler, PublicCourseListHandler, PublicPartnersHandler, \
-    PublicBlogHandler, PublicAboutHandler
+    PublicAboutHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler
 
@@ -37,8 +39,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/newsletter', NewsletterSubscribeHandler, name="newsletter"),
     webapp2.Route('/courses', PublicCourseListHandler, name="public-courses"),
     webapp2.Route('/partners', PublicPartnersHandler, name="partners"),
-    webapp2.Route('/blog', PublicBlogHandler, name="blog"),
     webapp2.Route('/about', PublicAboutHandler, name="about"),
+
+    # blog
+    webapp2.Route('/blog', PublicBlogHandler, name="blog"),
+
 
     # ADMIN URLS
     # basic
@@ -71,7 +76,14 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/user/<user_id:\d+>/delete', AdminUserDeleteHandler, name="user-delete"),
     webapp2.Route('/admin/user/<user_id:\d+>/edit', AdminUserEditHandler, name="user-edit"),
 
-    # other
+    # blog
+    webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),
+    webapp2.Route('/admin/blog/add', AdminBlogAddHandler, name="admin-blog-add"),
+    webapp2.Route('/admin/blog/<post_id:\d+>', AdminBlogDetailsHandler, name="admin-blog-details"),
+    webapp2.Route('/admin/blog/<post_id:\d+>/edit', AdminBlogEditHandler, name="admin-blog-edit"),
+    webapp2.Route('/admin/blog/<post_id:\d+>/delete', AdminBlogDeleteHandler, name="admin-blog-delete"),
+
+    # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
     webapp2.Route('/secured', SecuredSiteHandler, name="secured"),
 ], debug=True)
