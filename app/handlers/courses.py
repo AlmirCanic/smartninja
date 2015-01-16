@@ -1,4 +1,5 @@
 import datetime
+import os
 from app.handlers.base import Handler
 from app.models.course import Course, CourseApplication, CourseType
 from app.utils.decorators import admin_required
@@ -16,7 +17,7 @@ class AdminCourseDetailsHandler(Handler):
     @admin_required
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
-        applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).fetch()
+        applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
         num_paid = 0
         for application in applications:
             if application.payment_status:
