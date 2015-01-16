@@ -17,7 +17,11 @@ class AdminCourseDetailsHandler(Handler):
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
         applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).fetch()
-        params = {"course": course, "applications": applications}
+        num_paid = 0
+        for application in applications:
+            if application.payment_status:
+                num_paid += 1
+        params = {"course": course, "applications": applications, "num_paid": num_paid}
         self.render_template("admin/course_details.html", params)
 
 

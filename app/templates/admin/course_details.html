@@ -23,7 +23,41 @@
     </div>
     <!-- Breadcrumb end -->
 
-    <p>{{course.start_date}} - {{course.end_date}}</p>
+    <p>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}} - {{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}, {{ course.city }} ({{ course.place }})</p>
+    <p>Price(s): {{ course.price }}</p>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{course.taken}}/{{ course.spots }}</div>
+                                        <div>Number of students</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{ num_paid }}/{{ course.taken }}</div>
+                                        <div>Paid</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </div>
 
     <h3>Student applications</h3>
     {% if applications %}
