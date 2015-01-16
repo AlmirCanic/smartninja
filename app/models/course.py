@@ -73,6 +73,7 @@ class CourseApplication(ndb.Model):
     laptop = ndb.StringProperty()
     shirt = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
+    created = ndb.DateTimeProperty(auto_now_add=True)
 
     @property
     def get_id(self):
