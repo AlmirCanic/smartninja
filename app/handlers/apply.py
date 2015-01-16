@@ -3,6 +3,7 @@ from app.emails.apply import prijava_februar, email_course_application_thank_you
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, CourseApplication
+from app.settings import is_local
 from app.utils.decorators import admin_required
 
 
@@ -70,10 +71,12 @@ class TempPrijavaHandler(Handler):
                 course_app = add_user_to_course(user=user, kraj_tecaja=kraj_tecaja, kotizacija=float(kotizacija), prenosnik=prenosnik, majica=majica)
 
                 # send email to info@smartninja.org
-                prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik, majica)
+                if not is_local():
+                    prijava_februar(ime, priimek, email, naslov, starost, telefon, kraj_tecaja, kotizacija, prenosnik, majica)
 
                 # send email to the student
-                email_course_application_thank_you(course_app)
+                if not is_local():
+                    email_course_application_thank_you(course_app)
 
                 params = {"error": "Prijava oddana! :)"}
             else:

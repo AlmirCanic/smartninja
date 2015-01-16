@@ -1,5 +1,4 @@
 import datetime
-import os
 from app.handlers.base import Handler
 from app.models.course import Course, CourseApplication, CourseType
 from app.utils.decorators import admin_required
