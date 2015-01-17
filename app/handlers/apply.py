@@ -78,11 +78,10 @@ class TempPrijavaHandler(Handler):
                 # send email to the student
                 if not is_local():
                     email_course_application_thank_you(course_app)
-
-                params = {"error": "Prijava oddana! :)"}
+                self.redirect_to("apply-thank-you")
             else:
                 params = {"error": "Prosim izpolni vsa polja"}
-        self.render_template("public/apply_thank_you.html", params)
+                self.render_template("public/main2.html", params)
 
 
 # TODO: just temporary, delete after feb 2015
