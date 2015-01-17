@@ -797,6 +797,7 @@ a.button_fullwidth-2:hover, .button_fullwidth-2:hover  {background:#262c2d; colo
 	background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;
 	padding:60px 0;
 	color:#fff;
+    height:420px;
 	}
 .container_count {
 	width:60px;
