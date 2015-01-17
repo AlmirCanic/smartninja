@@ -21,6 +21,7 @@ class AdminCourseApplicationDetailsHandler(Handler):
         application = CourseApplication.get_by_id(int(application_id))
         application.payment_status = bool(self.request.get("paid"))
         application.price = float(self.request.get("price"))
+        application.invoice = self.request.get("invoice")
         application.put()
         self.redirect_to("course-details", course_id=application.course_id)
 

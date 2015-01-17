@@ -72,6 +72,7 @@ class CourseApplication(ndb.Model):
     currency = ndb.StringProperty()
     laptop = ndb.StringProperty()
     shirt = ndb.StringProperty()
+    invoice = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
