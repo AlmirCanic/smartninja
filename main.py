@@ -26,7 +26,8 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.public import MainHandler, TempMainHandler, PublicCourseListHandler, PublicPartnersHandler, \
-    PublicAboutHandler, PublicComingSoonHandler
+    PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
+    PublicNewsletterThankYou2Handler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler
 
@@ -41,6 +42,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/partners', PublicPartnersHandler, name="partners"),
     webapp2.Route('/about', PublicAboutHandler, name="about"),
     webapp2.Route('/coming-soon', PublicComingSoonHandler, name="coming-soon"),
+    webapp2.Route('/apply_thank_you', PublicApplyThankYouHandler, name="apply-thank-you"),
+    webapp2.Route('/email_thank_you', PublicNewsletterThankYouHandler, name="newsletter-thank-you-1"),
+    webapp2.Route('/email_thank_you_2', PublicNewsletterThankYou2Handler, name="newsletter-thank-you-2"),
 
     # blog
     webapp2.Route('/blog', PublicBlogHandler, name="blog"),

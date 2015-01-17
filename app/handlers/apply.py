@@ -82,7 +82,7 @@ class TempPrijavaHandler(Handler):
                 params = {"error": "Prijava oddana! :)"}
             else:
                 params = {"error": "Prosim izpolni vsa polja"}
-        self.render_template("public/main2.html", params)
+        self.render_template("public/apply_thank_you.html", params)
 
 
 # TODO: just temporary, delete after feb 2015

@@ -1,5 +1,6 @@
 from google.appengine.api import urlfetch
 from app.handlers.base import Handler
+from app.settings import is_local
 from app.utils.secret import get_mailchimp_api, get_newsletter_list_id
 
 
@@ -14,8 +15,9 @@ class NewsletterSubscribeHandler(Handler):
         if hidden:
             self.render_template("public/main2.html")
         elif email:
-            params = subscribe_mailchimp(email=email)
-            self.render_template("public/newsletter_thanks.html", params)
+            if not is_local():
+                subscribe_mailchimp(email=email)
+            self.redirect_to("newsletter-thank-you-2")
 
 
 def subscribe_mailchimp(email):

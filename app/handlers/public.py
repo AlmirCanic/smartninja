@@ -29,3 +29,18 @@ class PublicAboutHandler(Handler):
 class PublicComingSoonHandler(Handler):
     def get(self):
         self.render_template("public/coming_soon.html")
+
+
+class PublicApplyThankYouHandler(Handler):
+    def get(self):
+        self.render_template("public/apply_thank_you.html")
+
+
+class PublicNewsletterThankYouHandler(Handler):
+    def get(self):
+        self.render_template("public/newsletter_thank_you_1.html")
+
+
+class PublicNewsletterThankYou2Handler(Handler):
+    def get(self):
+        self.render_template("public/newsletter_thank_you_2.html")
