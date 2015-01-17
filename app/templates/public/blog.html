@@ -2,6 +2,26 @@
 
 {% block title %}Blog{% endblock title %}
 
+{% block social %}
+    <!-- START FACEBOOK OPEN GRAPH -->
+    <meta name="og:url" content="http://smartninja.org">
+    <meta name="og:title" content="SmartNinja - šola IT veščin">
+    <meta name="og:description" content="Nauči se veščin, ki so v današnjem svetu najbolj iskane in cenjene. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://smartninja.org/assets/img/public/facebook.jpg">
+    <!-- END FACEBOOK OPEN GRAPH -->
+
+    <!-- START TWITTER CARDS -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="SmartNinja - šola IT veščin">
+    <meta name="twitter:description" content="Nauči se veščin, ki so v današnjem svetu najbolj iskane in cenjene. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="twitter:creator" content="@NmStartUP">
+    <meta name="twitter:image" content="http://smartninja.org/assets/img/public/facebook.jpg">
+    <meta name="twitter:url" content="http://smartninja.org">
+    <!-- END TWITTER CARDS -->
+{% endblock social %}
+
 {% block main_content %}
 <section id="sub-header-small">
 <div class="container">
@@ -84,7 +104,7 @@
 
             <p>{{post.text}}</p>
 
-            <a href="/blog/{{post.slug}}" class="button_medium">Read more</a>
+            <a href="/blog/{{post.slug}}" class="button_medium">Preberi več</a>
         </div><!-- end post -->
         {% endfor %}
     {% endif %}
