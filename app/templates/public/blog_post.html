@@ -1,6 +1,11 @@
 {% extends "public/base.html" %}
 
-{% block title %}Blog{% endblock title %}
+{% block title %}{{post.title}}{% endblock title %}
+
+{% block meta %}
+    <meta name="keywords" content="SmartNinja šola programiranja programming school tečaji programiranja courses classes course class tutors instructors">
+    <meta name="description" content="{{post.text[:100]}}... #SmartNinja">
+{% endblock meta %}
 
 {% block social %}
     <!-- START FACEBOOK OPEN GRAPH -->
