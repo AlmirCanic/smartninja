@@ -24,3 +24,8 @@ class PublicPartnersHandler(Handler):
 class PublicAboutHandler(Handler):
     def get(self):
         self.render_template("public/about.html")
+
+
+class PublicComingSoonHandler(Handler):
+    def get(self):
+        self.render_template("public/coming_soon.html")
