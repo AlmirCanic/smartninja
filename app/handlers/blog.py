@@ -5,6 +5,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.blog import BlogPost
 from app.utils.decorators import admin_required
+from app.utils.other import strip_tags
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../libs'))
 
@@ -37,7 +38,9 @@ class PublicBlogDetailsHandler(Handler):
         markdowner = markdown2.Markdown()
         post.text = markdowner.convert(post.text)
 
-        params = {"post": post, "posts": posts}
+        summary = strip_tags(post.text.replace('\"', ""))[:300]
+
+        params = {"post": post, "posts": posts, "summary": summary}
         self.render_template("public/blog_post.html", params)
 
 
