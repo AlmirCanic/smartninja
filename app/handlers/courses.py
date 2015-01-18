@@ -19,13 +19,19 @@ class AdminCourseDetailsHandler(Handler):
         applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
         num_paid = 0
         num_no_laptop = 0
+        total_paid = 0.0
         for application in applications:
             if application.payment_status:
                 num_paid += 1
+                total_paid += application.price
             if application.laptop == "no":
                 num_no_laptop += 1
 
-        params = {"course": course, "applications": applications, "num_paid": num_paid, "no_laptop": num_no_laptop}
+        params = {"course": course,
+                  "applications": applications,
+                  "num_paid": num_paid,
+                  "no_laptop": num_no_laptop,
+                  "total_paid": total_paid}
         self.render_template("admin/course_details.html", params)
 
 
