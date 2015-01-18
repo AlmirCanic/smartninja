@@ -2465,81 +2465,116 @@ p.lead.boxed{
 /* Mobile portrait */
 @media (max-width: 480px) {
 	a#logo {
-	width:37px;
+	width:150px;
 	height:36px;
-	background:url(/assets/img/public/logo_mobile.png) no-repeat 0 0;
-}
-#subscribe {
-	background:none;
-	padding-bottom:0;
-}
-/* Typography*/
-h1 {
-	font-size:36px;
-	line-height:38px;
-	margin-bottom:10px;
-}
-#subscribe h1 {
-	font-size:40px;
-	margin-top:0;
-	text-align:center;
-}
-#subscribe h2 {
-	font-size:30px;
-}
-#main-features h2, #main-features_green h2 {
-	font-size:28px;
-}
-#main-features p.lead, #main-features_green p.lead{
-	font-size:14px;
-	margin-bottom:30px;
-}
-#main_content h2, #main_content_gray h2 {
-	font-size:24px;
-}
-#testimonials h2{
-	font-size:28px;
-}
-p.lead.boxed{
-	font-size:14px;
-	line-height:16px;
-	padding:8px;
-}
-footer h3 {
-	font-size:22px;
-	line-height:24px;
-}
-#top-wizard {padding:15px 30px;}
-#bottom-wizard {padding:15px 30px;}
-.backward, .forward, button[disabled].backward, button[disabled].forward  {
-	text-indent:-9999px;
-	width:50px;
-	padding:0;
-	height:40px;
-   }
-.backward:before, .forward:before, button[disabled].backward:before, button[disabled].forward:before {
-	text-indent:0;
-	top:12px;
-	font-size:16px;
-   }
-#complete{padding: 0 25px 15px 25px;}
-#complete h3{ font-size:18px; margin-bottom:20px}
-#complete i {font-size:80px;padding:0;}
+	background:url(/assets/img/public/logo.png) no-repeat 0 0;
+    }
+    #subscribe {
+        background:none;
+        padding-bottom:0;
+    }
+    /* Typography*/
+    h1 {
+        font-size:36px;
+        line-height:38px;
+        margin-bottom:10px;
+    }
+    #subscribe h1 {
+        font-size:40px;
+        margin-top:0;
+        text-align:center;
+    }
+    #subscribe h2 {
+        font-size:30px;
+    }
+    #main-features h2, #main-features_green h2 {
+        font-size:28px;
+    }
+    #main-features p.lead, #main-features_green p.lead{
+        font-size:14px;
+        margin-bottom:30px;
+    }
+    #main_content h2, #main_content_gray h2 {
+        font-size:24px;
+    }
+    #testimonials h2{
+        font-size:28px;
+    }
+    p.lead.boxed{
+        font-size:14px;
+        line-height:16px;
+        padding:8px;
+    }
+    footer h3 {
+        font-size:22px;
+        line-height:24px;
+    }
+    #top-wizard {padding:15px 30px;}
+    #bottom-wizard {padding:15px 30px;}
+    .backward, .forward, button[disabled].backward, button[disabled].forward  {
+        text-indent:-9999px;
+        width:50px;
+        padding:0;
+        height:40px;
+       }
+    .backward:before, .forward:before, button[disabled].backward:before, button[disabled].forward:before {
+        text-indent:0;
+        top:12px;
+        font-size:16px;
+       }
+    #complete{padding: 0 25px 15px 25px;}
+    #complete h3{ font-size:18px; margin-bottom:20px}
+    #complete i {font-size:80px;padding:0;}
 
-#map {height:250px;}
- #login_bg{
-	padding:30px 0;
-}
+    #map {height:250px;}
+     #login_bg{
+        padding:30px 0;
+    }
 
+    #sub-header{
+        height:660px;
+        padding:50px 0 70px 0;
+        color:#fff;
+        position:relative;
+        width:100%;
+        background:url(/assets/img/public/users_header.jpg) repeat 0 0;
+    }
+
+    #testimonials {
+        background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;
+        padding:60px 0;
+        color:#fff;
+        height:540px;
+	}
 
 }
 
 /* Mobile Portrait */
 @media only screen and (max-width: 320px) {
 
-.step h3 {font-size:18px;line-height:22px; margin-bottom:20px}
-#complete h3{ font-size:18px; margin-bottom:20px}
-#complete{padding: 0 15px 15px 15px;}
+    .step h3 {font-size:18px;line-height:22px; margin-bottom:20px}
+    #complete h3{ font-size:18px; margin-bottom:20px}
+    #complete{padding: 0 15px 15px 15px;}
+
+    #sub-header{
+        height:750px;
+        padding:30px 0 70px 0;
+        color:#fff;
+        position:relative;
+        width:100%;
+        background:url(/assets/img/public/users_header.jpg) repeat 0 0;
+    }
+
+    #sub-header h1{
+        font-size: 34px;
+    }
+
+    #testimonials {
+        background: #1abc9c url(/assets/img/public/users_bg.jpg) repeat 0 0;
+        padding:60px 0;
+        color:#fff;
+        height:600px;
+	}
 }
 
 #main_content article h3 em{
