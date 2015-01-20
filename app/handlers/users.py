@@ -63,6 +63,10 @@ class AdminUserEditHandler(Handler):
         first_name = self.request.get("first_name")
         last_name = self.request.get("last_name")
         address = self.request.get("address")
+        summary = self.request.get("summary")
+        photo_url = self.request.get("photo_url")
         phone_number = self.request.get("phone_number")
-        User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number)
+        instructor = bool(self.request.get("instructor"))
+        User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
+                    summary=summary, photo_url=photo_url, instructor=instructor)
         self.redirect_to("user-details", user_id=int(user_id))

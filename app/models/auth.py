@@ -11,8 +11,11 @@ class User(ndb.Model):
     phone_number = ndb.StringProperty()
     dob = ndb.StringProperty()  # date of birth
     created = ndb.DateTimeProperty(auto_now_add=True)
-    student = ndb.StringProperty(repeated=True)  # list of course IDs where this user is student
-    instructor = ndb.StringProperty(repeated=True)  # list of course IDs where this user is instructor
+    student_courses = ndb.StringProperty(repeated=True)  # list of course IDs where this user is student
+    instructor_courses = ndb.StringProperty(repeated=True)  # list of course IDs where this user is instructor
+    instructor = ndb.BooleanProperty(default=False)  # is user an instructor?
+    summary = ndb.StringProperty()
+    photo_url = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
 
     @property
@@ -43,7 +46,7 @@ class User(ndb.Model):
         return user
 
     @classmethod
-    def update(cls, user, first_name, last_name, address, phone_number):
+    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, instructor):
         if user.first_name != first_name or user.last_name != last_name:
             user.first_name = first_name
             user.last_name = last_name
@@ -55,5 +58,8 @@ class User(ndb.Model):
 
         user.address = address
         user.phone_number = phone_number
+        user.summary = summary
+        user.photo_url = photo_url
+        user.instructor = instructor
         user.put()
         return user

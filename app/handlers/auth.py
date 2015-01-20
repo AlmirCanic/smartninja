@@ -18,6 +18,11 @@ class ForbiddenHandler(Handler):
         self.render_template("403.html")
 
 
+class NotExistHandler(Handler):
+    def get(self):
+        self.render_template("404.html")
+
+
 class ProfileHandler(Handler):
     def get(self):
         current_user = users.get_current_user()

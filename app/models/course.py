@@ -33,6 +33,7 @@ class Course(ndb.Model):
     end_date = ndb.DateProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     price = ndb.FloatProperty(repeated=True)
+    instructor = ndb.IntegerProperty()
     currency = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
 
@@ -41,15 +42,17 @@ class Course(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, price, currency, category):
+    def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, price, currency,
+               category, instructor):
         course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
                      description=description, start_date=start_date, end_date=end_date, price=price, currency=currency,
-                     category=category)
+                     category=category, instructor=instructor)
         course.put()
         return course
 
     @classmethod
-    def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, price, currency, category):
+    def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, price,
+               currency, category, instructor):
         course.title = title
         course.course_type = course_type
         course.city = city
@@ -62,6 +65,7 @@ class Course(ndb.Model):
         course.price = price
         course.currency = currency
         course.category = category
+        course.instructor = instructor
         course.put()
         return course
 

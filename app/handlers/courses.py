@@ -1,5 +1,6 @@
 import datetime
 from app.handlers.base import Handler
+from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType
 from app.utils.decorators import admin_required
 
@@ -42,7 +43,8 @@ class AdminCourseAddHandler(Handler):
     @admin_required
     def get(self):
         course_types = CourseType.query().fetch()
-        params = {"course_types": course_types}
+        instructors = User.query(User.instructor == True).fetch()
+        params = {"course_types": course_types, "instructors": instructors}
         self.render_template("admin/course_add.html", params)
 
     @admin_required
@@ -59,6 +61,12 @@ class AdminCourseAddHandler(Handler):
         description = self.request.get("description")
         category = self.request.get("category")
         spots = self.request.get("spots")
+        instructor = self.request.get("instructor")
+
+        try:
+            instructor = int(instructor)
+        except Exception, e:
+            instructor = None
 
         if course_type and title and city and place and start_date and end_date and price and currency:
             prices = [float(prc) for prc in price.strip().split(",")]
@@ -68,7 +76,7 @@ class AdminCourseAddHandler(Handler):
             Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
-                          category=category)
+                          category=category, instructor=instructor)
             self.redirect_to("course-list")
 
 
@@ -99,8 +107,14 @@ class AdminCourseEditHandler(Handler):
         description = self.request.get("description")
         category = self.request.get("category")
         spots = self.request.get("spots")
+        instructor = self.request.get("instructor")
 
         course = Course.get_by_id(int(course_id))
+
+        try:
+            instructor = int(instructor)
+        except Exception, e:
+            instructor = None
 
         if course_type and title and city and place and start_date and end_date and price and currency:
             prices = [float(prc) for prc in price.strip().split(",")]
@@ -110,7 +124,7 @@ class AdminCourseEditHandler(Handler):
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
-                           summary=summary, category=category)
+                           summary=summary, category=category, instructor=instructor)
             self.redirect_to("course-details", course_id=int(course_id))
 
 
@@ -206,3 +220,12 @@ class PublicCourseListHandler(Handler):
 
         params = {"courses": courses}
         self.render_template("public/course_list.html", params=params)
+
+
+class PublicCourseDetailsHandler(Handler):
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        if course.deleted:
+            self.redirect_to("404")
+        params = {"course": course}
+        self.render_template("public/course_details.html", params=params)

@@ -17,13 +17,14 @@
 import webapp2
 from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetailsHandler, \
     AdminCourseApplicationDeleteHandler
-from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler
+from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
-    AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, PublicCourseListHandler
+    AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, PublicCourseListHandler, \
+    PublicCourseDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.public import MainHandler, TempMainHandler, PublicPartnersHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
@@ -38,7 +39,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/', TempMainHandler, name="temp"),
     webapp2.Route('/prijava', TempPrijavaHandler, name="prijava"),
     webapp2.Route('/newsletter', NewsletterSubscribeHandler, name="newsletter"),
-    webapp2.Route('/courses', PublicCourseListHandler, name="public-courses"),
     webapp2.Route('/partners', PublicPartnersHandler, name="partners"),
     webapp2.Route('/about', PublicAboutHandler, name="about"),
     webapp2.Route('/faq', PublicFaqHandler, name="faq"),
@@ -50,6 +50,10 @@ app = webapp2.WSGIApplication([
     # blog
     webapp2.Route('/blog', PublicBlogHandler, name="blog"),
     webapp2.Route('/blog/<post_slug:.+>', PublicBlogDetailsHandler, name="blog-details"),
+
+    # course
+    webapp2.Route('/courses', PublicCourseListHandler, name="public-courses"),
+    webapp2.Route('/course/<course_id:\d+>', PublicCourseDetailsHandler, name="public-course-details"),
 
 
     # ADMIN URLS
@@ -92,5 +96,6 @@ app = webapp2.WSGIApplication([
 
     # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
+    webapp2.Route('/404', NotExistHandler, name="404"),
     webapp2.Route('/secured', SecuredSiteHandler, name="secured"),
 ], debug=True)

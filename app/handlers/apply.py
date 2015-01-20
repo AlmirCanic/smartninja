@@ -101,19 +101,22 @@ def add_user_to_course(user, kraj_tecaja, kotizacija, prenosnik, majica):
         if not course:
             course = Course.create(title="SmartNinja Vikend Ljubljana", city="Ljubljana", start_date=datetime.date(2015, 2, 7),
                                    end_date=datetime.date(2015, 2, 8), description="", price=price, place="",
-                                   course_type=course_type.get_id, currency="EUR", spots=10, summary="", category="Programming")
+                                   course_type=course_type.get_id, currency="EUR", spots=10, summary="",
+                                   category="Programming", instructor=None)
     elif kraj_tecaja == "Maribor":
         course = Course.query(Course.title == "SmartNinja Vikend Maribor").get()
         if not course:
             course = Course.create(title="SmartNinja Vikend Maribor", city="Maribor", start_date=datetime.date(2015, 2, 14),
                                    end_date=datetime.date(2015, 2, 15), description="", price=price, place="",
-                                   course_type=course_type.get_id, currency="EUR", spots=10, summary="", category="Programming")
+                                   course_type=course_type.get_id, currency="EUR", spots=10, summary="",
+                                   category="Programming", instructor=None)
     elif kraj_tecaja == "NovaGorica":
         course = Course.query(Course.title == "SmartNinja Vikend Nova Gorica").get()
         if not course:
             course = Course.create(title="SmartNinja Vikend Nova Gorica", city="Nova Gorica", start_date=datetime.date(2015, 2, 28),
                                    end_date=datetime.date(2015, 3, 1), description="", price=price, place="",
-                                   course_type=course_type.get_id, currency="EUR", spots=10, summary="", category="Programming")
+                                   course_type=course_type.get_id, currency="EUR", spots=10, summary="",
+                                   category="Programming", instructor=None)
 
     if course:
         course_app = CourseApplication.create(course_title=course.title, course_id=course.get_id, student_name=user.get_full_name,
