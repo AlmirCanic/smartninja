@@ -24,8 +24,10 @@ class Course(ndb.Model):
     course_type = ndb.IntegerProperty()
     city = ndb.StringProperty()
     place = ndb.StringProperty()
+    category = ndb.StringProperty()
     spots = ndb.IntegerProperty()  # Number of spots available for students
     taken = ndb.IntegerProperty(default=0)  # Number of spots TAKEN
+    summary = ndb.StringProperty()
     description = ndb.TextProperty()
     start_date = ndb.DateProperty()
     end_date = ndb.DateProperty()
@@ -39,24 +41,27 @@ class Course(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, course_type, city, place, spots, description, start_date, end_date, price, currency):
-        course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, description=description,
-                     start_date=start_date, end_date=end_date, price=price, currency=currency)
+    def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, price, currency, category):
+        course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
+                     description=description, start_date=start_date, end_date=end_date, price=price, currency=currency,
+                     category=category)
         course.put()
         return course
 
     @classmethod
-    def update(cls, course, title, course_type, city, place, spots, description, start_date, end_date, price, currency):
+    def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, price, currency, category):
         course.title = title
         course.course_type = course_type
         course.city = city
         course.place = place
         course.spots = spots
+        course.summary = summary
         course.description = description
         course.start_date = start_date
         course.end_date = end_date
         course.price = price
         course.currency = currency
+        course.category = category
         course.put()
         return course
 

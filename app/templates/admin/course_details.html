@@ -24,7 +24,8 @@
     <!-- Breadcrumb end -->
 
     <p>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}} - {{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}, {{ course.city }} ({{ course.place }})</p>
-    <p>Price(s): {{ course.price }}</p>
+    <p>Price(s): {{ course_price }} ({{ course.currency }})</p>
+    <p>Summary: {{ course.summary }}</p>
 
     <div class="row">
         <div class="col-lg-3 col-md-6">

@@ -27,11 +27,14 @@ class AdminCourseDetailsHandler(Handler):
             if application.laptop == "no":
                 num_no_laptop += 1
 
+        course_price = str(course.price).replace("[", "").replace("]", "")
+
         params = {"course": course,
                   "applications": applications,
                   "num_paid": num_paid,
                   "no_laptop": num_no_laptop,
-                  "total_paid": total_paid}
+                  "total_paid": total_paid,
+                  "course_price": course_price}
         self.render_template("admin/course_details.html", params)
 
 
@@ -52,7 +55,9 @@ class AdminCourseAddHandler(Handler):
         end_date = self.request.get("end-date")
         price = self.request.get("price")
         currency = self.request.get("currency")
+        summary = self.request.get("summary")
         description = self.request.get("description")
+        category = self.request.get("category")
         spots = self.request.get("spots")
 
         if course_type and title and city and place and start_date and end_date and price and currency:
@@ -60,9 +65,10 @@ class AdminCourseAddHandler(Handler):
             start = start_date.split("-")
             end = end_date.split("-")
 
-            Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
+            Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
-                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency)
+                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
+                          category=category)
             self.redirect_to("course-list")
 
 
@@ -89,7 +95,9 @@ class AdminCourseEditHandler(Handler):
         end_date = self.request.get("end-date")
         price = self.request.get("price")
         currency = self.request.get("currency")
+        summary = self.request.get("summary")
         description = self.request.get("description")
+        category = self.request.get("category")
         spots = self.request.get("spots")
 
         course = Course.get_by_id(int(course_id))
@@ -101,7 +109,8 @@ class AdminCourseEditHandler(Handler):
 
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
-                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency)
+                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
+                           summary=summary, category=category)
             self.redirect_to("course-details", course_id=int(course_id))
 
 
@@ -182,3 +191,18 @@ class AdminCourseTypeDeleteHandler(Handler):
         course_type.deleted = True
         course_type.put()
         self.redirect_to("course-types-list")
+
+
+# PUBLIC
+
+class PublicCourseListHandler(Handler):
+    def get(self):
+        course_list = Course.query(Course.deleted == False).fetch()
+
+        courses = []
+        for course in course_list:
+            course.price_min = str(course.price[0]).replace(".", ",0")
+            courses.append(course)
+
+        params = {"courses": courses}
+        self.render_template("public/course_list.html", params=params)

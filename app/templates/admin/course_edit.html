@@ -41,6 +41,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Category (like Programming, Graphic design etc.)</label>
+                    <input type="text" class="form-control" value="{{course.category}}" placeholder="Category" name="category" id="courseCategory">
+                </div>
+
+                <div class="form-group">
                     <label>Title</label>
                     <input type="text" class="form-control" value="{{course.title}}" placeholder="Title" name="title" id="courseTitle">
                 </div>
@@ -83,6 +88,11 @@
                         <option disabled>------</option>
                         <option value="EUR">EUR</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Summary (short description, up to 120 chars)</label>
+                    <input type="text" class="form-control" value="{{course.summary}}" placeholder="Summary" name="summary" id="courseSummary">
                 </div>
 
                 <div class="form-group">

@@ -23,9 +23,9 @@ from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlog
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
-    AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler
+    AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, PublicCourseListHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
-from app.handlers.public import MainHandler, TempMainHandler, PublicCourseListHandler, PublicPartnersHandler, \
+from app.handlers.public import MainHandler, TempMainHandler, PublicPartnersHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \

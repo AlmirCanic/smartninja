@@ -11,11 +11,6 @@ class TempMainHandler(Handler):
         self.render_template("public/main2.html")
 
 
-class PublicCourseListHandler(Handler):
-    def get(self):
-        self.render_template("public/course_list.html")
-
-
 class PublicPartnersHandler(Handler):
     def get(self):
         self.render_template("public/partners.html")
