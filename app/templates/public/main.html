@@ -97,15 +97,26 @@
 
             {% for course in courses %}
             <!-- COURSE -->
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div
+                    {% if courses|count() == 4 %}
+                        class="col-lg-3 col-md-6 col-sm-6"
+                    {% elif courses|count() == 3 %}
+                        class="col-lg-4 col-md-6 col-sm-6"
+                    {% elif courses|count() == 2 %}
+                        class="col-lg-6 col-md-6 col-sm-6"
+                    {% else %}
+                        class="col-lg-3 col-md-6 col-sm-6"
+                    {% endif %}
+                >
                 <div class="col-item">
                     <span class="ribbon_course"></span>
 
                     <div class="photo">
-                        <a href="#"><img src="{{course.image_url}}" /></a>
+                        <a href="/course/{{course.get_id}}"><img src="{{course.image_url}}" /></a>
                         <div class="cat_row">
 
-                            <a href="#" class="category">{{course.category}}</a>
+                            <!--<a class="category">{{course.category}}</a>-->
+                            <a class="category">{{course.city}}</a>
 
                             <span class="pull-right">
                                 <i class=" icon-calendar"></i>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}
@@ -123,8 +134,8 @@
                         </div>
                         <br>
                         <div class="separator clearfix">
-                            <p class="btn-add"> <a href="#"><i class="icon-export-4"></i> Prijavi se</a></p>
-                            <p class="btn-details"> <a href="#"><i class=" icon-list"></i> Več ...</a></p>
+                            <p class="btn-add"> <a href="/course/{{course.get_id}}"><i class="icon-export-4"></i> Prijavi se</a></p>
+                            <p class="btn-details"> <a href="/course/{{course.get_id}}"><i class=" icon-list"></i> Več ...</a></p>
                         </div>
                     </div>
                 </div>
@@ -135,7 +146,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <a href="#" class="button_medium_outline pull-right">Poglej vse tečaje</a>
+                <a href="/courses" class="button_medium_outline pull-right">Poglej vse tečaje</a>
             </div>
         </div>
     </div>   <!-- End container -->
@@ -204,7 +215,7 @@
             <div class="col-md-8 col-md-offset-2 text-center">
                 <div class="row">
                     <div class="col-md-2 hidden-sm hidden-xs"><img src="/assets/img/public/arrow_hand_1.png" alt="Arrow" > </div>
-                    <div class="col-md-8"><a href="#" class="button_big">Nauči se nekaj novega!</a> </div>
+                    <div class="col-md-8"><a href="/courses" class="button_big">Nauči se nekaj novega!</a> </div>
                 </div>
             </div>
         </div>

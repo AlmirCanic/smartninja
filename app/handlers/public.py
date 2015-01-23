@@ -5,7 +5,13 @@ from app.models.course import Course
 
 class MainHandler(Handler):
     def get(self):
-        courses = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch(4)
+        course_list = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch(4)
+
+        courses = []
+        for course in course_list:
+            course.price_min = str(course.price[0]).replace(".", ",0")
+            courses.append(course)
+
         params = {"courses": courses}
         self.render_template("public/main.html", params=params)
 

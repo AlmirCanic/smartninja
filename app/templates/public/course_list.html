@@ -32,10 +32,11 @@
                             <span class="ribbon_course"></span>
 
                             <div class="photo">
-                                <a href="#"><img src="{{course.image_url}}" /></a>
+                                <a href="/course/{{course.get_id}}"><img src="{{course.image_url}}" /></a>
                                 <div class="cat_row">
 
-                                    <a href="#" class="category">{{course.category}}</a>
+                                    <!--<a class="category">{{course.category}}</a>-->
+                                    <a class="category">{{course.city}}</a>
 
                                     <span class="pull-right">
                                         <i class=" icon-calendar"></i>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}
@@ -53,8 +54,8 @@
                                 </div>
                                 <br>
                                 <div class="separator clearfix">
-                                    <p class="btn-add"> <a href="#"><i class="icon-export-4"></i> Prijavi se</a></p>
-                                    <p class="btn-details"> <a href="#"><i class=" icon-list"></i> Več ...</a></p>
+                                    <p class="btn-add"> <a href="/course/{{course.get_id}}"><i class="icon-export-4"></i> Prijavi se</a></p>
+                                    <p class="btn-details"> <a href="/course/{{course.get_id}}"><i class=" icon-list"></i> Več ...</a></p>
                                 </div>
                             </div>
                         </div>
