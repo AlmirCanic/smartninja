@@ -2,6 +2,22 @@
 
 {% block title %}Add new course{% endblock title %}
 
+{% block scripts %}
+    <link rel="stylesheet" type="text/css" href="/assets/js/markitup/skins/markitup/style.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/js/markitup/sets/markdown/style.css" />
+
+    <script type="text/javascript" src="/assets/js/markitup/jquery.markitup.js"></script>
+    <script type="text/javascript" src="/assets/js/markitup/sets/markdown/set.js"></script>
+
+    <script type="text/javascript" src="/assets/js/admin/slugify.js"></script>
+
+    <script language="javascript">
+        $(document).ready(function()	{
+            $('#markdown').markItUp(mySettings);
+        });
+    </script>
+{% endblock scripts %}
+
 {% block main_content %}
 <div class="main">
     <!-- Breadcrumb -->
@@ -41,7 +57,7 @@
                     <select class="form-control" name="instructor" id="courseInstructor">
                         <option value="" selected>Select course instructor</option>
                         {% for instructor in instructors %}
-                            <option value="{{ instructor.get_id }}">{{ instructor.get_full_name }}</option>
+                            <option value="{{ instructor.get_id }}|{{ instructor.get_full_name }}">{{ instructor.get_full_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -102,7 +118,8 @@
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea class="form-control" name="description" id="courseDescription"></textarea>
+                    <p>See <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown CheatSheet</a></p>
+                    <textarea class="form-control" style="height: 300px;" name="description" id="markdown"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>

@@ -23,10 +23,6 @@
     </div>
     <!-- Breadcrumb end -->
 
-    <p>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}} - {{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}, {{ course.city }} ({{ course.place }})</p>
-    <p>Price(s): {{ course_price }} ({{ course.currency }})</p>
-    <p>Summary: {{ course.summary }}</p>
-
     <div class="row">
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-primary">
@@ -130,6 +126,39 @@
     {% else %}
         <p>No applications yet :(</p>
     {% endif %}
+
+    <h3>About course</h3>
+    <p>{{ course.summary }}</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>City</th>
+                            <th>Place</th>
+                            <th>Prices</th>
+                            <th>Instructor</th>
+                            <th>Course type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{course.start_date}}</td>
+                            <td>{{course.end_date}}</td>
+                            <td>{{course.city}}</td>
+                            <td>{{course.place}}</td>
+                            <td>{{course.price}}</td>
+                            <td><a href="/admin/user/{{course.instructor}}">{{course.instructor_name}}</a></td>
+                            <td><a href="/admin/course/type/{{course.course_type}}">{{course.course_type}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <a href="/admin/course/{{course.get_id}}/edit"><button class="btn btn-success">Edit course</button></a>
     <a href="/admin/course/{{course.get_id}}/delete"><button class="btn btn-danger">Delete course</button></a>

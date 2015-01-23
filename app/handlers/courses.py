@@ -1,8 +1,14 @@
 import datetime
+import os
+import sys
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType
 from app.utils.decorators import admin_required
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../libs'))
+
+import markdown2
 
 
 class AdminCourseListHandler(Handler):
@@ -42,7 +48,7 @@ class AdminCourseDetailsHandler(Handler):
 class AdminCourseAddHandler(Handler):
     @admin_required
     def get(self):
-        course_types = CourseType.query().fetch()
+        course_types = CourseType.query(CourseType.deleted == False).fetch()
         instructors = User.query(User.instructor == True).fetch()
         params = {"course_types": course_types, "instructors": instructors}
         self.render_template("admin/course_add.html", params)
@@ -64,9 +70,11 @@ class AdminCourseAddHandler(Handler):
         instructor = self.request.get("instructor")
 
         try:
-            instructor = int(instructor)
+            instructor_id, instructor_name = instructor.split("|")
+            instructor = int(instructor_id)
         except Exception, e:
             instructor = None
+            instructor_name = None
 
         if course_type and title and city and place and start_date and end_date and price and currency:
             prices = [float(prc) for prc in price.strip().split(",")]
@@ -76,21 +84,23 @@ class AdminCourseAddHandler(Handler):
             Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
-                          category=category, instructor=instructor)
+                          category=category, instructor=instructor, instructor_name=instructor_name)
             self.redirect_to("course-list")
 
 
 class AdminCourseEditHandler(Handler):
     @admin_required
     def get(self, course_id):
-        course_types = CourseType.query().fetch()
+        course_types = CourseType.query(CourseType.deleted == False).fetch()
         course = Course.get_by_id(int(course_id))
         selected_course_type = CourseType.get_by_id(course.course_type)
+        instructors = User.query(User.instructor == True).fetch()
         course_price = str(course.price).replace("[", "").replace("]", "")
         params = {"course": course,
                   "course_types": course_types,
                   "course_price": course_price,
-                  "selected_course_type": selected_course_type}
+                  "selected_course_type": selected_course_type,
+                  "instructors": instructors}
         self.render_template("admin/course_edit.html", params)
 
     @admin_required
@@ -112,9 +122,11 @@ class AdminCourseEditHandler(Handler):
         course = Course.get_by_id(int(course_id))
 
         try:
-            instructor = int(instructor)
+            instructor_id, instructor_name = instructor.split("|")
+            instructor = int(instructor_id)
         except Exception, e:
             instructor = None
+            instructor_name = None
 
         if course_type and title and city and place and start_date and end_date and price and currency:
             prices = [float(prc) for prc in price.strip().split(",")]
@@ -124,7 +136,7 @@ class AdminCourseEditHandler(Handler):
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
-                           summary=summary, category=category, instructor=instructor)
+                           summary=summary, category=category, instructor=instructor, instructor_name=instructor_name)
             self.redirect_to("course-details", course_id=int(course_id))
 
 
@@ -227,5 +239,17 @@ class PublicCourseDetailsHandler(Handler):
         course = Course.get_by_id(int(course_id))
         if course.deleted:
             self.redirect_to("404")
-        params = {"course": course}
+
+        try:
+            instructor = User.get_by_id(course.instructor)
+        except Exception, e:
+            instructor = None
+
+        # markdown
+        markdowner = markdown2.Markdown()
+        course.description = markdowner.convert(course.description)
+
+        courses = Course.query(Course.deleted == False).fetch()
+
+        params = {"course": course, "instructor": instructor, "courses": courses}
         self.render_template("public/course_details.html", params=params)

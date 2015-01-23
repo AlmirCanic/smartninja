@@ -26,50 +26,36 @@
 
 <div class="row">
      		<div class="col-md-8">
-            <h2>{{course.title}}</h2>
-             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                <h2>{{course.title}}</h2>
+                <p>{{course.description}}</p>
 
-                <blockquote class="styled">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
-                    <small>Someone famous in <cite title="">Body of work</cite></small>
-             </blockquote>
-
-             <p><img src="img/pic_1.jpg" width="800" height="400" alt="Pic" class="img-responsive"></p>
-
-             <h4>Text of the printing</h4>
-             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-            <hr>
-            <div class="clearfix text-center"><a href="#" class="pull-left button_medium_outline"> <i class="icon-left-open"></i></a><a href="#" class="button_medium_outline">Mark as complete</a>   <a href="#" class="pull-right button_medium_outline"><i class="icon-right-open"></i></a></div>
             </div><!-- End col-md-8  -->
 
             <aside class="col-md-4">
 
        	 	<div class="box_style_1">
-                    <h4><a href="/courses">Back to courses <i class="icon-back pull-right"></i></a></h4><br>
+                    <h4><a href="/courses">Nazaj na seznam tečajev <i class="icon-back pull-right"></i></a></h4><br>
 
                     <h4>Inštruktor</h4>
 
                     <div class="media">
                         <div class="pull-right">
-                            <img src="/assets/img/public/matej2.jpg" height="50px" class="img-circle" alt="">
+                            <img src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="">
                         </div>
                         <div class="media-body">
-                            <h5 class="media-heading"><a href="#">Matej Ramuta</a></h5>
-                            <p>
-                                Izkušen web/mobile developer specializiran za Python in Google App Engine.
-                            </p>
+                            <h5 class="media-heading"><a href="#">{{course.instructor_name}}</a></h5>
+                            <p>{{instructor.summary}}</p>
                         </div>
                     </div>
 
+                {% if courses %}
                     <h4>Ostali tečaji</h4>
                     <ul class="list_1">
-                          <li><a href="#">Ceteros mediocritatem</a></li>
-                          <li><a href="#">Labore nostrum</a></li>
-                          <li><a href="#">Primis bonorum</a></li>
-                          <li><a href="#">Ceteros mediocritatem</a></li>
+                        {% for course in courses %}
+                          <li><a href="/course/{{course.get_id}}">{{course.title}}</a></li>
+                        {% endfor %}
                      </ul>
+                {% endif%}
            </div>
 
          </aside> <!-- End col-md-4 -->
