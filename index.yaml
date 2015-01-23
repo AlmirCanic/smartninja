@@ -16,6 +16,11 @@ indexes:
   - name: created
     direction: desc
 
+- kind: Course
+  properties:
+  - name: deleted
+  - name: start_date
+
 - kind: CourseApplication
   properties:
   - name: course_id

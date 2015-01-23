@@ -1,9 +1,13 @@
+import datetime
 from app.handlers.base import Handler
+from app.models.course import Course
 
 
 class MainHandler(Handler):
     def get(self):
-        self.render_template("public/main.html")
+        courses = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch(4)
+        params = {"courses": courses}
+        self.render_template("public/main.html", params=params)
 
 
 class TempMainHandler(Handler):

@@ -68,6 +68,7 @@ class AdminCourseAddHandler(Handler):
         category = self.request.get("category")
         spots = self.request.get("spots")
         instructor = self.request.get("instructor")
+        image_url = self.request.get("image_url")
 
         try:
             instructor_id, instructor_name = instructor.split("|")
@@ -84,7 +85,7 @@ class AdminCourseAddHandler(Handler):
             Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
-                          category=category, instructor=instructor, instructor_name=instructor_name)
+                          category=category, instructor=instructor, instructor_name=instructor_name, image_url=image_url)
             self.redirect_to("course-list")
 
 
@@ -118,6 +119,7 @@ class AdminCourseEditHandler(Handler):
         category = self.request.get("category")
         spots = self.request.get("spots")
         instructor = self.request.get("instructor")
+        image_url = self.request.get("image_url")
 
         course = Course.get_by_id(int(course_id))
 
@@ -136,7 +138,8 @@ class AdminCourseEditHandler(Handler):
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
-                           summary=summary, category=category, instructor=instructor, instructor_name=instructor_name)
+                           summary=summary, category=category, instructor=instructor, instructor_name=instructor_name,
+                           image_url=image_url)
             self.redirect_to("course-details", course_id=int(course_id))
 
 
@@ -223,7 +226,7 @@ class AdminCourseTypeDeleteHandler(Handler):
 
 class PublicCourseListHandler(Handler):
     def get(self):
-        course_list = Course.query(Course.deleted == False).fetch()
+        course_list = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
 
         courses = []
         for course in course_list:
