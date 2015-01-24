@@ -42,11 +42,17 @@
                         {% for course in courses %}
                         <tr>
                             <td><a href="/admin/course/{{course.get_id}}">{{ course.title }}</a></td>
-                            <td>{{ course.place }}</td>
+                            <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{ course.start_date }}</td>
                             <td>{{ course.end_date }}</td>
                             <td>{{ course.taken }}/{{ course.spots }}</td>
-                            <td><a href="/admin/user/{{ course.instructor }}">{{ course.instructor_name }}</a></td>
+                            <td>
+                                {% if course.instructor_name %}
+                                    <a href="/admin/user/{{ course.instructor }}">
+                                        {{ course.instructor_name }}
+                                    </a>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
