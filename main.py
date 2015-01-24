@@ -16,8 +16,9 @@
 #
 import webapp2
 from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetailsHandler, \
-    AdminCourseApplicationDeleteHandler
-from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler
+    AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler
+from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
+    OopsHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler
@@ -54,6 +55,7 @@ app = webapp2.WSGIApplication([
     # course
     webapp2.Route('/courses', PublicCourseListHandler, name="public-courses"),
     webapp2.Route('/course/<course_id:\d+>', PublicCourseDetailsHandler, name="public-course-details"),
+    webapp2.Route('/course/<course_id:\d+>/apply', PublicCourseApplicationAddHandler, name="public-application-add"),
 
 
     # ADMIN URLS
@@ -97,5 +99,6 @@ app = webapp2.WSGIApplication([
     # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
     webapp2.Route('/404', NotExistHandler, name="404"),
+    webapp2.Route('/oops', OopsHandler, name="oops"),
     webapp2.Route('/secured', SecuredSiteHandler, name="secured"),
 ], debug=True)

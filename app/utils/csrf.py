@@ -10,3 +10,7 @@ def get_csrf():
     memcache.add(key=random_csrf, value=True, time=3600)
 
     return random_csrf
+
+
+def check_csrf(csrf):
+    return memcache.get(key=csrf)

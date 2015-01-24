@@ -23,6 +23,11 @@ class NotExistHandler(Handler):
         self.render_template("404.html")
 
 
+class OopsHandler(Handler):
+    def get(self):
+        self.render_template("oops.html")
+
+
 class ProfileHandler(Handler):
     def get(self):
         current_user = users.get_current_user()

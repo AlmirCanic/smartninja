@@ -4,6 +4,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, CourseApplication
 from app.settings import is_local
+from app.utils.csrf import check_csrf
 from app.utils.decorators import admin_required
 
 
@@ -47,9 +48,16 @@ class AdminCourseApplicationDeleteHandler(Handler):
 # PUBLIC
 
 class PublicCourseApplicationAddHandler(Handler):
-    def post(self):
-        application = CourseApplication.create()
-        self.redirect_to("course-details", course_id=application.course_id)
+    def post(self, course_id):
+        hidden = self.request.get("hidden")
+        csrf = self.request.get("csrf")
+        if hidden:
+            return self.redirect_to("public-course-details", course_id=int(course_id))
+        elif check_csrf(csrf):
+            #application = CourseApplication.create()
+            self.redirect_to("apply-thank-you")
+        else:
+            return self.redirect_to("oops")
 
 
 # TODO: just temporary, delete after feb 2015
