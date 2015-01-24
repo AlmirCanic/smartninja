@@ -1,5 +1,5 @@
 import datetime
-from app.emails.apply import prijava_februar, email_course_application_thank_you
+from app.emails.apply import prijava_februar, email_course_application_thank_you, email_course_app_to_smartninja
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, CourseApplication
@@ -37,11 +37,7 @@ class AdminCourseApplicationDeleteHandler(Handler):
     @admin_required
     def post(self, application_id):
         application = CourseApplication.get_by_id(int(application_id))
-        application.deleted = True
-        application.put()
-        course = Course.get_by_id(int(application.course_id))
-        course.taken -= 1
-        course.put()
+        CourseApplication.delete(application=application)
         self.redirect_to("course-details", course_id=application.course_id)
 
 
@@ -54,8 +50,46 @@ class PublicCourseApplicationAddHandler(Handler):
         if hidden:
             return self.redirect_to("public-course-details", course_id=int(course_id))
         elif check_csrf(csrf):
-            #application = CourseApplication.create()
-            self.redirect_to("apply-thank-you")
+            first_name = self.request.get("first_name")
+            last_name = self.request.get("last_name")
+            email = self.request.get("email").strip()
+            address = self.request.get("address")
+            dob = self.request.get("dob")
+            phone = self.request.get("phone")
+            laptop = self.request.get("laptop")
+            shirt = self.request.get("shirt")
+            price = self.request.get("price")
+
+            # TODO: invoice on company
+
+            if first_name and last_name and email and address and dob and phone and laptop and shirt:
+                user = User.get_by_email(email)
+
+                if not user:
+                    # add user to database
+                    user = User.create(first_name=first_name, last_name=last_name, email=email, address=address,
+                                       dob=dob, phone_number=phone)
+
+                course = Course.get_by_id(int(course_id))
+
+                if not price:
+                    price = str(course.price[0])
+
+                course_app = CourseApplication.create(course=course, student_name=user.get_full_name, student_id=user.get_id,
+                                                      student_email=email, price=float(price), currency=course.currency,
+                                                      laptop=laptop, shirt=shirt)
+
+                # send email to info@smartninja.org
+                if not is_local():
+                    email_course_app_to_smartninja(course=course, user=user, application=course_app)
+
+                # send email to the student
+                if not is_local():
+                    email_course_application_thank_you(course_app)
+                return self.redirect_to("apply-thank-you")
+            else:
+                # TODO: error in params
+                return self.redirect_to("oops")
         else:
             return self.redirect_to("oops")
 

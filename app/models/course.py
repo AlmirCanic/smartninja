@@ -101,16 +101,26 @@ class CourseApplication(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, course_title, course_id, student_name, student_id, student_email, price, currency, laptop, shirt,
+    def create(cls, course, student_name, student_id, student_email, price, currency, laptop, shirt,
                company_invoice=False, company_title=None, company_address=None, company_town=None, company_zip=None,
                company_tax_number=None, other_info=None):
-        course_app = cls(course_title=course_title, course_id=course_id, student_name=student_name, student_id=student_id,
+        course_app = cls(course_title=course.title, course_id=course.get_id, student_name=student_name, student_id=student_id,
                          student_email=student_email, price=price, currency=currency, laptop=laptop, shirt=shirt,
                          company_invoice=company_invoice, company_title=company_title, company_address=company_address,
                          company_town=company_town, company_zip=company_zip, company_tax_number=company_tax_number,
                          other_info=other_info)
         course_app.put()
+        course.taken += 1
+        course.put()
         return course_app
+
+    @classmethod
+    def delete(cls, application):
+        application.deleted = True
+        application.put()
+        course = Course.get_by_id(int(application.course_id))
+        course.taken -= 1
+        course.put()
 
     @classmethod
     def create_temp(cls, course_title, course_id, student_name, student_id, student_email, price, currency, laptop, shirt):
