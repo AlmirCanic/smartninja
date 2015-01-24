@@ -24,16 +24,34 @@
 <section id="main_content">
     <div class="container">
 
-<div class="row">
-     		<div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8">
                 <h2>{{course.title}}</h2>
                 <p>{{course.description}}</p>
 
+                <h3 id="courseApplication">Prijava na tečaj</h3>
+                <form action="/course/{{course.get_id}}/apply" method="post">
+                    <input type="hidden" name="hidden">
+                    <input type="hidden" name="csrf" value="{{csrf}}">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" class="required form-control" placeholder="Ime"><span class="input-icon"><i class="icon-user"></i></span>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div><!-- end col-md-6 -->
+                    </div><!-- end row -->
+                </form>
             </div><!-- End col-md-8  -->
 
             <aside class="col-md-4">
-
-       	 	<div class="box_style_1">
+                <div class="box_style_1">
                     <h4><a href="/courses">Nazaj na seznam tečajev <i class="icon-back pull-right"></i></a></h4><br>
 
                     <h4>Inštruktor</h4>
@@ -42,25 +60,24 @@
                         <div class="pull-right">
                             <img src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="">
                         </div>
+
                         <div class="media-body">
                             <h5 class="media-heading"><a href="#">{{course.instructor_name}}</a></h5>
                             <p>{{instructor.summary}}</p>
                         </div>
                     </div>
 
-                {% if courses %}
-                    <h4>Ostali tečaji</h4>
-                    <ul class="list_1">
-                        {% for course in courses %}
-                          <li><a href="/course/{{course.get_id}}">{{course.title}}</a></li>
-                        {% endfor %}
-                     </ul>
-                {% endif%}
-           </div>
-
-         </aside> <!-- End col-md-4 -->
-
-     </div><!-- End row -->
+                    {% if courses %}
+                        <h4>Ostali tečaji</h4>
+                        <ul class="list_1">
+                            {% for course in courses %}
+                                <li><a href="/course/{{course.get_id}}">{{course.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif%}
+                </div>
+            </aside> <!-- End col-md-4 -->
+        </div><!-- End row -->
 
     </div><!-- End container -->
 </section><!-- End main_content -->

@@ -1,4 +1,5 @@
-from app.utils.other import convert_string_to_list, convert_list_to_string, convert_markdown_to_html
+from app.utils.csrf import get_csrf
+from app.utils.other import convert_markdown_to_html
 
 
 # TESTS
@@ -14,5 +15,12 @@ def test_converting_markdown_to_html():
     print("test_converting_markdown_to_html() test passed successfully.")
 
 
+def test_get_csrf():
+    print get_csrf()
+
+    print("test_converting_markdown_to_html() test passed successfully.")
+
+
 # RUN TESTS
 test_converting_markdown_to_html()
+test_get_csrf()

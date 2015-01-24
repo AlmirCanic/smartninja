@@ -2,6 +2,7 @@ import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType
+from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
 from app.utils.other import convert_markdown_to_html
 
@@ -236,7 +237,7 @@ class PublicCourseDetailsHandler(Handler):
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
         if course.deleted:
-            self.redirect_to("404")
+            return self.redirect_to("404")
 
         try:
             instructor = User.get_by_id(course.instructor)
@@ -247,5 +248,8 @@ class PublicCourseDetailsHandler(Handler):
 
         courses = Course.query(Course.deleted == False).fetch()
 
-        params = {"course": course, "instructor": instructor, "courses": courses}
-        self.render_template("public/course_details.html", params=params)
+        # CSRF
+        csrf = get_csrf()
+
+        params = {"course": course, "instructor": instructor, "courses": courses, "csrf": csrf}
+        return self.render_template("public/course_details.html", params=params)
