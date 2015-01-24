@@ -1,14 +1,9 @@
 import datetime
-import os
-import sys
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType
 from app.utils.decorators import admin_required
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../libs'))
-
-import markdown2
+from app.utils.other import convert_markdown_to_html
 
 
 class AdminCourseListHandler(Handler):
@@ -248,9 +243,7 @@ class PublicCourseDetailsHandler(Handler):
         except Exception, e:
             instructor = None
 
-        # markdown
-        markdowner = markdown2.Markdown()
-        course.description = markdowner.convert(course.description)
+        course.description = convert_markdown_to_html(course.description)
 
         courses = Course.query(Course.deleted == False).fetch()
 

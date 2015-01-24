@@ -1,15 +1,9 @@
-import os
-import sys
 from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.blog import BlogPost
 from app.utils.decorators import admin_required
-from app.utils.other import strip_tags
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../libs'))
-
-import markdown2
+from app.utils.other import strip_tags, convert_markdown_to_html
 
 
 class PublicBlogHandler(Handler):
@@ -18,11 +12,10 @@ class PublicBlogHandler(Handler):
 
         # convert markdown to html
         posts2 = []
-        markdowner = markdown2.Markdown()
 
         for post in posts:
             post.text = post.text[:500] + "..."
-            post.text = markdowner.convert(post.text)
+            post.text = convert_markdown_to_html(post.text)
             posts2.append(post)
 
         params = {"posts": posts2}
@@ -33,11 +26,7 @@ class PublicBlogDetailsHandler(Handler):
     def get(self, post_slug):
         post = BlogPost.query(BlogPost.slug == str(post_slug)).get()
         posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
-
-        # markdown
-        markdowner = markdown2.Markdown()
-        post.text = markdowner.convert(post.text)
-
+        post.text = convert_markdown_to_html(post.text)
         summary = strip_tags(post.text.replace('\"', ""))[:300]
 
         params = {"post": post, "posts": posts, "summary": summary}
@@ -73,11 +62,7 @@ class AdminBlogDetailsHandler(Handler):
     @admin_required
     def get(self, post_id):
         post = BlogPost.get_by_id(int(post_id))
-
-        # markdown
-        markdowner = markdown2.Markdown()
-        post.text = markdowner.convert(post.text)
-
+        post.text = convert_markdown_to_html(post.text)
         params = {"post": post}
         self.render_template("admin/blog_post_details.html", params)
 

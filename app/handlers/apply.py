@@ -44,6 +44,14 @@ class AdminCourseApplicationDeleteHandler(Handler):
         self.redirect_to("course-details", course_id=application.course_id)
 
 
+# PUBLIC
+
+class PublicCourseApplicationAddHandler(Handler):
+    def post(self):
+        application = CourseApplication.create()
+        self.redirect_to("course-details", course_id=application.course_id)
+
+
 # TODO: just temporary, delete after feb 2015
 class TempPrijavaHandler(Handler):
     def post(self):
