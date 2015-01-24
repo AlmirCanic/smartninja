@@ -55,6 +55,14 @@ class Course(ndb.Model):
     @classmethod
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, price,
                currency, category, instructor, instructor_name, image_url):
+
+        if course.title != title:
+            applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
+
+            for application in applications:
+                application.course_title = title
+                application.put()
+
         course.title = title
         course.course_type = course_type
         course.city = city
