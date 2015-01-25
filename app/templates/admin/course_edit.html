@@ -16,6 +16,8 @@
             $('#markdown').markItUp(mySettings);
         });
     </script>
+
+    <script src="/assets/js/admin/prices.js"></script>
 {% endblock scripts %}
 
 {% block main_content %}
@@ -102,10 +104,17 @@
                     <input type="date" class="form-control" value="{{course.end_date}}" name="end-date" id="courseEndDate">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group input_fields_wrap">
                     <label>Price(s)</label>
-                    <p><small>Separate multiple prices with a comma, like this: 97.00, 147.00, 197.00 (Use dot for a decimal number!!!)</small></p>
-                    <input type="text" class="form-control" value="{{course_price}}" placeholder="Price(s)" name="price" id="coursePrice">
+                    <p><a href="#" class="add_field_button">Add More Fields</a></p>
+                    {% for price in course.prices %}
+                        <div id="addedPrices">
+                            <input type="text" name="price_dot" placeholder="Price with dot" value="{{price.price_dot}}">
+                            <input type="text" name="price_comma" placeholder="Price with comma" value="{{price.price_comma}}">
+                            <input type="text" name="price_summary" placeholder="Summary" value="{{price.summary}}">
+                            <a href="#" class="remove_field">Remove</a>
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <div class="form-group">
@@ -119,7 +128,7 @@
 
                 <div class="form-group">
                     <label>Image URL</label>
-                    <p>h/w ration should be 3/5</p>
+                    <p>Image h/w ratio should be 3/5</p>
                     <input type="text" class="form-control" value="{{course_image_url}}" placeholder="A link (URL) to the image" name="image_url" id="imageURL">
                 </div>
 

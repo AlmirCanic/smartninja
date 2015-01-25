@@ -19,6 +19,13 @@ class CourseType(ndb.Model):
         return course_type
 
 
+class Price(ndb.Model):
+    price_dot = ndb.FloatProperty()
+    price_comma = ndb.StringProperty()
+    summary = ndb.StringProperty()
+    notes = ndb.StringProperty()
+
+
 class Course(ndb.Model):
     title = ndb.StringProperty()
     course_type = ndb.IntegerProperty()
@@ -38,22 +45,23 @@ class Course(ndb.Model):
     currency = ndb.StringProperty()
     image_url = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
+    prices = ndb.StructuredProperty(modelclass=Price, repeated=True)
 
     @property
     def get_id(self):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, price, currency,
+    def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, prices, currency,
                category, instructor, instructor_name, image_url):
         course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
-                     description=description, start_date=start_date, end_date=end_date, price=price, currency=currency,
+                     description=description, start_date=start_date, end_date=end_date, prices=prices, currency=currency,
                      category=category, instructor=instructor, instructor_name=instructor_name, image_url=image_url)
         course.put()
         return course
 
     @classmethod
-    def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, price,
+    def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
                currency, category, instructor, instructor_name, image_url):
 
         if course.title != title:
@@ -72,7 +80,7 @@ class Course(ndb.Model):
         course.description = description
         course.start_date = start_date
         course.end_date = end_date
-        course.price = price
+        course.prices = prices
         course.currency = currency
         course.category = category
         course.instructor = instructor

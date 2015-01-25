@@ -1,7 +1,7 @@
 import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
-from app.models.course import Course, CourseApplication, CourseType
+from app.models.course import Course, CourseApplication, CourseType, Price
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
 from app.utils.other import convert_markdown_to_html
@@ -30,14 +30,11 @@ class AdminCourseDetailsHandler(Handler):
             if application.laptop == "no":
                 num_no_laptop += 1
 
-        course_price = str(course.price).replace("[", "").replace("]", "")
-
         params = {"course": course,
                   "applications": applications,
                   "num_paid": num_paid,
                   "no_laptop": num_no_laptop,
-                  "total_paid": total_paid,
-                  "course_price": course_price}
+                  "total_paid": total_paid}
         self.render_template("admin/course_details.html", params)
 
 
@@ -57,7 +54,7 @@ class AdminCourseAddHandler(Handler):
         place = self.request.get("place")
         start_date = self.request.get("start-date")
         end_date = self.request.get("end-date")
-        price = self.request.get("price")
+        #price = self.request.get("price")
         currency = self.request.get("currency")
         summary = self.request.get("summary")
         description = self.request.get("description")
@@ -66,6 +63,12 @@ class AdminCourseAddHandler(Handler):
         instructor = self.request.get("instructor")
         image_url = self.request.get("image_url")
 
+        price_dot = self.request.get("price_dot")
+        price_comma = self.request.get("price_comma")
+        price_summary = self.request.get("price_summary")
+
+        #return self.write(price_dot)
+
         try:
             instructor_id, instructor_name = instructor.split("|")
             instructor = int(instructor_id)
@@ -73,14 +76,17 @@ class AdminCourseAddHandler(Handler):
             instructor = None
             instructor_name = None
 
-        if course_type and title and city and place and start_date and end_date and price and currency:
-            prices = [float(prc) for prc in price.strip().split(",")]
+        if course_type and title and city and place and start_date and end_date and currency:
+            #prices = [float(prc) for prc in price.strip().split(",")]
+
+            prices = [Price(price_dot=float(price_dot), price_comma=price_comma, summary=price_summary)]
+
             start = start_date.split("-")
             end = end_date.split("-")
 
             Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
-                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
+                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           category=category, instructor=instructor, instructor_name=instructor_name, image_url=image_url)
             self.redirect_to("course-list")
 
@@ -92,10 +98,8 @@ class AdminCourseEditHandler(Handler):
         course = Course.get_by_id(int(course_id))
         selected_course_type = CourseType.get_by_id(course.course_type)
         instructors = User.query(User.instructor == True).fetch()
-        course_price = str(course.price).replace("[", "").replace("]", "")
         params = {"course": course,
                   "course_types": course_types,
-                  "course_price": course_price,
                   "selected_course_type": selected_course_type,
                   "instructors": instructors}
         self.render_template("admin/course_edit.html", params)
@@ -108,7 +112,7 @@ class AdminCourseEditHandler(Handler):
         place = self.request.get("place")
         start_date = self.request.get("start-date")
         end_date = self.request.get("end-date")
-        price = self.request.get("price")
+        #price = self.request.get("price")
         currency = self.request.get("currency")
         summary = self.request.get("summary")
         description = self.request.get("description")
@@ -116,6 +120,10 @@ class AdminCourseEditHandler(Handler):
         spots = self.request.get("spots")
         instructor = self.request.get("instructor")
         image_url = self.request.get("image_url")
+
+        price_dot = self.request.get("price_dot")
+        price_comma = self.request.get("price_comma")
+        price_summary = self.request.get("price_summary")
 
         course = Course.get_by_id(int(course_id))
 
@@ -126,14 +134,15 @@ class AdminCourseEditHandler(Handler):
             instructor = None
             instructor_name = None
 
-        if course_type and title and city and place and start_date and end_date and price and currency:
-            prices = [float(prc) for prc in price.strip().split(",")]
+        if course_type and title and city and place and start_date and end_date and currency:
+            #prices = [float(prc) for prc in price.strip().split(",")]
+            prices = [Price(price_dot=float(price_dot), price_comma=price_comma, summary=price_summary)]
             start = start_date.split("-")
             end = end_date.split("-")
 
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
-                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), price=prices, currency=currency,
+                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                            summary=summary, category=category, instructor=instructor, instructor_name=instructor_name,
                            image_url=image_url)
             self.redirect_to("course-details", course_id=int(course_id))
@@ -226,7 +235,10 @@ class PublicCourseListHandler(Handler):
 
         courses = []
         for course in course_list:
-            course.price_min = str(course.price[0]).replace(".", ",0")
+            try:
+                course.price_min = str(course.price[0]).replace(".", ",0")
+            except:
+                course.price_min = course.prices[0].price_comma
             courses.append(course)
 
         params = {"courses": courses}

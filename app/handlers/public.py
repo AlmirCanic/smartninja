@@ -9,7 +9,10 @@ class MainHandler(Handler):
 
         courses = []
         for course in course_list:
-            course.price_min = str(course.price[0]).replace(".", ",0")
+            try:
+                course.price_min = str(course.price[0]).replace(".", ",0")
+            except:
+                course.price_min = course.prices[0].price_comma
             courses.append(course)
 
         params = {"courses": courses}

@@ -73,7 +73,10 @@ class PublicCourseApplicationAddHandler(Handler):
                 course = Course.get_by_id(int(course_id))
 
                 if not price:
-                    price = str(course.price[0])
+                    try:
+                        price = str(course.prices[0].price_dot)
+                    except:
+                        price = str(course.price[0])
 
                 course_app = CourseApplication.create(course=course, student_name=user.get_full_name, student_id=user.get_id,
                                                       student_email=email, price=float(price), currency=course.currency,
