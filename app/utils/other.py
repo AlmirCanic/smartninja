@@ -1,6 +1,7 @@
 from HTMLParser import HTMLParser
 import os
 import sys
+from app.models.course import Price
 
 
 def convert_markdown_to_html(text):
@@ -9,6 +10,21 @@ def convert_markdown_to_html(text):
     import markdown2
     markdowner = markdown2.Markdown()
     return markdowner.convert(text)
+
+
+def convert_prices_data(data):
+    """Converts prices data from course_add or course_edit to list of Price objects"""
+    data = data[:-2]
+    prices_data_list = data.split("{}")
+
+    price_objects_list = []
+
+    for prices_data in prices_data_list:
+        single_data_list = prices_data.split("|")
+        price = Price(price_dot=float(single_data_list[0]), price_comma=single_data_list[1], summary=single_data_list[2])
+        price_objects_list.append(price)
+
+    return price_objects_list
 
 
 # HTML parser and tags stripper

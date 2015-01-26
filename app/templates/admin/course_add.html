@@ -101,11 +101,13 @@
 
                 <div class="form-group input_fields_wrap">
                     <label>Price(s)</label>
-                    <button class="btn btn-default add_field_button">Add More Fields</button>
+                    <p>Example: 147.0 &emsp; 147,00 &emsp; Regular price</p>
+                    <button class="btn btn-default add_field_button">Add another price</button>
+                    <input type="hidden" id="allPricesData" name="all-prices-data">
                     <div id="addedPrices">
-                        <input type="text" name="price_dot" placeholder="Price with dot" class="">
-                        <input type="text" name="price_comma" placeholder="Price with comma" class="">
-                        <input type="text" name="price_summary" placeholder="Summary" class="">
+                        <input type="text" name="price_dot" placeholder="Price with dot" class="pricedot">
+                        <input type="text" name="price_comma" placeholder="Price with comma" class="pricecomma">
+                        <input type="text" name="price_summary" placeholder="Summary" class="pricesummary">
                     </div>
                 </div>
 
@@ -134,10 +136,8 @@
                     <textarea class="form-control" style="height: 300px;" name="description" id="markdown"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success" id="addCourseButton">Submit</button>
             </form>
-
-            <button type="submit" class="btn btn-default" id="addCourseButton">Test</button>
         </div>
     </div>
 

@@ -106,14 +106,17 @@
 
                 <div class="form-group input_fields_wrap">
                     <label>Price(s)</label>
-                    <p><a href="#" class="add_field_button">Add More Fields</a></p>
+                    <p>Example: 147.0 &emsp; 147,00 &emsp; Regular price</p>
+                    <button class="btn btn-default add_field_button">Add another price</button>
+                    <input type="hidden" id="allPricesData" name="all-prices-data">
+
                     {% for price in course.prices %}
-                        <div id="addedPrices">
-                            <input type="text" name="price_dot" placeholder="Price with dot" value="{{price.price_dot}}">
-                            <input type="text" name="price_comma" placeholder="Price with comma" value="{{price.price_comma}}">
-                            <input type="text" name="price_summary" placeholder="Summary" value="{{price.summary}}">
-                            <a href="#" class="remove_field">Remove</a>
-                        </div>
+                    <div id="addedPrices">
+                        <input type="text" name="price_dot" placeholder="Price with dot" class="pricedot" value="{{price.price_dot}}">
+                        <input type="text" name="price_comma" placeholder="Price with comma" class="pricecomma" value="{{price.price_comma}}">
+                        <input type="text" name="price_summary" placeholder="Summary" class="pricesummary" value="{{price.summary}}">
+                        <a href="#" class="remove_field">Remove</a>
+                    </div>
                     {% endfor %}
                 </div>
 
@@ -143,7 +146,7 @@
                     <textarea class="form-control" style="height: 300px;" name="description" id="markdown">{{course.description}}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success" id="addCourseButton">Submit</button>
             </form>
         </div>
     </div>
