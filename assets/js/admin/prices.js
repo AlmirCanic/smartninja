@@ -18,7 +18,7 @@ $(document).ready(function() {
             $(wrapper).append('<div id="addedPrices">' +
                 '<input type="text" name="price_dot" placeholder="Price with dot" class="pricedot"/> ' +
                 '<input type="text" name="price_comma" placeholder="Price with comma" class="pricecomma"/> ' +
-                '<input type="text" name="summary" placeholder="Summary" class="pricesummary"/> ' +
+                '<input type="text" name="price_summary" placeholder="Summary" class="pricesummary"/> ' +
                 '<a href="#" class="remove_field">Remove</a>' +
                 '</div>'); //add input box
         }
