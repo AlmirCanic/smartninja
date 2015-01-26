@@ -160,3 +160,30 @@ ul.list_1 {
 	font-weight: normal;
 	font-size:14px;
 }
+
+#complete button {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size:18px;
+	border:2px solid  #ff6666;
+	color:#ff6666;
+	padding:15px 35px;
+	text-decoration:none;
+	transition: background .5s ease;
+	-moz-transition: background .5s ease;
+	-webkit-transition: background .5s ease;
+	-o-transition: background .5s ease;
+	display:inline-block;
+	cursor:pointer;
+	font-weight:600;
+	text-transform:uppercase;
+	outline:none;
+	background:#fff;
+}
+
+#complete button:hover {
+    background:#ff6666;
+    color:#fff;
+    border:2px solid #ff6666;
+}

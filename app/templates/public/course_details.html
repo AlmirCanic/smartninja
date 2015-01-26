@@ -61,17 +61,17 @@
                                     </div>
                                 </li>
 
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="dob" class="required form-control" placeholder="Datum rojstva"><span class="input-icon"><i class="icon-star"></i></span>
+                                    </div>
+                                </li>
 
                             </ul>
                         </div><!-- end col-md-6 -->
 
                         <div class="col-md-6">
                             <ul class="data-list">
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="dob" class="required form-control" placeholder="Datum rojstva"><span class="input-icon"><i class="icon-star"></i></span>
-                                    </div>
-                                </li>
 
                                 <li>
                                     <div class="form-group">
@@ -104,10 +104,39 @@
                                     </div>
                                 </li>
 
+                                <li>
+                                    <div class="styled-select">
+                                        <select class="form-control required" name="price">
+                                            <option value="" selected>Kotizacija</option>
+                                            {% for price in course.prices %}
+                                                <option value="{{price.price_dot}}">{{price.price_comma}} {{course.currency}} - {{price.summary}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+
                             </ul>
                         </div><!-- end col-md-6 -->
                     </div><!-- end row -->
-                    <button type="submit" class="btn btn-success">Prijavi se!</button>
+
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-2">
+                            <strong>S prijavo sprejemaš <a href="#" data-toggle="modal" data-target="#myModal">pravila in pogoje šole programiranja SmartNinja</a>.</strong>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="submit step" id="complete">
+                            <!--<p>Prijave zaprte</p>-->
+                            <button type="submit" name="process" class="submit" id="prijava-gumb">Oddaj prijavo</button>
+                            <br>
+                            <p style="color: red;">{{ error }}</p>
+                        </div><!-- end submit step -->
+                    </div>
+
+
                 </form>
             </div><!-- End col-md-8  -->
 
