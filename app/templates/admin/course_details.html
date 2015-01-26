@@ -172,7 +172,7 @@
                     <tbody>
                         {% for price in course.prices %}
                         <tr>
-                            <td>{{price.price_comma}}</td>
+                            <td>{{price.price_comma}} {{course.currency}}</td>
                             <td>{{price.summary}}</td>
                         </tr>
                         {% endfor %}
