@@ -59,6 +59,8 @@ class PublicCourseApplicationAddHandler(Handler):
             laptop = self.request.get("laptop")
             shirt = self.request.get("shirt")
             price = self.request.get("price")
+            company = self.request.get("company_invoice")
+            other_info = self.request.get("other_info")
 
             # TODO: invoice on company
 
@@ -78,9 +80,25 @@ class PublicCourseApplicationAddHandler(Handler):
                     except:
                         price = str(course.price[0])
 
-                course_app = CourseApplication.create(course=course, student_name=user.get_full_name, student_id=user.get_id,
+                if company:
+                    company_title = self.request.get("company_title")
+                    company_address = self.request.get("company_address")
+                    company_zip = self.request.get("company_zip")
+                    company_town = self.request.get("company_town")
+                    company_tax = self.request.get("company_tax")
+                    course_app = CourseApplication.create(course=course, student_name=user.get_full_name,
+                                                          student_id=user.get_id, student_email=email,
+                                                          price=float(price), currency=course.currency, laptop=laptop,
+                                                          shirt=shirt, company_invoice=True, company_title=company_title,
+                                                          company_address=company_address, company_zip=company_zip,
+                                                          company_town=company_town, company_tax_number=company_tax,
+                                                          other_info=other_info)
+                elif not company:
+                    course_app = CourseApplication.create(course=course, student_name=user.get_full_name, student_id=user.get_id,
                                                       student_email=email, price=float(price), currency=course.currency,
-                                                      laptop=laptop, shirt=shirt)
+                                                      laptop=laptop, shirt=shirt, other_info=other_info)
+                else:
+                    return self.redirect_to("oops")
 
                 # send email to info@smartninja.org
                 if not is_local():

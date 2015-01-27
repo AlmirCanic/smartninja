@@ -2,6 +2,10 @@
 
 {% block title %}Seznam tečajev{% endblock title %}
 
+{% block scripts %}
+    <script src="/assets/js/public/company_data.js"></script>
+{% endblock scripts %}
+
 {% block main_content %}
 <section id="sub-header-mid">
     <div class="container">
@@ -143,8 +147,78 @@
                                     </div>
                                 </li>
 
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="company-invoice" name="company_invoice"> Želim račun na podjetje
+                                    </label>
+                                </div>
+
                             </ul>
                         </div><!-- end col-md-6 -->
+                    </div><!-- end row -->
+
+                    <div class="row" id="company-data">
+                        <div class="col-md-6">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" id="company-title" name="company_title" class="required form-control" placeholder="Ime podjetja"><span class="input-icon"><i class="icon-suitcase"></i></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" id="company-address" name="company_address" class="required form-control" placeholder="Naslov podjetja"><span class="input-icon"><i class="icon-commerical-building"></i></span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div><!-- end col-md-6 -->
+
+                        <div class="col-md-6">
+                            <ul class="data-list">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="data-list">
+                                            <li>
+                                                <div class="form-group">
+                                                    <input type="text" id="company-zip" name="company_zip" class="required form-control" placeholder="Poštna številka">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <ul class="data-list">
+                                            <li>
+                                                <div class="form-group">
+                                                    <input type="text" id="company-town" name="company_town" class="required form-control" placeholder="Kraj">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" id="company-tax" name="company_tax" class="required form-control" placeholder="Davčna številka">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="form-group">
+                                        <textarea rows="3" name="other_info" class="form-control" placeholder="Nam želiš še kaj sporočiti?" style="height:100px;"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div><!-- end row -->
 
                     <div class="row">
