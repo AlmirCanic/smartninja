@@ -16,7 +16,7 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- SB Admin CSS -->
-    <link href="/assets/css/admin/sb-admin.css" rel="stylesheet">
+    <link href="/assets/css/admin/sb-admin-2.css" rel="stylesheet">
 
     <!-- SB Admin Fonts -->
     <link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -76,31 +76,16 @@
                     <li><a href="/login"><i class="fa fa-fw fa-sign-in"></i> Login</a></li>
                 {% endif %}
             </ul>
-
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li>
+            
+            <!-- Sidebar -->
+            
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav in" id="side-menu">
+                        <li>
                         <a href="/admin/courses"><i class="fa fa-fw fa-university"></i> Courses</a>
                     </li>
-
-                    <!--
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo">
-                            <i class="fa fa-fw fa-university"></i> Courses <i class="fa fa-fw fa-caret-down"></i>
-                        </a>
-
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Course #1</a>
-                            </li>
-                            <li>
-                                <a href="#">Course #2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    -->
-
+                    
                     <li>
                         <a href="/admin/users"><i class="fa fa-fw fa-users"></i> Users</a>
                     </li>
@@ -112,9 +97,13 @@
                     <li>
                         <a href="/admin/blog"><i class="fa fa-fw fa-book"></i> Blog</a>
                     </li>
-
-                </ul>
+                    </ul>
+                </div>
             </div>
+            
+            <!-- Sidebar -->
+
+            
             <!-- /.navbar-collapse -->
         </nav>
 
