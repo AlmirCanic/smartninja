@@ -6,6 +6,26 @@
     <script src="/assets/js/public/company_data.js"></script>
 {% endblock scripts %}
 
+{% block social %}
+    <!-- START FACEBOOK OPEN GRAPH -->
+    <meta name="og:url" content="http://smartninja.org">
+    <meta name="og:title" content="{{course.title}}">
+    <meta name="og:description" content="{{course.summary}}">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="{{course.image_url}}">
+    <!-- END FACEBOOK OPEN GRAPH -->
+
+    <!-- START TWITTER CARDS -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="{{course.title}}">
+    <meta name="twitter:description" content="{{course.summary}} #SmartNinja">
+    <meta name="twitter:creator" content="@smartninjaorg">
+    <meta name="twitter:image" content="{{course.image_url}}">
+    <meta name="twitter:url" content="http://smartninja.org">
+    <!-- END TWITTER CARDS -->
+{% endblock social %}
+
 {% block main_content %}
 <section id="sub-header-mid">
     <div class="container">
