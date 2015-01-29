@@ -189,11 +189,16 @@ ul.list_1 {
 }
 
 .newsletter {
-	background:#1c1c1c no-repeat center 60px;
-	color:#fff;
-	width:100%;
-	padding-top:30px;
+    background: #1c1c1c no-repeat center 60px;
+    color: #fff;
+    width: 100%;
+    padding-top: 30px;
     padding-bottom: 50px;
-	text-align:center;
-	font-size:13px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.faq-bottom-text
+{
+    text-align:center;
 }
