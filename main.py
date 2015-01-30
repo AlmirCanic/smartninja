@@ -17,7 +17,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     PublicCourseDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
-    AdminPartnerDeleteHandler
+    AdminPartnerDeleteHandler, AdminPartnerEditHandler
 from app.handlers.public import MainHandler, TempMainHandler, PublicPartnersHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
@@ -85,6 +85,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/partner/add', AdminPartnerAddHandler, name="admin-partner-add"),
     webapp2.Route('/admin/partner/<partner_id:\d+>', AdminPartnerDetailsHandler, name="admin-partner-details"),
     webapp2.Route('/admin/partner/<partner_id:\d+>/delete', AdminPartnerDeleteHandler, name="admin-partner-delete"),
+    webapp2.Route('/admin/partner/<partner_id:\d+>/edit', AdminPartnerEditHandler, name="admin-partner-edit"),
 
     # blog
     webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),

@@ -20,3 +20,14 @@ class Partner(ndb.Model):
         partner = cls(title=title, summary=summary, website=website, description=description, country=country, logo=logo)
         partner.put()
         return partner
+
+    @classmethod
+    def update(cls, partner, title, summary, website, country, logo, description):
+        partner.title = title
+        partner.summary = summary
+        partner.website = website
+        partner.country = country
+        partner.logo = logo
+        partner.description = description
+        partner.put()
+        return partner
