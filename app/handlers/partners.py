@@ -11,6 +11,25 @@ class AdminPartnersListHandler(Handler):
         self.render_template("admin/partners_list.html", params)
 
 
+class AdminPartnerAddHandler(Handler):
+    @admin_required
+    def get(self):
+        params = {}
+        self.render_template("admin/partner_add.html", params)
+
+    @admin_required
+    def post(self):
+        title = self.request.get("title")
+        country = self.request.get("country")
+        website = self.request.get("website")
+        logo = self.request.get("logo")
+        summary = self.request.get("logo")
+        description = self.request.get("logo")
+
+        Partner.create(title=title, country=country, website=website, logo=logo, summary=summary, description=description)
+
+        self.redirect_to("admin-partners-list")
+
 """
 class AdminUserDetailsHandler(Handler):
     @admin_required

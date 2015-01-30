@@ -5,6 +5,8 @@ class Partner(ndb.Model):
     title = ndb.StringProperty()
     summary = ndb.StringProperty()
     website = ndb.StringProperty()
+    country = ndb.StringProperty()
+    logo = ndb.StringProperty()
     description = ndb.TextProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
@@ -14,7 +16,7 @@ class Partner(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, summary, website, description):
-        partner = cls(title=title, summary=summary, website=website, description=description)
+    def create(cls, title, summary, website, country, logo, description):
+        partner = cls(title=title, summary=summary, website=website, description=description, country=country, logo=logo)
         partner.put()
         return partner
