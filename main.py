@@ -17,8 +17,8 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     PublicCourseDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
-    AdminPartnerDeleteHandler, AdminPartnerEditHandler
-from app.handlers.public import MainHandler, TempMainHandler, PublicPartnersHandler, \
+    AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler
+from app.handlers.public import MainHandler, TempMainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \

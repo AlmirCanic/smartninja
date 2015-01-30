@@ -2,12 +2,14 @@ import os
 import jinja2
 import webapp2
 from google.appengine.api import users
+from app.utils import filters
 from app.utils.decorators import admin_required
 
 template_dir = os.path.join(os.path.dirname(__file__), '../templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
                                extensions=['jinja2.ext.autoescape'],
                                autoescape=False)
+jinja_env.filters['nl2br'] = filters.nl2br
 
 
 class Handler(webapp2.RequestHandler):

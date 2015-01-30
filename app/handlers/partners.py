@@ -76,3 +76,12 @@ class AdminPartnerEditHandler(Handler):
                        description=description)
 
         self.redirect_to("admin-partner-details", partner_id=partner_id)
+
+
+# PUBLIC
+
+class PublicPartnersHandler(Handler):
+    def get(self):
+        partners = Partner.query(Partner.deleted == False).fetch()
+        params = {"partners": partners}
+        self.render_template("public/partners.html", params=params)
