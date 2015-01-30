@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from app.models.partner import Partner
 
 
 class CourseType(ndb.Model):
@@ -26,6 +27,13 @@ class Price(ndb.Model):
     notes = ndb.StringProperty()
 
 
+class CourseInstructor(ndb.Model):
+    name = ndb.StringProperty()
+    summary = ndb.StringProperty()
+    photo_url = ndb.StringProperty()
+    user_id = ndb.IntegerProperty()
+
+
 class Course(ndb.Model):
     title = ndb.StringProperty()
     course_type = ndb.IntegerProperty()
@@ -46,6 +54,8 @@ class Course(ndb.Model):
     image_url = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
     prices = ndb.StructuredProperty(modelclass=Price, repeated=True)
+    course_instructors = ndb.StructuredProperty(modelclass=CourseInstructor, repeated=True)
+    partners = ndb.StructuredProperty(modelclass=Partner, repeated=True)
 
     @property
     def get_id(self):
@@ -53,16 +63,16 @@ class Course(ndb.Model):
 
     @classmethod
     def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, prices, currency,
-               category, instructor, instructor_name, image_url):
+               category, course_instructors, image_url):
         course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
                      description=description, start_date=start_date, end_date=end_date, prices=prices, currency=currency,
-                     category=category, instructor=instructor, instructor_name=instructor_name, image_url=image_url)
+                     category=category, course_instructors=course_instructors, image_url=image_url)
         course.put()
         return course
 
     @classmethod
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
-               currency, category, instructor, instructor_name, image_url):
+               currency, category, course_instructors, image_url):
 
         if course.title != title:
             applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
@@ -83,8 +93,7 @@ class Course(ndb.Model):
         course.prices = prices
         course.currency = currency
         course.category = category
-        course.instructor = instructor
-        course.instructor_name = instructor_name
+        course.course_instructors = course_instructors
         course.image_url = image_url
         course.put()
         return course

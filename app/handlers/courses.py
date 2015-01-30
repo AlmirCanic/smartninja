@@ -1,7 +1,7 @@
 import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
-from app.models.course import Course, CourseApplication, CourseType, Price
+from app.models.course import Course, CourseApplication, CourseType, Price, CourseInstructor
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
 from app.utils.other import convert_markdown_to_html, convert_prices_data
@@ -61,27 +61,26 @@ class AdminCourseAddHandler(Handler):
         spots = self.request.get("spots")
         instructor = self.request.get("instructor")
         image_url = self.request.get("image_url")
-
         prices_data_string = self.request.get("all-prices-data")
 
-        try:
-            instructor_id, instructor_name = instructor.split("|")
-            instructor = int(instructor_id)
-        except Exception, e:
-            instructor = None
-            instructor_name = None
-
-        if course_type and title and city and place and start_date and end_date and currency:
+        if course_type and title and city and place and start_date and end_date and currency and instructor and prices_data_string:
             # convert prices data string to list of Price objects
             prices = convert_prices_data(data=prices_data_string)
 
+            # instructors
+            instructor_id, instructor_name = instructor.split("|")
+            user_instructor = User.get_by_id(int(instructor_id))
+            course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
+                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id))
+
+            # course date
             start = start_date.split("-")
             end = end_date.split("-")
 
             Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
-                          category=category, instructor=instructor, instructor_name=instructor_name, image_url=image_url)
+                          category=category, course_instructors=[course_instructor], image_url=image_url)
             self.redirect_to("course-list")
 
 
@@ -106,7 +105,6 @@ class AdminCourseEditHandler(Handler):
         place = self.request.get("place")
         start_date = self.request.get("start-date")
         end_date = self.request.get("end-date")
-        #price = self.request.get("price")
         currency = self.request.get("currency")
         summary = self.request.get("summary")
         description = self.request.get("description")
@@ -114,21 +112,19 @@ class AdminCourseEditHandler(Handler):
         spots = self.request.get("spots")
         instructor = self.request.get("instructor")
         image_url = self.request.get("image_url")
-
         prices_data_string = self.request.get("all-prices-data")
 
         course = Course.get_by_id(int(course_id))
 
-        try:
-            instructor_id, instructor_name = instructor.split("|")
-            instructor = int(instructor_id)
-        except Exception, e:
-            instructor = None
-            instructor_name = None
-
-        if course_type and title and city and place and start_date and end_date and currency:
+        if course_type and title and city and place and start_date and end_date and currency and instructor and prices_data_string:
             # convert prices data string to list of Price objects
             prices = convert_prices_data(data=prices_data_string)
+
+            # instructors
+            instructor_id, instructor_name = instructor.split("|")
+            user_instructor = User.get_by_id(int(instructor_id))
+            course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
+                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id))
 
             start = start_date.split("-")
             end = end_date.split("-")
@@ -136,7 +132,7 @@ class AdminCourseEditHandler(Handler):
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
-                          summary=summary, category=category, instructor=instructor, instructor_name=instructor_name,
+                          summary=summary, category=category, course_instructors=[course_instructor],
                           image_url=image_url)
             self.redirect_to("course-details", course_id=int(course_id))
 

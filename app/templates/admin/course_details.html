@@ -149,7 +149,13 @@
                             <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
                             <td>{{course.city}}</td>
                             <td>{{course.place}}</td>
-                            <td><a href="/admin/user/{{course.instructor}}">{{course.instructor_name}}</a></td>
+                            <td>
+                                {% for instructor in course.course_instructors %}
+                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                        {{ instructor.name }}
+                                    </a>
+                                {% endfor %}
+                            </td>
                             <td><a href="/admin/course/type/{{course.course_type}}">{{course.course_type}}</a></td>
                         </tr>
                     </tbody>

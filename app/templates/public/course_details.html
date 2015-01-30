@@ -268,16 +268,18 @@
 
                     <h4>Inštruktor</h4>
 
+                    {% for instructor in course.course_instructors %}
                     <div class="media">
                         <div class="pull-right">
                             <img src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="">
                         </div>
 
                         <div class="media-body">
-                            <h5 class="media-heading"><a>{{course.instructor_name}}</a></h5>
+                            <h5 class="media-heading"><a>{{instructor.name}}</a></h5>
                             <p>{{instructor.summary}}</p>
                         </div>
                     </div>
+                    {% endfor %}
 
                     {% if courses %}
                         <h4>Ostali tečaji</h4>
