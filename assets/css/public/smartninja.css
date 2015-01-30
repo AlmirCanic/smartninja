@@ -29,7 +29,9 @@ h1,h2,h3,h4,h5,h6 {
 	position:relative;
 	width:100%;
     color:#fff;
-	background:#0cbdaa url(/assets/img/public/ozadje_background.jpg) repeat 0 0;
+	background:#0cbdaa url(/assets/img/public/ozadje_background_3.jpg) repeat 0 0;
+    background-size:cover;
+    background-position:10% 60%;
 }
 
 #sub-header-small{
