@@ -85,6 +85,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Partner organization</label>
+                    <select class="form-control" name="partner" id="coursePartner">
+                        <option value="" selected>Select partner organization</option>
+                        {% for partner in partners %}
+                            <option value="{{ partner.get_id }}">{{ partner.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>Number of spots available</label>
                     <input type="text" class="form-control" placeholder="Number of students" name="spots" id="courseSpots">
                 </div>

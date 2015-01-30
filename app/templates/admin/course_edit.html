@@ -61,10 +61,25 @@
                 <div class="form-group">
                     <label>Main instructor</label>
                     <select class="form-control" name="instructor" id="courseInstructor">
-                        <option value="{{course.instructor}}|{{ course.instructor_name }}" selected>{{ course.instructor_name }}</option>
+                        {% if course.course_instructors[0] %}
+                            <option value="{{course.course_instructors[0].user_id}}|{{ course.course_instructors[0].name }}" selected>{{ course.course_instructors[0].name }}</option>
+                        {% endif %}
                         <option disabled>------------------------------</option>
                         {% for instructor in instructors %}
                             <option value="{{ instructor.get_id }}|{{ instructor.get_full_name }}">{{ instructor.get_full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Partner organization</label>
+                    <select class="form-control" name="partner" id="coursePartner">
+                        {% if course.partners[0] %}
+                            <option value="{{course.partners[0].get_id}}" selected>{{ course.partners[0].title }}</option>
+                        {% endif %}
+                        <option disabled>------------------------------</option>
+                        {% for partner in partners %}
+                            <option value="{{ partner.get_id }}">{{ partner.title }}</option>
                         {% endfor %}
                     </select>
                 </div>

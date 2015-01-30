@@ -1,19 +1,8 @@
 #!/usr/bin/env python
 #
-# Copyright 2007 Google Inc.
+# Copyright 2015 SmartNinja
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+
 import webapp2
 from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetailsHandler, \
     AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler
@@ -27,6 +16,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, PublicCourseListHandler, \
     PublicCourseDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
+from app.handlers.partners import AdminPartnersListHandler
 from app.handlers.public import MainHandler, TempMainHandler, PublicPartnersHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
@@ -83,11 +73,14 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/course/type/<course_type_id:\d+>/delete', AdminCourseTypeDeleteHandler, name="course-type-delete"),
     webapp2.Route('/admin/course/type/add', AdminCourseTypeAddHandler, name="course-type-add"),
 
-    #users
+    # users
     webapp2.Route('/admin/users', AdminUsersListHandler, name="users-list"),
     webapp2.Route('/admin/user/<user_id:\d+>', AdminUserDetailsHandler, name="user-details"),
     webapp2.Route('/admin/user/<user_id:\d+>/delete', AdminUserDeleteHandler, name="user-delete"),
     webapp2.Route('/admin/user/<user_id:\d+>/edit', AdminUserEditHandler, name="user-edit"),
+
+    # partners
+    webapp2.Route('/admin/partners', AdminPartnersListHandler, name="admin-partners-list"),
 
     # blog
     webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),
