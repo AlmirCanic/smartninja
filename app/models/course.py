@@ -63,16 +63,16 @@ class Course(ndb.Model):
 
     @classmethod
     def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, prices, currency,
-               category, course_instructors, image_url):
+               category, course_instructors, image_url, partners):
         course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
                      description=description, start_date=start_date, end_date=end_date, prices=prices, currency=currency,
-                     category=category, course_instructors=course_instructors, image_url=image_url)
+                     category=category, course_instructors=course_instructors, image_url=image_url, partners=partners)
         course.put()
         return course
 
     @classmethod
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
-               currency, category, course_instructors, image_url):
+               currency, category, course_instructors, image_url, partners):
 
         if course.title != title:
             applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
@@ -93,6 +93,7 @@ class Course(ndb.Model):
         course.prices = prices
         course.currency = currency
         course.category = category
+        course.partners = partners
         course.course_instructors = course_instructors
         course.image_url = image_url
         course.put()

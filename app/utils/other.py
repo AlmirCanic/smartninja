@@ -2,6 +2,7 @@ from HTMLParser import HTMLParser
 import os
 import sys
 from app.models.course import Price
+from app.models.partner import Partner
 
 
 def convert_markdown_to_html(text):
@@ -25,6 +26,14 @@ def convert_prices_data(data):
         price_objects_list.append(price)
 
     return price_objects_list
+
+
+def convert_partners_data(data):
+    if data == "":
+        return []
+    else:
+        partner = Partner.get_by_id(int(data))
+        return [partner]
 
 
 # HTML parser and tags stripper

@@ -281,6 +281,15 @@
                     </div>
                     {% endfor %}
 
+                    {% if course.partners %}
+                        <h4>Partner</h4>
+                        {% for partner in course.partners %}
+                            <div class="media">
+                                <a href="{{partner.website}}"><img src="{{partner.logo}}" height="100px" class="img-circle" alt=""></a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
                     {% if courses %}
                         <h4>Ostali tečaji</h4>
                         <ul class="list_1">

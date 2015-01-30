@@ -2,9 +2,10 @@ import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType, Price, CourseInstructor
+from app.models.partner import Partner
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
-from app.utils.other import convert_markdown_to_html, convert_prices_data
+from app.utils.other import convert_markdown_to_html, convert_prices_data, convert_partners_data
 
 
 class AdminCourseListHandler(Handler):
@@ -43,7 +44,8 @@ class AdminCourseAddHandler(Handler):
     def get(self):
         course_types = CourseType.query(CourseType.deleted == False).fetch()
         instructors = User.query(User.instructor == True).fetch()
-        params = {"course_types": course_types, "instructors": instructors}
+        partners = Partner.query(Partner.deleted == False).fetch()
+        params = {"course_types": course_types, "instructors": instructors, "partners": partners}
         self.render_template("admin/course_add.html", params)
 
     @admin_required
@@ -60,6 +62,7 @@ class AdminCourseAddHandler(Handler):
         category = self.request.get("category")
         spots = self.request.get("spots")
         instructor = self.request.get("instructor")
+        partner_id = self.request.get("partner")
         image_url = self.request.get("image_url")
         prices_data_string = self.request.get("all-prices-data")
 
@@ -73,6 +76,9 @@ class AdminCourseAddHandler(Handler):
             course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
                                                  photo_url=user_instructor.photo_url, user_id=int(instructor_id))
 
+            # partner
+            partners = convert_partners_data(partner_id)
+
             # course date
             start = start_date.split("-")
             end = end_date.split("-")
@@ -80,7 +86,8 @@ class AdminCourseAddHandler(Handler):
             Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
-                          category=category, course_instructors=[course_instructor], image_url=image_url)
+                          category=category, course_instructors=[course_instructor], image_url=image_url,
+                          partners=partners)
             self.redirect_to("course-list")
 
 
@@ -91,10 +98,12 @@ class AdminCourseEditHandler(Handler):
         course = Course.get_by_id(int(course_id))
         selected_course_type = CourseType.get_by_id(course.course_type)
         instructors = User.query(User.instructor == True).fetch()
+        partners = Partner.query(Partner.deleted == False).fetch()
         params = {"course": course,
                   "course_types": course_types,
                   "selected_course_type": selected_course_type,
-                  "instructors": instructors}
+                  "instructors": instructors,
+                  "partners": partners}
         self.render_template("admin/course_edit.html", params)
 
     @admin_required
@@ -113,6 +122,7 @@ class AdminCourseEditHandler(Handler):
         instructor = self.request.get("instructor")
         image_url = self.request.get("image_url")
         prices_data_string = self.request.get("all-prices-data")
+        partner_id = self.request.get("partner")
 
         course = Course.get_by_id(int(course_id))
 
@@ -126,6 +136,9 @@ class AdminCourseEditHandler(Handler):
             course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
                                                  photo_url=user_instructor.photo_url, user_id=int(instructor_id))
 
+            # partner
+            partners = convert_partners_data(partner_id)
+
             start = start_date.split("-")
             end = end_date.split("-")
 
@@ -133,7 +146,7 @@ class AdminCourseEditHandler(Handler):
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
-                          image_url=image_url)
+                          image_url=image_url, partners=partners)
             self.redirect_to("course-details", course_id=int(course_id))
 
 

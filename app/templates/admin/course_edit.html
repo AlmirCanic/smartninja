@@ -78,6 +78,7 @@
                             <option value="{{course.partners[0].get_id}}" selected>{{ course.partners[0].title }}</option>
                         {% endif %}
                         <option disabled>------------------------------</option>
+                        <option value="">No partner</option>
                         {% for partner in partners %}
                             <option value="{{ partner.get_id }}">{{ partner.title }}</option>
                         {% endfor %}

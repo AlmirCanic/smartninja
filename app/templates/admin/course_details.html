@@ -140,7 +140,7 @@
                             <th>City</th>
                             <th>Place</th>
                             <th>Instructor</th>
-                            <th>Course type</th>
+                            <th>Partner</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -156,7 +156,13 @@
                                     </a>
                                 {% endfor %}
                             </td>
-                            <td><a href="/admin/course/type/{{course.course_type}}">{{course.course_type}}</a></td>
+                            <td>
+                                {% for partner in course.partners %}
+                                    <a href="/admin/partner/{{ partner.get_id }}">
+                                        {{ partner.title }}
+                                    </a>
+                                {% endfor %}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
