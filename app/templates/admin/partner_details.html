@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ partner.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-briefcase"></i>  <a href="/admin/partners">Partners</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Partner details
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ partner.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <img src="{{partner.logo}}" class="img-responsive img-thumbnail" width="90px">
+
+    <h3>Website</h3>
+    <p>{{partner.website}}</p>
+
+    <h3>Country</h3>
+    <p>{{partner.country}}</p>
+
+    <h3>Summary</h3>
+    <p>{{partner.summary}}</p>
+
+    <h3>Description</h3>
+    <p>{{partner.description}}</p>
+
+    <a href="/admin/partner/{{partner.get_id}}/edit"><button class="btn btn-success">Edit partner</button></a>
+    <a href="/admin/partner/{{partner.get_id}}/delete"><button class="btn btn-danger">Delete partner</button></a>
+</div>
+{% endblock main_content %}
