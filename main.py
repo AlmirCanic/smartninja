@@ -27,8 +27,8 @@ from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, A
 
 app = webapp2.WSGIApplication([
     # PUBLIC
-    webapp2.Route('/main', MainHandler, name="main"),
-    webapp2.Route('/', TempMainHandler, name="temp"),
+    webapp2.Route('/', MainHandler, name="main"),
+    webapp2.Route('/oldmain', TempMainHandler, name="temp"),  # TODO: izbrisi
     webapp2.Route('/prijava', TempPrijavaHandler, name="prijava"),
     webapp2.Route('/newsletter', NewsletterSubscribeHandler, name="newsletter"),
     webapp2.Route('/partners', PublicPartnersHandler, name="partners"),
