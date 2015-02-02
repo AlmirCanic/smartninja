@@ -107,6 +107,7 @@ class PublicCourseApplicationAddHandler(Handler):
                 # send email to the student
                 if not is_local():
                     email_course_application_thank_you(course_app)
+
                 return self.redirect_to("apply-thank-you")
             else:
                 # TODO: error in params

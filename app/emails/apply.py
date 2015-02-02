@@ -29,7 +29,7 @@ def email_course_app_to_smartninja(course, user, application):
                user.phone_number.encode('utf-8'),
                course.city.encode('utf-8'),
                course.place.encode('utf-8'),
-               application.price.encode('utf-8'),
+               application.price,
                application.currency.encode('utf-8'),
                application.laptop.encode('utf-8'),
                application.shirt.encode('utf-8'))
@@ -53,7 +53,7 @@ def email_course_app_to_smartninja(course, user, application):
                user.phone_number.encode('utf-8'),
                course.city.encode('utf-8'),
                course.place.encode('utf-8'),
-               application.price.encode('utf-8'),
+               application.price,
                application.currency.encode('utf-8'),
                application.laptop.encode('utf-8'),
                application.shirt.encode('utf-8'))
