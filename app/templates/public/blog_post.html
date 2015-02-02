@@ -45,69 +45,55 @@
 
 <div class="container">
 
-	 <div class="row">
-     <aside class="col-md-4">
-     	<div class=" box_style_1">
-
-				<div class="widget">
-					<h4><i class="icon-back"></i><a href="/blog"> BLOG</a></h4>
-				</div>
-                <!-- End widget -->
-
-                <br>
-
-				<div class="widget">
-					<h4>Zadnje objave</h4>
-
-                    {% if posts %}
-					<ul class="recent_post">
-                        {% for post in posts %}
-						<li>
-						    <i class="icon-calendar-empty"></i> {{post.created.day}}.{{post.created.month}}.{{post.created.year}}
-						    <div><a href="/blog/{{post.slug}}">{{post.title}}</a></div>
-						</li>
-                        {% endfor %}
-					</ul>
-                    {% else %}
-                        <p>No posts</p>
-                    {% endif %}
-				</div><!-- End widget -->
-
-                <!--
-				<div class="widget tags add_bottom_30">
-					<h4>Tags</h4>
-					<a href="#">Lorem ipsum</a>
-					<a href="#">Dolor</a>
-					<a href="#">Long established</a>
-					<a href="#">Sit amet</a>
-					<a href="#">Latin words</a>
-					<a href="#">Excepteur sint</a>
-				</div>-->
-                <!-- End widget -->
-
-			</div><!-- End box-sidebar -->
-     </aside><!-- End aside -->
-
-    <div class="col-md-8">
-        <div class="post">
-            <img src="{{post.cover_image}}" alt="" class="img-responsive">
-            <div class="post_info clearfix">
-                <div class="post-left">
-                    <ul>
-                        <li><i class="icon-calendar-empty"></i><span>{{post.created.day}}.{{post.created.month}}.{{post.created.year}}</span></li>
-                        <li><i class="icon-user"></i>{{post.author_name}}</li>
-                    </ul>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="post">
+                <img src="{{post.cover_image}}" alt="" class="img-responsive">
+                <div class="post_info clearfix">
+                    <div class="post-left">
+                        <ul>
+                            <li><i class="icon-calendar-empty"></i><span>{{post.created.day}}.{{post.created.month}}.{{post.created.year}}</span></li>
+                            <li><i class="icon-user"></i>{{post.author_name}}</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <h2>{{post.title}}</h2>
+                <h2>{{post.title}}</h2>
 
-            <p>{{post.text}}</p>
-        </div><!-- end post -->
-    </div><!-- End col-md-8-->
+                <p>{{post.text}}</p>
+            </div><!-- end post -->
+        </div><!-- End col-md-8-->
 
+        <aside class="col-md-4">
+            <div class=" box_style_1">
 
-  </div>  <!-- End row-->
+                    <div class="widget">
+                        <h4><i class="icon-back"></i><a href="/blog"> BLOG</a></h4>
+                    </div>
+                    <!-- End widget -->
+
+                    <br>
+
+                    <div class="widget">
+                        <h4>Zadnje objave</h4>
+
+                        {% if posts %}
+                        <ul class="recent_post">
+                            {% for post in posts %}
+                            <li>
+                                <i class="icon-calendar-empty"></i> {{post.created.day}}.{{post.created.month}}.{{post.created.year}}
+                                <div><a href="/blog/{{post.slug}}">{{post.title}}</a></div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            <p>No posts</p>
+                        {% endif %}
+                    </div><!-- End widget -->
+                </div><!-- End box-sidebar -->
+         </aside><!-- End aside -->
+
+    </div>  <!-- End row-->
 </div><!-- End container -->
 </section><!-- End main_content-->
 {% endblock main_content %}

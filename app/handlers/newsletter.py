@@ -5,15 +5,11 @@ from app.utils.secret import get_mailchimp_api, get_newsletter_list_id
 
 
 class NewsletterSubscribeHandler(Handler):
-    def get(self):
-        # TODO: Remove this method!!! (just for testing purposes)
-        self.render_template("public/newsletter_thanks.html")
-
     def post(self):
         hidden = self.request.get("hidden")
         email = self.request.get("email_newsletter1")
         if hidden:
-            self.render_template("public/main2.html")
+            self.redirect_to("oops")
         elif email:
             if not is_local():
                 subscribe_mailchimp(email=email)

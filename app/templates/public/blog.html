@@ -41,19 +41,34 @@
 <div class="container">
 
 	 <div class="row">
-     <aside class="col-md-4">
+
+
+    <div class="col-md-8">
+        {% if posts %}
+            {% for post in posts %}
+            <div class="post">
+                <a href="/blog/{{post.slug}}"><img src="{{post.cover_image}}" alt="" class="img-responsive"></a>
+                <div class="post_info clearfix">
+                    <div class="post-left">
+                        <ul>
+                            <li><i class="icon-calendar-empty"></i><span>{{post.created.day}}.{{post.created.month}}.{{post.created.year}}</span></li>
+                            <li><i class="icon-user"></i>{{post.author_name}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2><a href="/blog/{{post.slug}}">{{post.title}}</a></h2>
+
+                <p>{{post.text}}</p>
+
+                <a href="/blog/{{post.slug}}" class="button_medium">Preberi več</a>
+            </div><!-- end post -->
+            {% endfor %}
+        {% endif %}
+    </div><!-- End col-md-8-->
+
+    <aside class="col-md-4">
      	<div class=" box_style_1">
-
-                <!--
-				<div class="widget">
-					<h4>Text widget</h4>
-					<p>
-						 Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-					</p>
-				</div>-->
-                <!-- End widget -->
-
-
 				<div class="widget">
 					<h4>Zadnje objave</h4>
 
@@ -70,45 +85,8 @@
                         <p>No posts</p>
                     {% endif %}
 				</div><!-- End widget -->
-
-                <!--
-				<div class="widget tags add_bottom_30">
-					<h4>Tags</h4>
-					<a href="#">Lorem ipsum</a>
-					<a href="#">Dolor</a>
-					<a href="#">Long established</a>
-					<a href="#">Sit amet</a>
-					<a href="#">Latin words</a>
-					<a href="#">Excepteur sint</a>
-				</div>-->
-                <!-- End widget -->
-
 			</div><!-- End box-sidebar -->
      </aside><!-- End aside -->
-
-<div class="col-md-8">
-    {% if posts %}
-        {% for post in posts %}
-        <div class="post">
-            <a href="/blog/{{post.slug}}"><img src="{{post.cover_image}}" alt="" class="img-responsive"></a>
-            <div class="post_info clearfix">
-                <div class="post-left">
-                    <ul>
-                        <li><i class="icon-calendar-empty"></i><span>{{post.created.day}}.{{post.created.month}}.{{post.created.year}}</span></li>
-                        <li><i class="icon-user"></i>{{post.author_name}}</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h2><a href="/blog/{{post.slug}}">{{post.title}}</a></h2>
-
-            <p>{{post.text}}</p>
-
-            <a href="/blog/{{post.slug}}" class="button_medium">Preberi več</a>
-        </div><!-- end post -->
-        {% endfor %}
-    {% endif %}
-</div><!-- End col-md-8-->
 
 
   </div>  <!-- End row-->

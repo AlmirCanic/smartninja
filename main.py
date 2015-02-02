@@ -11,6 +11,7 @@ from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, Pro
 from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler
+from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, AdminCourseTypesListHandler, \
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, PublicCourseListHandler, \
@@ -38,6 +39,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/apply_thank_you', PublicApplyThankYouHandler, name="apply-thank-you"),
     webapp2.Route('/email_thank_you', PublicNewsletterThankYouHandler, name="newsletter-thank-you-1"),
     webapp2.Route('/email_thank_you_2', PublicNewsletterThankYou2Handler, name="newsletter-thank-you-2"),
+    webapp2.Route('/contact-thank-you', PublicContactThankYou, name="public-contact-thanks"),
+    webapp2.Route('/contact', PublicContactUsHandler, name="public-contact"),
 
     # blog
     webapp2.Route('/blog', PublicBlogHandler, name="blog"),

@@ -47,7 +47,7 @@
 			<li><strong>Matična št.</strong>: 4054415000</li>
 		</ul>
 		<hr>
-		<h3>Follow us</h3>
+		<h3>Sledi nam</h3>
 		<ul id="follow_us_contacts">
 			<li><a href="https://www.facebook.com/pages/SmartNinja/1563841910494321"><i class="icon-facebook"></i>/SmartNinja</a></li>
 			<li><a href="https://twitter.com/smartninjaorg"><i class="icon-twitter"></i>/smartninjaorg</a></li>
@@ -102,26 +102,28 @@
                         
         </div>
 
-    <!--
+        <!-- CONTACT FORM -->
         <div class=" box_style_2" id="contact-form">
 			<span class="tape"></span>
 			<div class="row">
 				<div class="col-md-12">
-					<h3>General Enquire</h3>
+					<h3>Vprašaj nas karkoli</h3>
 				</div>
 			</div>
 			<div id="message-contact"></div>
-			<form method="post" action="assets/contact.php" id="contactform">
+			<form method="post" action="/contact">
+                <input type="hidden" name="hidden">
+
 				<div class="row">
 					<div class="col-md-6 col-sm-6">
 						<div class="form-group">
-							<input type="text" class="form-control style_2" id="name_contact" name="name_contact" placeholder="Enter Name">
+							<input type="text" class="form-control style_2" id="name_contact" name="first_name" placeholder="Ime">
                             <span class="input-icon"><i class="icon-user"></i></span>
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6">
 						<div class="form-group">
-							<input type="text" class="form-control style_2" id="lastname_contact" name="lastname_contact" placeholder="Enter Last Name">
+							<input type="text" class="form-control style_2" id="lastname_contact" name="last_name" placeholder="Priimek">
                             <span class="input-icon"><i class="icon-user"></i></span>
 						</div>
 					</div>
@@ -129,13 +131,13 @@
 				<div class="row">
 					<div class="col-md-6 col-sm-6">
 						<div class="form-group">
-							<input type="email" id="email_contact" name="email_contact" class="form-control style_2" placeholder="Enter Email">
+							<input type="email" id="email_contact" name="email" class="form-control style_2" placeholder="Tvoj email">
                             <span class="input-icon"><i class="icon-email"></i></span>
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6">
 						<div class="form-group">
-							<input type="text" id="phone_contact" name="phone_contact" class="form-control style_2" placeholder="Enter Phone number">
+							<input type="text" id="phone_contact" name="phone" class="form-control style_2" placeholder="Telefonska številka (če želiš)">
                             <span class="input-icon"><i class="icon-phone"></i></span>
 						</div>
 					</div>
@@ -143,19 +145,17 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<textarea rows="5" id="message_contact" name="message_contact" class="form-control" placeholder="Write your message" style="height:200px;"></textarea>
+							<textarea rows="5" id="message_contact" name="message" class="form-control" placeholder="Tvoje sporočilo" style="height:200px;"></textarea>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="text" id="verify_contact" class=" form-control" placeholder="Are you human? 3 + 1 =">
-						<input type="submit" value="Submit" class=" button_medium" id="submit-contact"/>
+						<input type="submit" value="Pošlji" class="button_medium pull-right"/>
 					</div>
 				</div>
 			</form>
 		</div>
-		-->
 
 </div><!-- End container -->
 </section><!-- End main_content-->
