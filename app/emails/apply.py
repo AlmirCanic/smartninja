@@ -22,6 +22,7 @@ def email_course_app_to_smartninja(course, user, application):
         Has laptop: {10}
         T-shirt size: {11}
         Invoice on company: {12} (if True, see application details)
+        Other info: {13}
     '''.format(course.title.encode('utf-8'),
                user.get_full_name.encode('utf-8'),
                user.email.encode('utf-8'),
@@ -34,7 +35,8 @@ def email_course_app_to_smartninja(course, user, application):
                application.currency.encode('utf-8'),
                application.laptop.encode('utf-8'),
                application.shirt.encode('utf-8'),
-               application.company_invoice)
+               application.company_invoice,
+               application.other_info.encode('utf-8'))
 
     html_message_body = '''
         <p>New application for {0}!</p>
@@ -48,6 +50,7 @@ def email_course_app_to_smartninja(course, user, application):
         <p>Has laptop: {10}</p>
         <p>T-shirt size: {11}</p>
         <p>Invoice on company: {12} (if True, see application details)</p>
+        <p>Other info: {13}</p>
     '''.format(course.title.encode('utf-8'),
                user.get_full_name.encode('utf-8'),
                user.email.encode('utf-8'),
@@ -60,7 +63,8 @@ def email_course_app_to_smartninja(course, user, application):
                application.currency.encode('utf-8'),
                application.laptop.encode('utf-8'),
                application.shirt.encode('utf-8'),
-               application.company_invoice)
+               application.company_invoice,
+               application.other_info.encode('utf-8'))
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to="info@smartninja.org",
