@@ -104,6 +104,7 @@
                                 <th>Price</th>
                                 <th>Paid</th>
                                 <th>Invoice</th>
+                                <th>Company</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,6 +117,13 @@
                                 <td>{{application.price}} {{application.currency}}</td>
                                 <td>{{application.payment_status}}</td>
                                 <td>{{application.invoice}}</td>
+                                <td>
+                                    {% if application.company_invoice %}
+                                        <strong>{{application.company_invoice}}</strong>
+                                    {% else %}
+                                        {{application.company_invoice}}
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
