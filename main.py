@@ -4,7 +4,7 @@
 #
 
 import webapp2
-from app.handlers.apply import TempPrijavaHandler, AdminCourseApplicationDetailsHandler, \
+from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
     AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
     OopsHandler
@@ -19,7 +19,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler
-from app.handlers.public import MainHandler, TempMainHandler, \
+from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
@@ -29,8 +29,6 @@ from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, A
 app = webapp2.WSGIApplication([
     # PUBLIC
     webapp2.Route('/', MainHandler, name="main"),
-    webapp2.Route('/oldmain', TempMainHandler, name="temp"),  # TODO: izbrisi
-    webapp2.Route('/prijava', TempPrijavaHandler, name="prijava"),
     webapp2.Route('/newsletter', NewsletterSubscribeHandler, name="newsletter"),
     webapp2.Route('/partners', PublicPartnersHandler, name="partners"),
     webapp2.Route('/about', PublicAboutHandler, name="about"),

@@ -56,6 +56,8 @@ class Course(ndb.Model):
     prices = ndb.StructuredProperty(modelclass=Price, repeated=True)
     course_instructors = ndb.StructuredProperty(modelclass=CourseInstructor, repeated=True)
     partners = ndb.StructuredProperty(modelclass=Partner, repeated=True)
+    applications_closed = ndb.BooleanProperty(default=False)
+    tags = ndb.StringProperty(repeated=True)
 
     @property
     def get_id(self):

@@ -12,7 +12,14 @@ class AdminCourseListHandler(Handler):
     @admin_required
     def get(self):
         courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
-        params = {"courses": courses}
+        past_courses = []
+        future_courses = []
+        for course in courses:
+            if course.start_date > datetime.date.today():
+                future_courses.append(course)
+            else:
+                past_courses.append(course)
+        params = {"future_courses": future_courses, "past_courses": past_courses}
         self.render_template("admin/course_list.html", params)
 
 
