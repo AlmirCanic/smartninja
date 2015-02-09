@@ -259,15 +259,30 @@ class PublicCourseListHandler(Handler):
     def get(self):
         course_list = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
 
+        # replace .0 price with ,00 (european system vs US)
         courses = []
         for course in course_list:
             try:
                 course.price_min = str(course.price[0]).replace(".", ",0")
             except:
                 course.price_min = course.prices[0].price_comma
+
+            tags_string = ""
+            for tag in course.tags:
+                tags_string += tag + ","
+
+            course.tags_string = tags_string[:-1]
+
             courses.append(course)
 
-        params = {"courses": courses}
+        # get all the tags from courses
+        tags = []
+        for course in courses:
+            tags += course.tags
+
+        tags = list(set(tags))
+
+        params = {"courses": courses, "tags": tags}
         self.render_template("public/course_list.html", params=params)
 
 
