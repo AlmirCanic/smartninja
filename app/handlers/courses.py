@@ -5,7 +5,8 @@ from app.models.course import Course, CourseApplication, CourseType, Price, Cour
 from app.models.partner import Partner
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
-from app.utils.other import convert_markdown_to_html, convert_prices_data, convert_partners_data
+from app.utils.other import convert_markdown_to_html, convert_prices_data, convert_partners_data, convert_tags_to_list, \
+    convert_tags_to_string
 
 
 class AdminCourseListHandler(Handler):
@@ -28,6 +29,7 @@ class AdminCourseDetailsHandler(Handler):
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
         applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+
         num_paid = 0
         num_no_laptop = 0
         total_paid = 0.0
@@ -38,11 +40,14 @@ class AdminCourseDetailsHandler(Handler):
             if application.laptop == "no":
                 num_no_laptop += 1
 
+        tags = convert_tags_to_string(course.tags)
+
         params = {"course": course,
                   "applications": applications,
                   "num_paid": num_paid,
                   "no_laptop": num_no_laptop,
-                  "total_paid": total_paid}
+                  "total_paid": total_paid,
+                  "tags": tags}
         self.render_template("admin/course_details.html", params)
 
 
@@ -72,6 +77,7 @@ class AdminCourseAddHandler(Handler):
         partner_id = self.request.get("partner")
         image_url = self.request.get("image_url")
         prices_data_string = self.request.get("all-prices-data")
+        tags = self.request.get("tags")
 
         if course_type and title and city and place and start_date and end_date and currency and instructor and prices_data_string:
             # convert prices data string to list of Price objects
@@ -82,6 +88,9 @@ class AdminCourseAddHandler(Handler):
             user_instructor = User.get_by_id(int(instructor_id))
             course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
                                                  photo_url=user_instructor.photo_url, user_id=int(instructor_id))
+
+            # tags
+            tags = convert_tags_to_list(tags)
 
             # partner
             partners = convert_partners_data(partner_id)
@@ -94,7 +103,7 @@ class AdminCourseAddHandler(Handler):
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           category=category, course_instructors=[course_instructor], image_url=image_url,
-                          partners=partners)
+                          partners=partners, tags=tags)
             self.redirect_to("course-list")
 
 
@@ -106,11 +115,15 @@ class AdminCourseEditHandler(Handler):
         selected_course_type = CourseType.get_by_id(course.course_type)
         instructors = User.query(User.instructor == True).fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
+
+        tags = convert_tags_to_string(course.tags)
+
         params = {"course": course,
                   "course_types": course_types,
                   "selected_course_type": selected_course_type,
                   "instructors": instructors,
-                  "partners": partners}
+                  "partners": partners,
+                  "tags": tags}
         self.render_template("admin/course_edit.html", params)
 
     @admin_required
@@ -130,6 +143,7 @@ class AdminCourseEditHandler(Handler):
         image_url = self.request.get("image_url")
         prices_data_string = self.request.get("all-prices-data")
         partner_id = self.request.get("partner")
+        tags = self.request.get("tags")
 
         course = Course.get_by_id(int(course_id))
 
@@ -143,6 +157,9 @@ class AdminCourseEditHandler(Handler):
             course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
                                                  photo_url=user_instructor.photo_url, user_id=int(instructor_id))
 
+            # tags
+            tags = convert_tags_to_list(tags)
+
             # partner
             partners = convert_partners_data(partner_id)
 
@@ -153,7 +170,7 @@ class AdminCourseEditHandler(Handler):
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
-                          image_url=image_url, partners=partners)
+                          image_url=image_url, partners=partners, tags=tags)
             self.redirect_to("course-details", course_id=int(course_id))
 
 

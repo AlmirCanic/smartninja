@@ -36,6 +36,19 @@ def convert_partners_data(data):
         return [partner]
 
 
+def convert_tags_to_list(tags):
+    return tags.split(",")
+
+
+def convert_tags_to_string(tags):
+    tags_string = ""
+
+    for tag in tags:
+        tags_string += tag + ","
+
+    return tags_string[:-1]
+
+
 # HTML parser and tags stripper
 class MLStripper(HTMLParser):
     def __init__(self):
