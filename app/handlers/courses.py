@@ -260,7 +260,7 @@ class PublicCourseDetailsHandler(Handler):
 
         course.description = convert_markdown_to_html(course.description)
 
-        courses = Course.query(Course.deleted == False).fetch()
+        courses = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
 
         # CSRF
         csrf = get_csrf()
