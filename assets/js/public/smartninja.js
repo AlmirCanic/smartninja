@@ -8,7 +8,7 @@
 
 			// Loading external javascript file
 			$.cookiesDirective.loadScript({
-				uri:'external.js',
+				uri:'/assets/js/public/external.js',
 				appendTo: 'eantics'
 			});
 		}
