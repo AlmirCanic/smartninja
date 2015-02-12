@@ -43,7 +43,7 @@
     </div><!-- End container -->
     <div class="divider_top"></div>
 </section><!-- End sub-header -->
-
+<!-- Komentar -->
 
 <section id="main_content">
     <div class="container">
@@ -55,251 +55,399 @@
 
                 <hr>
 
-                <h3 id="pricesTable">Kotizacija</h3>
-                <div class="row">
-                    <div class="col-lg-7">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Cena tečaja</th>
-                                        <th>Opis kotizacije</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for price in course.prices %}
-                                    <tr>
-                                        <td>{{price.price_comma}} {{course.currency}}</td>
-                                        <td>{{price.summary}}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <h3 id="courseApplication">Prijava na tečaj</h3>
-                <form action="/course/{{course.get_id}}/apply" method="post">
-                    <input type="hidden" name="hidden">
-                    <input type="hidden" name="csrf" value="{{csrf}}">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="data-list">
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="first_name" class="required form-control" placeholder="Ime"><span class="input-icon"><i class="icon-user"></i></span>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="last_name" class="required form-control" placeholder="Priimek"><span class="input-icon"><i class="icon-user"></i></span>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="email" class="required form-control" placeholder="Email naslov"><span class="input-icon"><i class="icon-email"></i></span>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="address" class="required form-control" placeholder="Naslov prebivališča"><span class="input-icon"><i class="icon-home"></i></span>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="dob" class="required form-control" placeholder="Datum rojstva"><span class="input-icon"><i class="icon-star"></i></span>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div><!-- end col-md-6 -->
-
-                        <div class="col-md-6">
-                            <ul class="data-list">
-
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" name="phone" class="required form-control" placeholder="Telefonska številka"><span class="input-icon"><i class="icon-phone"></i></span>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="styled-select">
-                                        <select class="form-control required" name="laptop">
-                                            <option value="" selected>Imaš prenosni računalnik?</option>
-                                            <option value="yes">DA</option>
-                                            <option value="no">NE</option>
-                                        </select>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="styled-select">
-                                        <select class="form-control required" name="shirt">
-                                            <option value="" selected>Izberi velikost majice</option>
-                                            <option value="XS">XS</option>
-                                            <option value="S">S</option>
-                                            <option value="M">M</option>
-                                            <option value="L">L</option>
-                                            <option value="XL">XL</option>
-                                            <option value="XXL">XXL</option>
-                                            <option value="XXXL">XXXL</option>
-                                        </select>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="styled-select">
-                                        <select class="form-control required" name="price">
-                                            <option value="" selected>Kotizacija</option>
-                                            {% for price in course.prices %}
-                                                <option value="{{price.price_dot}}">{{price.price_comma}} {{course.currency}} - {{price.summary}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </li>
-
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="company-invoice" name="company_invoice"> Želim račun na podjetje
-                                    </label>
-                                </div>
-
-                            </ul>
-                        </div><!-- end col-md-6 -->
-                    </div><!-- end row -->
-
-                    <div class="row" id="company-data">
-                        <div class="col-md-6">
-                            <ul class="data-list">
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" id="company-title" name="company_title" class="required form-control" placeholder="Ime podjetja"><span class="input-icon"><i class="icon-suitcase"></i></span>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" id="company-address" name="company_address" class="required form-control" placeholder="Naslov podjetja"><span class="input-icon"><i class="icon-commerical-building"></i></span>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div><!-- end col-md-6 -->
-
-                        <div class="col-md-6">
-                            <ul class="data-list">
-
+               
+    <div class="container"><!-- Start testimonials -->
+        <div class="row">
+            <div class='col-md-offset-0 col-md-8 text-center'>
+                <h2>Kaj pravijo drugi</h2>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-offset-0 col-md-8'>
+                <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                    <!-- Bottom Carousel Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#quote-carousel" data-slide-to="1"></li>
+                        <li data-target="#quote-carousel" data-slide-to="2"></li>
+                        <li data-target="#quote-carousel" data-slide-to="3"></li>
+                    </ol>
+                    <!-- Carousel Slides / Quotes -->
+                    <div class="carousel-inner">
+                        <!-- Quote 3 -->
+                        <div class="item active">
+                            <blockquote>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="data-list">
-                                            <li>
-                                                <div class="form-group">
-                                                    <input type="text" id="company-zip" name="company_zip" class="required form-control" placeholder="Poštna številka">
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    <div class="col-sm-3 text-center">
+                                        <img class="img-circle" src="/assets/img/public/uros.jpg" alt="">
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <ul class="data-list">
-                                            <li>
-                                                <div class="form-group">
-                                                    <input type="text" id="company-town" name="company_town" class="required form-control" placeholder="Kraj">
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    <div class="col-sm-9">
+                                        <p>
+                                            Šola programiranja SmartNinja mi je pomagala izboljšati svoje znanje izdelave
+                                            spletnih
+                                            strani. Naučil sem se ogrodja Bootstrap, uporabe GIT-a ter osnov JavaScripta.
+                                            Vse našteto zdaj že uporabljam pri delu v novi službi.
+                                        </p>
+                                        <small>Uroš Plavec</small>
                                     </div>
                                 </div>
+                            </blockquote>
+                        </div>
 
-                                <li>
-                                    <div class="form-group">
-                                        <input type="text" id="company-tax" name="company_tax" class="required form-control" placeholder="Davčna številka">
+                        <!-- Quote 2 -->
+                        <div class="item">
+                            <blockquote>
+                                <div class="row">
+                                    <div class="col-sm-3 text-center">
+                                        <img class="img-circle" src="/assets/img/public/spela.jpg" alt="Gregor Nanger">
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div><!-- end row -->
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ul class="data-list">
-                                <li>
-                                    <div class="form-group">
-                                        <textarea rows="3" name="other_info" class="form-control" placeholder="Nam želiš še kaj sporočiti?" style="height:100px;"></textarea>
+                                    <div class="col-sm-9">
+                                        <p>
+                                            Na tečaj programiranja s HTML in CSS sem
+                                            se prijavila, ker mi razlaga in način učenja pri pouku ni bil dovolj jasen.
+                                            Po končanem tečaju sem bila sposobna samostojno izdelati preproste spletne
+                                            strani, v šoli pa nimam več težav.
+                                        </p>
+                                        <small>Špela Cimprič</small>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </blockquote>
                         </div>
-                    </div><!-- end row -->
 
-                    <div class="row">
-                        <div class="col-md-9 col-md-offset-2">
-                            <strong>S prijavo sprejemaš <a href="#" data-toggle="modal" data-target="#myModal">pravila in pogoje šole programiranja SmartNinja</a>.</strong>
+                        <!-- Quote 1 -->
+                        <div class="item">
+                            <blockquote>
+                                <div class="row">
+                                    <div class="col-sm-3 text-center">
+                                        <img class="img-circle" src="/assets/img/public/mitja.jpg" alt="">
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p>
+                                            V šoli SmartNinja spoznavam osnove
+                                            programiranja v Pythonu in izdelovanja spletnih strani s HTML, CSS in jQuery.
+                                            Pomoč mentorjev mi pomaga hitreje napredovati pri učenju, kot
+                                            pa če bi se učil čisto sam.
+                                        </p>
+                                        <small>Mitja Kastelic</small>
+                                    </div>
+                                </div>
+                            </blockquote>
                         </div>
+
+                        <!-- Quote 2 -->
+                        <div class="item">
+                            <blockquote>
+                                <div class="row">
+                                    <div class="col-sm-3 text-center">
+                                        <img class="img-circle" src="/assets/img/public/gregor.jpg" alt="Gregor Nanger">
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p>
+                                            V šolo programiranja SmartNinja smo poslali našega pripravnika. V kratkem času je zelo
+                                            hitro napredoval in zdaj že dela na enem izmed naših večjih projektov. Šolo
+                                            programiranja SmartNinja zato močno priporočam!
+                                        </p>
+                                        <small>Gregor Nanger, Voco</small>
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+
+
+
                     </div>
-
-                    <br>
-
-                    <div class="row">
-                        <div class="submit step" id="complete">
-                            <!--<p>Prijave zaprte</p>-->
-                            <button type="submit" name="process" class="submit" id="prijava-gumb">Oddaj prijavo</button>
-                            <br>
-                            <p style="color: red;">{{ error }}</p>
-                        </div><!-- end submit step -->
-                    </div>
-
-
-                </form>
-            </div><!-- End col-md-8  -->
-
-            <aside class="col-md-4">
-                <div class="box_style_1">
-                    <h4><a href="/courses">Nazaj na seznam tečajev <i class="icon-back pull-right"></i></a></h4><br>
-
-                    <h4>Inštruktor</h4>
-
-                    {% for instructor in course.course_instructors %}
-                    <div class="media">
-                        <div class="pull-right">
-                            <img src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="">
-                        </div>
-
-                        <div class="media-body">
-                            <h5 class="media-heading"><a>{{instructor.name}}</a></h5>
-                            <p>{{instructor.summary}}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                    {% if course.partners %}
-                        <h4>Partner</h4>
-                        {% for partner in course.partners %}
-                            <div class="media">
-                                <a href="{{partner.website}}"><img src="{{partner.logo}}" height="100px" class="img-medium" alt=""></a>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    {% if courses %}
-                        <h4>Ostali tečaji</h4>
-                        <ul class="list_1">
-                            {% for course in courses %}
-                                <li><a href="/course/{{course.get_id}}">{{course.title}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif%}
                 </div>
-            </aside> <!-- End col-md-4 -->
+            </div>
+        </div><!-- End testimonials -->
+        <!-- Start prices-->
+        <div class="row" id="pricing_2">
+                    <div class="col-md-4 col-sm-6">
+                
+                    <div class="pricing-table black ">
+                        <div class="pricing-table-header">
+                            <span class="heading">Single course</span>
+                            <span class="price-value"><span>30</span><span class="mo">$</span></span>
+                        </div>
+                        <div class="pricing-table-space "></div>
+                        <div class="pricing-table-features">
+                            <p><strong>One month</strong> valid</p>
+                            <p><strong> Saving</strong> %</p>
+                            <p><strong>Saving price</strong> 0$</p>
+                            <p>-</p>
+                        </div>
+                        
+                        <div class="pricing-table-sign-up">
+                            <a href="javascript:void(0)" class="button_fullwidth">BUY NOW!</a>
+                        </div>
+    
+                    </div><!-- End pricing-table-->
+                </div><!-- End col-md-3 -->
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="pricing-table black">
+                        <div class="pricing-table-header">
+                            <span class="heading">12 course</span>
+                            <span class="price-value"><span>280</span><span class="mo">$</span></span>
+                        </div>
+                        <div class="pricing-table-space "></div>
+                        <div class="pricing-table-features">
+                            <p><strong>Three month</strong> valid</p>
+                            <p><strong> Saving </strong> 20%</p>
+                            <p><strong>Saving price</strong> 40$</p>
+                            <p><strong>Unlimited  </strong>access</p>
+                        </div>
+                        
+                        <div class="pricing-table-sign-up">
+                            <a href="javascript:void(0)" class="button_fullwidth">BUY NOW!</a>
+                        </div>
+                        
+                    </div><!-- End pricing-table-->
+                </div><!-- End col-md-3 -->
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="pricing-table black">
+                        <div class="pricing-table-header">
+                            <span class="heading">Full Access  + Extra</span>
+                            <span class="price-value"><span>800</span><span class="mo">$</span></span>
+                        </div>
+                        <div class="pricing-table-space "></div>
+                        <div class="pricing-table-features">
+                            <p><strong>Nine month</strong> valid</p>
+                            <p><strong> Saving </strong> 40%</p>
+                            <p><strong>Saving price</strong> 120$</p>
+                            <p><strong>Unlimited  </strong>access + Extra</p>
+                        </div>
+                        
+                        <div class="pricing-table-sign-up">
+                            <a href="javascript:void(0)" class="button_fullwidth">BUY NOW!</a>
+                        </div>
+                        
+                    </div><!-- End pricing-table-->
+                </div><!-- End col-md-3 -->
+                    
+
+        </div><!-- End prices -->
+    </div>
+               
+                <h3 id="courseApplication">Prijava na tečaj</h3>
+            <form action="/course/{{course.get_id}}/apply" method="post">
+                <input type="hidden" name="hidden">
+                <input type="hidden" name="csrf" value="{{csrf}}">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="data-list">
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" name="first_name" class="required form-control" placeholder="Ime"><span class="input-icon"><i class="icon-user"></i></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" name="last_name" class="required form-control" placeholder="Priimek"><span class="input-icon"><i class="icon-user"></i></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" name="email" class="required form-control" placeholder="Email naslov"><span class="input-icon"><i class="icon-email"></i></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" name="address" class="required form-control" placeholder="Naslov prebivališča"><span class="input-icon"><i class="icon-home"></i></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" name="dob" class="required form-control" placeholder="Datum rojstva"><span class="input-icon"><i class="icon-star"></i></span>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div><!-- end col-md-6 -->
+
+                    <div class="col-md-6">
+                        <ul class="data-list">
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="required form-control" placeholder="Telefonska številka"><span class="input-icon"><i class="icon-phone"></i></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="styled-select">
+                                    <select class="form-control required" name="laptop">
+                                        <option value="" selected>Imaš prenosni računalnik?</option>
+                                        <option value="yes">DA</option>
+                                        <option value="no">NE</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="styled-select">
+                                    <select class="form-control required" name="shirt">
+                                        <option value="" selected>Izberi velikost majice</option>
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XXL">XXL</option>
+                                        <option value="XXXL">XXXL</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="styled-select">
+                                    <select class="form-control required" name="price">
+                                        <option value="" selected>Kotizacija</option>
+                                        {% for price in course.prices %}
+                                            <option value="{{price.price_dot}}">{{price.price_comma}} {{course.currency}} - {{price.summary}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </li>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="company-invoice" name="company_invoice"> Želim račun na podjetje
+                                </label>
+                            </div>
+
+                        </ul>
+                    </div><!-- end col-md-6 -->
+                </div><!-- end row -->
+
+                <div class="row" id="company-data">
+                    <div class="col-md-6">
+                        <ul class="data-list">
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" id="company-title" name="company_title" class="required form-control" placeholder="Ime podjetja"><span class="input-icon"><i class="icon-suitcase"></i></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" id="company-address" name="company_address" class="required form-control" placeholder="Naslov podjetja"><span class="input-icon"><i class="icon-commerical-building"></i></span>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div><!-- end col-md-6 -->
+
+                    <div class="col-md-6">
+                        <ul class="data-list">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="data-list">
+                                        <li>
+                                            <div class="form-group">
+                                                <input type="text" id="company-zip" name="company_zip" class="required form-control" placeholder="Poštna številka">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <ul class="data-list">
+                                        <li>
+                                            <div class="form-group">
+                                                <input type="text" id="company-town" name="company_town" class="required form-control" placeholder="Kraj">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" id="company-tax" name="company_tax" class="required form-control" placeholder="Davčna številka">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- end row -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="data-list">
+                            <li>
+                                <div class="form-group">
+                                    <textarea rows="3" name="other_info" class="form-control" placeholder="Nam želiš še kaj sporočiti?" style="height:100px;"></textarea>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- end row -->
+
+                <div class="row">
+                    <div class="col-md-9 col-md-offset-2">
+                        <strong>S prijavo sprejemaš <a href="#" data-toggle="modal" data-target="#myModal">pravila in pogoje šole programiranja SmartNinja</a>.</strong>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="submit step" id="complete">
+                        <!--<p>Prijave zaprte</p>-->
+                        <button type="submit" name="process" class="submit" id="prijava-gumb">Oddaj prijavo</button>
+                        <br>
+                        <p style="color: red;">{{ error }}</p>
+                    </div><!-- end submit step -->
+                </div>
+
+
+            </form>
+        </div><!-- End col-md-8  -->
+
+        <aside class="col-md-4">
+            <div class="box_style_1">
+                <h4><a href="/courses">Nazaj na seznam tečajev <i class="icon-back pull-right"></i></a></h4><br>
+
+                <h4>Inštruktor</h4>
+
+                {% for instructor in course.course_instructors %}
+                <div class="media">
+                    <div class="pull-right">
+                        <img src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="">
+                    </div>
+
+                    <div class="media-body">
+                        <h5 class="media-heading"><a>{{instructor.name}}</a></h5>
+                        <p>{{instructor.summary}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if course.partners %}
+                    <h4>Partner</h4>
+                    {% for partner in course.partners %}
+                        <div class="media">
+                            <a href="{{partner.website}}"><img src="{{partner.logo}}" height="100px" class="img-medium" alt=""></a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if courses %}
+                    <h4>Ostali tečaji</h4>
+                    <ul class="list_1">
+                        {% for course in courses %}
+                            <li><a href="/course/{{course.get_id}}">{{course.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif%}
+            </div>
+        </aside> <!-- End col-md-4 -->
         </div><!-- End row -->
 
     </div><!-- End container -->
