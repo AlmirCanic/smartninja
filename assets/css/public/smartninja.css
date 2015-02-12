@@ -204,3 +204,16 @@ ul.list_1 {
 {
     text-align:center;
 }
+
+/* Custom styles for testimonials in course details */
+.small_2
+{
+    color:#2d4050 !important;
+}
+
+.course-testimonials
+{
+    font-size:15px !important;
+}
+
+/* End custom styles */
