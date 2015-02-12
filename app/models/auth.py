@@ -1,6 +1,6 @@
 from google.appengine.ext import ndb
 from app.models.course import CourseApplication
-from app.settings import ADMINS
+from app.models.partner import PartnerUserCourse
 
 
 class User(ndb.Model):
@@ -35,6 +35,14 @@ class User(ndb.Model):
         return user
 
     @classmethod
+    def short_create(cls, email, first_name=None, last_name=None):
+        user = cls(email=email,
+                   first_name=first_name,
+                   last_name=last_name)
+        user.put()
+        return user
+
+    @classmethod
     def create(cls, first_name, last_name, email, address, phone_number, dob):
         user = cls(first_name=first_name,
                    last_name=last_name,
@@ -55,6 +63,12 @@ class User(ndb.Model):
             for application in applications:
                 application.student_name = "%s %s" % (first_name, last_name)
                 application.put()
+
+            pucs = PartnerUserCourse.query(PartnerUserCourse.user_id == user.get_id).fetch()
+
+            for puc in pucs:
+                puc.user_name = user.first_name + " " + user.last_name
+                puc.put()
 
         user.address = address
         user.phone_number = phone_number

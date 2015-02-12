@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
-from app.models.partner import Partner
+from app.models.partner import Partner, PartnerUserCourse
 
 
 class CourseType(ndb.Model):
@@ -77,12 +77,20 @@ class Course(ndb.Model):
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
                currency, category, course_instructors, image_url, partners, tags):
 
-        if course.title != title:
+        if course.title != title or course.start_date != start_date or course.city != city:
             applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
 
             for application in applications:
                 application.course_title = title
                 application.put()
+
+            pucs = PartnerUserCourse.query(PartnerUserCourse.course_id == course.get_id).fetch()
+
+            for puc in pucs:
+                puc.course_title = title
+                puc.start_date = start_date
+                puc.city = city
+                puc.put()
 
         course.title = title
         course.course_type = course_type

@@ -1,0 +1,102 @@
+{% extends "partner/base.html" %}
+
+{% block title %}Courses{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-institution"></i> Courses
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Courses
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <h3>Future courses</h3>
+    {% if future_courses %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Place</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Applied</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in future_courses %}
+                        <tr>
+                            <td><a href="/partner/course/{{course.get_id}}">{{ course.title }}</a></td>
+                            <td>{{ course.city }}, {{ course.place }}</td>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>{{ course.taken }}/{{ course.spots }}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %} {{ instructor.name }} {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No future courses</p>
+    {% endif %}
+
+    <h3>Past courses</h3>
+    {% if past_courses %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Place</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Applied</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in past_courses %}
+                        <tr>
+                            <td><a href="/partner/course/{{course.get_id}}">{{ course.title }}</a></td>
+                            <td>{{ course.city }}, {{ course.place }}</td>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>{{ course.taken }}/{{ course.spots }}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %} {{ instructor.name }} {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No courses</p>
+    {% endif %}
+
+</div>
+{% endblock main_content %}

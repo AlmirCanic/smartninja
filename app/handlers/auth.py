@@ -5,7 +5,7 @@ from app.models.auth import User
 
 class LoginHandler(Handler):
     def get(self):
-        self.redirect(users.create_login_url("/admin/courses"))
+        self.redirect(users.create_login_url(self.request.uri))
 
 
 class LogoutHandler(Handler):

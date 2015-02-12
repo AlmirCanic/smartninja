@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Delete partner user for a specific course{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-briefcase"></i>  <a href="/admin/partner-courses">Partner users</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> Delete partner user for a specific course
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Delete {{puc.user_name}}'s access to {{puc.course_title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/admin/partner-course/{{puc.get_id}}/delete" method="post">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3">
+            <a href="/admin/partner-courses"><button class="btn btn-default">Cancel</button></a>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

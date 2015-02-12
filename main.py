@@ -18,7 +18,8 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     PublicCourseDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
-    AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler
+    AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
+    AdminPartnerUserCourseAdd, AdminPartnerUserCourseDelete, PartnerCourseListHandler
 from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
@@ -53,8 +54,6 @@ app = webapp2.WSGIApplication([
     # ADMIN URLS
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
-    webapp2.Route('/login', LoginHandler, name="login"),
-    webapp2.Route('/logout', LogoutHandler, name="logout"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
 
     # courses
@@ -88,6 +87,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/partner/<partner_id:\d+>/delete', AdminPartnerDeleteHandler, name="admin-partner-delete"),
     webapp2.Route('/admin/partner/<partner_id:\d+>/edit', AdminPartnerEditHandler, name="admin-partner-edit"),
 
+    # partner user course
+    webapp2.Route('/admin/partner-courses', AdminPartnerUserCourseList, name="admin-partner-user-course-list"),
+    webapp2.Route('/admin/partner-course/add', AdminPartnerUserCourseAdd, name="admin-partner-user-course-add"),
+    webapp2.Route('/admin/partner-course/<puc_id:\d+>/delete', AdminPartnerUserCourseDelete, name="admin-partner-user-course-delete"),
+
     # blog
     webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),
     webapp2.Route('/admin/blog/add', AdminBlogAddHandler, name="admin-blog-add"),
@@ -95,9 +99,15 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/blog/<post_id:\d+>/edit', AdminBlogEditHandler, name="admin-blog-edit"),
     webapp2.Route('/admin/blog/<post_id:\d+>/delete', AdminBlogDeleteHandler, name="admin-blog-delete"),
 
+    # PARTNER URLS
+    webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
+    webapp2.Route('/partner/courses', PartnerCourseListHandler, name="partner-course-list"),
+
     # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
     webapp2.Route('/404', NotExistHandler, name="404"),
     webapp2.Route('/oops', OopsHandler, name="oops"),
     webapp2.Route('/secured', SecuredSiteHandler, name="secured"),
+    webapp2.Route('/login', LoginHandler, name="login"),
+    webapp2.Route('/logout', LogoutHandler, name="logout"),
 ], debug=True)
