@@ -54,7 +54,7 @@ class User(ndb.Model):
         return user
 
     @classmethod
-    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, instructor):
+    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, instructor=False):
         if user.first_name != first_name or user.last_name != last_name:
             user.first_name = first_name
             user.last_name = last_name
@@ -75,5 +75,6 @@ class User(ndb.Model):
         user.summary = summary
         user.photo_url = photo_url
         user.instructor = instructor
+        user.dob = dob
         user.put()
         return user

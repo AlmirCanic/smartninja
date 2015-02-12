@@ -1,0 +1,73 @@
+{% extends "partner/base.html" %}
+
+{% block title %}Edit user{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-user"></i>  <a href="/partner/profile">Profile</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Edit your profile
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ profile.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/partner/profile/edit" method="post">
+
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" class="form-control" placeholder="First name" value="{{profile.first_name}}" name="first_name" id="firstName">
+                </div>
+
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" class="form-control" placeholder="Last name" value="{{profile.last_name}}" name="last_name" id="lastName">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" placeholder="Address" value="{{profile.address}}" name="address" id="address">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone number</label>
+                    <input type="text" class="form-control" placeholder="Phone number" value="{{profile.phone_number}}" name="phone_number" id="phoneNumber">
+                </div>
+
+                <div class="form-group">
+                    <label>Date of birth</label>
+                    <input type="text" class="form-control" placeholder="Date of birth" value="{{profile.dob}}" name="dob" id="dob">
+                </div>
+
+                <div class="form-group">
+                    <label>Summary</label>
+                    <p>Short summary of what you do (up to 100 chars)</p>
+                    <input type="text" class="form-control" placeholder="Summary" value="{{profile.summary}}" name="summary" id="summary">
+                </div>
+
+                <div class="form-group">
+                    <label>Photo URL</label>
+                    <input type="text" class="form-control" placeholder="A link (URL) to your photo" value="{{profile.photo_url}}" name="photo_url" id="photoURL">
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

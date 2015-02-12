@@ -1,6 +1,6 @@
 import datetime
 from app.models.auth import User
-from app.models.course import Course
+from app.models.course import Course, CourseApplication
 from app.utils.decorators import admin_required, partner_required
 from app.handlers.base import Handler
 from app.models.partner import Partner, PartnerUserCourse
@@ -152,7 +152,7 @@ class PartnerCourseListHandler(Handler):
         current_user = users.get_current_user()
         user = User.query(User.email == str(current_user.email())).get()
         if not user:
-            return self.redirect_to("403.html")
+            return self.redirect_to("forbidden")
         else:
             pucs = PartnerUserCourse.query(PartnerUserCourse.user_id == user.get_id).fetch()
 
@@ -170,3 +170,85 @@ class PartnerCourseListHandler(Handler):
                     past_courses.append(course)
             params = {"future_courses": future_courses, "past_courses": past_courses}
             self.render_template("partner/course_list.html", params)
+
+
+class PartnerCourseDetailsHandler(Handler):
+    @partner_required
+    def get(self, course_id):
+        current_user = users.get_current_user()
+        user = User.query(User.email == str(current_user.email())).get()
+        if not user:
+            return self.redirect_to("forbidden")
+        else:
+            puc = PartnerUserCourse.query(PartnerUserCourse.course_id == int(course_id),
+                                          PartnerUserCourse.user_id == user.get_id).get()
+
+            if puc:
+                course = Course.get_by_id(int(course_id))
+
+                applications = CourseApplication.query(CourseApplication.course_id == int(course_id),
+                                                       CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+
+                num_paid = 0
+                num_no_laptop = 0
+                total_paid = 0.0
+                for application in applications:
+                    if application.payment_status:
+                        num_paid += 1
+                        total_paid += application.price
+                    if application.laptop == "no":
+                        num_no_laptop += 1
+
+                params = {"course": course,
+                          "applications": applications,
+                          "num_paid": num_paid,
+                          "no_laptop": num_no_laptop,
+                          "total_paid": total_paid}
+                return self.render_template("partner/course_details.html", params)
+            else:
+                return self.redirect_to("forbidden")
+
+
+class PartnerProfileDetailsHandler(Handler):
+    @partner_required
+    def get(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email())).get()
+
+        if not profile:
+            return self.redirect_to("forbidden")
+
+        params = {"profile": profile}
+        self.render_template("partner/profile.html", params)
+
+
+class PartnerProfileEditHandler(Handler):
+    @partner_required
+    def get(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email())).get()
+
+        if not profile:
+            return self.redirect_to("forbidden")
+        else:
+            params = {"profile": profile}
+            self.render_template("partner/profile_edit.html", params)
+
+    @partner_required
+    def post(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email())).get()
+
+        if not profile:
+            return self.redirect_to("forbidden")
+        else:
+            first_name = self.request.get("first_name")
+            last_name = self.request.get("last_name")
+            address = self.request.get("address")
+            summary = self.request.get("summary")
+            photo_url = self.request.get("photo_url")
+            phone_number = self.request.get("phone_number")
+            dob = self.request.get("dob")
+            User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
+                    summary=summary, photo_url=photo_url, dob=dob)
+            self.redirect_to("partner-profile")
