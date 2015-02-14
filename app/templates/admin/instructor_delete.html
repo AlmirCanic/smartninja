@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Delete partner user for a specific course{% endblock title %}
+{% block title %}Delete instructor{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -12,15 +12,15 @@
                     <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
                 </li>
                 <li>
-                    <i class="fa fa-briefcase"></i>  <a href="/admin/partner-courses">Partner users</a>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/instructors">Instructors</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-remove"></i> Remove partner user from a specific course
+                    <i class="fa fa-remove"></i> Remove instructor
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Delete {{puc.user_name}}'s access to {{puc.course_title}}
+                Remove {{instructor.full_name}}
             </h1>
         </div>
     </div>
@@ -28,13 +28,13 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <form action="/admin/partner-course/{{puc.get_id}}/delete" method="post">
+            <form action="/admin/users/instructor/{{instructor.get_id}}/delete" method="post">
                 <button class="btn btn-danger">Delete</button>
             </form>
         </div>
 
         <div class="col-lg-3">
-            <a href="/admin/partner-courses"><button class="btn btn-default">Cancel</button></a>
+            <a href="/admin/users/instructors"><button class="btn btn-default">Cancel</button></a>
         </div>
     </div>
 </div>

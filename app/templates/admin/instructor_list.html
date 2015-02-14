@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Instructors{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  Users
+                </li>
+
+                <li>
+                    <i class="fa fa-users"></i>  Instructors
+                </li>
+
+                <li>
+                    <i class="fa fa-plus-square-o"></i>  <a href="/admin/users/instructor/add">Add new instructor</a>
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Instructors
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Tabs start -->
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="/admin/users">Admins</a></li>
+        <li role="presentation"><a href="#">Managers</a></li>
+        <li role="presentation" class="active"><a href="/admin/users/instructors">Instructors</a></li>
+        <li role="presentation"><a href="/admin/partner-courses">Partner Users</a></li>
+        <li role="presentation"><a href="/admin/users/all">All users</a></li>
+    </ul>
+    <!-- End Tabs -->
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Instructors</h3>
+            {% if instructors %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instructor in instructors %}
+                        <tr>
+                            <td><a href="/admin/user/{{instructor.user_id}}">{{ instructor.full_name }}</a></td>
+                            <td>{{ instructor.email }}</td>
+                            <td><a href="/admin/users/instructor/{{ instructor.get_id }}/delete">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p>No instructors yet</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
