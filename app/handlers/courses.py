@@ -2,6 +2,7 @@ import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType, Price, CourseInstructor
+from app.models.instructor import Instructor
 from app.models.partner import Partner
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
@@ -55,7 +56,7 @@ class AdminCourseAddHandler(Handler):
     @admin_required
     def get(self):
         course_types = CourseType.query(CourseType.deleted == False).fetch()
-        instructors = User.query(User.instructor == True).fetch()
+        instructors = Instructor.query().fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
         params = {"course_types": course_types, "instructors": instructors, "partners": partners}
         self.render_template("admin/course_add.html", params)
@@ -113,7 +114,7 @@ class AdminCourseEditHandler(Handler):
         course_types = CourseType.query(CourseType.deleted == False).fetch()
         course = Course.get_by_id(int(course_id))
         selected_course_type = CourseType.get_by_id(course.course_type)
-        instructors = User.query(User.instructor == True).fetch()
+        instructors = Instructor.query().fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
 
         tags = convert_tags_to_string(course.tags)

@@ -1,8 +1,11 @@
 # ADMIN
+import datetime
+from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
+from app.models.course import Course, CourseApplication
 from app.models.instructor import Instructor
-from app.utils.decorators import admin_required
+from app.utils.decorators import admin_required, instructor_required
 
 
 class AdminInstructorsListHandler(Handler):
@@ -45,3 +48,99 @@ class AdminInstructorDeleteHandler(Handler):
         instructor = Instructor.get_by_id(int(instructor_id))
         instructor.key.delete()
         self.redirect_to("admin-instructors-list")
+
+
+# INSTRUCTOR
+
+class InstructorCourseListHandler(Handler):
+    @instructor_required
+    def get(self):
+        current_user = users.get_current_user()
+        user = User.query(User.email == str(current_user.email())).get()
+        if not user:
+            return self.redirect_to("forbidden")
+        else:
+            courses = Course.query(Course.course_instructors.user_id == user.get_id).fetch()
+
+            past_courses = []
+            future_courses = []
+            for course in courses:
+                if course.start_date > datetime.date.today():
+                    future_courses.append(course)
+                else:
+                    past_courses.append(course)
+            params = {"future_courses": future_courses, "past_courses": past_courses}
+            self.render_template("instructor/course_list.html", params)
+
+
+class InstructorCourseDetailsHandler(Handler):
+    @instructor_required
+    def get(self, course_id):
+        current_user = users.get_current_user()
+        user = User.query(User.email == str(current_user.email())).get()
+        if not user:
+            return self.redirect_to("forbidden")
+        else:
+            course = Course.get_by_id(int(course_id))
+            courses = Course.query(Course.course_instructors.user_id == user.get_id).fetch()
+
+            if course in courses:
+                applications = CourseApplication.query(CourseApplication.course_id == int(course_id),
+                                                       CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+
+                num_no_laptop = 0
+                for application in applications:
+                    if application.laptop == "no":
+                        num_no_laptop += 1
+
+                params = {"course": course,
+                          "applications": applications,
+                          "no_laptop": num_no_laptop}
+                return self.render_template("instructor/course_details.html", params)
+            else:
+                return self.redirect_to("forbidden")
+
+
+class InstructorProfileDetailsHandler(Handler):
+    @instructor_required
+    def get(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email())).get()
+
+        if not profile:
+            return self.redirect_to("forbidden")
+
+        params = {"profile": profile}
+        self.render_template("instructor/profile.html", params)
+
+
+class InstructorProfileEditHandler(Handler):
+    @instructor_required
+    def get(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email())).get()
+
+        if not profile:
+            return self.redirect_to("forbidden")
+        else:
+            params = {"profile": profile}
+            self.render_template("instructor/profile_edit.html", params)
+
+    @instructor_required
+    def post(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email())).get()
+
+        if not profile:
+            return self.redirect_to("forbidden")
+        else:
+            first_name = self.request.get("first_name")
+            last_name = self.request.get("last_name")
+            address = self.request.get("address")
+            summary = self.request.get("summary")
+            photo_url = self.request.get("photo_url")
+            phone_number = self.request.get("phone_number")
+            dob = self.request.get("dob")
+            User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
+                    summary=summary, photo_url=photo_url, dob=dob)
+            self.redirect_to("instructor-profile")

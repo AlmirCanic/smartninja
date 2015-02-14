@@ -66,7 +66,7 @@
                         {% endif %}
                         <option disabled>------------------------------</option>
                         {% for instructor in instructors %}
-                            <option value="{{ instructor.get_id }}|{{ instructor.get_full_name }}">{{ instructor.get_full_name }}</option>
+                            <option value="{{ instructor.user_id }}|{{ instructor.full_name }}">{{ instructor.full_name }}</option>
                         {% endfor %}
                     </select>
                 </div>

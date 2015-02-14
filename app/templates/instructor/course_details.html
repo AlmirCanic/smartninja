@@ -1,0 +1,133 @@
+{% extends "instructor/base.html" %}
+
+{% block title %}{{ course.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-institution"></i>  <a href="/partner/courses">Courses</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Course details
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ course.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{course.taken}}/{{ course.spots }}</div>
+                            <div>Applications</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-laptop fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ no_laptop }}</div>
+                            <div>Without laptop</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <h3>Student applications</h3>
+    {% if applications %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Email</th>
+                                <th>Laptop</th>
+                                <th>T-shirt</th>
+                                <th>Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for application in applications %}
+                            <tr {% if application.payment_status %} class="success" {% else %} class="danger" {% endif %}>
+                                <td>{{application.student_name}}</td>
+                                <td>{{application.student_email}}</td>
+                                <td>{{application.laptop}}</td>
+                                <td>{{application.shirt}}</td>
+                                <td>{{application.payment_status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>No applications yet :(</p>
+    {% endif %}
+
+    <h3>About course</h3>
+    <p>{{ course.summary }}</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>City</th>
+                            <th>Place</th>
+                            <th>Instructor</th>
+                            <th>Partner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>{{course.city}}</td>
+                            <td>{{course.place}}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %} {{ instructor.name }} {% endfor %}
+                            </td>
+                            <td>
+                                {% for partner in course.partners %} {{ partner.title }} {% endfor %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a href="/course/{{course.get_id}}" target="_blank"><button class="btn btn-primary">See course on public website</button></a>
+
+</div>
+{% endblock main_content %}

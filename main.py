@@ -16,7 +16,8 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     AdminCourseTypeDetailsHandler, AdminCourseAddHandler, AdminCourseTypeAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, PublicCourseListHandler, \
     PublicCourseDetailsHandler
-from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler
+from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
+    InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
@@ -113,6 +114,13 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/partner/profile/edit', PartnerProfileEditHandler, name="partner-profile-edit"),
     webapp2.Route('/partner/courses', PartnerCourseListHandler, name="partner-course-list"),
     webapp2.Route('/partner/course/<course_id:\d+>', PartnerCourseDetailsHandler, name="partner-course-details"),
+
+    # PARTNER URLS
+    webapp2.Route('/instructor', InstructorCourseListHandler, name="instructor"),
+    webapp2.Route('/instructor/courses', InstructorCourseListHandler, name="instructor-course-list"),
+    webapp2.Route('/instructor/course/<course_id:\d+>', InstructorCourseDetailsHandler, name="instructor-course-details"),
+    webapp2.Route('/instructor/profile', InstructorProfileDetailsHandler, name="instructor-profile"),
+    webapp2.Route('/instructor/profile/edit', InstructorProfileEditHandler, name="instructor-profile-edit"),
 
     # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
