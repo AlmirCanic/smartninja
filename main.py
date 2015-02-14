@@ -25,7 +25,7 @@ from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
-    AdminUserEditHandler
+    AdminUserEditHandler, AdminUsersAllListHandler
 
 
 app = webapp2.WSGIApplication([
@@ -77,6 +77,7 @@ app = webapp2.WSGIApplication([
 
     # users
     webapp2.Route('/admin/users', AdminUsersListHandler, name="users-list"),
+    webapp2.Route('/admin/users/all', AdminUsersAllListHandler, name="users-all-list"),
     webapp2.Route('/admin/user/<user_id:\d+>', AdminUserDetailsHandler, name="user-details"),
     webapp2.Route('/admin/user/<user_id:\d+>/delete', AdminUserDeleteHandler, name="user-delete"),
     webapp2.Route('/admin/user/<user_id:\d+>/edit', AdminUserEditHandler, name="user-edit"),

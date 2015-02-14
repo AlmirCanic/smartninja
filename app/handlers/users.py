@@ -11,16 +11,22 @@ class AdminUsersListHandler(Handler):
         users = User.query(User.deleted == False).fetch()
 
         admins = []
-        students = []
 
         for user in users:
             if user.email in ADMINS:
                 admins.append(user)
-            else:
-                students.append(user)
 
-        params = {"admins": admins, "students": students}
+        params = {"admins": admins}
         self.render_template("admin/users_list.html", params)
+
+
+class AdminUsersAllListHandler(Handler):
+    @admin_required
+    def get(self):
+        users = User.query(User.deleted == False).fetch()
+
+        params = {"users": users}
+        self.render_template("admin/users_all_list.html", params)
 
 
 class AdminUserDetailsHandler(Handler):

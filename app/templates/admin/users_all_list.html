@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Admins{% endblock title %}
+{% block title %}All users{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -9,16 +9,15 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-users"></i>  Users
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
                 </li>
-
                 <li>
-                    <i class="fa fa-users"></i>  Admins
+                    <i class="fa fa-users"></i>  All
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Admins
+                All users
             </h1>
         </div>
     </div>
@@ -26,18 +25,18 @@
 
     <!-- Tabs start -->
     <ul class="nav nav-pills">
-        <li role="presentation" class="active"><a href="/admin/users">Admins</a></li>
+        <li role="presentation"><a href="/admin/users">Admins</a></li>
         <li role="presentation"><a href="#">Managers</a></li>
         <li role="presentation"><a href="/admin/users/instructors">Instructors</a></li>
         <li role="presentation"><a href="/admin/partner-courses">Partner Users</a></li>
-        <li role="presentation"><a href="/admin/users/all">All users</a></li>
+        <li role="presentation" class="active"><a href="/admin/users/all">All users</a></li>
     </ul>
     <!-- End Tabs -->
 
     <div class="row">
         <div class="col-lg-6">
-            <h3>Admins</h3>
-            {% if admins %}
+            <h3>All users</h3>
+            {% if users %}
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
@@ -47,17 +46,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for admin in admins %}
+                        {% for user in users %}
                         <tr>
-                            <td><a href="/admin/user/{{admin.get_id}}">{{ admin.get_full_name }}</a></td>
-                            <td>{{ admin.email }}</td>
+                            <td><a href="/admin/user/{{user.get_id}}">{{ user.get_full_name }}</a></td>
+                            <td>{{ user.email }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
             {% else %}
-                <p>No admins yet</p>
+                <p>No users yet</p>
             {% endif %}
         </div>
     </div>
