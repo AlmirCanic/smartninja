@@ -16,6 +16,9 @@
     <meta name="og:image" content="{{post.cover_image}}">
     <!-- END FACEBOOK OPEN GRAPH -->
 
+    <!-- FB comments -->
+    <meta property="fb:admins" content="1042442164"/>
+
     <!-- START TWITTER CARDS -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="">
@@ -26,6 +29,26 @@
     <meta name="twitter:url" content="http://smartninja.org">
     <!-- END TWITTER CARDS -->
 {% endblock social %}
+
+{% block fbsdk %}
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1615537165343215',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+{% endblock fbsdk %}
 
 {% block main_content %}
 <section id="sub-header-small">
@@ -61,6 +84,22 @@
                 <h2>{{post.title}}</h2>
 
                 <p>{{post.text}}</p>
+
+                <!-- FB like and share -->
+                <div
+                  class="fb-like"
+                  data-share="true"
+                  data-width="450"
+                  data-show-faces="true">
+                </div>
+
+                <hr>
+
+                <h2>Komentarji</h2>
+
+                <!-- FB comments -->
+                <div class="fb-comments" data-href="http://smartninja.org/{{post.slug}}" data-numposts="10"
+                     data-colorscheme="light" data-mobile="True" data-width="100%"></div>
             </div><!-- end post -->
         </div><!-- End col-md-8-->
 
@@ -90,6 +129,17 @@
                             <p>No posts</p>
                         {% endif %}
                     </div><!-- End widget -->
+
+                    <br>
+
+                    <div class="widget">
+                        <h4>Všečkaj nas na FB</h4>
+                        <div
+                            class="fb-like-box"
+                            data-href="https://www.facebook.com/pages/SmartNinja/1563841910494321"
+                            data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false"
+                            data-show-border="true"></div>
+                    </div>
                 </div><!-- End box-sidebar -->
          </aside><!-- End aside -->
 
