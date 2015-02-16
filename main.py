@@ -18,7 +18,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     PublicCourseDetailsHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
-from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler
+from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
@@ -81,7 +81,8 @@ app = webapp2.WSGIApplication([
     # lessons
     webapp2.Route('/admin/course/type/<course_type_id:\d+>/add-lesson', AdminLessonAddHandler, name="admin-lesson-add"),
     webapp2.Route('/admin/lesson/<lesson_id:\d+>', AdminLessonDetailsHandler, name="admin-lesson-details"),
-    #webapp2.Route('/admin/lesson/<lesson_id:\d+>/edit', AdminCourseTypeEditHandler, name="course-type-edit"),
+    webapp2.Route('/admin/lesson/<lesson_id:\d+>/edit', AdminLessonEditHandler, name="admin-lesson-edit"),
+    webapp2.Route('/admin/lesson/<lesson_id:\d+>/delete', AdminLessonDeleteHandler, name="admin-lesson-delete"),
 
     # users
     webapp2.Route('/admin/users', AdminUsersListHandler, name="users-list"),

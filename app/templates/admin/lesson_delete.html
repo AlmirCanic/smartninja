@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}{{ lesson.title }}{% endblock title %}
+{% block title %}Delete {{ lesson.title }}{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -20,17 +20,22 @@
             </ol>
 
             <h1 class="page-header">
-                {{ lesson.title }}
+                Do you want to delete {{ lesson.title }} lesson?
             </h1>
         </div>
     </div>
     <!-- Breadcrumb end -->
 
-    <p><a href="/admin/course/type/{{course_type.get_id}}">{{course_type.title}}</a></p>
-    <p>Order: {{ lesson.order }}</p>
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/admin/lesson/{{lesson.get_id}}/delete" method="post">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
 
-    <a href="/admin/lesson/{{lesson.get_id}}/delete" class="pull-right"><button class="btn btn-danger">Delete</button></a>
-    <a href="/admin/lesson/{{lesson.get_id}}/edit" class="pull-right"><button class="btn btn-success">Edit</button></a>
-    <p>{{ lesson.text }}</p>
+        <div class="col-lg-3">
+            <a href="/admin/lesson/{{lesson.get_id}}"><button class="btn btn-default">Cancel</button></a>
+        </div>
+    </div>
 </div>
 {% endblock main_content %}
