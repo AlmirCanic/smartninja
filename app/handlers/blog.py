@@ -14,8 +14,8 @@ class PublicBlogHandler(Handler):
         posts2 = []
 
         for post in posts:
-            post.text = post.text[:500] + "..."
             post.text = convert_markdown_to_html(post.text)
+            post.text = strip_tags(post.text)[:500] + "..."
             posts2.append(post)
 
         params = {"posts": posts2}
