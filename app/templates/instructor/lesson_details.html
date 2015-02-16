@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "instructor/base.html" %}
 
 {% block title %}{{ lesson.title }}{% endblock title %}
 
@@ -9,10 +9,10 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-puzzle-piece"></i>  <a href="/admin/course/types">Course Types</a>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/instructor/curriculums">Curriculums</a>
                 </li>
                 <li>
-                    <i class="fa fa-table"></i> <a href="/admin/course/type/{{course_type.get_id}}">{{course_type.title}}</a>
+                    <i class="fa fa-table"></i> <a href="/instructor/curriculum/{{course_type.get_id}}">{{course_type.title}}</a>
                 </li>
                 <li class="active">
                     <i class="fa fa-book"></i> {{lesson.title}}
@@ -26,11 +26,11 @@
     </div>
     <!-- Breadcrumb end -->
 
-    <p><a href="/admin/course/type/{{course_type.get_id}}">{{course_type.title}}</a></p>
+    <p><a href="/instructor/curriculum/{{course_type.get_id}}">{{course_type.title}}</a></p>
     <p>Order: {{ lesson.order }}</p>
 
-    <a href="/admin/lesson/{{lesson.get_id}}/delete" class="pull-right"><button class="btn btn-danger">Delete</button></a>
-    <a href="/admin/lesson/{{lesson.get_id}}/edit" class="pull-right"><button class="btn btn-success">Edit</button></a>
+    <a href="/instructor/lesson/{{lesson.get_id}}/delete" class="pull-right"><button class="btn btn-danger">Delete</button></a>
+    <a href="/instructor/lesson/{{lesson.get_id}}/edit" class="pull-right"><button class="btn btn-success">Edit</button></a>
     <p>{{ lesson.text }}</p>
 </div>
 {% endblock main_content %}
