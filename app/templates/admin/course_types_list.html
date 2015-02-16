@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Course Types{% endblock title %}
+{% block title %}Curriculums{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -9,15 +9,15 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-puzzle-piece"></i>  Course Types
+                    <i class="fa fa-puzzle-piece"></i>  Curriculums
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/admin/course/type/add">Add new course type</a>
+                    <i class="fa fa-plus-square-o"></i> <a href="/admin/course/type/add">Add new curriculum</a>
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Course types
+                Curriculums
             </h1>
         </div>
     </div>
@@ -31,7 +31,8 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Curriculum</th>
+                            <th>Google Drive URL</th>
+                            <th>Created</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,7 @@
                         <tr>
                             <td><a href="/admin/course/type/{{course_type.get_id}}">{{ course_type.title }}</a></td>
                             <td><a href="{{ course_type.curriculum }}">{{ course_type.curriculum }}</a></td>
+                            <td>{{ course_type.created }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -48,7 +50,7 @@
     </div>
     <!-- /.row -->
     {% else %}
-        <p>No course types</p>
+        <p>No Curriculums</p>
     {% endif %}
 
 </div>
