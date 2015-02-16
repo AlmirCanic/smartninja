@@ -3,6 +3,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType, Price, CourseInstructor
 from app.models.instructor import Instructor
+from app.models.lesson import Lesson
 from app.models.partner import Partner
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
@@ -202,7 +203,8 @@ class AdminCourseTypeDetailsHandler(Handler):
     @admin_required
     def get(self, course_type_id):
         course_type = CourseType.get_by_id(int(course_type_id))
-        params = {"course_type": course_type}
+        lessons = Lesson.query(Lesson.course_type == int(course_type_id), Lesson.deleted == False).fetch()
+        params = {"course_type": course_type, "lessons": lessons}
         self.render_template("admin/course_type_details.html", params)
 
 

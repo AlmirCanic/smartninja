@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ lesson.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/admin/blog">Blog</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/admin/course/type/{{course_type.get_id}}">{{course_type.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-book"></i> {{lesson.title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ lesson.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p><a href="/admin/course/type/{{course_type.get_id}}">{{course_type.title}}</a></p>
+    <p>Order: {{ lesson.order }}</p>
+    <br>
+    <p>{{ lesson.text }}</p>
+
+    <a href="/admin/lesson/{{lesson.get_id}}/edit"><button class="btn btn-success">Edit</button></a>
+    <a href="/admin/lesson/{{lesson.get_id}}/delete"><button class="btn btn-danger">Delete</button></a>
+</div>
+{% endblock main_content %}
