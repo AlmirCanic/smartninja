@@ -5,6 +5,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication
 from app.models.instructor import Instructor
+from app.models.report import Report
 from app.utils.decorators import admin_required, instructor_required
 from app.utils.other import logga
 
@@ -86,6 +87,7 @@ class InstructorCourseDetailsHandler(Handler):
         else:
             course = Course.get_by_id(int(course_id))
             courses = Course.query(Course.course_instructors.user_id == user.get_id).fetch()
+            reports = Report.query(Report.course_id == int(course_id), Report.deleted == False).fetch()
 
             if course in courses:
                 applications = CourseApplication.query(CourseApplication.course_id == int(course_id),
@@ -97,6 +99,7 @@ class InstructorCourseDetailsHandler(Handler):
                         num_no_laptop += 1
 
                 params = {"course": course,
+                          "reports": reports,
                           "applications": applications,
                           "no_laptop": num_no_laptop}
                 return self.render_template("instructor/course_details.html", params)
