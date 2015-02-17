@@ -146,6 +146,7 @@ class AdminCourseEditHandler(Handler):
         prices_data_string = self.request.get("all-prices-data")
         partner_id = self.request.get("partner")
         tags = self.request.get("tags")
+        closed = self.request.get("closed")
 
         course = Course.get_by_id(int(course_id))
 
@@ -172,7 +173,7 @@ class AdminCourseEditHandler(Handler):
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
-                          image_url=image_url, partners=partners, tags=tags)
+                          image_url=image_url, partners=partners, tags=tags, closed=bool(closed))
             self.redirect_to("course-details", course_id=int(course_id))
 
 

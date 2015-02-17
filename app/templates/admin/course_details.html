@@ -89,6 +89,10 @@
         </div>
     </div>
 
+    {% if course.applications_closed %}
+        <h2 style="color: red;">Applications are closed!</h2>
+    {% endif %}
+
     <h3>Student applications</h3>
     {% if applications %}
         <div class="row">

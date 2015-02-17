@@ -202,6 +202,9 @@
 
                 <!-- Start prijava -->
                 <h3 id="courseApplication">Prijava na tečaj</h3>
+                {% if course.applications_closed %}
+                <p>Prijave so zaključene. Poglej si še <a href="/courses">ostale tečaje</a>.</p>
+                {% else %}
                 <form action="/course/{{course.get_id}}/apply" method="post">
                     <input type="hidden" name="hidden">
                     <input type="hidden" name="csrf" value="{{csrf}}">
@@ -380,8 +383,10 @@
 
 
                 </form>
-                <!-- End Kotizacija -->
-            </div><!-- End col-md-8  -->
+                <!-- End Prijava -->
+                {% endif %}
+            </div><!-- End col-md  -->
+
 
             <aside class="col-md-4">
                 <div class="box_style_1">
