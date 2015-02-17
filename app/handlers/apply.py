@@ -6,6 +6,7 @@ from app.models.course import CourseType, Course, CourseApplication
 from app.settings import is_local
 from app.utils.csrf import check_csrf
 from app.utils.decorators import admin_required
+from app.utils.other import logga
 
 
 class AdminCourseApplicationDetailsHandler(Handler):
@@ -24,6 +25,7 @@ class AdminCourseApplicationDetailsHandler(Handler):
         application.price = float(self.request.get("price"))
         application.invoice = self.request.get("invoice")
         application.put()
+        logga("Course application %s edited." % application_id)
         self.redirect_to("course-details", course_id=application.course_id)
 
 
@@ -38,6 +40,7 @@ class AdminCourseApplicationDeleteHandler(Handler):
     def post(self, application_id):
         application = CourseApplication.get_by_id(int(application_id))
         CourseApplication.delete(application=application)
+        logga("Course application %s deleted." % application_id)
         self.redirect_to("course-details", course_id=application.course_id)
 
 

@@ -5,6 +5,8 @@ from app.utils.decorators import admin_required, instructor_required
 
 
 # ADMIN
+from app.utils.other import logga
+
 
 class AdminCourseTypesListHandler(Handler):
     @admin_required
@@ -35,7 +37,8 @@ class AdminCourseTypeAddHandler(Handler):
         description = self.request.get("description")
 
         if title and curriculum:
-            CourseType.create(title=title, curriculum=curriculum, description=description)
+            cur = CourseType.create(title=title, curriculum=curriculum, description=description)
+            logga("Curriculum %s added." % cur.get_id)
             self.redirect_to("course-types-list")
 
 
@@ -53,6 +56,7 @@ class AdminCourseTypeEditHandler(Handler):
         course_type.curriculum = self.request.get("curriculum")
         course_type.description = self.request.get("description")
         course_type.put()
+        logga("Curriculum %s edited." % course_type_id)
         self.redirect_to("course-type-details", course_type_id=int(course_type_id))
 
 
@@ -68,6 +72,7 @@ class AdminCourseTypeDeleteHandler(Handler):
         course_type = CourseType.get_by_id(int(course_type_id))
         course_type.deleted = True
         course_type.put()
+        logga("Curriculum %s deleted." % course_type_id)
         self.redirect_to("course-types-list")
 
 
@@ -102,7 +107,8 @@ class InstructorCurriculumAddHandler(Handler):
         description = self.request.get("description")
 
         if title and curriculum:
-            CourseType.create(title=title, curriculum=curriculum, description=description)
+            cur = CourseType.create(title=title, curriculum=curriculum, description=description)
+            logga("Curriculum %s added." % cur.get_id)
             self.redirect_to("instructor-curriculum-list")
 
 
@@ -120,4 +126,5 @@ class InstructorCurriculumEditHandler(Handler):
         course_type.curriculum = self.request.get("curriculum")
         course_type.description = self.request.get("description")
         course_type.put()
+        logga("Curriculum %s edited." % course_type_id)
         self.redirect_to("instructor-curriculum-details", course_type_id=int(course_type_id))

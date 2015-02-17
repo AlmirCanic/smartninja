@@ -8,6 +8,8 @@ from google.appengine.api import users
 
 
 # ADMIN
+from app.utils.other import logga
+
 
 class AdminPartnersListHandler(Handler):
     @admin_required
@@ -32,7 +34,8 @@ class AdminPartnerAddHandler(Handler):
         summary = self.request.get("summary")
         description = self.request.get("description")
 
-        Partner.create(title=title, country=country, website=website, logo=logo, summary=summary, description=description)
+        partner = Partner.create(title=title, country=country, website=website, logo=logo, summary=summary, description=description)
+        logga("Partner %s added." % partner.get_id)
 
         self.redirect_to("admin-partners-list")
 
@@ -57,6 +60,7 @@ class AdminPartnerDeleteHandler(Handler):
         partner = Partner.get_by_id(int(partner_id))
         partner.deleted = True
         partner.put()
+        logga("Partner %s deleted." % partner_id)
         self.redirect_to("admin-partners-list")
 
 
@@ -80,6 +84,7 @@ class AdminPartnerEditHandler(Handler):
 
         Partner.update(partner=partner, title=title, country=country, website=website, logo=logo, summary=summary,
                        description=description)
+        logga("Partner %s updated." % partner_id)
 
         self.redirect_to("admin-partner-details", partner_id=partner_id)
 
@@ -116,7 +121,8 @@ class AdminPartnerUserCourseAdd(Handler):
 
         course = Course.get_by_id(int(course_id))
 
-        PartnerUserCourse.create(user_id=user.get_id, user_name=user.get_full_name, user_email=email, course=course)
+        puc = PartnerUserCourse.create(user_id=user.get_id, user_name=user.get_full_name, user_email=email, course=course)
+        logga("PartnerUserCourse %s added." % puc.get_id)
 
         return self.redirect_to("admin-partner-user-course-list")
 
@@ -132,6 +138,7 @@ class AdminPartnerUserCourseDelete(Handler):
         puc = PartnerUserCourse.get_by_id(int(puc_id))
         #PartnerUserCourse.delete(puc=puc)
         puc.key.delete()  # delete directly from the database, because not that important
+        logga("PartnerUserCourse %s deleted." % puc_id)
         self.redirect_to("admin-partner-user-course-list")
 
 
@@ -251,4 +258,5 @@ class PartnerProfileEditHandler(Handler):
             dob = self.request.get("dob")
             User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob)
+            logga("Partner %s profile edited." % profile.get_id)
             self.redirect_to("partner-profile")

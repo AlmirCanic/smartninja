@@ -24,6 +24,7 @@ class BlogPost(ndb.Model):
                    author_id=author_id,
                    cover_image=cover_image)
         post.put()
+        return post
 
     @classmethod
     def update(cls, blog_post, title, slug, text, cover_image):

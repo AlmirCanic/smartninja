@@ -3,7 +3,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.blog import BlogPost
 from app.utils.decorators import admin_required
-from app.utils.other import strip_tags, convert_markdown_to_html
+from app.utils.other import strip_tags, convert_markdown_to_html, logga
 
 
 class PublicBlogHandler(Handler):
@@ -54,7 +54,13 @@ class AdminBlogAddHandler(Handler):
         text = self.request.get("text")
         user = User.get_by_email(users.get_current_user().email())
         if title and slug and image and text:
-            BlogPost.create(title=title, slug=slug, cover_image=image, text=text, author_id=user.get_id, author_name=user.get_full_name)
+            blogpost = BlogPost.create(title=title,
+                                       slug=slug,
+                                       cover_image=image,
+                                       text=text,
+                                       author_id=user.get_id,
+                                       author_name=user.get_full_name)
+            logga("Blog %s added." % blogpost.get_id)
         self.redirect_to("admin-blog-list")
 
 
@@ -83,6 +89,7 @@ class AdminBlogEditHandler(Handler):
         if title and slug and image and text:
             post = BlogPost.get_by_id(int(post_id))
             BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
+            logga("Blog %s edited." % post_id)
         self.redirect_to("admin-blog-details", post_id=post_id)
 
 
@@ -98,4 +105,5 @@ class AdminBlogDeleteHandler(Handler):
         post = BlogPost.get_by_id(int(post_id))
         post.deleted = True
         post.put()
+        logga("Blog %s deleted." % post_id)
         self.redirect_to("admin-blog-list")

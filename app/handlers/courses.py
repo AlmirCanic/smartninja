@@ -8,7 +8,7 @@ from app.models.partner import Partner
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
 from app.utils.other import convert_markdown_to_html, convert_prices_data, convert_partners_data, convert_tags_to_list, \
-    convert_tags_to_string
+    convert_tags_to_string, logga
 
 
 class AdminCourseListHandler(Handler):
@@ -101,11 +101,12 @@ class AdminCourseAddHandler(Handler):
             start = start_date.split("-")
             end = end_date.split("-")
 
-            Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
+            course = Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           category=category, course_instructors=[course_instructor], image_url=image_url,
                           partners=partners, tags=tags)
+            logga("Course %s added." % course.get_id)
             self.redirect_to("course-list")
 
 
@@ -174,6 +175,7 @@ class AdminCourseEditHandler(Handler):
                           end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
                           image_url=image_url, partners=partners, tags=tags, closed=bool(closed))
+            logga("Course %s edited." % course_id)
             self.redirect_to("course-details", course_id=int(course_id))
 
 
@@ -189,6 +191,7 @@ class AdminCourseDeleteHandler(Handler):
         course = Course.get_by_id(int(course_id))
         course.deleted = True
         course.put()
+        logga("Course %s deleted." % course_id)
         self.redirect_to("course-list")
 
 

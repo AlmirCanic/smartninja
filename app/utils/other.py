@@ -1,6 +1,8 @@
 from HTMLParser import HTMLParser
+import logging
 import os
 import sys
+from google.appengine.api import users
 from app.models.course import Price
 from app.models.partner import Partner
 
@@ -66,3 +68,8 @@ def strip_tags(html):
     s = MLStripper()
     s.feed(html)
     return s.get_data()
+
+
+def logga(message):
+    user = users.get_current_user()
+    logging.info("Action by user %s: %s" % (user.email(), message))

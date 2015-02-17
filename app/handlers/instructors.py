@@ -6,6 +6,7 @@ from app.models.auth import User
 from app.models.course import Course, CourseApplication
 from app.models.instructor import Instructor
 from app.utils.decorators import admin_required, instructor_required
+from app.utils.other import logga
 
 
 class AdminInstructorsListHandler(Handler):
@@ -32,7 +33,8 @@ class AdminInstructorAddHandler(Handler):
         if not user:
             user = User.short_create(email=email, first_name=first_name, last_name=last_name)
 
-        Instructor.create(full_name=user.get_full_name, email=email, user_id=user.get_id)
+        instructor = Instructor.create(full_name=user.get_full_name, email=email, user_id=user.get_id)
+        logga("Instructor %s added." % instructor.get_id)
 
         return self.redirect_to("admin-instructors-list")
 
@@ -47,6 +49,7 @@ class AdminInstructorDeleteHandler(Handler):
     def post(self, instructor_id):
         instructor = Instructor.get_by_id(int(instructor_id))
         instructor.key.delete()
+        logga("Instructor %s removed." % instructor_id)
         self.redirect_to("admin-instructors-list")
 
 
@@ -141,6 +144,7 @@ class InstructorProfileEditHandler(Handler):
             photo_url = self.request.get("photo_url")
             phone_number = self.request.get("phone_number")
             dob = self.request.get("dob")
-            User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
+            user = User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob)
+            logga("User %s edited." % user.get_id)
             self.redirect_to("instructor-profile")
