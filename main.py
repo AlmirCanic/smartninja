@@ -32,7 +32,7 @@ from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandl
     PartnerProfileDetailsHandler, PartnerProfileEditHandler
 from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
-    PublicNewsletterThankYou2Handler, PublicFaqHandler
+    PublicNewsletterThankYou2Handler, PublicFaqHandler, PublicCareersHandler
 from app.handlers.reports import InstructorReportAddHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler
@@ -51,6 +51,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/email_thank_you_2', PublicNewsletterThankYou2Handler, name="newsletter-thank-you-2"),
     webapp2.Route('/contact-thank-you', PublicContactThankYou, name="public-contact-thanks"),
     webapp2.Route('/contact', PublicContactUsHandler, name="public-contact"),
+    webapp2.Route('/careers', PublicCareersHandler, name="public-contact"),
 
     # blog
     webapp2.Route('/blog', PublicBlogHandler, name="blog"),
