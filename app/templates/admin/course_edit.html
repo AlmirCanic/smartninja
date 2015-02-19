@@ -75,7 +75,7 @@
                     <label>Partner organization</label>
                     <select class="form-control" name="partner" id="coursePartner">
                         {% if course.partners[0] %}
-                            <option value="{{course.partners[0].get_id}}" selected>{{ course.partners[0].title }}</option>
+                            <option value="{{course.partners[0].partner_id}}" selected>{{ course.partners[0].title }}</option>
                         {% endif %}
                         <option disabled>------------------------------</option>
                         <option value="">No partner</option>

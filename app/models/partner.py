@@ -10,6 +10,7 @@ class Partner(ndb.Model):
     description = ndb.TextProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
+    partner_id = ndb.IntegerProperty()  # needed because structuredproperty in course doesnt have an id
 
     @property
     def get_id(self):
@@ -18,6 +19,8 @@ class Partner(ndb.Model):
     @classmethod
     def create(cls, title, summary, website, country, logo, description):
         partner = cls(title=title, summary=summary, website=website, description=description, country=country, logo=logo)
+        partner.put()
+        partner.partner_id = partner.get_id
         partner.put()
         return partner
 
