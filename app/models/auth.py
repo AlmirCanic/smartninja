@@ -54,14 +54,16 @@ class User(ndb.Model):
         return user
 
     @classmethod
-    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, instructor=False):
-        if user.first_name != first_name or user.last_name != last_name:
+    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None, instructor=False):
+        if user.first_name != first_name or user.last_name != last_name or user.email != email:
             user.first_name = first_name
             user.last_name = last_name
             applications = CourseApplication.query(CourseApplication.student_id == user.get_id).fetch()
 
             for application in applications:
                 application.student_name = "%s %s" % (first_name, last_name)
+                if email != None:
+                    application.student_email = email
                 application.put()
 
             pucs = PartnerUserCourse.query(PartnerUserCourse.user_id == user.get_id).fetch()
@@ -73,6 +75,8 @@ class User(ndb.Model):
         user.address = address
         user.phone_number = phone_number
         user.summary = summary
+        if email != None:
+            user.email = email
         user.photo_url = photo_url
         user.instructor = instructor
         user.dob = dob

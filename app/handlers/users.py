@@ -71,6 +71,7 @@ class AdminUserEditHandler(Handler):
         user = User.get_by_id(int(user_id))
         first_name = self.request.get("first_name")
         last_name = self.request.get("last_name")
+        email = self.request.get("email")
         address = self.request.get("address")
         summary = self.request.get("summary")
         photo_url = self.request.get("photo_url")
@@ -78,6 +79,6 @@ class AdminUserEditHandler(Handler):
         dob = self.request.get("dob")
         instructor = bool(self.request.get("instructor"))
         User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
-                    summary=summary, photo_url=photo_url, dob=dob, instructor=instructor)
+                    summary=summary, photo_url=photo_url, dob=dob, instructor=instructor, email=email)
         logga("User %s edited." % user_id)
         self.redirect_to("user-details", user_id=int(user_id))
