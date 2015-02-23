@@ -98,12 +98,12 @@ class AdminCourseAddHandler(Handler):
             partners = convert_partners_data(partner_id)
 
             # course date
-            start = start_date.split("-")
-            end = end_date.split("-")
+            start = start_date.split("/")
+            end = end_date.split("/")
 
             course = Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
-                          description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
-                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
+                          description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
+                          end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
                           category=category, course_instructors=[course_instructor], image_url=image_url,
                           partners=partners, tags=tags)
             logga("Course %s added." % course.get_id)
@@ -121,12 +121,17 @@ class AdminCourseEditHandler(Handler):
 
         tags = convert_tags_to_string(course.tags)
 
+        start_date = "{0}/{1}/{2}".format(course.start_date.month, course.start_date.day, course.start_date.year)
+        end_date = "{0}/{1}/{2}".format(course.end_date.month, course.end_date.day, course.end_date.year)
+
         params = {"course": course,
                   "course_types": course_types,
                   "selected_course_type": selected_course_type,
                   "instructors": instructors,
                   "partners": partners,
-                  "tags": tags}
+                  "tags": tags,
+                  "start_date": start_date,
+                  "end_date": end_date}
         self.render_template("admin/course_edit.html", params)
 
     @admin_required
@@ -167,12 +172,12 @@ class AdminCourseEditHandler(Handler):
             # partner
             partners = convert_partners_data(partner_id)
 
-            start = start_date.split("-")
-            end = end_date.split("-")
+            start = start_date.split("/")
+            end = end_date.split("/")
 
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
-                          description=description, start_date=datetime.date(int(start[0]), int(start[1]), int(start[2])),
-                          end_date=datetime.date(int(end[0]), int(end[1]), int(end[2])), prices=prices, currency=currency,
+                          description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
+                          end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
                           image_url=image_url, partners=partners, tags=tags, closed=bool(closed))
             logga("Course %s edited." % course_id)

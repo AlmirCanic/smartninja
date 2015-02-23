@@ -2,6 +2,10 @@
 
 {% block title %}Edit course{% endblock title %}
 
+{% block css %}
+    <link href="/assets/js/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
 {% block scripts %}
     <link rel="stylesheet" type="text/css" href="/assets/js/markitup/skins/markitup/style.css" />
     <link rel="stylesheet" type="text/css" href="/assets/js/markitup/sets/markdown/style.css" />
@@ -10,10 +14,12 @@
     <script type="text/javascript" src="/assets/js/markitup/sets/markdown/set.js"></script>
 
     <script type="text/javascript" src="/assets/js/admin/slugify.js"></script>
+        <script type="text/javascript" src="/assets/js/jqueryui/jquery-ui.min.js"></script>
 
     <script language="javascript">
         $(document).ready(function()	{
             $('#markdown').markItUp(mySettings);
+            $('.datepicker input').datepicker();
         });
     </script>
 
@@ -124,14 +130,14 @@
                     <input type="text" class="form-control" value="{{course.spots}}" placeholder="Spots" name="spots" id="courseSpots">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group datepicker">
                     <label>Start date</label>
-                    <input type="date" class="form-control" value="{{course.start_date}}" name="start-date" id="courseStartDate">
+                    <input type="text" class="form-control" value="{{start_date}}" name="start-date" id="courseStartDate">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group datepicker">
                     <label>End date</label>
-                    <input type="date" class="form-control" value="{{course.end_date}}" name="end-date" id="courseEndDate">
+                    <input type="text" class="form-control" value="{{end_date}}" name="end-date" id="courseEndDate">
                 </div>
 
                 <div class="form-group input_fields_wrap">
