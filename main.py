@@ -10,7 +10,8 @@ from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, Pro
     OopsHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
-    AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler
+    AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
+    InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
     AdminCourseAddHandler, AdminCourseEditHandler, \
@@ -134,22 +135,30 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/instructor', InstructorCourseListHandler, name="instructor"),
     webapp2.Route('/instructor/courses', InstructorCourseListHandler, name="instructor-course-list"),
     webapp2.Route('/instructor/course/<course_id:\d+>', InstructorCourseDetailsHandler, name="instructor-course-details"),
+
     webapp2.Route('/instructor/profile', InstructorProfileDetailsHandler, name="instructor-profile"),
     webapp2.Route('/instructor/profile/edit', InstructorProfileEditHandler, name="instructor-profile-edit"),
 
-    # course types/curriculums
+    # instructor blog
+    webapp2.Route('/instructor/blog', InstructorBlogListHandler, name="instructor-blog-list"),
+    webapp2.Route('/instructor/blog/add', InstructorBlogAddHandler, name="instructor-blog-add"),
+    webapp2.Route('/instructor/blog/<post_id:\d+>', InstructorBlogDetailsHandler, name="instructor-blog-details"),
+    webapp2.Route('/instructor/blog/<post_id:\d+>/edit', InstructorBlogEditHandler, name="instructor-blog-edit"),
+    webapp2.Route('/instructor/blog/<post_id:\d+>/delete', InstructorBlogDeleteHandler, name="instructor-blog-delete"),
+
+    # instructor course types/curriculums
     webapp2.Route('/instructor/curriculums', InstructorCurriculumsListHandler, name="instructor-curriculum-list"),
     webapp2.Route('/instructor/curriculum/<course_type_id:\d+>', InstructorCurriculumDetailsHandler, name="instructor-curriculum-details"),
     webapp2.Route('/instructor/curriculum/<course_type_id:\d+>/edit', InstructorCurriculumEditHandler, name="instructor-curriculum-edit"),
     webapp2.Route('/instructor/curriculum/add', InstructorCurriculumAddHandler, name="instructor-curriculum-add"),
 
-    # lessons
+    # instructor lessons
     webapp2.Route('/instructor/curriculum/<course_type_id:\d+>/add-lesson', InstructorLessonAddHandler, name="instructor-lesson-add"),
     webapp2.Route('/instructor/lesson/<lesson_id:\d+>', InstructorLessonDetailsHandler, name="instructor-lesson-details"),
     webapp2.Route('/instructor/lesson/<lesson_id:\d+>/edit', InstructorLessonEditHandler, name="instructor-lesson-edit"),
     webapp2.Route('/instructor/lesson/<lesson_id:\d+>/delete', InstructorLessonDeleteHandler, name="instructor-lesson-delete"),
 
-    # reports
+    # instructor reports
     webapp2.Route('/instructor/course/<course_id:\d+>/add-report', InstructorReportAddHandler, name="instructor-report-add"),
 
     # OTHER
