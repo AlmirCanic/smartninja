@@ -25,7 +25,7 @@ class PublicBlogHandler(Handler):
 class PublicBlogDetailsHandler(Handler):
     def get(self, post_slug):
         post = BlogPost.query(BlogPost.slug == str(post_slug)).get()
-        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
+        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch(5)
         post.text = convert_markdown_to_html(post.text)
         summary = strip_tags(post.text.replace('\"', ""))[:300]
 
