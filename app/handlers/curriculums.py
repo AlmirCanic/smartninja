@@ -20,7 +20,7 @@ class AdminCourseTypeDetailsHandler(Handler):
     @admin_required
     def get(self, course_type_id):
         course_type = CourseType.get_by_id(int(course_type_id))
-        lessons = Lesson.query(Lesson.course_type == int(course_type_id), Lesson.deleted == False).fetch()
+        lessons = Lesson.query(Lesson.course_type == int(course_type_id), Lesson.deleted == False).order(Lesson.order).fetch()
         params = {"course_type": course_type, "lessons": lessons}
         self.render_template("admin/course_type_details.html", params)
 
@@ -90,7 +90,7 @@ class InstructorCurriculumDetailsHandler(Handler):
     @instructor_required
     def get(self, course_type_id):
         course_type = CourseType.get_by_id(int(course_type_id))
-        lessons = Lesson.query(Lesson.course_type == int(course_type_id), Lesson.deleted == False).fetch()
+        lessons = Lesson.query(Lesson.course_type == int(course_type_id), Lesson.deleted == False).order(Lesson.order).fetch()
         params = {"course_type": course_type, "lessons": lessons}
         self.render_template("instructor/course_type_details.html", params)
 

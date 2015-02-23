@@ -27,3 +27,9 @@ indexes:
   - name: deleted
   - name: created
     direction: desc
+
+- kind: Lesson
+  properties:
+  - name: course_type
+  - name: deleted
+  - name: order

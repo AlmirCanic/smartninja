@@ -20,7 +20,7 @@ class AdminStudentCourseList(Handler):
 class AdminStudentCourseAdd(Handler):
     @admin_required
     def get(self):
-        courses = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
+        courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
         params = {"courses": courses}
         self.render_template("admin/student_course_add.html", params)
 
@@ -99,7 +99,7 @@ class StudentCourseDetailsHandler(Handler):
             if stc:
                 course = Course.get_by_id(int(course_id))
 
-                lessons = Lesson.query(Lesson.course_type == course.course_type, Lesson.deleted == False).fetch()
+                lessons = Lesson.query(Lesson.course_type == course.course_type, Lesson.deleted == False).order(Lesson.order).fetch()
 
                 params = {"course": course,
                           "lessons": lessons}
