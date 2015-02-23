@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}All users{% endblock title %}
+{% block title %}Student access{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -12,12 +12,15 @@
                     <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
                 </li>
                 <li>
-                    <i class="fa fa-users"></i>  All
+                    <i class="fa fa-users"></i>  Student access to courses
+                </li>
+                <li>
+                    <i class="fa fa-plus-square-o"></i>  <a href="/admin/users/students/add">Add new student to course</a>
                 </li>
             </ol>
 
             <h1 class="page-header">
-                All users
+                Students access
             </h1>
         </div>
     </div>
@@ -29,35 +32,44 @@
         <li role="presentation"><a href="#">Managers</a></li>
         <li role="presentation"><a href="/admin/users/instructors">Instructors</a></li>
         <li role="presentation"><a href="/admin/partner-courses">Partner Users</a></li>
-        <li role="presentation"><a href="/admin/users/students">Student access</a></li>
-        <li role="presentation" class="active"><a href="/admin/users/all">All users</a></li>
+        <li role="presentation" class="active"><a href="/admin/users/students">Student access</a></li>
+        <li role="presentation"><a href="/admin/users/all">All users</a></li>
     </ul>
     <!-- End Tabs -->
 
     <div class="row">
-        <div class="col-lg-6">
-            <h3>All users</h3>
-            {% if users %}
+        <div class="col-lg-12">
+            <h3>Student access to courses</h3>
+            <p>To what courses students have access to.</p>
+            {% if students %}
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Course</th>
+                            <th>City</th>
+                            <th>Start date</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for student in students %}
                         <tr>
-                            <td><a href="/admin/user/{{user.get_id}}">{{ user.get_full_name }}</a></td>
-                            <td>{{ user.email }}</td>
+                            <td><a href="/admin/user/{{student.user_id}}">{{ student.user_name }}</a></td>
+                            <td>{{ student.user_email }}</td>
+                            <td><a href="/admin/course/{{ student.course_id }}">{{ student.course_title }}</a></td>
+                            <td>{{ student.course_city }}</td>
+                            <td>{{ student.course_start_date }}</td>
+                            <td><a href="/admin/users/students/{{ student.get_id }}/delete">Delete</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
             {% else %}
-                <p>No users yet</p>
+                <p>No students were added yet</p>
             {% endif %}
         </div>
     </div>

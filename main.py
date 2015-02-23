@@ -35,6 +35,7 @@ from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler, PublicCareersHandler
 from app.handlers.reports import InstructorReportAddHandler
+from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler
 
@@ -116,6 +117,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/partner-courses', AdminPartnerUserCourseList, name="admin-partner-user-course-list"),
     webapp2.Route('/admin/partner-course/add', AdminPartnerUserCourseAdd, name="admin-partner-user-course-add"),
     webapp2.Route('/admin/partner-course/<puc_id:\d+>/delete', AdminPartnerUserCourseDelete, name="admin-partner-user-course-delete"),
+
+    # student access to courses
+    webapp2.Route('/admin/users/students', AdminStudentCourseList, name="admin-student-course-list"),
+    webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
+    webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
 
     # blog
     webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),
