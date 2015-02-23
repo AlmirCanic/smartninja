@@ -25,7 +25,7 @@ from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructo
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
     InstructorLessonAddHandler, InstructorLessonDetailsHandler, InstructorLessonEditHandler, \
-    InstructorLessonDeleteHandler
+    InstructorLessonDeleteHandler, StudentLessonDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
@@ -35,7 +35,8 @@ from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler, PublicCareersHandler
 from app.handlers.reports import InstructorReportAddHandler
-from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete
+from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
+    StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler
 
@@ -166,6 +167,13 @@ app = webapp2.WSGIApplication([
 
     # instructor reports
     webapp2.Route('/instructor/course/<course_id:\d+>/add-report', InstructorReportAddHandler, name="instructor-report-add"),
+
+    # STUDENT URLS
+    webapp2.Route('/student', StudentCourseListHandler, name="student"),
+    webapp2.Route('/student/course/<course_id:\d+>', StudentCourseDetailsHandler, name="student-course-details"),
+    webapp2.Route('/student/course/<course_id:\d+>/lesson/<lesson_id:\d+>', StudentLessonDetailsHandler, name="student-lesson-details"),
+    webapp2.Route('/student/profile', StudentProfileDetailsHandler, name="student-profile"),
+    webapp2.Route('/student/profile/edit', StudentProfileEditHandler, name="student-profile-edit"),
 
     # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),

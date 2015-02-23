@@ -1,0 +1,31 @@
+{% extends "student/base.html" %}
+
+{% block title %}{{ lesson.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/student">Courses</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/student/course/{{course.get_id}}">{{course.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-book"></i> {{lesson.title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ lesson.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p>{{ lesson.text }}</p>
+</div>
+{% endblock main_content %}

@@ -1,7 +1,7 @@
 from app.handlers.base import Handler
-from app.models.course import CourseType
+from app.models.course import CourseType, Course
 from app.models.lesson import Lesson
-from app.utils.decorators import admin_required, instructor_required
+from app.utils.decorators import admin_required, instructor_required, student_required
 from app.utils.other import convert_markdown_to_html, logga
 
 
@@ -147,3 +147,14 @@ class InstructorLessonDeleteHandler(Handler):
         lesson.put()
         logga("Lesson %s deleted." % lesson_id)
         self.redirect_to("instructor-curriculum-details", course_type_id=lesson.course_type)
+
+
+# STUDENT
+class StudentLessonDetailsHandler(Handler):
+    @student_required
+    def get(self, course_id, lesson_id):
+        lesson = Lesson.get_by_id(int(lesson_id))
+        course = Course.get_by_id(int(course_id))
+        lesson.text = convert_markdown_to_html(lesson.text)
+        params = {"lesson": lesson, "course": course}
+        self.render_template("student/lesson_details.html", params)
