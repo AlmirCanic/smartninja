@@ -1,5 +1,5 @@
 import datetime
-from app.emails.apply import prijava_februar, email_course_application_thank_you, email_course_app_to_smartninja
+from app.emails.apply import email_course_application_thank_you, email_course_app_to_smartninja
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, CourseApplication

@@ -53,7 +53,7 @@
     </style>
 
     <body>
-       <p class="snit">
+       <p class="snit" style="text-align: center;">
            SNIT d.o.o., Ulica Slavka Gruma 100, 8000 Novo mesto
             <br>
            Davčna številka: 45457140, Davčni zavezanec: NE, Matična številka: 6779654000
@@ -61,7 +61,7 @@
        <hr>
 
        <div class="predracun">
-           <div class="stolpec levi">
+           <div class="stolpec" style="display: inline-block; width: 300px;">
                <p>Naročnik storitve:</p>
                {% if course_app.company_invoice %}
                     <h3>
@@ -76,7 +76,7 @@
                <p>PREDRAČUN št.: {{course_app.created.year}}-{{ts}}</p>
            </div>
 
-           <div class="stolpec desni">
+           <div class="stolpec" style="display: inline-block; width: 300px;">
                <p>Kraj: Novo mesto</p>
                <p>Datum predračuna: {{course_app.created.day}}.{{course_app.created.month}}.{{course_app.created.year}}</p>
                <p>Datum zapadlosti plačila: {{final_date.day}}.{{final_date.month}}.{{final_date.year}}</p>
@@ -85,47 +85,47 @@
 
        <br>
 
-       <table class="produkt">
+       <table class="produkt" style="border: 1px solid black; text-align: center; border-collapse: collapse; width: 80%; margin: 0 auto;">
            <thead>
                 <tr>
-                    <th>OPIS</th>
-                    <th>Količina</th>
-                    <th>Cena</th>
-                    <th>VREDNOST v EUR</th>
+                    <th style="border: 1px solid black; text-align: center;">OPIS</th>
+                    <th style="border: 1px solid black; text-align: center;">Količina</th>
+                    <th style="border: 1px solid black; text-align: center;">Cena</th>
+                    <th style="border: 1px solid black; text-align: center;">VREDNOST v EUR</th>
                 </tr>
            </thead>
 
            <tbody>
                 <tr>
-                    <td>{{course_app.course_title}}</td>
-                    <td>1x</td>
-                    <td>{{price_str}} EUR</td>
-                    <td>{{price_str}} EUR</td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;">{{course_app.course_title}}</td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;">1x</td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;">{{price_str}} EUR</td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;">{{price_str}} EUR</td>
                 </tr>
            </tbody>
 
            <tfoot>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><strong>SKUPAJ ZA PLAČILO: {{price_str}} EUR</strong></td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;"></td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;"></td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;"></td>
+                    <td style="border: 1px solid black; text-align: center; height: 50px; vertical-align: middle;"><strong>SKUPAJ ZA PLAČILO: {{price_str}} EUR</strong></td>
                 </tr>
            </tfoot>
        </table>
 
        <br>
 
-       <p class="snit">Znesek v dogovorjenem roku nakažite na naš TRR: IBAN <strong>SI56 1010 0005 4026 570</strong> (BANKA KOPER d.d.).</p>
+       <p class="snit" style="text-align: center;">Znesek v dogovorjenem roku nakažite na naš TRR: IBAN <strong>SI56 1010 0005 4026 570</strong> (BANKA KOPER d.d.).</p>
 
-        <p class="snit">Pri plačilu se sklicujte na SI00 {{ts}}.</p>
+        <p class="snit" style="text-align: center;">Pri plačilu se sklicujte na SI00 {{ts}}.</p>
 
-        <p class="snit">DDV ni obračunan na podlagi 1. odstavka 94. člena Zakona o davku na dodano vrednost (nismo zavezanci za DDV).</p>
+        <p class="snit" style="text-align: center;">DDV ni obračunan na podlagi 1. odstavka 94. člena Zakona o davku na dodano vrednost (nismo zavezanci za DDV).</p>
 
        <br>
        <br>
 
-        <p class="podpis"><strong>Izdajatelj</strong>
+        <p class="podpis" style="margin-left: 110px;"><strong>Izdajatelj</strong>
             <br>
             Miha Fabjan <br>
             (direktor)
@@ -141,7 +141,7 @@
         <br>
         <br>
 
-       <div class="logo">
+       <div class="logo" style="width: 300px; margin: 0 auto;">
            <img src="http://i.imgur.com/r4N2GLD.png">
        </div>
 

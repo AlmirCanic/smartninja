@@ -85,10 +85,9 @@ def email_course_application_thank_you(course_app):
     params = {"course_app": course_app, "ts": ts, "final_date": final_date, "price_str": price_str}
 
     html_template = jinja_env.get_template("emails/si/course_application.html")
-    text_template_path_user = os.path.join(os.path.dirname(__file__), '../templates/emails/si/course_application.txt')
-    text_template_path_company = os.path.join(os.path.dirname(__file__), '../templates/emails/si/course_application_company.txt')
 
     if course_app.company_invoice:
+        text_template_path_company = os.path.join(os.path.dirname(__file__), '../templates/emails/si/course_application_company.txt')
         with open(text_template_path_company, "r") as text_template:
             message_body = text_template.read().format(course_app.company_title.encode('utf-8'),
                                                        course_app.company_address.encode('utf-8'),
@@ -102,6 +101,7 @@ def email_course_application_thank_you(course_app):
                                                        price_str,
                                                        course_app.price)
     else:
+        text_template_path_user = os.path.join(os.path.dirname(__file__), '../templates/emails/si/course_application.txt')
         with open(text_template_path_user, "r") as text_template:
             message_body = text_template.read().format(course_app.student_name.encode('utf-8'),
                                                        ts,
@@ -115,7 +115,7 @@ def email_course_application_thank_you(course_app):
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to=course_app.student_email,
-                                subject="Predračun za SmartNinja tečaj",
+                                subject="Predracun za SmartNinja tecaj",
                                 body=message_body,
                                 html=html_message_body)
     message.send()
