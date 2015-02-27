@@ -121,3 +121,24 @@ def email_course_application_thank_you(course_app):
     message.send()
 
     subscribe_mailchimp(course_app.student_email)
+
+
+def email_course_application_thank_you_2(course_app):
+    message_body = '''
+        Hvala za prijavo na SmartNinja tecaj. V kratkem dobis email s predracunom ter email za prijavo na nase e-novice.
+
+        POZOR: V kolikor teh emailov ne dobis, poglej pod spam.
+
+        Lep pozdrav,
+        Ekipa SmartNinja
+    '''
+
+    html_template = jinja_env.get_template("emails/si/hvala_za_prijavo.html")
+    html_message_body = html_template.render()
+
+    message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
+                                to=course_app.student_email,
+                                subject="Hvala za prijavo!",
+                                body=message_body,
+                                html=html_message_body)
+    message.send()
