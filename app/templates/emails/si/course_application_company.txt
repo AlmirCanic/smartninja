@@ -2,27 +2,31 @@ SNIT d.o.o., Ulica Slavka Gruma 100, 8000 Novo mesto
 Davčna številka: 45457140, Davčni zavezanec: NE, Matična številka: 6779654000
 -----------------------------
 
-Naročnik storitve: {0}
+Naročnik storitve:
+{0}
+{1}
+{2} {3}
+Davčna št.: {4}
 
-PREDRAČUN št.: 2015-{1}
+PREDRAČUN št.: 2015-{5}
 Kraj: Novo mesto
-Datum predračuna: {2}
-Datum zapadlosti plačila: {3}
+Datum predračuna: {6}
+Datum zapadlosti plačila: {7}
 
 
 STORITEV
 
-Opis: {4}
+Opis: {8}
 Količina: 1x
-Cena: {5} EUR
-VREDNOST (EUR): {5} EUR
+Cena: {9} EUR
+VREDNOST (EUR): {9} EUR
 -----------
-SKUPAJ ZA PLAČILO: {5} EUR
+SKUPAJ ZA PLAČILO: {9} EUR
 
 
 Znesek v dogovorjenem roku nakažite na naš TRR: IBAN SI56 1010 0005 4026 570 (BANKA KOPER d.d.).
 
-Pri plačilu se sklicujte na SI00 {1}.
+Pri plačilu se sklicujte na SI00 {5}.
 
 DDV ni obračunan na podlagi 1. odstavka 94. člena Zakona o davku na dodano vrednost (nismo zavezanci za DDV).
 
