@@ -60,7 +60,7 @@ class PublicCourseApplicationAddHandler(Handler):
             address = self.request.get("address")
             dob = self.request.get("dob")
             phone = self.request.get("phone")
-            laptop = self.request.get("laptop")
+            laptop = "yes"
             shirt = self.request.get("shirt")
             price = self.request.get("price")
             company = self.request.get("company_invoice")

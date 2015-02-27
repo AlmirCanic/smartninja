@@ -115,7 +115,7 @@ def email_course_application_thank_you(course_app):
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to=course_app.student_email,
-                                subject="Predracun za SmartNinja tecaj",
+                                subject="Hvala za prijavo na {0}".format(course_app.course_title.encode('utf-8')),
                                 body=message_body,
                                 html=html_message_body)
     message.send()
@@ -138,7 +138,7 @@ def email_course_application_thank_you_2(course_app):
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to=course_app.student_email,
-                                subject="Hvala za prijavo!",
+                                subject="Hvala za prijavo na {0}".format(course_app.course_title.encode('utf-8')),
                                 body=message_body,
                                 html=html_message_body)
     message.send()
