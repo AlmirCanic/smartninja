@@ -104,6 +104,10 @@ class PublicCourseApplicationAddHandler(Handler):
                 else:
                     return self.redirect_to("oops")
 
+                ts = str(course_app.created.month) + str(course_app.created.day) + str(course_app.created.microsecond)
+                final_date = course_app.created + datetime.timedelta(days=8)
+                price_str = str(course_app.price).replace(".0", ",00")
+
                 # send email to info@smartninja.org
                 if not is_local():
                     email_course_app_to_smartninja(course=course, user=user, application=course_app)
@@ -111,9 +115,9 @@ class PublicCourseApplicationAddHandler(Handler):
                 # send email to the student
                 if not is_local():
                     email_course_application_thank_you_2(course_app)
-                    email_course_application_thank_you(course_app)
+                    email_course_application_thank_you(course_app, ts=ts, final_date=final_date, price_str=price_str)
 
-                return self.redirect_to("apply-thank-you")
+                return self.redirect("/apply_thank_you?caid=%s" % course_app.get_id)
             else:
                 # TODO: error in params
                 return self.redirect_to("oops")

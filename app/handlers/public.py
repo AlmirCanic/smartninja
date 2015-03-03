@@ -1,6 +1,6 @@
 import datetime
 from app.handlers.base import Handler
-from app.models.course import Course
+from app.models.course import Course, CourseApplication
 
 
 class MainHandler(Handler):
@@ -46,7 +46,16 @@ class PublicComingSoonHandler(Handler):
 
 class PublicApplyThankYouHandler(Handler):
     def get(self):
-        self.render_template("public/apply_thank_you.html")
+        caid = self.request.get("caid")
+        course_app = CourseApplication.get_by_id(int(caid))
+
+        ts = str(course_app.created.month) + str(course_app.created.day) + str(course_app.created.microsecond)
+        final_date = course_app.created + datetime.timedelta(days=8)
+        price_str = str(course_app.price).replace(".0", ",00")
+
+        params = {"course_app": course_app, "ts": ts, "final_date": final_date, "price_str": price_str}
+
+        self.render_template("public/apply_thank_you.html", params=params)
 
 
 class PublicNewsletterThankYouHandler(Handler):

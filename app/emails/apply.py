@@ -76,12 +76,7 @@ def email_course_app_to_smartninja(course, user, application):
     message.send()
 
 
-def email_course_application_thank_you(course_app):
-    import time
-    ts = int(time.time())
-    final_date = course_app.created + datetime.timedelta(days=8)
-    price_str = str(course_app.price).replace(".0", ",00")
-
+def email_course_application_thank_you(course_app, ts, final_date, price_str):
     params = {"course_app": course_app, "ts": ts, "final_date": final_date, "price_str": price_str}
 
     html_template = jinja_env.get_template("emails/si/course_application.html")
