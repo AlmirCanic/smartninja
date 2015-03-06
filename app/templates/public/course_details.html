@@ -4,6 +4,7 @@
 
 {% block scripts %}
     <script src="/assets/js/public/company_data.js"></script>
+    <script src="/assets/js/public/check_application_form.js"></script>
 {% endblock scripts %}
 
 {% block social %}
@@ -214,31 +215,31 @@
                             <ul class="data-list">
                                 <li>
                                     <div class="form-group">
-                                        <input type="text" name="first_name" class="required form-control" placeholder="Ime"><span class="input-icon"><i class="icon-user"></i></span>
+                                        <input type="text" name="first_name" id="cd_first_name" class="required form-control" placeholder="Ime"><span class="input-icon"><i class="icon-user"></i></span>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div class="form-group">
-                                        <input type="text" name="last_name" class="required form-control" placeholder="Priimek"><span class="input-icon"><i class="icon-user"></i></span>
+                                        <input type="text" name="last_name" id="cd_last_name" class="required form-control" placeholder="Priimek"><span class="input-icon"><i class="icon-user"></i></span>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div class="form-group">
-                                        <input type="text" name="email" class="required form-control" placeholder="Email naslov"><span class="input-icon"><i class="icon-email"></i></span>
+                                        <input type="text" name="email" id="cd_email" class="required form-control" placeholder="Email naslov"><span class="input-icon"><i class="icon-email"></i></span>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div class="form-group">
-                                        <input type="text" name="address" class="required form-control" placeholder="Naslov prebivališča"><span class="input-icon"><i class="icon-home"></i></span>
+                                        <input type="text" name="address" id="cd_address" class="required form-control" placeholder="Naslov prebivališča"><span class="input-icon"><i class="icon-home"></i></span>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div class="form-group">
-                                        <input type="text" name="dob" class="required form-control" placeholder="Datum rojstva"><span class="input-icon"><i class="icon-star"></i></span>
+                                        <input type="text" name="dob" id="cd_dob" class="required form-control" placeholder="Datum rojstva"><span class="input-icon"><i class="icon-star"></i></span>
                                     </div>
                                 </li>
 
@@ -250,7 +251,7 @@
 
                                 <li>
                                     <div class="form-group">
-                                        <input type="text" name="phone" class="required form-control" placeholder="Telefonska številka"><span class="input-icon"><i class="icon-phone"></i></span>
+                                        <input type="text" name="phone" id="cd_phone" class="required form-control" placeholder="Telefonska številka"><span class="input-icon"><i class="icon-phone"></i></span>
                                     </div>
                                 </li>
 
@@ -283,7 +284,7 @@
 
                                 <li>
                                     <div class="styled-select">
-                                        <select class="form-control required" name="price">
+                                        <select class="form-control required" name="price" id="cd_price">
                                             <option value="" selected>Kotizacija</option>
                                             {% for price in course.prices %}
                                                 <option value="{{price.price_dot}}">{{price.price_comma}} {{course.currency}} - {{price.summary}}</option>
@@ -377,7 +378,7 @@
                     <div class="row">
                         <div class="submit step" id="complete">
                             <!--<p>Prijave zaprte</p>-->
-                            <button type="submit" name="process" class="submit" id="prijava-gumb">Oddaj prijavo</button>
+                            <button type="submit" name="process" class="submit" id="cd_submit">Oddaj prijavo</button>
                             <br>
                             <p style="color: red;">{{ error }}</p>
                         </div><!-- end submit step -->

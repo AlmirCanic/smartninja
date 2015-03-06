@@ -66,10 +66,14 @@ class PublicCourseApplicationAddHandler(Handler):
             company = self.request.get("company_invoice")
             other_info = self.request.get("other_info")
 
-            # TODO: invoice on company
-
-            if first_name and last_name and email and address and dob and phone and laptop and shirt:
+            if first_name and last_name and email and address and phone:
                 user = User.get_by_email(email)
+
+                if not shirt:
+                    shirt = "/"
+
+                if not dob:
+                    dob = "/"
 
                 if not user:
                     # add user to database
@@ -107,6 +111,9 @@ class PublicCourseApplicationAddHandler(Handler):
                 ts = str(course_app.created.month) + str(course_app.created.day) + str(course_app.created.microsecond)
                 final_date = course_app.created + datetime.timedelta(days=8)
                 price_str = str(course_app.price).replace(".0", ",00")
+
+                course_app.invoice = ts
+                course_app.put()
 
                 # send email to info@smartninja.org
                 if not is_local():
