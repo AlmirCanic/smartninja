@@ -26,9 +26,10 @@ class InstructorReportAddHandler(Handler):
             author = User.get_by_email(email=user.email())
             course = Course.get_by_id(int(course_id))
 
-            lesson_date = date.split("-")
+            lesson_date = date.split("/")
 
-            report = Report.create(lesson_date=datetime.date(int(lesson_date[0]), int(lesson_date[1]), int(lesson_date[2])),
+            report = Report.create(lesson_date=datetime.date(int(lesson_date[2]), int(lesson_date[0]),
+                                                             int(lesson_date[1])),
                                    course=course, author=author, text=text)
             logga("Report %s added." % report.get_id)
             #self.redirect_to("instructor-report-details", report_id=report.get_id)

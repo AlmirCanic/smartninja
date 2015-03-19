@@ -2,6 +2,20 @@
 
 {% block title %}Add new report{% endblock title %}
 
+{% block css %}
+    <link href="/assets/js/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/assets/js/jqueryui/jquery-ui.min.js"></script>
+
+    <script language="javascript">
+        $(document).ready(function()	{
+            $('.datepicker input').datepicker();
+        });
+    </script>
+{% endblock scripts %}
+
 {% block main_content %}
 <div class="main">
     <!-- Breadcrumb -->
@@ -30,9 +44,9 @@
         <div class="col-lg-7">
             <form action="/instructor/course/{{course.get_id}}/add-report" method="post">
 
-                <div class="form-group">
+                <div class="form-group datepicker">
                     <label>Lesson date</label>
-                    <input type="date" class="form-control" name="date">
+                    <input type="text" class="form-control" name="date">
                 </div>
 
                 <div class="form-group">
