@@ -36,17 +36,16 @@ class InstructorReportAddHandler(Handler):
             self.redirect_to("instructor-course-details", course_id=course.get_id)
 
 
-"""
 class InstructorReportDetailsHandler(Handler):
     @instructor_required
-    def get(self, lesson_id):
-        lesson = Report.get_by_id(int(lesson_id))
-        course_type = CourseType.get_by_id(lesson.course_type)
-        lesson.text = convert_markdown_to_html(lesson.text)
-        params = {"lesson": lesson, "course_type": course_type}
-        self.render_template("instructor/lesson_details.html", params)
+    def get(self, report_id):
+        report = Report.get_by_id(int(report_id))
+        author = User.get_by_email(users.get_current_user().email())
+        course = Course.get_by_id(report.course_id)
+        params = {"report": report, "course": course, "author": author}
+        self.render_template("instructor/report_details.html", params)
 
-
+"""
 class InstructorReportEditHandler(Handler):
     @instructor_required
     def get(self, lesson_id):

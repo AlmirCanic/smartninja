@@ -1,0 +1,33 @@
+{% extends "instructor/base.html" %}
+
+{% block title %}Report details{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-table"></i> <a href="/instructor/course/{{course.get_id}}">{{course.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-book"></i> {{report.lesson_date}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Report for {{report.lesson_date}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p>{{ report.text }}</p>
+
+    {% if author.get_id == report.author_id %}
+        <a href="/instructor/report/{{report.get_id}}/delete" class="pull-right"><button class="btn btn-danger">Delete</button></a>
+        <a href="/instructor/report/{{report.get_id}}/edit" class="pull-right"><button class="btn btn-success">Edit</button></a>
+    {% endif %}
+</div>
+{% endblock main_content %}
