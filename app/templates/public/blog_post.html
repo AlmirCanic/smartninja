@@ -29,6 +29,7 @@
     <meta name="twitter:creator" content="@smartninjaorg">
     <meta name="twitter:image" content="{{post.cover_image}}">
     <meta name="twitter:url" content="http://smartninja.org">
+    
     <!-- END TWITTER CARDS -->
 {% endblock social %}
 
@@ -44,6 +45,7 @@
 
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
      if (d.getElementById(id)) {return;}
      js = d.createElement(s); js.id = id;
      js.src = "//connect.facebook.net/en_US/sdk.js";
@@ -106,7 +108,7 @@
         </div><!-- End col-md-8-->
 
         <aside class="col-md-4">
-            <div class=" box_style_1">
+            <div class="box_style_1">
 
                     <div class="widget">
                         <h4><i class="icon-back"></i><a href="/blog"> BLOG</a></h4>

@@ -217,3 +217,10 @@ ul.list_1 {
 }
 
 /* End custom styles */
+
+/* Blog post comments edit */
+
+.mobilePluginComments
+{
+    width:100% !important;
+}
