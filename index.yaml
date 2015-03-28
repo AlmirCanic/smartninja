@@ -19,6 +19,11 @@ indexes:
 - kind: Course
   properties:
   - name: deleted
+  - name: end_date
+
+- kind: Course
+  properties:
+  - name: deleted
   - name: start_date
 
 - kind: CourseApplication

@@ -13,15 +13,15 @@ from app.utils.other import logga
 class AdminReportsListHandler(Handler):
     @admin_required
     def get(self):
-        courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+        courses = Course.query(Course.deleted == False).order(Course.end_date).fetch()
         past_courses = []
-        future_courses = []
+        current_courses = []
         for course in courses:
-            if course.start_date > datetime.date.today():
-                future_courses.append(course)
+            if course.end_date > datetime.date.today():
+                current_courses.append(course)
             else:
                 past_courses.append(course)
-        params = {"future_courses": future_courses, "past_courses": past_courses}
+        params = {"current_courses": current_courses, "past_courses": past_courses}
         self.render_template("admin/reports.html", params=params)
 
 

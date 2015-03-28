@@ -20,8 +20,8 @@
     </div>
     <!-- Breadcrumb end -->
 
-    <h3>No reports for future courses</h3>
-    {% if future_courses %}
+    <h3>Reports for current or future courses</h3>
+    {% if current_courses %}
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for course in future_courses %}
+                        {% for course in current_courses %}
                         <tr>
                             <td><a href="/admin/course/{{course.get_id}}/reports">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
@@ -58,7 +58,7 @@
     </div>
     <!-- /.row -->
     {% else %}
-        <p>No reports for future courses</p>
+        <p>No reports for current courses</p>
     {% endif %}
 
     <h3>Reports for past courses</h3>
