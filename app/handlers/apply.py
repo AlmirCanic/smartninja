@@ -45,6 +45,25 @@ class AdminCourseApplicationDeleteHandler(Handler):
         self.redirect_to("course-details", course_id=application.course_id)
 
 
+class AdminCourseApplicationMoveStudentHandler(Handler):
+    @admin_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        courses = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
+        params = {"application": application, "courses": courses}
+        self.render_template("admin/application_move_student.html", params)
+
+    @admin_required
+    def post(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        course_id = self.request.get("course")
+        new_course = Course.get_by_id(int(course_id))
+        old_course = Course.get_by_id(application.course_id)
+        CourseApplication.move_student_to_another_course(application=application, old_course=old_course, new_course=new_course)
+        logga("Student application %s moved to another course." % application_id)
+        self.redirect_to("course-details", course_id=application.course_id)
+
+
 # PUBLIC
 
 class PublicCourseApplicationAddHandler(Handler):

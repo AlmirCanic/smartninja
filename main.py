@@ -5,7 +5,7 @@
 
 import webapp2
 from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
-    AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler
+    AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler, AdminCourseApplicationMoveStudentHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
     OopsHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler
@@ -42,7 +42,7 @@ from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, A
 
 
 app = webapp2.WSGIApplication([
-    # PUBLIC
+# PUBLIC
     webapp2.Route('/', MainHandler, name="main"),
     webapp2.Route('/newsletter', NewsletterSubscribeHandler, name="newsletter"),
     webapp2.Route('/partners', PublicPartnersHandler, name="partners"),
@@ -66,7 +66,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/course/<course_id:\d+>/apply', PublicCourseApplicationAddHandler, name="public-application-add"),
 
 
-    # ADMIN URLS
+# ADMIN URLS
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
@@ -81,6 +81,7 @@ app = webapp2.WSGIApplication([
     # course applications
     webapp2.Route('/admin/application/<application_id:\d+>', AdminCourseApplicationDetailsHandler, name="application-details"),
     webapp2.Route('/admin/application/<application_id:\d+>/delete', AdminCourseApplicationDeleteHandler, name="application-delete"),
+    webapp2.Route('/admin/application/<application_id:\d+>/move-student', AdminCourseApplicationMoveStudentHandler, name="application-move-student"),
 
     # course types/curriculums
     webapp2.Route('/admin/course/types', AdminCourseTypesListHandler, name="course-types-list"),

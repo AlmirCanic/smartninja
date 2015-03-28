@@ -162,6 +162,16 @@ class CourseApplication(ndb.Model):
         course.put()
 
     @classmethod
+    def move_student_to_another_course(cls, application, old_course, new_course):
+        application.course_id = new_course.get_id
+        application.course_title = new_course.title
+        application.put()
+        old_course.taken -= 1
+        old_course.put()
+        new_course.taken += 1
+        new_course.put()
+
+    @classmethod
     def create_temp(cls, course_title, course_id, student_name, student_id, student_email, price, currency, laptop, shirt):
         course_app = cls(course_title=course_title, course_id=course_id, student_name=student_name, student_id=student_id,
                          student_email=student_email, price=price, currency=currency, laptop=laptop, shirt=shirt)
