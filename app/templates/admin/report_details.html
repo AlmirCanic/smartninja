@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Report details{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-archive"></i> <a href="/admin/reports">Reports</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/admin/course/{{course.get_id}}/reports">Reports for {{course.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-book"></i> {{report.lesson_date}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Report for {{report.lesson_date}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+    <p><strong>Author: {{report.author_name}}</strong></p>
+
+    <p>{{ report.text|forceescape|nl2br }}</p>
+</div>
+{% endblock main_content %}

@@ -25,6 +25,24 @@ class AdminReportsListHandler(Handler):
         self.render_template("admin/reports.html", params=params)
 
 
+class AdminCourseReportsHandler(Handler):
+    @admin_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        reports = Report.query(Report.course_id == int(course_id), Report.deleted == False).fetch()
+        params = {"course": course, "reports": reports}
+        self.render_template("admin/reports_for_course.html", params=params)
+
+
+class AdminReportDetailsHandler(Handler):
+    @admin_required
+    def get(self, report_id):
+        report = Report.get_by_id(int(report_id))
+        course = Course.get_by_id(report.course_id)
+        params = {"report": report, "course": course}
+        self.render_template("admin/report_details.html", params)
+
+
 # INSTRUCTOR
 class InstructorReportAddHandler(Handler):
     @instructor_required
