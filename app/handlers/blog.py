@@ -88,7 +88,16 @@ class AdminBlogEditHandler(Handler):
     @admin_required
     def get(self, post_id):
         post = BlogPost.get_by_id(int(post_id))
-        params = {"post": post}
+
+        authors = []
+        current_user = User.get_by_email(users.get_current_user().email())
+        authors.append(current_user)
+        instructors = Instructor.query().fetch()
+        for instructor in instructors:
+            some_user = User.get_by_id(instructor.user_id)
+            authors.append(some_user)
+
+        params = {"post": post, "authors": authors}
         self.render_template("admin/blog_post_edit.html", params)
 
     @admin_required
@@ -97,10 +106,16 @@ class AdminBlogEditHandler(Handler):
         slug = self.request.get("slug")
         image = self.request.get("image")
         text = self.request.get("text")
+        author_id = self.request.get("author")
+        author = User.get_by_id(int(author_id))
+        user = User.get_by_email(users.get_current_user().email())
         if title and slug and image and text:
             post = BlogPost.get_by_id(int(post_id))
             BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
-            logga("Blog %s edited." % post_id)
+            post.author_id = int(author_id)
+            post.author_name = author.get_full_name
+            post.put()
+            logga("Blog %s edited by %s." % (post_id, user.get_id))
         self.redirect_to("admin-blog-details", post_id=post_id)
 
 
