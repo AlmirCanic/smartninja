@@ -2,6 +2,7 @@ from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.blog import BlogPost
+from app.models.instructor import Instructor
 from app.utils.decorators import admin_required, instructor_required
 from app.utils.other import strip_tags, convert_markdown_to_html, logga
 
@@ -44,7 +45,15 @@ class AdminBlogListHandler(Handler):
 class AdminBlogAddHandler(Handler):
     @admin_required
     def get(self):
-        self.render_template("admin/blog_add.html")
+        authors = []
+        current_user = User.get_by_email(users.get_current_user().email())
+        authors.append(current_user)
+        instructors = Instructor.query().fetch()
+        for instructor in instructors:
+            some_user = User.get_by_id(instructor.user_id)
+            authors.append(some_user)
+        params = {"authors": authors}
+        self.render_template("admin/blog_add.html", params=params)
 
     @admin_required
     def post(self):
@@ -52,15 +61,17 @@ class AdminBlogAddHandler(Handler):
         slug = self.request.get("slug")
         image = self.request.get("image")
         text = self.request.get("text")
+        author_id = self.request.get("author")
+        author = User.get_by_id(int(author_id))
         user = User.get_by_email(users.get_current_user().email())
         if title and slug and image and text:
             blogpost = BlogPost.create(title=title,
                                        slug=slug,
                                        cover_image=image,
                                        text=text,
-                                       author_id=user.get_id,
-                                       author_name=user.get_full_name)
-            logga("Blog %s added." % blogpost.get_id)
+                                       author_id=author.get_id,
+                                       author_name=author.get_full_name)
+            logga("Blog %s added by %s." % (blogpost.get_id, user.get_id))
         self.redirect_to("admin-blog-list")
 
 

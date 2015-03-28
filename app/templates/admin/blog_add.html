@@ -60,6 +60,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Author</label>
+                    <select class="form-control" name="author" id="author">
+                        <option value="" selected>Select author</option>
+                        {% for author in authors %}
+                            <option value="{{ author.get_id }}">{{ author.get_full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>Text</label>
                     <p>See <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown CheatSheet</a></p>
                     <textarea class="form-control" style="height: 300px;" name="text" id="markdown"></textarea>
