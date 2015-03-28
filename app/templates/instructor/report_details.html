@@ -23,11 +23,11 @@
     </div>
     <!-- Breadcrumb end -->
 
-    <p>{{ report.text }}</p>
-
     {% if author.get_id == report.author_id %}
         <a href="/instructor/report/{{report.get_id}}/delete" class="pull-right"><button class="btn btn-danger">Delete</button></a>
         <a href="/instructor/report/{{report.get_id}}/edit" class="pull-right"><button class="btn btn-success">Edit</button></a>
     {% endif %}
+
+    <p>{{ report.text|forceescape|nl2br }}</p>
 </div>
 {% endblock main_content %}

@@ -32,7 +32,6 @@ class InstructorReportAddHandler(Handler):
                                                              int(lesson_date[1])),
                                    course=course, author=author, text=text)
             logga("Report %s added." % report.get_id)
-            #self.redirect_to("instructor-report-details", report_id=report.get_id)
             self.redirect_to("instructor-course-details", course_id=course.get_id)
 
 
@@ -45,31 +44,31 @@ class InstructorReportDetailsHandler(Handler):
         params = {"report": report, "course": course, "author": author}
         self.render_template("instructor/report_details.html", params)
 
-"""
+
 class InstructorReportEditHandler(Handler):
     @instructor_required
-    def get(self, lesson_id):
-        lesson = Report.get_by_id(int(lesson_id))
-        course_type = CourseType.get_by_id(lesson.course_type)
-        params = {"course_type": course_type, "lesson": lesson}
-        self.render_template("instructor/lesson_edit.html", params)
+    def get(self, report_id):
+        report = Report.get_by_id(int(report_id))
+        params = {"report": report}
+        self.render_template("instructor/report_edit.html", params)
 
     @instructor_required
-    def post(self, lesson_id):
-        title = self.request.get("title")
-        order = self.request.get("order")
+    def post(self, report_id):
         text = self.request.get("text")
+        date = self.request.get("date")
 
-        if title and text:
-            lesson = Report.get_by_id(int(lesson_id))
-            course_type = CourseType.get_by_id(lesson.course_type)
-            Report.update(lesson=lesson, title=title, order=int(order), text=text, course_type=course_type.get_id)
-            logga("Report %s updated." % lesson_id)
-            self.redirect_to("instructor-lesson-details", lesson_id=int(lesson_id))
+        if date and text:
+            report = Report.get_by_id(int(report_id))
+            lesson_date = date.split("/")
+            Report.update(report=report, lesson_date=datetime.date(int(lesson_date[2]), int(lesson_date[0]),
+                                                                   int(lesson_date[1])),
+                          text=text)
+            logga("Report %s updated." % report_id)
+            self.redirect_to("instructor-report-details", report_id=int(report_id))
         else:
             self.redirect_to("oops")
 
-
+"""
 class InstructorReportDeleteHandler(Handler):
     @instructor_required
     def get(self, lesson_id):

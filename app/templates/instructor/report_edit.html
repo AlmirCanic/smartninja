@@ -1,6 +1,6 @@
 {% extends "instructor/base.html" %}
 
-{% block title %}Add new report{% endblock title %}
+{% block title %}Edit report for {{report.lesson_date}}{% endblock title %}
 
 {% block css %}
     <link href="/assets/js/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
@@ -26,15 +26,15 @@
                     <i class="fa fa-institution"></i>  <a href="/instructor/courses">Courses</a>
                 </li>
                 <li>
-                    <i class="fa fa-table"></i> <a href="/instructor/course/{{course.get_id}}">{{course.title}}</a>
+                    <i class="fa fa-table"></i> <a href="/instructor/report/{{report.get_id}}">{{report.lesson_date}}</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> Add new report
+                    <i class="fa fa-plus-square-o"></i> Edit report for {{report.lesson_date}}
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Add new report
+                Edit report for {{report.lesson_date}}
             </h1>
         </div>
     </div>
@@ -42,11 +42,11 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/instructor/course/{{course.get_id}}/add-report" method="post">
+            <form action="/instructor/report/{{report.get_id}}/edit" method="post">
 
                 <div class="form-group datepicker">
                     <label>Lesson date</label>
-                    <input type="text" class="form-control" name="date">
+                    <input type="text" class="form-control" name="date" value="{{report.lesson_date.month}}/{{report.lesson_date.day}}/{{report.lesson_date.year}}">
                 </div>
 
                 <div class="form-group">
@@ -58,7 +58,7 @@
                         Did somebody miss the class?
                         Who didn't do their homework?
                     </p>
-                    <textarea class="form-control" style="height: 300px;" name="text"></textarea>
+                    <textarea class="form-control" style="height: 300px;" name="text">{{report.text}}</textarea>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
