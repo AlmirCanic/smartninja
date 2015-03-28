@@ -5,10 +5,27 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course
 from app.models.report import Report
-from app.utils.decorators import instructor_required
+from app.utils.decorators import instructor_required, admin_required
 from app.utils.other import logga
 
 
+# ADMIN
+class AdminReportsListHandler(Handler):
+    @admin_required
+    def get(self):
+        courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+        past_courses = []
+        future_courses = []
+        for course in courses:
+            if course.start_date > datetime.date.today():
+                future_courses.append(course)
+            else:
+                past_courses.append(course)
+        params = {"future_courses": future_courses, "past_courses": past_courses}
+        self.render_template("admin/reports.html", params=params)
+
+
+# INSTRUCTOR
 class InstructorReportAddHandler(Handler):
     @instructor_required
     def get(self, course_id):
