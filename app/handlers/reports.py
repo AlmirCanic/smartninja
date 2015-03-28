@@ -68,20 +68,19 @@ class InstructorReportEditHandler(Handler):
         else:
             self.redirect_to("oops")
 
-"""
+
 class InstructorReportDeleteHandler(Handler):
     @instructor_required
-    def get(self, lesson_id):
-        lesson = Report.get_by_id(int(lesson_id))
-        course_type = CourseType.get_by_id(lesson.course_type)
-        params = {"course_type": course_type, "lesson": lesson}
-        self.render_template("instructor/lesson_delete.html", params)
+    def get(self, report_id):
+        report = Report.get_by_id(int(report_id))
+        params = {"report": report}
+        self.render_template("instructor/report_delete.html", params)
 
     @instructor_required
-    def post(self, lesson_id):
-        lesson = Report.get_by_id(int(lesson_id))
-        lesson.deleted = True
-        lesson.put()
-        logga("Report %s deleted." % lesson_id)
-        self.redirect_to("instructor-curriculum-details", course_type_id=lesson.course_type)
-        """
+    def post(self, report_id):
+        report = Report.get_by_id(int(report_id))
+        course_id = report.course_id
+        report.deleted = True
+        report.put()
+        logga("Report %s deleted." % report_id)
+        self.redirect_to("instructor-course-details", course_id=course_id)
