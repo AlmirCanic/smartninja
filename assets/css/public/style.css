@@ -11,3 +11,8 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+/* Blog post FB comments */
+.fb-comments, .fb-comments iframe[style], .fb-like-box, .fb-like-box iframe[style] {width: 96% !important;}
+.fb-comments span, .fb-comments iframe span[style], .fb-like-box span, .fb-like-box iframe span[style] {width: 96% !important;}
+/* End comments */
