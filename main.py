@@ -37,7 +37,7 @@ from app.handlers.public import MainHandler, \
 from app.handlers.reports import InstructorReportAddHandler, InstructorReportDetailsHandler, InstructorReportEditHandler, \
     InstructorReportDeleteHandler, AdminReportsListHandler, AdminCourseReportsHandler, AdminReportDetailsHandler
 from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
-    StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler
+    StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler
 
@@ -130,6 +130,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/users/students', AdminStudentCourseList, name="admin-student-course-list"),
     webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
     webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
+    webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
 
     # blog
     webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),

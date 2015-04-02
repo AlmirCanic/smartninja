@@ -12,10 +12,18 @@ from app.utils.other import logga
 class AdminStudentCourseList(Handler):
     @admin_required
     def get(self):
-        students = StudentCourse.query().fetch()
-        params = {"students": students}
+        courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+        params = {"courses": courses}
         self.render_template("admin/student_course_list.html", params)
 
+
+class AdminStudentCourseAccessHandler(Handler):
+    @admin_required
+    def get(self, course_id):
+        students = StudentCourse.query(StudentCourse.course_id == int(course_id)).fetch()
+        course = Course.get_by_id(int(course_id))
+        params = {"students": students, "course": course}
+        self.render_template("admin/student_access_per_course.html", params)
 
 class AdminStudentCourseAdd(Handler):
     @admin_required
