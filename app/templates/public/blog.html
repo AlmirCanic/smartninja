@@ -65,6 +65,12 @@
             </div><!-- end post -->
             {% endfor %}
         {% endif %}
+
+        {% if next %}
+        <ul class="pager">
+            <li class="previous"><a href="/blog?page={{next}}"><span aria-hidden="true">&larr;</span> Starejši članki</a></li>
+        </ul>
+        {% endif %}
     </div><!-- End col-md-8-->
 
     <aside class="col-md-4">

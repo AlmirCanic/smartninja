@@ -1,4 +1,5 @@
 from google.appengine.api import users
+from google.appengine.datastore.datastore_query import Cursor
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.blog import BlogPost
@@ -9,7 +10,8 @@ from app.utils.other import strip_tags, convert_markdown_to_html, logga
 
 class PublicBlogHandler(Handler):
     def get(self):
-        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
+        curs = Cursor(urlsafe=self.request.get('page'))
+        posts, next_curs, more = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch_page(10, start_cursor=curs)
 
         # convert markdown to html
         posts2 = []
@@ -20,6 +22,9 @@ class PublicBlogHandler(Handler):
             posts2.append(post)
 
         params = {"posts": posts2}
+
+        if more and next_curs:
+            params["next"] = next_curs.urlsafe()
         self.render_template("public/blog.html", params)
 
 
@@ -37,8 +42,14 @@ class PublicBlogDetailsHandler(Handler):
 class AdminBlogListHandler(Handler):
     @admin_required
     def get(self):
-        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
+        curs = Cursor(urlsafe=self.request.get('page'))
+        posts, next_curs, more = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch_page(10, start_cursor=curs)
+
         params = {"posts": posts}
+
+        if more and next_curs:
+            params["next"] = next_curs.urlsafe()
+
         self.render_template("admin/blog_list.html", params)
 
 
