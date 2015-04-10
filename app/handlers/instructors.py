@@ -64,7 +64,7 @@ class InstructorCourseListHandler(Handler):
         if not user:
             return self.redirect_to("forbidden")
         else:
-            courses = Course.query(Course.course_instructors.user_id == user.get_id).fetch()
+            courses = Course.query(Course.course_instructors.user_id == user.get_id, Course.deleted == False).fetch()
 
             past_courses = []
             future_courses = []
@@ -86,7 +86,7 @@ class InstructorCourseDetailsHandler(Handler):
             return self.redirect_to("forbidden")
         else:
             course = Course.get_by_id(int(course_id))
-            courses = Course.query(Course.course_instructors.user_id == user.get_id).fetch()
+            courses = Course.query(Course.course_instructors.user_id == user.get_id, Course.deleted == False).fetch()
             reports = Report.query(Report.course_id == int(course_id), Report.deleted == False).fetch()
 
             if course in courses:
