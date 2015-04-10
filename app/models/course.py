@@ -134,6 +134,9 @@ class CourseApplication(ndb.Model):
     company_zip = ndb.StringProperty()
     company_tax_number = ndb.StringProperty()
     other_info = ndb.TextProperty()
+    grade_score = ndb.IntegerProperty()
+    grade_summary = ndb.TextProperty()
+    grade_tags = ndb.StringProperty(repeated=True)
 
     @property
     def get_id(self):
@@ -172,8 +175,8 @@ class CourseApplication(ndb.Model):
         new_course.put()
 
     @classmethod
-    def create_temp(cls, course_title, course_id, student_name, student_id, student_email, price, currency, laptop, shirt):
-        course_app = cls(course_title=course_title, course_id=course_id, student_name=student_name, student_id=student_id,
-                         student_email=student_email, price=price, currency=currency, laptop=laptop, shirt=shirt)
-        course_app.put()
-        return course_app
+    def grade_student(cls, application, score, summary, tags):
+        application.grade_score = score
+        application.grade_summary = summary
+        application.grade_tags = tags
+        application.put()

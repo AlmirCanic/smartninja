@@ -1,0 +1,43 @@
+{% extends "instructor/base.html" %}
+
+{% block title %}Grade for {{ application.student_name }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-institution"></i>  <a href="/instructor/courses">Courses</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/instructor/course/{{application.course_id}}">{{application.course_title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-graduation-cap"></i> Grade for {{ application.student_name }}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Grade for {{ application.student_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+    <p>Grade a student after the course. Grading helps to evaluate students (they don't see their scores). Scores are
+        visible to IT companies, so they can find the right person and offer them a job.</p>
+    <p><strong>Score</strong> is from 1 to 4 (1 is the worst, 4 is the best). In <strong>summary</strong> you write how successful student was, if s/he did
+    their homeworks in time, what are their strength and weaknesses etc. In <strong>tags add skills</strong> that they posses now (like
+        JavaScript, Python, PHP etc.)</p>
+
+    <hr>
+
+    <a href="/instructor/grade/{{application.get_id}}/edit" class="pull-right"><button class="btn btn-success">Edit grade</button></a>
+
+    <p><strong>Score (1-4):</strong> {{application.grade_score}}</p>
+    <p><strong>Tags:</strong> {{tags}}</p>
+    <p><strong>Summary:</strong> {{application.grade_summary}}</p>
+
+</div>
+{% endblock main_content %}

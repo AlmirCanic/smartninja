@@ -21,6 +21,7 @@ from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTyp
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler, InstructorCurriculumEditHandler, \
     InstructorCurriculumAddHandler
+from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
@@ -178,6 +179,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/instructor/report/<report_id:\d+>', InstructorReportDetailsHandler, name="instructor-report-details"),
     webapp2.Route('/instructor/report/<report_id:\d+>/edit', InstructorReportEditHandler, name="instructor-report-edit"),
     webapp2.Route('/instructor/report/<report_id:\d+>/delete', InstructorReportDeleteHandler, name="instructor-report-delete"),
+
+    # instructor grades for students
+    webapp2.Route('/instructor/grade/<application_id:\d+>', InstructorGradeStudentDetailsHandler, name="instructor-grade-student"),
+    webapp2.Route('/instructor/grade/<application_id:\d+>/edit', InstructorGradeStudentEditHandler, name="instructor-grade-student-edit"),
 
 # STUDENT URLS
     webapp2.Route('/student', StudentCourseListHandler, name="student"),
