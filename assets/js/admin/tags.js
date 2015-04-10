@@ -46,8 +46,6 @@ $(document).ready(function() {
             allData += tagsList[i] + ",";
         }
 
-
-
         allData = allData.substring(0, allData.length - 1);
 
         //alert(allData);

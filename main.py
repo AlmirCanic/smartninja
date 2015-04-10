@@ -21,7 +21,8 @@ from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTyp
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler, InstructorCurriculumEditHandler, \
     InstructorCurriculumAddHandler
-from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler
+from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
+    AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
@@ -139,6 +140,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/blog/<post_id:\d+>', AdminBlogDetailsHandler, name="admin-blog-details"),
     webapp2.Route('/admin/blog/<post_id:\d+>/edit', AdminBlogEditHandler, name="admin-blog-edit"),
     webapp2.Route('/admin/blog/<post_id:\d+>/delete', AdminBlogDeleteHandler, name="admin-blog-delete"),
+
+    # grades for students
+    webapp2.Route('/admin/grades', AdminGradesListHandler, name="admin-grades-list"),
+    webapp2.Route('/admin/course/<course_id:\d+>/grades', AdminCourseGradesHandler, name="admin-course-grades"),
+    webapp2.Route('/admin/grade/<application_id:\d+>', AdminGradeStudentDetailsHandler, name="admin-grade-student"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Grades{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-graduation-cap"></i> Grades
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Student grades per course
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <h3>Grades for past courses</h3>
+    {% if courses %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Place</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td><a href="/admin/course/{{course.get_id}}/grades">{{ course.title }}</a></td>
+                            <td>{{ course.city }}, {{ course.place }}</td>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %}
+                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                        {{ instructor.name }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No reports</p>
+    {% endif %}
+
+</div>
+{% endblock main_content %}

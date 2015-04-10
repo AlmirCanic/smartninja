@@ -2,10 +2,42 @@ from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseApplication, Course
-from app.utils.decorators import instructor_required
+from app.utils.decorators import instructor_required, admin_required
 from app.utils.other import logga, convert_tags_to_string, convert_tags_to_list
 
 
+# ADMIN
+class AdminGradesListHandler(Handler):
+    @admin_required
+    def get(self):
+        courses = Course.query(Course.deleted == False).order(Course.end_date).fetch()
+
+        params = {"courses": courses}
+        self.render_template("admin/grades.html", params=params)
+
+
+class AdminCourseGradesHandler(Handler):
+    @admin_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+
+        params = {"course": course, "applications": applications}
+        self.render_template("admin/grades_for_course.html", params=params)
+
+
+class AdminGradeStudentDetailsHandler(Handler):
+    @admin_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+
+        tags = convert_tags_to_string(application.grade_tags)
+
+        params = {"application": application, "tags": tags}
+        self.render_template("admin/grade_details.html", params)
+
+
+# INSTRUCTOR
 class InstructorGradeStudentDetailsHandler(Handler):
     @instructor_required
     def get(self, application_id):
