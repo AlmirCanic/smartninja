@@ -31,7 +31,8 @@
                     <table class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Student grade</th>
+                                <th>Student</th>
+                                <th>Grade</th>
                                 <th>Email</th>
                                 <th>Price</th>
                                 <th>Paid</th>
@@ -40,7 +41,8 @@
                         <tbody>
                             {% for application in applications %}
                             <tr {% if application.payment_status %} class="success" {% else %} class="danger" {% endif %}>
-                                <td><a href="/admin/grade/{{application.get_id}}">{{application.student_name}}</a></td>
+                                <td><a href="/admin/user/{{application.student_id}}">{{application.student_name}}</a></td>
+                                <td>{{application.grade_score}} <a href="/admin/grade/{{application.get_id}}">(read more)</a></td>
                                 <td>{{application.student_email}}</td>
                                 <td>{{application.price}} {{application.currency}}</td>
                                 <td>{{application.payment_status}}</td>
