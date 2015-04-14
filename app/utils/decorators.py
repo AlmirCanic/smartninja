@@ -10,7 +10,7 @@ def admin_required(handler):
     def check_login(self, *args, **kwargs):
         user = users.get_current_user()
         if user:
-            email = user.email()
+            email = user.email().lower()
             if email in ADMINS:
                 return handler(self, *args, **kwargs)
             else:
@@ -24,7 +24,7 @@ def partner_required(handler):
     def check_login(self, *args, **kwargs):
         user = users.get_current_user()
         if user:
-            email = user.email()
+            email = user.email().lower()
             pucs = PartnerUserCourse.query(PartnerUserCourse.user_email == email).fetch()
             if pucs:
                 return handler(self, *args, **kwargs)
@@ -39,7 +39,7 @@ def student_required(handler):
     def check_login(self, *args, **kwargs):
         user = users.get_current_user()
         if user:
-            email = user.email()
+            email = user.email().lower()
             students = StudentCourse.query(StudentCourse.user_email == email).fetch()
             if students:
                 return handler(self, *args, **kwargs)
@@ -54,7 +54,7 @@ def instructor_required(handler):
     def check_login(self, *args, **kwargs):
         user = users.get_current_user()
         if user:
-            email = user.email()
+            email = user.email().lower()
             instructors = Instructor.query(Instructor.email == email).fetch()
             if instructors:
                 return handler(self, *args, **kwargs)
