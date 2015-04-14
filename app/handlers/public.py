@@ -5,7 +5,7 @@ from app.models.course import Course, CourseApplication
 
 class MainHandler(Handler):
     def get(self):
-        course_list = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch(4)
+        course_list = Course.query(Course.deleted == False, Course.start_date >= datetime.datetime.now()).order(Course.start_date).fetch(4)
 
         courses = []
         for course in course_list:

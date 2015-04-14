@@ -18,7 +18,7 @@ class AdminCourseListHandler(Handler):
         past_courses = []
         future_courses = []
         for course in courses:
-            if course.start_date > datetime.date.today():
+            if course.start_date >= datetime.date.today():
                 future_courses.append(course)
             else:
                 past_courses.append(course)
@@ -204,7 +204,7 @@ class AdminCourseDeleteHandler(Handler):
 
 class PublicCourseListHandler(Handler):
     def get(self):
-        course_list = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
+        course_list = Course.query(Course.deleted == False, Course.start_date >= datetime.datetime.now()).order(Course.start_date).fetch()
 
         # replace .0 price with ,00 (european system vs US)
         courses = []
