@@ -3,19 +3,13 @@
 {% block title %}Edit lesson{% endblock title %}
 
 {% block scripts %}
-    <link rel="stylesheet" type="text/css" href="/assets/js/markitup/skins/markitup/style.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/js/markitup/sets/markdown/style.css" />
+    <link rel="stylesheet" href="/assets/css/public/bootstrap-markdown.min.css">
 
-    <script type="text/javascript" src="/assets/js/markitup/jquery.markitup.js"></script>
-    <script type="text/javascript" src="/assets/js/markitup/sets/markdown/set.js"></script>
-
-    <script type="text/javascript" src="/assets/js/admin/slugify.js"></script>
-
-    <script language="javascript">
-        $(document).ready(function()	{
-            $('#markdown').markItUp(mySettings);
-        });
-    </script>
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.sl.js"></script>
+    <script src="/assets/js/bootstrap-markdown/markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/to-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/script.js"></script>
 {% endblock scripts %}
 
 {% block main_content %}
@@ -59,7 +53,7 @@
                 <div class="form-group">
                     <label>Text</label>
                     <p>See <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown CheatSheet</a></p>
-                    <textarea class="form-control" style="height: 300px;" name="text" id="markdown">{{lesson.text}}</textarea>
+                    <textarea name="text" class="form-control markdown" rows="6">{{lesson.text}}</textarea><br>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
