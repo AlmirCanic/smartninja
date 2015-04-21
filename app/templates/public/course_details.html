@@ -62,6 +62,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="carousel slide" data-ride="carousel" id="quote-carousel-2">
+
+                            {% if course.category == "Programiranje" %}
                             <ol class="carousel-indicators">
                                 <li data-target="#quote-carousel-2" data-slide-to="0" class="active"></li>
                                 <li data-target="#quote-carousel-2" data-slide-to="1"></li>
@@ -71,7 +73,6 @@
                             </ol>
 
                             <div class="carousel-inner">
-
                                 <div class="item active">
                                     <blockquote class="course-testimonials">
                                         <div class="row">
@@ -95,7 +96,7 @@
                                     <blockquote class="course-testimonials">
                                         <div class="row">
                                             <div class="col-sm-3 text-center">
-                                                <img class="img-circle" src="/assets/img/public/spela.jpg" alt="Gregor Nanger">
+                                                <img class="img-circle" src="/assets/img/public/spela.jpg" alt="">
                                             </div>
                                             <div class="col-sm-9">
                                                 <p>
@@ -165,6 +166,53 @@
                                         </div>
                                     </blockquote>
                                 </div>
+                            {% elif course.category == "Marketing" %}
+                            <ol class="carousel-indicators">
+                                <li data-target="#quote-carousel-2" data-slide-to="0" class="active"></li>
+                                <li data-target="#quote-carousel-2" data-slide-to="1"></li>
+                            </ol>
+
+                            <div class="carousel-inner">
+
+                                <div class="item active">
+                                    <blockquote class="course-testimonials">
+                                        <div class="row">
+                                            <div class="col-sm-3 text-center">
+                                                <img class="img-circle" src="http://i.imgur.com/zBPwJnO.jpg" alt="Tamara">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p>
+                                                    Delavnica je primerna za vsakogar, ki želi povečati prepoznavnost
+                                                    svojega produkta brez ogromnega finančnega vložka za marketing.
+                                                    Inštruktor Jure upošteva kdo ga posluša in temu tudi prilagodi
+                                                    svoje predavanje.
+                                                </p>
+                                                <small class="small_2">Tamara</small>
+                                            </div>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="item">
+                                    <blockquote class="course-testimonials">
+                                        <div class="row">
+                                            <div class="col-sm-3 text-center">
+                                                <img class="img-circle" src="http://i.imgur.com/jwazgX4.jpg" alt="Matej">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p>
+                                                    Nenehno učenje omogoča, da se ti včasih odprejo kakšna vrata, za
+                                                    katera si nisi mislil, da sploh obstajajo. In čeprav misliš, da
+                                                    veš vse o marketingu, morebiti tudi o novodobnem marketingu, je
+                                                    dobro, da si tak tečaj privoščiš.
+                                                </p>
+                                                <small class="small_2">Matej</small>
+                                            </div>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                            {% endif %}
 
                             </div>
                         </div>
