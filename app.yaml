@@ -1,5 +1,5 @@
 application: smartninjaorg1
-version: 1-23
+version: 1-25
 runtime: python27
 api_version: 1
 threadsafe: yes
