@@ -118,7 +118,8 @@
                                 <th>Laptop</th>
                                 <th>T-shirt</th>
                                 <th>Paid</th>
-                                <th>Grade a student</th>
+                                <th>Grade</th>
+                                <th>Tools</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,6 +130,7 @@
                                 <td>{{application.laptop}}</td>
                                 <td>{{application.shirt}}</td>
                                 <td>{{application.payment_status}}</td>
+                                <td>{{application.grade_score}}</td>
                                 <td><a href="/instructor/grade/{{application.get_id}}">Grade</a></td>
                             </tr>
                             {% endfor %}
