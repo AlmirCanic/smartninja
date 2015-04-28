@@ -1,0 +1,5 @@
+cron:
+- description: Whole Database Daily Backup
+  url: /_ah/datastore_admin/backup.create?name=AllDatabaseBackup&kind=BlogPost&kind=Course&kind=CourseApplication&kind=CourseType&kind=Instructor&kind=Lesson&kind=Partner&kind=PartnerUserCourse&kind=Report&kind=StudentCourse&kind=User&filesystem=gs&gs_bucket_name=snit-db-backup
+  schedule: every sunday 03:00
+  target: ah-builtin-python-bundle
