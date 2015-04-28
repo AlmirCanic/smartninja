@@ -1,6 +1,5 @@
 from google.appengine.ext import ndb
-from app.models.course import CourseApplication
-from app.models.partner import PartnerUserCourse
+from app.utils.user_utils import change_name_or_email
 
 
 class User(ndb.Model):
@@ -16,6 +15,9 @@ class User(ndb.Model):
     instructor = ndb.BooleanProperty(default=False)  # is user an instructor?
     summary = ndb.StringProperty()
     photo_url = ndb.StringProperty()
+    github_url = ndb.StringProperty()
+    grade_avg_score = ndb.FloatProperty()
+    grade_all_tags = ndb.StringProperty(repeated=True)
     deleted = ndb.BooleanProperty(default=False)
 
     @property
@@ -55,22 +57,7 @@ class User(ndb.Model):
 
     @classmethod
     def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None, instructor=False):
-        if user.first_name != first_name or user.last_name != last_name or user.email != email:
-            user.first_name = first_name
-            user.last_name = last_name
-            applications = CourseApplication.query(CourseApplication.student_id == user.get_id).fetch()
-
-            for application in applications:
-                application.student_name = "%s %s" % (first_name, last_name)
-                if email != None:
-                    application.student_email = email
-                application.put()
-
-            pucs = PartnerUserCourse.query(PartnerUserCourse.user_id == user.get_id).fetch()
-
-            for puc in pucs:
-                puc.user_name = user.first_name + " " + user.last_name
-                puc.put()
+        change_name_or_email(user, first_name, last_name, email)
 
         user.address = address
         user.phone_number = phone_number

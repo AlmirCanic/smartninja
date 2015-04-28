@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 from app.models.partner import Partner, PartnerUserCourse
+from app.utils.course_utils import update_student_grade
 
 
 class CourseType(ndb.Model):
@@ -180,3 +181,5 @@ class CourseApplication(ndb.Model):
         application.grade_summary = summary
         application.grade_tags = tags
         application.put()
+
+        update_student_grade(application)

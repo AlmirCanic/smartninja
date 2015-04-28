@@ -1,30 +1,271 @@
-{% extends "public/base.html" %}
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+  	<meta charset="utf-8">
+    <title>404 - ne obstaja | SmartNinja šola IT veščin</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-{% block title %}404 - ne obstaja{% endblock title %}
+    <meta name="keywords" content="SmartNinja, šola programiranja, programming school, tečaji programiranja, courses, classes, course, class, tutors, instructors, tečaj programiranja, tečaj, IT">
+    <meta name="description" content="Nauči se veščin, ki jih iščejo sodobna IT podjetja. Učimo spletno in mobilno programiranja, grafični design in internet stvari (IoT).">
 
-{% block main_content %}
-<section id="sub-header-small">
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1 text-center">
-			<h1>404</h1>
-            <br>
-			<p class="lead boxed ">Ne obstaja :(</p>
-		</div>
-	</div><!-- End row -->
-</div><!-- End container -->
-<div class="divider_top"></div>
-</section><!-- End sub-header -->
+    <meta name="google-site-verification" content="eIZPTeiYfR0rel0-2qy_a1-x1MQg910ZZreuNh_kFDw" />
 
-<section id="main_content">
+    <!-- START FACEBOOK OPEN GRAPH -->
+    <meta name="og:url" content="http://smartninja.org">
+    <meta name="og:title" content="SmartNinja - šola IT veščin">
+    <meta name="og:description" content="Nauči se veščin, ki so v današnjem svetu najbolj iskane in cenjene. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://smartninja.org/assets/img/public/fb_preview.jpg">
+    <!-- END FACEBOOK OPEN GRAPH -->
+
+    <!-- START TWITTER CARDS -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="SmartNinja - šola IT veščin">
+    <meta name="twitter:description" content="Nauči se veščin, ki so v današnjem svetu najbolj iskane in cenjene. Primerno tako za popolne začetnike, kot tudi tiste s predznanjem.">
+    <meta name="twitter:creator" content="@NmStartUP">
+    <meta name="twitter:image" content="http://smartninja.org/assets/img/public/fb_preview.jpg">
+    <meta name="twitter:url" content="http://smartninja.org">
+    <!-- END TWITTER CARDS -->
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assets/img/public/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="/assets/img/public/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="/assets/img/public/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="/assets/img/public/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/public/superfish.css" rel="stylesheet">
+    <link href="/assets/css/public/theme.css" rel="stylesheet">
+    <link href="/assets/css/public/timeline.css" rel="stylesheet">
+    <link href="/assets/css/public/fontello/css/fontello.css" rel="stylesheet">
+    <link href="/assets/css/public/smartninja.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50813177-1', 'smartninja.org');
+        ga('send', 'pageview');
+
+    </script>
+
+    <script src="//load.sumome.com/" data-sumo-site-id="1cb769f2e894175f341541bbcfce32e2ed9323c603a328ead8017c282064837c" async></script>
+
+
+  </head>
+
+  <body>
+
+  <!-- NAVBAR -->
+  <header class="navbar navbar-fixed-top">
+      <div class="container">
+          <div class="row" id="row-fix">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                  <a href="/" id="logo">SmartNinja</a>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                  <div class="navbar-collapse collapse">
+
+                      <ul class="sf-menu pull-right">
+                          <!--<li><a href="/" id="home">Domov</a></li>-->
+                          <li><a href="/courses" id="courses">Seznam tečajev</a></li>
+                          <!-- <li><a href="#potek" id="potek">Potek</a></li> -->
+                          <li><a href="/partners" id="partners">Partnerji</a></li>
+                          <li><a href="/blog" id="blog">Blog</a></li>
+                          <li><a href="/faq" id="faq">FAQ</a></li>
+                          <li><a href="/about" id="about">O nas</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+
+              <div class="col-md-2 col-sm-2 col-xs-2 pull-right">
+                  <div class="navbar-header pull-right">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-menu-3" style="color: #ffffff;"></span>
+                      </button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </header>
+  <!-- End navbar -->
+
+    <section id="sub-header-small">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <h3>Stran, ki jo iščeš ne obstaja (več), ali pa si se zatipkal/a.</h3>
+            <div class="col-md-10 col-md-offset-1 text-center">
+                <h1>404</h1>
                 <br>
-                <img class="img-responsive center-block" src="http://www.troll.me/images/aliens-white-castle/404-error-aliens.jpg">
+                <p class="lead boxed ">Ne obstaja :(</p>
+            </div>
+        </div><!-- End row -->
+    </div><!-- End container -->
+    <div class="divider_top"></div>
+    </section><!-- End sub-header -->
+
+    <section id="main_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h3>Stran, ki jo iščeš ne obstaja (več), ali pa si se zatipkal/a.</h3>
+                    <br>
+                    <img class="img-responsive center-block" src="http://www.troll.me/images/aliens-white-castle/404-error-aliens.jpg">
+                </div>
+            </div>
+        </div><!-- End container -->
+    </section><!-- End main_content-->
+
+  <!-- Modal: Terms and conditions -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Pogoji sodelovanja</h4>
+              </div>
+              <div class="modal-body">
+                  <p>Pogoji sodelovanja<br />
+                      PRAVILA IN POGOJI SODELOVANJA V PROGRAMIH SMARTNINJA</p>
+
+                  <p>1. SPLOŠNE DOLOČBE</p>
+
+                  <p>SmartNinja je izobraževalni tečaj (v nadaljevanju: tečaj), ki ga organizira podjetje
+                      SNIT d.o.o., Ulica Slavka Gruma 100, 8000 Novo mesto, Davčna št. 45457140, Matična številka:
+                      6779654000 (v nadaljevanju: organizator).</p>
+
+                  <p>Udeleženci tečaja (v nadaljevanju: udeleženci) so posamezniki, ki so se prijavili na tečaj in
+                      sprejemajo pravila in pogoje sodelovanja v programu.</p>
+
+                  <p>2. POTEK IN POGOJI</p>
+
+                  <p>Na tečaju lahko sodeluje vsak, ki se je prek prijavnega obrazca prijavil v program ter sprejel pravila in
+                      pogoje sodelovanja na tečaju. Prijava mora biti oddana do izteka roka za prijavo ter vsebovati vse zahtevane
+                      podatke. Podatki morajo biti točni.<br />
+                      Organizator si pridržuje pravico do omejitve števila udeležencev. Tolmačenja in pojasnila k določbam in pravilom
+                      daje organizator, njegove odločitve so dokončne in na njih ni mogoča pritožba.</p>
+
+                  <p>Udeleženci morajo pred iztekom roka za prijavo poravnati kotizacijo v celoti</p>
+
+                  <p>Manj kot 7 dni pred iztekom roka je organizator dolžan povrniti le 50 % celotne kotizacije. Na
+                      zadnji dan roka za prijavo na tečaj organizator ni dolžan vrniti kotizacije udeležencu.</p>
+
+                  <p>Udeleženec, ki se prijavi prek spleta, lahko v 15 dneh od dneva prijave (velja le v primeru, da je
+                      to več kot 7 dni do pričetka izvajanja tečaja) podjetju SNIT d.o.o. sporoči, da odstopa od prijave
+                      (43. člen Zakona o varstvu potrošnikov). Manipulativni stroški znašajo 25,00 EUR z DDV.</p>
+
+                  <p>V primeru bolezni udeležencu vrne organizator sorazmerni delež šolnine do datuma pisnega izpisa.</p>
+
+                  <p>V vseh ostalih primerih prenehanja obiskovanja tečaja (pomanjkanje časa, dopust ...) tečajnik
+                      poravna celotno šolnino do začetka tečaja.</p>
+
+                  <p>Plačanega tečaja v udeležencec ne more »prenesti« v drug tečaj.</p>
+
+                  <p>Delavnice SmartNinja se izvajajo na različnih lokacijah. Organizator bo 5 (pet) dni pred pričetkom izvajanja
+                      programa obvestil udeležence o točni lokaciji izvajanja programa.</p>
+
+                  <p>Udeleženec bo:<br />
+                      - v programu aktivno sodeloval,<br />
+                      - se udeležil vseh aktivnosti znotraj delavnice,<br />
+                      - pri delu uporabljal orodja in programe, za katera ima ustrezne pravice,<br />
+                      - skrbel za nemoteno delo in izvajanje delavnice,<br />
+                      - z lastnino, tehničnimi pripomočki in ostalo opremo bo ravnal odgovorno. V primeru škode je udeleženec obvezan
+                      povrnitve škode.<br />
+                      <br />
+                      Organizator bo:<br />
+                      - izvedel vse aktivnosti v programu SmartNinja<br />
+                      - zagotovil kvalitetno izpeljavo tečaja<br />
+                      - zagotovil tehnično infrastrukturo za izvedbo tečaja<br />
+                      - zagotovil ostalo infrastrukturo (hrana, pijača in morebitna prenočitev, če te stvari tečaj predvideva)<br />
+                      <br />
+                      Udeleženec se bo vzdržal kakršnega koli delovanja, ki bi škodilo ugledu in dobremu imenu organizatorja.</p>
+
+                  <p>3. VARSTVO PODATKOV</p>
+
+                  <p>Organizator pri izvajanju delavnice obdeluje osebne podatke udeležencev, ki mu jih ti posredujejo. Organizator
+                      vse osebne podatke varuje in obdeluje v skladu s predpisi, ki urejajo varstvo osebnih podatkov. Organizator si
+                      pridržuje pravico spremljanja delovanja in aktivnosti udeležencev ter pripravljanja člankov o njihovem delovanju
+                      v programu. Organizator ne bo javno objavljal podatkov ali informacij, ki so poslovna skrivnost.</p>
+
+                  <p>4. KONČNE DOLOČBE</p>
+
+                  <p>V primeru kršitev teh pravil bo organizator udeleženca opozoril ter mu postavil rok za prenehanje ali odpravo
+                      kršitve. V kolikor bo udeleženec s kršitvami nadaljeval, ga lahko organizator izloči iz tečaja.<br /><br />
+                      Udeleženci tečaja z oddajo prijave potrjujejo, da so seznanjeni s temi pravili ter da do organizatorja ne bodo
+                      imeli nikakršnih zahtevkov. V kolikor ni v posameznih pogodbah z udeleženci dogovorjeno drugače, organizator nima
+                      nobenih pravic na produktih ali storitvah udeležencev, ustvarjenih v sklopu delavnice. Organizator pa si pridržuje
+                      pravico pri komuniciranju z javnostjo izpostaviti, da je bil tak produkt ali storitev udeležencev ustvarjen v
+                      sklopu tečaja.<br /><br />
+                      Prijava na tečaj ter sprejem pogojev sodelovanja v programu ne štejeta kot pogodba o zaposlitvi ali kot
+                      povabilo k sklenitvi pogodbe o zaposlitvi. Udeleženec se za sodelovanje v programu odloči prostovoljno in s tem
+                      ne opravlja nobene vrste dela za organizatorja.<br /><br />
+
+                      Pravila in pogoji sodelovanja v programu veljajo od 9. februarja 2015 dalje. Organizator lahko spreminja pogoje in
+                      pravila ter se obvezuje, da bo v tem primeru na ustrezen način obvestil udeležence.</p>
+
+                  <p>Miha Fabjan<br />
+                      direktor<br />
+                      SNIT d.o.o.<br />
+                  </p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Zapri</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3>Prijavi se na sveže SmartNinja e-novice!</h3>
+
+                    <div id="message-newsletter">
+                    </div>
+                    <form method="post" action="/newsletter" class="form-inline">
+                        <input type="hidden" name="hidden">
+                        <input name="email_newsletter1" id="email_newsletter" type="email" placeholder="Tvoj email" class="form-control">
+                        <button id="submit-newsletter" class=" button_outline"> Naroči se</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div><!-- End container -->
-</section><!-- End main_content-->
-{% endblock main_content %}
+
+    </footer>
+
+    <div id="copy_right">© 2014 - 2015 SmartNinja.org</div>
+
+    <div id="toTop">Nazaj na vrh</div>
+    <!-- End footer -->
+
+    <script src="/assets/js/jquery.js"></script>
+
+    <!-- OTHER JS -->
+    <script src="/assets/js/public/superfish.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/public/validate.js"></script>
+    <script src="/assets/js/public/functions.js"></script>
+    <script type="text/javascript" src="/assets/js/public/jquery.cookiesdirective.js"></script>
+    <script type="text/javascript" src="/assets/js/public/smartninja.js"></script>
+
+  </body>
+</html>

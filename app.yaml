@@ -1,5 +1,5 @@
 application: smartninjaorg1
-version: 1-25
+version: 1-26
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -15,7 +15,7 @@ inbound_services:
 - mail
 
 error_handlers:
-- file: 404.html
+- file: app/templates/404.html
 
 libraries:
 - name: webapp2
