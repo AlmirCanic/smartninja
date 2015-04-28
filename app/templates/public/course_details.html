@@ -253,7 +253,12 @@
                 <!-- Start prijava -->
                 <h3 id="courseApplication">Prijava na tečaj</h3>
                 {% if course.applications_closed %}
-                <p>Prijave so zaključene. Poglej si še <a href="/courses">ostale tečaje</a>.</p>
+                <p>Prijave so zaključene. Če želiš v čakalno vrsto, v kolikor kdo odpove udeležbo, nam piši
+                    <a href="http://smartninja.org/about#contact-form">prek kontaktnega obrazca</a>. Če bo takih
+                    emailov več, bomo razmislili o dodatni skupini tečaja.
+                </p>
+
+                <p>Poglej si tudi še <a href="/courses">ostale tečaje</a>.</p>
                 {% else %}
                 <form action="/course/{{course.get_id}}/apply" method="post">
                     <input type="hidden" name="hidden">
