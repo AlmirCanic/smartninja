@@ -25,6 +25,7 @@ class AdminStudentCourseAccessHandler(Handler):
         params = {"students": students, "course": course}
         self.render_template("admin/student_access_per_course.html", params)
 
+
 class AdminStudentCourseAdd(Handler):
     @admin_required
     def get(self):

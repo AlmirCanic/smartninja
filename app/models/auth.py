@@ -16,7 +16,7 @@ class User(ndb.Model):
     summary = ndb.StringProperty()
     photo_url = ndb.StringProperty()
     github_url = ndb.StringProperty()
-    grade_avg_score = ndb.FloatProperty()
+    grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)
     deleted = ndb.BooleanProperty(default=False)
 
@@ -33,7 +33,7 @@ class User(ndb.Model):
 
     @classmethod
     def get_by_email(cls, email):
-        user = User.query(User.email == email).get()
+        user = User.query(User.email == email, User.deleted == False).get()
         return user
 
     @classmethod
