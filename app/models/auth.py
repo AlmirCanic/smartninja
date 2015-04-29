@@ -56,7 +56,8 @@ class User(ndb.Model):
         return user
 
     @classmethod
-    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None, instructor=False):
+    def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None,
+               instructor=False, github=None):
         change_name_or_email(user, first_name, last_name, email)
 
         user.address = address
@@ -66,6 +67,8 @@ class User(ndb.Model):
             user.email = email
         user.photo_url = photo_url
         user.instructor = instructor
+        if github != None:
+            user.github_url = github
         user.dob = dob
         user.put()
         return user

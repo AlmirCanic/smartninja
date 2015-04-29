@@ -29,10 +29,9 @@
     <p>Email: {{ this_user.email }}</p>
     <p>Phone Number : {{ this_user.phone_number }}</p>
     <p>Address: {{ this_user.address }}</p>
-    <p>GitHub: {{ this_user.github_url }}</p>
+    <p>GitHub: <a href="{{ this_user.github_url }}" target="_blank">{{ this_user.github_url }}</a></p>
     <p>Date of birth: {{ this_user.dob }}</p>
     <p>Summary: {{ this_user.summary }}</p>
-    <p>Instructor: {{ this_user.instructor }}</p>
 
     <hr>
 

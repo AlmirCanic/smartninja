@@ -1,7 +1,5 @@
-import logging
 from app.handlers.base import Handler
 from app.models.auth import User
-from app.models.course import CourseApplication
 from app.settings import ADMINS
 from app.utils.decorators import admin_required
 from app.utils.other import logga
@@ -71,14 +69,15 @@ class AdminUserEditHandler(Handler):
         user = User.get_by_id(int(user_id))
         first_name = self.request.get("first_name")
         last_name = self.request.get("last_name")
-        email = self.request.get("email")
         address = self.request.get("address")
         summary = self.request.get("summary")
         photo_url = self.request.get("photo_url")
         phone_number = self.request.get("phone_number")
         dob = self.request.get("dob")
-        instructor = bool(self.request.get("instructor"))
+        github = self.request.get("github_url")
+
         User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
-                    summary=summary, photo_url=photo_url, dob=dob, instructor=instructor, email=email)
+                    summary=summary, photo_url=photo_url, dob=dob, github=github)
+
         logga("User %s edited." % user_id)
         self.redirect_to("user-details", user_id=int(user_id))
