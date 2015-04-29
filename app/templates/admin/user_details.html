@@ -26,7 +26,12 @@
     <img src="{{this_user.photo_url}}" class="img-thumbnail" width="200px">
     <br>
     <br>
-    <p>Email: {{ this_user.email }}</p>
+    <p>
+        Email: {{ this_user.email }}
+        <a href="/admin/user/{{this_user.get_id}}/change-email">
+            <button class="btn btn-warning btn-xs">Edit email</button>
+        </a>
+    </p>
     <p>Phone Number : {{ this_user.phone_number }}</p>
     <p>Address: {{ this_user.address }}</p>
     <p>GitHub: <a href="{{ this_user.github_url }}" target="_blank">{{ this_user.github_url }}</a></p>

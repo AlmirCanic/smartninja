@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
-from app.utils.user_utils import change_name_or_email
+from app.utils.user_utils import change_name
 
 
 class User(ndb.Model):
@@ -58,7 +58,7 @@ class User(ndb.Model):
     @classmethod
     def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None,
                instructor=False, github=None):
-        change_name_or_email(user, first_name, last_name, email)
+        change_name(user, first_name, last_name)
 
         user.address = address
         user.phone_number = phone_number

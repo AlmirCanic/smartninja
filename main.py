@@ -12,6 +12,7 @@ from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
     InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
+from app.handlers.change_email import AdminUserChangeEmailHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
     AdminCourseAddHandler, AdminCourseEditHandler, \
@@ -110,6 +111,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/user/<user_id:\d+>', AdminUserDetailsHandler, name="user-details"),
     webapp2.Route('/admin/user/<user_id:\d+>/delete', AdminUserDeleteHandler, name="user-delete"),
     webapp2.Route('/admin/user/<user_id:\d+>/edit', AdminUserEditHandler, name="user-edit"),
+    webapp2.Route('/admin/user/<user_id:\d+>/change-email', AdminUserChangeEmailHandler, name="admin-user-change-email"),
 
     # instructors
     webapp2.Route('/admin/users/instructors', AdminInstructorsListHandler, name="admin-instructors-list"),
