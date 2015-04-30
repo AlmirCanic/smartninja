@@ -1,9 +1,8 @@
 import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
-from app.models.course import Course, CourseApplication, CourseType, Price, CourseInstructor
+from app.models.course import Course, CourseApplication, CourseType, CourseInstructor
 from app.models.instructor import Instructor
-from app.models.lesson import Lesson
 from app.models.partner import Partner
 from app.utils.csrf import get_csrf
 from app.utils.decorators import admin_required
@@ -16,13 +15,16 @@ class AdminCourseListHandler(Handler):
     def get(self):
         courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
         past_courses = []
+        current_courses = []
         future_courses = []
         for course in courses:
             if course.start_date >= datetime.date.today():
                 future_courses.append(course)
+            elif course.start_date < datetime.date.today() and course.end_date >= datetime.date.today():
+                current_courses.append(course)
             else:
                 past_courses.append(course)
-        params = {"future_courses": future_courses, "past_courses": past_courses}
+        params = {"future_courses": future_courses, "past_courses": past_courses, "current_courses": current_courses}
         self.render_template("admin/course_list.html", params)
 
 
