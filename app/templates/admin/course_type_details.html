@@ -46,7 +46,7 @@
                             <tr>
                                 <td><a href="/admin/lesson/{{lesson.get_id}}">{{lesson.title}}</a></td>
                                 <td>{{lesson.order}}</td>
-                                <td>{{lesson.created}}</td>
+                                <td>{{lesson.created.strftime('%d.%m.%Y')}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

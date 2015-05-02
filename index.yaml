@@ -38,3 +38,16 @@ indexes:
   - name: course_type
   - name: deleted
   - name: order
+
+- kind: Report
+  properties:
+  - name: course_id
+  - name: deleted
+  - name: lesson_date
+
+- kind: Report
+  properties:
+  - name: course_id
+  - name: deleted
+  - name: lesson_date
+    direction: desc

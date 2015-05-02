@@ -40,7 +40,7 @@
                         <tr>
                             <td><a href="/admin/course/type/{{course_type.get_id}}">{{ course_type.title }}</a></td>
                             <td><a href="{{ course_type.curriculum }}">{{ course_type.curriculum }}</a></td>
-                            <td>{{ course_type.created }}</td>
+                            <td>{{ course_type.created.strftime('%d.%m.%Y') }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

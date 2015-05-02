@@ -29,7 +29,7 @@ class AdminCourseReportsHandler(Handler):
     @admin_required
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
-        reports = Report.query(Report.course_id == int(course_id), Report.deleted == False).fetch()
+        reports = Report.query(Report.course_id == int(course_id), Report.deleted == False).order(-Report.lesson_date).fetch()
         params = {"course": course, "reports": reports}
         self.render_template("admin/reports_for_course.html", params=params)
 

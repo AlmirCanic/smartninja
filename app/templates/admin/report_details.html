@@ -15,12 +15,12 @@
                     <i class="fa fa-table"></i> <a href="/admin/course/{{course.get_id}}/reports">Reports for {{course.title}}</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-book"></i> {{report.lesson_date}}
+                    <i class="fa fa-book"></i> {{report.lesson_date.strftime('%d.%m.%Y')}}
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Report for {{report.lesson_date}}
+                Report for {{report.lesson_date.strftime('%d.%m.%Y')}}
             </h1>
         </div>
     </div>

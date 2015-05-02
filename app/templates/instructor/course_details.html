@@ -92,7 +92,7 @@
                         <tbody>
                             {% for report in reports %}
                             <tr>
-                                <td><a href="/instructor/report/{{report.get_id}}">{{report.lesson_date}}</a></td>
+                                <td><a href="/instructor/report/{{report.get_id}}">{{report.lesson_date.strftime('%d.%m.%Y')}}</a></td>
                                 <td>{{report.author_name}}</td>
                             </tr>
                             {% endfor %}
