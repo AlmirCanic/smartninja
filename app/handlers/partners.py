@@ -157,7 +157,7 @@ class PartnerCourseListHandler(Handler):
     @partner_required
     def get(self):
         current_user = users.get_current_user()
-        user = User.query(User.email == str(current_user.email())).get()
+        user = User.query(User.email == str(current_user.email()).lower()).get()
         if not user:
             return self.redirect_to("forbidden")
         else:
@@ -183,7 +183,7 @@ class PartnerCourseDetailsHandler(Handler):
     @partner_required
     def get(self, course_id):
         current_user = users.get_current_user()
-        user = User.query(User.email == str(current_user.email())).get()
+        user = User.query(User.email == str(current_user.email()).lower()).get()
         if not user:
             return self.redirect_to("forbidden")
         else:
@@ -220,7 +220,7 @@ class PartnerProfileDetailsHandler(Handler):
     @partner_required
     def get(self):
         current_user = users.get_current_user()
-        profile = User.query(User.email == str(current_user.email())).get()
+        profile = User.query(User.email == str(current_user.email()).lower()).get()
 
         if not profile:
             return self.redirect_to("forbidden")
@@ -233,7 +233,7 @@ class PartnerProfileEditHandler(Handler):
     @partner_required
     def get(self):
         current_user = users.get_current_user()
-        profile = User.query(User.email == str(current_user.email())).get()
+        profile = User.query(User.email == str(current_user.email()).lower()).get()
 
         if not profile:
             return self.redirect_to("forbidden")
@@ -244,7 +244,7 @@ class PartnerProfileEditHandler(Handler):
     @partner_required
     def post(self):
         current_user = users.get_current_user()
-        profile = User.query(User.email == str(current_user.email())).get()
+        profile = User.query(User.email == str(current_user.email()).lower()).get()
 
         if not profile:
             return self.redirect_to("forbidden")

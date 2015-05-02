@@ -34,7 +34,7 @@ class ProfileHandler(Handler):
         profile = User.query(User.email == str(current_user.email())).get()
         if not profile:
             profile = User()
-            profile.email = current_user.email()
+            profile.email = current_user.email().lower()
             profile.put()
 
         params = {"profile": profile}

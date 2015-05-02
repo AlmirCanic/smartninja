@@ -57,7 +57,7 @@ class AdminBlogAddHandler(Handler):
     @admin_required
     def get(self):
         authors = []
-        current_user = User.get_by_email(users.get_current_user().email())
+        current_user = User.get_by_email(users.get_current_user().email().lower())
         authors.append(current_user)
         instructors = Instructor.query().fetch()
         for instructor in instructors:
@@ -74,7 +74,7 @@ class AdminBlogAddHandler(Handler):
         text = self.request.get("text")
         author_id = self.request.get("author")
         author = User.get_by_id(int(author_id))
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if title and slug and image and text:
             blogpost = BlogPost.create(title=title,
                                        slug=slug,
@@ -101,7 +101,7 @@ class AdminBlogEditHandler(Handler):
         post = BlogPost.get_by_id(int(post_id))
 
         authors = []
-        current_user = User.get_by_email(users.get_current_user().email())
+        current_user = User.get_by_email(users.get_current_user().email().lower())
         authors.append(current_user)
         instructors = Instructor.query().fetch()
         for instructor in instructors:
@@ -119,7 +119,7 @@ class AdminBlogEditHandler(Handler):
         text = self.request.get("text")
         author_id = self.request.get("author")
         author = User.get_by_id(int(author_id))
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if title and slug and image and text:
             post = BlogPost.get_by_id(int(post_id))
             BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
@@ -167,7 +167,7 @@ class InstructorBlogAddHandler(Handler):
         slug = self.request.get("slug")
         image = self.request.get("image")
         text = self.request.get("text")
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if title and slug and image and text:
             blogpost = BlogPost.create(title=title,
                                        slug=slug,
@@ -185,7 +185,7 @@ class InstructorBlogDetailsHandler(Handler):
         post = BlogPost.get_by_id(int(post_id))
         post.text = convert_markdown_to_html(post.text)
         can_edit = False
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if post.author_id == user.get_id:
             can_edit = True
         params = {"post": post, "can_edit": can_edit}
@@ -197,7 +197,7 @@ class InstructorBlogEditHandler(Handler):
     def get(self, post_id):
         post = BlogPost.get_by_id(int(post_id))
         params = {"post": post}
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if post.author_id == user.get_id:
             self.render_template("instructor/blog_post_edit.html", params)
         else:
@@ -213,7 +213,7 @@ class InstructorBlogEditHandler(Handler):
         if title and slug and image and text:
             post = BlogPost.get_by_id(int(post_id))
 
-            user = User.get_by_email(users.get_current_user().email())
+            user = User.get_by_email(users.get_current_user().email().lower())
             if post.author_id == user.get_id:
                 BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
                 logga("Blog %s edited." % post_id)
@@ -225,7 +225,7 @@ class InstructorBlogDeleteHandler(Handler):
     def get(self, post_id):
         post = BlogPost.get_by_id(int(post_id))
         params = {"post": post}
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if post.author_id == user.get_id:
             self.render_template("instructor/blog_post_delete.html", params)
         else:
@@ -234,7 +234,7 @@ class InstructorBlogDeleteHandler(Handler):
     @instructor_required
     def post(self, post_id):
         post = BlogPost.get_by_id(int(post_id))
-        user = User.get_by_email(users.get_current_user().email())
+        user = User.get_by_email(users.get_current_user().email().lower())
         if post.author_id == user.get_id:
             post.deleted = True
             post.put()

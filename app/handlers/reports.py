@@ -58,7 +58,7 @@ class InstructorReportAddHandler(Handler):
 
         if date and text:
             user = users.get_current_user()
-            author = User.get_by_email(email=user.email())
+            author = User.get_by_email(email=user.email().lower())
             course = Course.get_by_id(int(course_id))
 
             lesson_date = date.split("/")
@@ -74,7 +74,7 @@ class InstructorReportDetailsHandler(Handler):
     @instructor_required
     def get(self, report_id):
         report = Report.get_by_id(int(report_id))
-        author = User.get_by_email(users.get_current_user().email())
+        author = User.get_by_email(users.get_current_user().email().lower())
         course = Course.get_by_id(report.course_id)
         params = {"report": report, "course": course, "author": author}
         self.render_template("instructor/report_details.html", params)

@@ -42,7 +42,7 @@ class InstructorGradeStudentDetailsHandler(Handler):
     @instructor_required
     def get(self, application_id):
         current_user = users.get_current_user()
-        user = User.query(User.email == str(current_user.email())).get()
+        user = User.query(User.email == str(current_user.email()).lower()).get()
 
         application = CourseApplication.get_by_id(int(application_id))
         course = Course.get_by_id(application.course_id)
@@ -64,7 +64,7 @@ class InstructorGradeStudentEditHandler(Handler):
     @instructor_required
     def get(self, application_id):
         current_user = users.get_current_user()
-        user = User.query(User.email == str(current_user.email())).get()
+        user = User.query(User.email == str(current_user.email()).lower()).get()
 
         application = CourseApplication.get_by_id(int(application_id))
         course = Course.get_by_id(application.course_id)
@@ -84,7 +84,7 @@ class InstructorGradeStudentEditHandler(Handler):
     @instructor_required
     def post(self, application_id):
         current_user = users.get_current_user()
-        user = User.query(User.email == str(current_user.email())).get()
+        user = User.query(User.email == str(current_user.email()).lower()).get()
 
         application = CourseApplication.get_by_id(int(application_id))
         course = Course.get_by_id(application.course_id)

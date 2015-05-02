@@ -3,7 +3,7 @@ from app.emails.apply import email_course_application_thank_you, email_course_ap
     email_course_application_thank_you_2
 from app.handlers.base import Handler
 from app.models.auth import User
-from app.models.course import CourseType, Course, CourseApplication
+from app.models.course import Course, CourseApplication
 from app.settings import is_local
 from app.utils.csrf import check_csrf
 from app.utils.decorators import admin_required
