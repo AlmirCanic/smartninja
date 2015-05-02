@@ -19,7 +19,7 @@ class StudentCourse(ndb.Model):
 
     @classmethod
     def create(cls, user_id, user_name, user_email, course):
-        student = cls(user_id=user_id, user_name=user_name, user_email=user_email, course_id=course.get_id,
+        student = cls(user_id=user_id, user_name=user_name, user_email=user_email.lower(), course_id=course.get_id,
                       course_title=course.title, course_city=course.city, course_start_date=course.start_date)
         student.put()
         return student
@@ -28,7 +28,7 @@ class StudentCourse(ndb.Model):
     def update(cls, student, user_id, user_name, user_email, course):
         student.user_id = user_id
         student.user_name = user_name
-        student.user_email = user_email
+        student.user_email = user_email.lower()
         student.course_id = course.get_id
         student.course_title = course.title
         student.course_city = course.city

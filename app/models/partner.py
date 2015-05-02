@@ -53,7 +53,7 @@ class PartnerUserCourse(ndb.Model):
 
     @classmethod
     def create(cls, user_id, user_name, user_email, course):
-        puc = cls(user_id=user_id, user_name=user_name, user_email=user_email, course_id=course.get_id,
+        puc = cls(user_id=user_id, user_name=user_name, user_email=user_email.lower(), course_id=course.get_id,
                   course_title=course.title, course_city=course.city, course_start_date=course.start_date)
         puc.put()
         return puc
@@ -62,7 +62,7 @@ class PartnerUserCourse(ndb.Model):
     def update(cls, puc, user_id, user_name, user_email, course):
         puc.user_id = user_id
         puc.user_name = user_name
-        puc.user_email = user_email
+        puc.user_email = user_email.lower()
         puc.course_id = course.get_id
         puc.course_title = course.title
         puc.course_city = course.city

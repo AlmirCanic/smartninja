@@ -148,7 +148,7 @@ class CourseApplication(ndb.Model):
                company_invoice=False, company_title=None, company_address=None, company_town=None, company_zip=None,
                company_tax_number=None, other_info=None):
         course_app = cls(course_title=course.title, course_id=course.get_id, student_name=student_name, student_id=student_id,
-                         student_email=student_email, price=price, currency=currency, laptop=laptop, shirt=shirt,
+                         student_email=student_email.lower(), price=price, currency=currency, laptop=laptop, shirt=shirt,
                          company_invoice=company_invoice, company_title=company_title, company_address=company_address,
                          company_town=company_town, company_zip=company_zip, company_tax_number=company_tax_number,
                          other_info=other_info)

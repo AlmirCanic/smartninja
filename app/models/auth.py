@@ -33,12 +33,12 @@ class User(ndb.Model):
 
     @classmethod
     def get_by_email(cls, email):
-        user = User.query(User.email == email, User.deleted == False).get()
+        user = User.query(User.email == email.lower(), User.deleted == False).get()
         return user
 
     @classmethod
     def short_create(cls, email, first_name=None, last_name=None):
-        user = cls(email=email,
+        user = cls(email=email.lower(),
                    first_name=first_name,
                    last_name=last_name)
         user.put()
@@ -48,7 +48,7 @@ class User(ndb.Model):
     def create(cls, first_name, last_name, email, address, phone_number, dob):
         user = cls(first_name=first_name,
                    last_name=last_name,
-                   email=email,
+                   email=email.lower(),
                    address=address,
                    phone_number=phone_number,
                    dob=dob)
@@ -64,7 +64,7 @@ class User(ndb.Model):
         user.phone_number = phone_number
         user.summary = summary
         if email != None:
-            user.email = email
+            user.email = email.lower()
         user.photo_url = photo_url
         user.instructor = instructor
         if github != None:

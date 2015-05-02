@@ -75,7 +75,7 @@ class PublicCourseApplicationAddHandler(Handler):
         elif check_csrf(csrf):
             first_name = self.request.get("first_name")
             last_name = self.request.get("last_name")
-            email = self.request.get("email").strip()
+            email = self.request.get("email").strip().lower()
             address = self.request.get("address")
             dob = self.request.get("dob")
             phone = self.request.get("phone")

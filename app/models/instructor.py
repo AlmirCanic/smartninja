@@ -13,6 +13,6 @@ class Instructor(ndb.Model):
 
     @classmethod
     def create(cls, full_name, user_id, email):
-        instructor = cls(full_name=full_name, user_id=user_id, email=email)
+        instructor = cls(full_name=full_name, user_id=user_id, email=email.lower())
         instructor.put()
         return instructor

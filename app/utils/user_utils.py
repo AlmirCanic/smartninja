@@ -23,7 +23,7 @@ def change_name(user, first_name, last_name):
 
 
 def change_email(user, email, new_user=None):
-    user.email = email
+    user.email = email.lower()
     user.put()
 
     applications = CourseApplication.query(CourseApplication.student_id == user.get_id).fetch()
@@ -38,7 +38,7 @@ def change_email(user, email, new_user=None):
     pucs = PartnerUserCourse.query(PartnerUserCourse.user_id == user.get_id).fetch()
 
     for puc in pucs:
-        puc.user_email = email
+        puc.user_email = email.lower()
         if new_user:
             puc.user_id = new_user.get_id
             puc.user_name = new_user.get_full_name
@@ -51,7 +51,7 @@ def change_email(user, email, new_user=None):
         if instructor_counter > 0:
             instructor.key.delete()
         else:
-            instructor.email = email
+            instructor.email = email.lower()
             if new_user:
                 instructor.full_name = new_user.get_full_name
                 instructor.user_id = new_user.get_id
@@ -61,7 +61,7 @@ def change_email(user, email, new_user=None):
     student_courses = StudentCourse.query(StudentCourse.user_id == user.get_id).fetch()
 
     for stc in student_courses:
-        stc.user_email = email
+        stc.user_email = email.lower()
         if new_user:
             stc.user_id = new_user.get_id
             stc.user_name = new_user.get_full_name

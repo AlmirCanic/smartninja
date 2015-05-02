@@ -72,4 +72,4 @@ def strip_tags(html):
 
 def logga(message):
     user = users.get_current_user()
-    logging.info("Action by user %s: %s" % (user.email(), message))
+    logging.info("Action by user %s: %s" % (user.email().lower(), message))
