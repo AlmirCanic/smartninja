@@ -1,7 +1,28 @@
-@import url('http://fonts.googleapis.com/css?family=Ubuntu:400,600,700,800,900&subset=latin,latin-ext');
+/*@import url('http://fonts.googleapis.com/css?family=Ubuntu:400,600,700,800,900&subset=latin,latin-ext');*/
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('/assets/fonts/ubuntu/Ubuntu-R.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu-M';
+    src: url('/assets/fonts/ubuntu/Ubuntu-M.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu-L';
+    src: url('/assets/fonts/ubuntu/Ubuntu-R.ttf');
+    font-weight: 300;
+    font-style: normal;
+}
 
 body {
-	font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+	font-family: 'Ubuntu-L', Arial, Helvetica, sans-serif;
 	font-size:14px;
 	line-height:20px;
 	margin:0;
@@ -19,8 +40,16 @@ a#logo {
 	display:block;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1 {
+  	font-family: 'Ubuntu-M', Arial, Helvetica, sans-serif;
+}
+
+h2,h3,h4,h5,h6 {
   	font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+}
+
+p {
+  	font-family: 'Ubuntu-L', Arial, Helvetica, sans-serif;
 }
 
 #sub-header{
