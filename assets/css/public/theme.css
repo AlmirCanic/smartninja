@@ -994,7 +994,7 @@ position:absolute; left:10px; top:-15px; background-color:#f8f8f8; padding:0px 1
 	background: #1c1c1c;
 	z-index: 90;
 	font-size: 22px;
-	font-family: 'Ubuntu';
+	font-family: 'fontello';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -1138,7 +1138,7 @@ ul.social-bookmarks.team {float:none; margin:0; padding:0; margin:auto; display:
 }
 .question_box:before {
     content: "\ec7e";
-   font-family: 'Ubuntu';
+   font-family: 'fontello';
     font-style: normal;
     font-weight: normal;
     text-decoration: inherit;
@@ -2182,7 +2182,7 @@ ul.list_3 li {
 	padding-left:20px;
 }
 ul.list_3 li:before {
-	font-family: "Ubuntu";
+	font-family: "fontello";
 	content: "\ea3e";
 	position:absolute;
 	left:0;
@@ -2365,7 +2365,7 @@ img.speaker {
 
 .item blockquote p:before {
     content: "\ebe7";
-    font-family: 'Ubuntu';
+    font-family: 'fontello';
     float: left;
     margin-right: 10px;
 }
@@ -2406,7 +2406,7 @@ ul.list_ok li {
 	padding-left:20px;
 }
 ul.list_ok li:before {
-	font-family: "Ubuntu";
+	font-family: "fontello";
 	content: "\e81a";
 	position:absolute;
 	left:0;
@@ -2428,7 +2428,7 @@ ul.list_1 li a {
 }
 
 ul.list_1 li a:after {
-	font-family: "Ubuntu";
+	font-family: "fontello";
 	content: "\e89b";
 	float:right;
 }
@@ -2453,7 +2453,7 @@ ul.list_2 li a {
 	border-bottom: 1px solid #efefef;
 }
 ul.list_2 li a:after {
-	font-family: "Ubuntu";
+	font-family: "fontello";
 	content: "\ee1c";
 	float:right;
 }

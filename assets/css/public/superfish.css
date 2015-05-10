@@ -131,7 +131,7 @@ ul.sf-menu li a:hover{
 }
 #mobnav-btn:before {
     display: none;
-	font-family: "Ubuntu";
+	font-family: "fontello";
 	content: "\e874";
     font-size: 24px;
 	width:24px;
