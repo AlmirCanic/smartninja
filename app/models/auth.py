@@ -18,6 +18,7 @@ class User(ndb.Model):
     github_url = ndb.StringProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)
+    job_searching = ndb.BooleanProperty(default=True)
     deleted = ndb.BooleanProperty(default=False)
 
     @property
@@ -57,7 +58,7 @@ class User(ndb.Model):
 
     @classmethod
     def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None,
-               instructor=False, github=None):
+               instructor=False, github=None, job_searching=None):
         change_name(user, first_name, last_name)
 
         user.address = address
@@ -69,6 +70,8 @@ class User(ndb.Model):
         user.instructor = instructor
         if github != None:
             user.github_url = github
+        if job_searching != None:
+            user.job_searching = job_searching
         user.dob = dob
         user.put()
         return user

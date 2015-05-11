@@ -71,6 +71,14 @@
                     <input type="text" class="form-control" placeholder="A link (URL) to your photo" value="{{this_user.photo_url}}" name="photo_url" id="photoURL">
                 </div>
 
+                <div class="form-group">
+                    <label>Job searching</label>
+                    <br>
+                    <input type="checkbox" placeholder="Job searching" name="searching"
+                        {% if this_user.job_searching %}checked{% endif %}
+                    > Check if this user is searching for a job
+                </div>
+
                 <button type="submit" class="btn btn-success">Submit</button>
             </form>
         </div>

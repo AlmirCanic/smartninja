@@ -74,10 +74,11 @@ class AdminUserEditHandler(Handler):
         photo_url = self.request.get("photo_url")
         phone_number = self.request.get("phone_number")
         dob = self.request.get("dob")
+        job_searching = self.request.get("searching")
         github = self.request.get("github_url")
 
         User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
-                    summary=summary, photo_url=photo_url, dob=dob, github=github)
+                    summary=summary, photo_url=photo_url, dob=dob, github=github, job_searching=bool(job_searching))
 
         logga("User %s edited." % user_id)
         self.redirect_to("user-details", user_id=int(user_id))
