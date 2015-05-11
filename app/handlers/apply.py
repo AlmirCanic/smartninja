@@ -4,6 +4,7 @@ from app.emails.apply import email_course_application_thank_you, email_course_ap
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication
+from app.models.student import StudentCourse
 from app.settings import is_local
 from app.utils.csrf import check_csrf
 from app.utils.decorators import admin_required
@@ -26,6 +27,11 @@ class AdminCourseApplicationDetailsHandler(Handler):
         application.price = float(self.request.get("price"))
         application.invoice = self.request.get("invoice")
         application.put()
+
+        if application.payment_status:
+            StudentCourse.create(user_id=application.student_id, user_name=application.student_name,
+                                 user_email=application.student_email, course=Course.get_by_id(application.course_id))
+
         logga("Course application %s edited." % application_id)
         self.redirect_to("course-details", course_id=application.course_id)
 
