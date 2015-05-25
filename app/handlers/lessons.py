@@ -78,7 +78,7 @@ class AdminLessonDeleteHandler(Handler):
 
 
 # INSTRUCTOR
-
+'''
 class InstructorLessonAddHandler(Handler):
     @instructor_required
     def get(self, course_type_id):
@@ -96,6 +96,7 @@ class InstructorLessonAddHandler(Handler):
             lesson = Lesson.create(title=title, order=int(order), text=text, course_type=int(course_type_id))
             logga("Lesson %s added." % lesson.get_id)
             self.redirect_to("instructor-lesson-details", lesson_id=lesson.get_id)
+'''
 
 
 class InstructorLessonDetailsHandler(Handler):
@@ -108,6 +109,7 @@ class InstructorLessonDetailsHandler(Handler):
         self.render_template("instructor/lesson_details.html", params)
 
 
+'''
 class InstructorLessonEditHandler(Handler):
     @instructor_required
     def get(self, lesson_id):
@@ -147,6 +149,7 @@ class InstructorLessonDeleteHandler(Handler):
         lesson.put()
         logga("Lesson %s deleted." % lesson_id)
         self.redirect_to("instructor-curriculum-details", course_type_id=lesson.course_type)
+'''
 
 
 # STUDENT

@@ -20,15 +20,13 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     PublicCourseDetailsHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
-    InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler, InstructorCurriculumEditHandler, \
-    InstructorCurriculumAddHandler
+    InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
-    InstructorLessonAddHandler, InstructorLessonDetailsHandler, InstructorLessonEditHandler, \
-    InstructorLessonDeleteHandler, StudentLessonDetailsHandler
+    InstructorLessonDetailsHandler, StudentLessonDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
@@ -174,14 +172,14 @@ app = webapp2.WSGIApplication([
     # instructor course types/curriculums
     webapp2.Route('/instructor/curriculums', InstructorCurriculumsListHandler, name="instructor-curriculum-list"),
     webapp2.Route('/instructor/curriculum/<course_type_id:\d+>', InstructorCurriculumDetailsHandler, name="instructor-curriculum-details"),
-    webapp2.Route('/instructor/curriculum/<course_type_id:\d+>/edit', InstructorCurriculumEditHandler, name="instructor-curriculum-edit"),
-    webapp2.Route('/instructor/curriculum/add', InstructorCurriculumAddHandler, name="instructor-curriculum-add"),
+    #webapp2.Route('/instructor/curriculum/<course_type_id:\d+>/edit', InstructorCurriculumEditHandler, name="instructor-curriculum-edit"),
+    #webapp2.Route('/instructor/curriculum/add', InstructorCurriculumAddHandler, name="instructor-curriculum-add"),
 
     # instructor lessons
-    webapp2.Route('/instructor/curriculum/<course_type_id:\d+>/add-lesson', InstructorLessonAddHandler, name="instructor-lesson-add"),
+    #webapp2.Route('/instructor/curriculum/<course_type_id:\d+>/add-lesson', InstructorLessonAddHandler, name="instructor-lesson-add"),
     webapp2.Route('/instructor/lesson/<lesson_id:\d+>', InstructorLessonDetailsHandler, name="instructor-lesson-details"),
-    webapp2.Route('/instructor/lesson/<lesson_id:\d+>/edit', InstructorLessonEditHandler, name="instructor-lesson-edit"),
-    webapp2.Route('/instructor/lesson/<lesson_id:\d+>/delete', InstructorLessonDeleteHandler, name="instructor-lesson-delete"),
+    #webapp2.Route('/instructor/lesson/<lesson_id:\d+>/edit', InstructorLessonEditHandler, name="instructor-lesson-edit"),
+    #webapp2.Route('/instructor/lesson/<lesson_id:\d+>/delete', InstructorLessonDeleteHandler, name="instructor-lesson-delete"),
 
     # instructor reports
     webapp2.Route('/instructor/course/<course_id:\d+>/add-report', InstructorReportAddHandler, name="instructor-report-add"),

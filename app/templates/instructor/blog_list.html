@@ -40,7 +40,7 @@
                         <tr>
                             <td><a href="/instructor/blog/{{post.get_id}}">{{ post.title }}</a></td>
                             <td>{{ post.author_name }}</td>
-                            <td>{{ post.created }}</td>
+                            <td>{{ post.created.strftime('%d.%m.%Y') }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

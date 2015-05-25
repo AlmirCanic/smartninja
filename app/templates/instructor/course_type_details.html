@@ -14,9 +14,6 @@
                 <li class="active">
                     <i class="fa fa-table"></i> Curriculum details
                 </li>
-                <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/instructor/curriculum/{{course_type.get_id}}/add-lesson">Add new lesson</a>
-                </li>
             </ol>
 
             <h1 class="page-header">
@@ -44,9 +41,9 @@
                         <tbody>
                             {% for lesson in lessons %}
                             <tr>
-                                <td><a href="/instructor/lesson/{{lesson.get_id}}">{{lesson.title}}</a></td>
-                                <td>{{lesson.order}}</td>
-                                <td>{{lesson.created}}</td>
+                                <td><a href="/instructor/lesson/{{lesson.get_id}}">{{ lesson.title }}</a></td>
+                                <td>{{ lesson.order }}</td>
+                                <td>{{ lesson.created.strftime('%d.%m.%Y') }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -58,8 +55,11 @@
         <p>No lessons yet :(</p>
     {% endif %}
 
+    <!--
     <a href="/instructor/curriculum/{{course_type.get_id}}/add-lesson"><button class="btn btn-primary">Add new lesson</button></a>
     <a href="/instructor/curriculum/{{course_type.get_id}}/edit"><button class="btn btn-success">Edit curriculum</button></a>
-    <a href="{{ course_type.curriculum }}" target="_blank"><button class="btn btn-default">Google Drive</button></a>
+    -->
+
+    <a href="{{ course_type.curriculum }}" target="_blank"><button class="btn btn-default">GIT</button></a>
 </div>
 {% endblock main_content %}

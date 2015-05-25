@@ -95,6 +95,7 @@ class InstructorCurriculumDetailsHandler(Handler):
         self.render_template("instructor/course_type_details.html", params)
 
 
+'''
 class InstructorCurriculumAddHandler(Handler):
     @instructor_required
     def get(self):
@@ -128,3 +129,4 @@ class InstructorCurriculumEditHandler(Handler):
         course_type.put()
         logga("Curriculum %s edited." % course_type_id)
         self.redirect_to("instructor-curriculum-details", course_type_id=int(course_type_id))
+'''
