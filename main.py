@@ -21,6 +21,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
+from app.handlers.employers import AdminEmployersListHandler, AdminEmployerAddHandler, AdminEmployerDeleteHandler
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
@@ -116,6 +117,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/users/instructors', AdminInstructorsListHandler, name="admin-instructors-list"),
     webapp2.Route('/admin/users/instructor/add', AdminInstructorAddHandler, name="admin-instructor-add"),
     webapp2.Route('/admin/users/instructor/<instructor_id:\d+>/delete', AdminInstructorDeleteHandler, name="admin-instructor-delete"),
+
+    # employers
+    webapp2.Route('/admin/users/employers', AdminEmployersListHandler, name="admin-employers-list"),
+    webapp2.Route('/admin/users/employer/add', AdminEmployerAddHandler, name="admin-employer-add"),
+    webapp2.Route('/admin/users/employer/<employer_id:\d+>/delete', AdminEmployerDeleteHandler, name="admin-employer-delete"),
 
     # partners
     webapp2.Route('/admin/partners', AdminPartnersListHandler, name="admin-partners-list"),

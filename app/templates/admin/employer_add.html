@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Add new instructor{% endblock title %}
+{% block title %}Add new employer{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -12,12 +12,12 @@
                     <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
                 </li>
                 <li>
-                    <i class="fa fa-users"></i>  <a href="/admin/users/instructors">Instructors</a>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/employer">Employers</a>
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Add new instructor
+                Add new employer
             </h1>
         </div>
     </div>
@@ -25,24 +25,24 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/admin/users/instructor/add" method="post">
+            <form action="/admin/users/employer/add" method="post">
 
                 <div class="form-group">
-                    <label>Instructor email</label>
-                    <input type="text" class="form-control" placeholder="Instructor user email" name="email">
+                    <label>Employer email</label>
+                    <input type="text" class="form-control" placeholder="Employer user email" name="email">
                 </div>
 
                 <div class="form-group">
-                    <label>Instructor first name (if new user)</label>
+                    <label>Employer first name (if new user)</label>
                     <input type="text" class="form-control" placeholder="First name" name="first-name">
                 </div>
 
                 <div class="form-group">
-                    <label>Instructor last name (if new user)</label>
+                    <label>Employer last name (if new user)</label>
                     <input type="text" class="form-control" placeholder="Last name" name="last-name">
                 </div>
 
-                <button type="submit" class="btn btn-success">Add instructor</button>
+                <button type="submit" class="btn btn-success">Add employer</button>
             </form>
         </div>
     </div>

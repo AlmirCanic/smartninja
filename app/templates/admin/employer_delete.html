@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Delete employer{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/employers">Employers</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-remove"></i> Remove employer
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Remove {{employer.full_name}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/admin/users/employer/{{employer.get_id}}/delete" method="post">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3">
+            <a href="/admin/users/employers"><button class="btn btn-default">Cancel</button></a>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

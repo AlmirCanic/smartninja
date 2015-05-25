@@ -1,5 +1,4 @@
-from app.utils.csrf import get_csrf, check_csrf
-from app.utils.other import convert_markdown_to_html, convert_prices_data
+from app.utils.other import convert_markdown_to_html, convert_prices_data, convert_tags_to_list, convert_tags_to_string
 
 
 # TESTS
@@ -23,6 +22,28 @@ def test_converting_prices_data():
 
     print("test_converting_prices_data() test passed successfully.")
 
+
+def test_converting_tags_to_list():
+    data = "12 weeks,programming,Ljubljana"
+
+    l = convert_tags_to_list(data)
+
+    assert l == ["12 weeks", "programming", "Ljubljana"]
+
+    print("test_converting_tags_to_list() test passed successfully.")
+
+
+def test_converting_tags_to_string():
+    data = ["12 weeks", "programming", "Ljubljana"]
+
+    s = convert_tags_to_string(data)
+
+    assert s == "12 weeks,programming,Ljubljana"
+
+    print("test_converting_tags_to_string() test passed successfully.")
+
 # RUN TESTS
 test_converting_markdown_to_html()
 test_converting_prices_data()
+test_converting_tags_to_list()
+test_converting_tags_to_string()
