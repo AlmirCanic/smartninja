@@ -33,6 +33,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: CourseApplication
+  properties:
+  - name: deleted
+  - name: student_id
+  - name: grade_score
+
 - kind: Lesson
   properties:
   - name: course_type

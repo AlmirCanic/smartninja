@@ -1,0 +1,119 @@
+{% extends "employer/base.html" %}
+
+{% block title %}{{ candidate.get_full_name }} details{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i> <a href="/employer">Candidates</a>
+                </li>
+
+                <li>
+                    <i class="fa fa-user"></i> {{ candidate.get_full_name }}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ candidate.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Info -->
+    <div class="row">
+        <div class="col-lg-3">
+            <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}" width="200px">
+        </div>
+
+        <div class="col-lg-7">
+
+            <h5><i class="fa fa-certificate"></i>
+                {% for tag in candidate.grade_all_tags %}
+                    {{ tag }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            </h5>
+
+            <br>
+
+            <p><i class="fa fa-comment"></i> {{candidate.summary}}</p>
+
+            <br>
+
+            <h5><i class="fa fa-location-arrow"></i> {{candidate.current_town}}</h5>
+
+            <br>
+
+            <i class="fa fa-github"></i> <a href="{{candidate.github_url}}">{{candidate.github_url}}</a>
+        </div>
+
+        <div class="col-lg-1" data-toggle="tooltip" data-placement="left" title="1.0 (the worst), 4.0 (the best)">
+            <h1>
+                {% if candidate.grade_avg_score >= 3.0 %}
+                <span class="label label-info">
+                {% elif candidate.grade_avg_score >= 2.0 and candidate.grade_avg_score < 3.0 %}
+                <span class="label label-warning">
+                {% elif candidate.grade_avg_score >= 1.0 and candidate.grade_avg_score < 2.0 %}
+                <span class="label label-danger">
+                {% endif %}
+                    {{candidate.grade_avg_score}}
+                </span>
+            </h1>
+        </div>
+    </div>
+    <!-- Info end -->
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <button class="btn btn-danger btn-lg center-block">Contact this candidate!</button>
+        </div>
+    </div>
+
+    <!-- Courses -->
+    <h2>Courses</h2>
+    <br>
+
+    {% for application in applications %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="/course/{{application.course_id}}" target="_blank">{{ application.course_title }}</a></h3>
+        </div>
+
+        <div class="panel-body">
+            <p data-toggle="tooltip" data-placement="left" title="1 is the worst, 4 is the best">
+                <i class="fa fa-graduation-cap"></i> <strong>Grade:</strong> {{application.grade_score}}
+            </p>
+
+            <p>
+                <i class="fa fa-certificate"></i>
+                 <strong>Skills:</strong>
+                {% for tag in application.grade_tags %}
+                    {{ tag }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            </p>
+            <p>
+                <i class="fa fa-institution"></i>
+                 <strong>Instructor summary:</strong>
+                <br>
+                {{application.grade_summary}}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- Courses end -->
+</div>
+{% endblock main_content %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+{% endblock scripts %}

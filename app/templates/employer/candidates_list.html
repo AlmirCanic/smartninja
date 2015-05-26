@@ -33,18 +33,22 @@
         </div>
     </div>
 
+    <br>
+
     {% if candidates %}
         {% for candidate in candidates %}
         <div class="row">
             <div class="col-lg-3">
-                <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}">
+                <a href="/employer/candidate/{{candidate.get_id}}">
+                    <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}" width="200px">
+                </a>
             </div>
 
             <div class="col-lg-7">
-                <h3>{{candidate.get_full_name}}</h3>
-                <br>
+                <a href="/employer/candidate/{{candidate.get_id}}"><h3>{{candidate.get_full_name}}</h3></a>
 
-                <h5><i class="fa fa-edit"></i>
+
+                <h5><i class="fa fa-certificate"></i>
                     {% for tag in candidate.grade_all_tags %}
                         {{ tag }}{% if not loop.last %},{% endif %}
                     {% endfor %}
@@ -54,10 +58,10 @@
                 <h5><i class="fa fa-location-arrow"></i> {{candidate.current_town}}</h5>
                 <br>
 
-                <p><i class="fa fa-bullhorn"></i> {{candidate.summary}}</p>
+                <p><i class="fa fa-comment"></i> {{candidate.summary}}</p>
             </div>
 
-            <div class="col-lg-2">
+            <div class="col-lg-1" data-toggle="tooltip" data-placement="left" title="1.0 (the worst), 4.0 (the best)">
                 <h1>
                     {% if candidate.grade_avg_score >= 3.0 %}
                     <span class="label label-info">
@@ -80,3 +84,11 @@
 
 </div>
 {% endblock main_content %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+{% endblock scripts %}
