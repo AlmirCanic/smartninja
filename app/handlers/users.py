@@ -70,6 +70,7 @@ class AdminUserEditHandler(Handler):
         first_name = self.request.get("first_name")
         last_name = self.request.get("last_name")
         address = self.request.get("address")
+        current_town = self.request.get("current-town")
         summary = self.request.get("summary")
         photo_url = self.request.get("photo_url")
         phone_number = self.request.get("phone_number")
@@ -78,7 +79,8 @@ class AdminUserEditHandler(Handler):
         github = self.request.get("github_url")
 
         User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
-                    summary=summary, photo_url=photo_url, dob=dob, github=github, job_searching=bool(job_searching))
+                    summary=summary, photo_url=photo_url, dob=dob, github=github, job_searching=bool(job_searching),
+                    current_town=current_town)
 
         logga("User %s edited." % user_id)
         self.redirect_to("user-details", user_id=int(user_id))

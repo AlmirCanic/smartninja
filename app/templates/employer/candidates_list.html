@@ -14,13 +14,69 @@
             </ol>
 
             <h1 class="page-header">
-                Candidates
+                Job candidates
             </h1>
         </div>
     </div>
     <!-- Breadcrumb end -->
 
-    <p>Candidates</p>
+    <div class="row">
+        <div class="col-lg-4 pull-right">
+            <form method="post" action="/employer">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Search by skill (one skill per search)" name="skill">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Go!</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if candidates %}
+        {% for candidate in candidates %}
+        <div class="row">
+            <div class="col-lg-3">
+                <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}">
+            </div>
+
+            <div class="col-lg-7">
+                <h3>{{candidate.get_full_name}}</h3>
+                <br>
+
+                <h5><i class="fa fa-edit"></i>
+                    {% for tag in candidate.grade_all_tags %}
+                        {{ tag }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                </h5>
+                <br>
+
+                <h5><i class="fa fa-location-arrow"></i> {{candidate.current_town}}</h5>
+                <br>
+
+                <p><i class="fa fa-bullhorn"></i> {{candidate.summary}}</p>
+            </div>
+
+            <div class="col-lg-2">
+                <h1>
+                    {% if candidate.grade_avg_score >= 3.0 %}
+                    <span class="label label-info">
+                    {% elif candidate.grade_avg_score >= 2.0 and candidate.grade_avg_score < 3.0 %}
+                    <span class="label label-warning">
+                    {% elif candidate.grade_avg_score >= 1.0 and candidate.grade_avg_score < 2.0 %}
+                    <span class="label label-danger">
+                    {% endif %}
+                        {{candidate.grade_avg_score}}
+                    </span>
+                </h1>
+            </div>
+        </div>
+
+        <hr>
+        {% endfor %}
+    {% else %}
+        <p>No candidates... yet. New courses will bring new forces :)</p>
+    {% endif %}
 
 </div>
 {% endblock main_content %}
