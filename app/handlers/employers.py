@@ -5,6 +5,7 @@ from app.utils.decorators import admin_required
 from app.utils.other import logga
 
 
+# ADMIN
 class AdminEmployersListHandler(Handler):
     @admin_required
     def get(self):

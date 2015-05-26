@@ -1,5 +1,6 @@
 from google.appengine.api import users
 from webapp2 import redirect_to
+from app.models.employer import Employer
 from app.models.instructor import Instructor
 from app.models.partner import PartnerUserCourse
 from app.models.student import StudentCourse
@@ -57,6 +58,21 @@ def instructor_required(handler):
             email = user.email().lower()
             instructors = Instructor.query(Instructor.email == email).fetch()
             if instructors:
+                return handler(self, *args, **kwargs)
+            else:
+                return redirect_to("forbidden")
+        else:
+            return self.redirect(users.create_login_url(self.request.uri))
+    return check_login
+
+
+def employer_required(handler):
+    def check_login(self, *args, **kwargs):
+        user = users.get_current_user()
+        if user:
+            email = user.email().lower()
+            employers = Employer.query(Instructor.email == email).fetch()
+            if employers:
                 return handler(self, *args, **kwargs)
             else:
                 return redirect_to("forbidden")
