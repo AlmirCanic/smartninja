@@ -23,7 +23,8 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
-from app.handlers.employers import AdminEmployersListHandler, AdminEmployerAddHandler, AdminEmployerDeleteHandler
+from app.handlers.employers import AdminEmployersListHandler, AdminEmployerAddHandler, AdminEmployerDeleteHandler, \
+    EmployerProfileDetailsHandler, EmployerProfileEditHandler
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
@@ -207,6 +208,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/employer', EmployerCandidatesListHandler, name="employer-candidates-list"),
     webapp2.Route('/employer/candidate/<candidate_id:\d+>', EmployerCandidateDetailsHandler, name="employer-candidate-details"),
     webapp2.Route('/employer/contacted', EmployerContactedCandidatesListHandler, name="employer-contacted-list"),
+    webapp2.Route('/employer/profile', EmployerProfileDetailsHandler, name="employer-profile"),
+    webapp2.Route('/employer/profile/edit', EmployerProfileEditHandler, name="employer-profile-edit"),
 
 # STUDENT URLS
     webapp2.Route('/student', StudentCourseListHandler, name="student"),

@@ -24,7 +24,7 @@ def email_employer_contact_candidate(contact_candidate):
 
         <p>Employer's contact: {2}</p>
 
-        <p>If you have any question regarding this email, don't hesitate to contact us</p>
+        <p>If you have any questions regarding this email, don't hesitate to contact us.</p>
 
         <p>Kind regards,<br>
         SmartNinja Team</p>
