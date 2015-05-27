@@ -57,3 +57,21 @@ indexes:
   - name: deleted
   - name: lesson_date
     direction: desc
+
+- kind: User
+  properties:
+  - name: grade_all_tags
+  - name: job_searching
+  - name: grade_avg_score
+    direction: desc
+
+- kind: User
+  properties:
+  - name: job_searching
+  - name: grade_avg_score
+
+- kind: User
+  properties:
+  - name: job_searching
+  - name: grade_avg_score
+    direction: desc

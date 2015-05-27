@@ -35,7 +35,8 @@ class AdminSuccessfullyEmployedHandler(Handler):
 class EmployerCandidatesListHandler(Handler):
     @employer_required
     def get(self):
-        candidates = User.query(User.job_searching == True).fetch()
+        candidates = User.query(User.job_searching == True,
+                                User.grade_avg_score > 0.0).order(-User.grade_avg_score).fetch()
 
         params = {"candidates": candidates}
         return self.render_template("employer/candidates_list.html", params)
@@ -44,7 +45,9 @@ class EmployerCandidatesListHandler(Handler):
     def post(self):
         skill = self.request.get("skill")
 
-        candidates = User.query(User.job_searching == True, User.grade_all_tags == skill).fetch()
+        candidates = User.query(User.job_searching == True,
+                                User.grade_all_tags == skill,
+                                User.grade_avg_score > 0.0).order(-User.grade_avg_score).fetch()
 
         params = {"candidates": candidates}
         return self.render_template("employer/candidates_list.html", params)

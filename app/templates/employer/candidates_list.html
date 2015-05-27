@@ -40,7 +40,11 @@
         <div class="row">
             <div class="col-lg-3">
                 <a href="/employer/candidate/{{candidate.get_id}}">
-                    <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}" width="200px">
+                    {% if candidate.photo_url != "None" %}
+                        <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}" width="200px">
+                    {% else %}
+                        <img class="img-responsive img-thumbnail" src="/assets/img/public/facebook.jpg" alt="{{candidate.get_full_name}}" width="200px">
+                    {% endif %}
                 </a>
             </div>
 
@@ -67,7 +71,7 @@
                     <span class="label label-info">
                     {% elif candidate.grade_avg_score >= 2.0 and candidate.grade_avg_score < 3.0 %}
                     <span class="label label-warning">
-                    {% elif candidate.grade_avg_score >= 1.0 and candidate.grade_avg_score < 2.0 %}
+                    {% elif candidate.grade_avg_score >= 0.0 and candidate.grade_avg_score < 2.0 %}
                     <span class="label label-danger">
                     {% endif %}
                         {{candidate.grade_avg_score}}
