@@ -88,7 +88,18 @@
     {% for application in applications %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><a href="/course/{{application.course_id}}" target="_blank">{{ application.course_title }}</a></h3>
+            <h3 class="panel-title">
+                <a href="/course/{{application.course_id}}" target="_blank">{{ application.course_title }}</a>
+                <span class="label label-info" data-toggle="tooltip" data-placement="top" title="Course level">
+                    {% if application.course_level == 1 %}
+                        Beginner
+                    {% elif application.course_level == 2 %}
+                        Intermediate
+                    {% elif application.course_level == 3 %}
+                        Advanced
+                    {% endif %}
+                </span>
+            </h3>
         </div>
 
         <div class="panel-body">

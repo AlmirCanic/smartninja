@@ -23,14 +23,16 @@
     <img src="{{profile.photo_url}}" class="img-thumbnail" width="200px">
     <br>
     <br>
-    <p>Email: {{ profile.email }}</p>
-    <p>Address: {{ profile.address }}</p>
-    <p>Current town: {{ profile.current_town }}</p>
-    <p>Phone number: {{ profile.phone_number }}</p>
-    <p>Date of birth: {{ profile.dob }}</p>
-    <p>Short description: {{ profile.summary }}</p>
-    <p>GitHub: <a href="{{profile.github_url}}">{{ profile.github_url }}</a></p>
-    <p>Job searching: {{ profile.job_searching }}</p>
+    <p><strong>Email:</strong> {{ profile.email }}</p>
+    <p><strong>Address:</strong> {{ profile.address }}</p>
+    <p><strong>Current town:</strong> {{ profile.current_town }}</p>
+    <p><strong>Phone number:</strong> {{ profile.phone_number }}</p>
+    <p><strong>Date of birth:</strong> {{ profile.dob }}</p>
+    <p><strong>Short description:</strong> {{ profile.summary }}</p>
+    <p><strong>GitHub:</strong> <a href="{{profile.github_url}}">{{ profile.github_url }}</a></p>
+    <p><strong>Job searching:</strong> {{ profile.job_searching }}<sup>*</sup></p>
+
+    <p><sup>*</sup> Set this on True, if you want to have your profile presented to potential employers.</p>
 
     <a href="/student/profile/edit"><button class="btn btn-success">Edit your profile</button></a>
 </div>

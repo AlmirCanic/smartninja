@@ -82,6 +82,7 @@ class AdminCourseAddHandler(Handler):
         image_url = self.request.get("image_url")
         prices_data_string = self.request.get("all-prices-data")
         tags = self.request.get("tags")
+        level = self.request.get("level")
 
         if course_type and title and city and place and start_date and end_date and currency and instructor and prices_data_string:
             # convert prices data string to list of Price objects
@@ -107,7 +108,7 @@ class AdminCourseAddHandler(Handler):
                           description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
                           end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
                           category=category, course_instructors=[course_instructor], image_url=image_url,
-                          partners=partners, tags=tags)
+                          partners=partners, tags=tags, level=int(level))
             logga("Course %s added." % course.get_id)
             self.redirect_to("course-list")
 
@@ -155,6 +156,7 @@ class AdminCourseEditHandler(Handler):
         partner_id = self.request.get("partner")
         tags = self.request.get("tags")
         closed = self.request.get("closed")
+        level = self.request.get("level")
 
         course = Course.get_by_id(int(course_id))
 
@@ -181,7 +183,7 @@ class AdminCourseEditHandler(Handler):
                           description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
                           end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
-                          image_url=image_url, partners=partners, tags=tags, closed=bool(closed))
+                          image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level))
             logga("Course %s edited." % course_id)
             self.redirect_to("course-details", course_id=int(course_id))
 

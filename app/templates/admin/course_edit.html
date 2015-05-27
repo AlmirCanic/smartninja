@@ -100,6 +100,25 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Level</label>
+                    <select class="form-control" name="level" id="courseLevel">
+                        <option value="{{course.level}}">
+                            {% if course.level == 1 %}
+                                Beginner
+                            {% elif course.level == 2 %}
+                                Intermediate
+                            {% elif course.level == 3 %}
+                                Advanced
+                            {% endif %}
+                        </option>
+                        <option disabled>------------------------------</option>
+                        <option value="1">Beginner</option>
+                        <option value="2">Intermediate</option>
+                        <option value="3">Advanced</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>Category (like Programming, Graphic design etc.)</label>
                     <input type="text" class="form-control" value="{{course.category}}" placeholder="Category" name="category" id="courseCategory">
                 </div>

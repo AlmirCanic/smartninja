@@ -38,6 +38,7 @@ class CourseInstructor(ndb.Model):
 class Course(ndb.Model):
     title = ndb.StringProperty()
     course_type = ndb.IntegerProperty()
+    level = ndb.IntegerProperty()
     city = ndb.StringProperty()
     place = ndb.StringProperty()
     category = ndb.StringProperty()
@@ -66,23 +67,24 @@ class Course(ndb.Model):
 
     @classmethod
     def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, prices, currency,
-               category, course_instructors, image_url, partners, tags):
+               category, course_instructors, image_url, partners, tags, level=None):
         course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
                      description=description, start_date=start_date, end_date=end_date, prices=prices, currency=currency,
                      category=category, course_instructors=course_instructors, image_url=image_url, partners=partners,
-                     tags=tags)
+                     tags=tags, level=level)
         course.put()
         return course
 
     @classmethod
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
-               currency, category, course_instructors, image_url, partners, tags, closed):
+               currency, category, course_instructors, image_url, partners, tags, closed, level):
 
-        if course.title != title or course.start_date != start_date or course.city != city:
+        if course.title != title or course.start_date != start_date or course.city != city or course.level != level:
             applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
 
             for application in applications:
                 application.course_title = title
+                application.course_level = level
                 application.put()
 
             pucs = PartnerUserCourse.query(PartnerUserCourse.course_id == course.get_id).fetch()
@@ -109,6 +111,7 @@ class Course(ndb.Model):
         course.course_instructors = course_instructors
         course.image_url = image_url
         course.tags = tags
+        course.level = level
         course.applications_closed = closed
         course.put()
         return course
@@ -135,6 +138,7 @@ class CourseApplication(ndb.Model):
     company_zip = ndb.StringProperty()
     company_tax_number = ndb.StringProperty()
     other_info = ndb.TextProperty()
+    course_level = ndb.IntegerProperty()
     grade_score = ndb.IntegerProperty()
     grade_summary = ndb.TextProperty()
     grade_tags = ndb.StringProperty(repeated=True)
@@ -151,7 +155,7 @@ class CourseApplication(ndb.Model):
                          student_email=student_email.lower(), price=price, currency=currency, laptop=laptop, shirt=shirt,
                          company_invoice=company_invoice, company_title=company_title, company_address=company_address,
                          company_town=company_town, company_zip=company_zip, company_tax_number=company_tax_number,
-                         other_info=other_info)
+                         other_info=other_info, course_level=course.level)
         course_app.put()
         course.taken += 1
         course.put()
@@ -169,6 +173,7 @@ class CourseApplication(ndb.Model):
     def move_student_to_another_course(cls, application, old_course, new_course):
         application.course_id = new_course.get_id
         application.course_title = new_course.title
+        application.course_level = new_course.level
         application.put()
         old_course.taken -= 1
         old_course.put()
