@@ -1,5 +1,4 @@
 import os
-import datetime
 from google.appengine.api import mail
 import jinja2
 from app.handlers.newsletter import subscribe_mailchimp

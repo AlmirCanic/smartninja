@@ -72,11 +72,17 @@
     <div class="row">
         <div class="col-lg-12">
             <button class="btn btn-danger btn-lg center-block" data-toggle="modal" data-target="#contactCandidateModal">Contact this candidate!</button>
+
+            {% if contact_success %}
+                <br>
+                <div class="alert alert-success" role="alert">Candidate successfully contacted!</div>
+            {% endif %}
+
         </div>
     </div>
 
     <!-- Courses -->
-    <h2>Courses</h2>
+    <h2>{{candidate.first_name}}'s courses</h2>
     <br>
 
     {% for application in applications %}
@@ -111,7 +117,7 @@
     <!-- Modal - contact the candidate -->
     <div class="modal fade" id="contactCandidateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form>
+            <form method="post" action="/employer/candidate/{{candidate.get_id}}">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -120,12 +126,12 @@
 
 
                     <div class="modal-body">
-                        <p>Send the following message to {{candidate.first_name}}</p>
+                        <p>Send the following message to {{candidate.first_name}}:</p>
 
-                        <textarea class="form-control" rows="8">
+                        <textarea class="form-control" rows="8" name="message">
 Hello!
 
-I'd like to discuss with you a possible job opportunity. Please send me an email to {{ user.email() }}.
+I'd like to discuss with you a possible job opportunity. Please send me an email to {{ user.email() }} if you're interested.
 
 Kind regards,
 {{user.nickname()}}</textarea>
