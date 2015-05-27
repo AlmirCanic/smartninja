@@ -13,7 +13,8 @@ def email_employer_contact_candidate(contact_candidate):
 
         Kind regards,
         SmartNinja Team
-    '''.format(contact_candidate.candidate_name, contact_candidate.message, contact_candidate.employer_email)
+    '''.format(contact_candidate.candidate_name.encode('utf-8'), contact_candidate.message.encode('utf-8'),
+               contact_candidate.employer_email)
 
     html_message_body = '''
         <h2>Dear {0}!</h2>
@@ -28,7 +29,8 @@ def email_employer_contact_candidate(contact_candidate):
 
         <p>Kind regards,<br>
         SmartNinja Team</p>
-    '''.format(contact_candidate.candidate_name, contact_candidate.message, contact_candidate.employer_email)
+    '''.format(contact_candidate.candidate_name.encode('utf-8'), contact_candidate.message.encode('utf-8'),
+               contact_candidate.employer_email)
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to=contact_candidate.candidate_email,
