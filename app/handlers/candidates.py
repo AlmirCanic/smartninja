@@ -19,6 +19,18 @@ class AdminContactedCandidatesListHandler(Handler):
         return self.render_template("admin/contacted_list.html", params)
 
 
+class AdminSuccessfullyEmployedHandler(Handler):
+    @admin_required
+    def post(self, contacted_candidate_id):
+        employed = self.request.get("employed")
+
+        contacted = ContactCandidate.get_by_id(int(contacted_candidate_id))
+        contacted.successful_employment = bool(employed)
+        contacted.put()
+
+        return self.redirect_to("admin-contacted-list")
+
+
 # EMPLOYER
 class EmployerCandidatesListHandler(Handler):
     @employer_required

@@ -41,8 +41,40 @@
                                 <td><a href="/admin/user/{{contact.employer_user_id}}">{{contact.employer_name}}</a> ({{contact.employer_email}})</td>
                                 <td>{{contact.created.strftime('%d.%m.%Y')}}</td>
                                 <td>{{contact.message}}</td>
-                                <td>{{contact.successful_employment}}</td>
+                                <td>
+                                    {{contact.successful_employment}} <a href="#" data-toggle="modal" data-target="#successfullyEmployed">(edit)</a>
+
+                                </td>
                             </tr>
+
+                            <!-- Modal - contact the candidate -->
+                            <div class="modal fade" id="successfullyEmployed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <form method="post" action="/admin/contacted/{{contact.get_id}}/success">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Successfully employed?</h4>
+                                            </div>
+
+
+                                            <div class="modal-body">
+                                                <p>Did employer successfully hire this candidate?</p>
+
+                                                <input type="checkbox" name="employed"
+                                                    {% if contact.successful_employment %}checked{% endif %}
+                                                > Check if candidate has been hired
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- End modal - contact the candidate -->
                             {% endfor %}
                         </tbody>
                     </table>
@@ -52,5 +84,7 @@
     {% else %}
         <p>No candidates contacted yet :(</p>
     {% endif %}
+
+
 </div>
 {% endblock main_content %}
