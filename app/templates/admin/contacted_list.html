@@ -1,0 +1,56 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Contacted candidates list{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-mail-forward"></i> Contacted
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Candidates contacted by employers
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    {% if contacted_list %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Candidate name</th>
+                                <th>Employer name</th>
+                                <th>Date</th>
+                                <th>Message</th>
+                                <th>Successful employment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in contacted_list %}
+                            <tr>
+                                <td><a href="/admin/user/{{contact.candidate_user_id}}">{{contact.candidate_name}}</a> ({{contact.candidate_email}})</td>
+                                <td><a href="/admin/user/{{contact.employer_user_id}}">{{contact.employer_name}}</a> ({{contact.employer_email}})</td>
+                                <td>{{contact.created.strftime('%d.%m.%Y')}}</td>
+                                <td>{{contact.message}}</td>
+                                <td>{{contact.successful_employment}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>No candidates contacted yet :(</p>
+    {% endif %}
+</div>
+{% endblock main_content %}

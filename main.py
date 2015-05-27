@@ -12,7 +12,8 @@ from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
     InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
-from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler
+from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler, \
+    EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
@@ -154,6 +155,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/course/<course_id:\d+>/grades', AdminCourseGradesHandler, name="admin-course-grades"),
     webapp2.Route('/admin/grade/<application_id:\d+>', AdminGradeStudentDetailsHandler, name="admin-grade-student"),
 
+    # contacted
+    webapp2.Route('/admin/contacted', AdminContactedCandidatesListHandler, name="admin-contacted-list"),
+
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
     webapp2.Route('/partner/profile', PartnerProfileDetailsHandler, name="partner-profile"),
@@ -201,6 +205,7 @@ app = webapp2.WSGIApplication([
 # EMPLOYER URLS
     webapp2.Route('/employer', EmployerCandidatesListHandler, name="employer-candidates-list"),
     webapp2.Route('/employer/candidate/<candidate_id:\d+>', EmployerCandidateDetailsHandler, name="employer-candidate-details"),
+    webapp2.Route('/employer/contacted', EmployerContactedCandidatesListHandler, name="employer-contacted-list"),
 
 # STUDENT URLS
     webapp2.Route('/student', StudentCourseListHandler, name="student"),

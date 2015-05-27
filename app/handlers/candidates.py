@@ -5,9 +5,21 @@ from app.models.auth import User
 from app.models.contact_candidate import ContactCandidate
 from app.models.course import CourseApplication
 from app.settings import is_local
-from app.utils.decorators import employer_required
+from app.utils.decorators import employer_required, admin_required
 
 
+# ADMIN
+class AdminContactedCandidatesListHandler(Handler):
+    @admin_required
+    def get(self):
+        contacted_list = ContactCandidate.query(ContactCandidate.deleted == False).fetch()
+
+        params = {"contacted_list": contacted_list}
+
+        return self.render_template("admin/contacted_list.html", params)
+
+
+# EMPLOYER
 class EmployerCandidatesListHandler(Handler):
     @employer_required
     def get(self):
@@ -57,3 +69,16 @@ class EmployerCandidateDetailsHandler(Handler):
 
         params = {"contact_success": True, "candidate": candidate, "applications": applications}
         return self.render_template("employer/candidate_details.html", params)
+
+
+class EmployerContactedCandidatesListHandler(Handler):
+    @employer_required
+    def get(self):
+        employer = users.get_current_user()
+
+        contacted_list = ContactCandidate.query(ContactCandidate.employer_email == employer.email(),
+                                                ContactCandidate.deleted == False).fetch()
+
+        params = {"contacted_list": contacted_list}
+
+        return self.render_template("employer/contacted_list.html", params)
