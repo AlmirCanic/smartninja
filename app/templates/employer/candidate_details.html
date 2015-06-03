@@ -107,6 +107,9 @@
         </div>
 
         <div class="panel-body">
+
+            <p><i class="fa fa-graduation-cap"></i> <strong>Date:</strong> {{application.created.strftime('%b %Y')}}</p>
+
             <p data-toggle="tooltip" data-placement="left" title="1 is the worst, 4 is the best">
                 <i class="fa fa-graduation-cap"></i> <strong>Grade:</strong> {{application.grade_score}}
             </p>
