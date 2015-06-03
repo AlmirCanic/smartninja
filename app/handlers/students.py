@@ -2,6 +2,7 @@ import datetime
 from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
+from app.models.contact_candidate import ContactCandidate
 from app.models.course import Course
 from app.models.lesson import Lesson
 from app.models.student import StudentCourse
@@ -165,3 +166,16 @@ class StudentProfileEditHandler(Handler):
                     current_town=current_town)
             logga("Student %s profile edited." % profile.get_id)
             self.redirect_to("student-profile")
+
+
+class StudentContactedByEmployersListHandler(Handler):
+    @student_required
+    def get(self):
+        student = users.get_current_user()
+
+        contacted_list = ContactCandidate.query(ContactCandidate.candidate_email == student.email(),
+                                                ContactCandidate.deleted == False).fetch()
+
+        params = {"contacted_list": contacted_list}
+
+        return self.render_template("student/contacted_list.html", params)

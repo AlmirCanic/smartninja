@@ -42,7 +42,8 @@ from app.handlers.public import MainHandler, \
 from app.handlers.reports import InstructorReportAddHandler, InstructorReportDetailsHandler, InstructorReportEditHandler, \
     InstructorReportDeleteHandler, AdminReportsListHandler, AdminCourseReportsHandler, AdminReportDetailsHandler
 from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
-    StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler
+    StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler, \
+    StudentContactedByEmployersListHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler
 
@@ -217,6 +218,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/student/course/<course_id:\d+>/lesson/<lesson_id:\d+>', StudentLessonDetailsHandler, name="student-lesson-details"),
     webapp2.Route('/student/profile', StudentProfileDetailsHandler, name="student-profile"),
     webapp2.Route('/student/profile/edit', StudentProfileEditHandler, name="student-profile-edit"),
+    webapp2.Route('/student/contacted', StudentContactedByEmployersListHandler, name="student-contacted-list"),
 
 # OTHER
     webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
