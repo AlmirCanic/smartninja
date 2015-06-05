@@ -67,11 +67,13 @@
 
             <div class="col-lg-1" data-toggle="tooltip" data-placement="left" title="1.0 (the worst), 4.0 (the best)">
                 <h1>
-                    {% if candidate.grade_avg_score >= 3.0 %}
+                    {% if candidate.grade_avg_score >= 3.5 %}
+                    <span class="label label-success">
+                    {% elif candidate.grade_avg_score >= 2.5 and candidate.grade_avg_score < 3.5 %}
                     <span class="label label-info">
-                    {% elif candidate.grade_avg_score >= 2.0 and candidate.grade_avg_score < 3.0 %}
+                    {% elif candidate.grade_avg_score >= 1.5 and candidate.grade_avg_score < 2.5 %}
                     <span class="label label-warning">
-                    {% elif candidate.grade_avg_score >= 0.0 and candidate.grade_avg_score < 2.0 %}
+                    {% elif candidate.grade_avg_score >= 0.0 and candidate.grade_avg_score < 1.5 %}
                     <span class="label label-danger">
                     {% endif %}
                         {{candidate.grade_avg_score}}
