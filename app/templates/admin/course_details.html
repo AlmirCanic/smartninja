@@ -135,6 +135,10 @@
                 </div>
             </div>
         </div>
+
+        <form method="post" action="/admin/course/{{course.get_id}}/export">
+            <button class="btn btn-warning">Export data (CSV)</button>
+        </form>
     {% else %}
         <p>No applications yet :(</p>
     {% endif %}

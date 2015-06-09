@@ -19,7 +19,7 @@ from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
     AdminCourseAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, PublicCourseListHandler, \
-    PublicCourseDetailsHandler
+    PublicCourseDetailsHandler, AdminCourseExportDataHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
@@ -83,6 +83,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/course/<course_id:\d+>', AdminCourseDetailsHandler, name="course-details"),
     webapp2.Route('/admin/course/<course_id:\d+>/edit', AdminCourseEditHandler, name="course-edit"),
     webapp2.Route('/admin/course/<course_id:\d+>/delete', AdminCourseDeleteHandler, name="course-delete"),
+    webapp2.Route('/admin/course/<course_id:\d+>/export', AdminCourseExportDataHandler, name="course-export"),
     webapp2.Route('/admin/course/add', AdminCourseAddHandler, name="course-add"),
 
     # course applications
