@@ -17,7 +17,7 @@
             </ol>
 
             <h1 class="page-header">
-                {{ course.title }}
+                {{ course.title }} <a href="/course/{{course.get_id}}" target="_blank"><i class="fa fa-globe"></i></a>
             </h1>
         </div>
     </div>
@@ -144,6 +144,7 @@
     {% endif %}
 
     <h3>About course</h3>
+
     <p>{{ course.summary }}</p>
     <div class="row">
         <div class="col-lg-12">
