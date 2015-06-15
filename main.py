@@ -4,6 +4,7 @@
 #
 
 import webapp2
+
 from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
     AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler, AdminCourseApplicationMoveStudentHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
@@ -46,6 +47,7 @@ from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd,
     StudentContactedByEmployersListHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler
+from app.utils.localhost_data import LocalhostFakeDataHandler
 
 
 app = webapp2.WSGIApplication([
@@ -74,6 +76,9 @@ app = webapp2.WSGIApplication([
 
 
 # ADMIN URLS
+    # fake localhost data
+    webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
+
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
