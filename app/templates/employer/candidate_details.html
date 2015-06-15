@@ -69,6 +69,7 @@
                     {{candidate.grade_avg_score}}
                 </span>
             </h1>
+            <span class="full-grade">out of 4.0</span>
         </div>
     </div>
     <!-- Info end -->
@@ -110,7 +111,10 @@
 
         <div class="panel-body">
 
-            <p><i class="fa fa-graduation-cap"></i> <strong>Date:</strong> {{application.created.strftime('%b %Y')}}</p>
+            <p>
+                <i class="fa fa-calendar"></i> <strong>Date:</strong> {{application.created.strftime('%b %Y')}}
+                <a href="/course/{{application.course_id}}" target="_blank">(see course details)</a>
+            </p>
 
             <p data-toggle="tooltip" data-placement="left" title="1 is the worst, 4 is the best">
                 <i class="fa fa-graduation-cap"></i> <strong>Grade:</strong> {{application.grade_score}}
