@@ -65,6 +65,15 @@
                     <textarea class="form-control" style="height: 300px;" name="summary">{{application.grade_summary}}</textarea>
                 </div>
 
+                <div class="form-group">
+                    <label>Top student</label>
+                    <p>If a student was exceptionally good, grade them as a top developer.</p>
+                    <br>
+                    <input type="checkbox" name="top-dev"
+                        {% if application.grade_top_student %}checked{% endif %}
+                    > Check if student was exceptionally good
+                </div>
+
                 <button type="submit" class="btn btn-success" id="submitButton">Submit</button>
             </form>
 

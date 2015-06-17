@@ -142,6 +142,7 @@ class CourseApplication(ndb.Model):
     grade_score = ndb.IntegerProperty()
     grade_summary = ndb.TextProperty()
     grade_tags = ndb.StringProperty(repeated=True)
+    grade_top_student = ndb.BooleanProperty(default=False)
 
     @property
     def get_id(self):
@@ -181,10 +182,11 @@ class CourseApplication(ndb.Model):
         new_course.put()
 
     @classmethod
-    def grade_student(cls, application, score, summary, tags):
+    def grade_student(cls, application, score, summary, tags, top_student=False):
         application.grade_score = score
         application.grade_summary = summary
         application.grade_tags = tags
+        application.grade_top_student = top_student
         application.put()
 
         update_student_grade(application)

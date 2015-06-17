@@ -55,6 +55,12 @@
             <i class="fa fa-github"></i> <a href="{{candidate.github_url}}">{{candidate.github_url}}</a>
         </div>
 
+        {% if candidate.grade_top_student > 0 %}
+            <div class="col-lg-1"  data-toggle="tooltip" data-placement="bottom" title="Top student">
+                <h1><span class="label label-warning"><i class="fa fa-star"></i></span></h1>
+            </div>
+        {% endif %}
+
     </div>
     <!-- Info end -->
 
@@ -102,6 +108,9 @@
 
             <p data-toggle="tooltip" data-placement="left" title="1 is the worst, 4 is the best">
                 <i class="fa fa-graduation-cap"></i> <strong>Grade:</strong> {{application.grade_score}}
+                {% if application.grade_top_student %}
+                    <i class="fa fa-star"></i> Top student
+                {% endif %}
             </p>
 
             <p>

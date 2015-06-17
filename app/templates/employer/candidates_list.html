@@ -50,6 +50,12 @@
                 <p><i class="fa fa-comment"></i> <strong>About me:</strong> {{candidate.summary}}</p>
             </div>
 
+            {% if candidate.grade_top_student > 0 %}
+                <div class="col-lg-1"  data-toggle="tooltip" data-placement="bottom" title="Top student">
+                    <h1><span class="label label-warning"><i class="fa fa-star"></i></span></h1>
+                </div>
+            {% endif %}
+
         </div>
 
         <hr>

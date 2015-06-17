@@ -97,10 +97,12 @@ class InstructorGradeStudentEditHandler(Handler):
             score = self.request.get("score")
             tags = self.request.get("all-tags")
             summary = self.request.get("summary")
+            top_dev = self.request.get("top-dev")
 
             tags = convert_tags_to_list(tags)
 
-            CourseApplication.grade_student(application=application, score=int(score), summary=summary, tags=list(tags))
+            CourseApplication.grade_student(application=application, score=int(score), summary=summary, tags=list(tags),
+                                            top_student=bool(top_dev))
             logga("User %s edited student application %s grade." % (user.get_id, application.get_id))
             self.redirect_to("instructor-grade-student", application_id=application_id)
         else:

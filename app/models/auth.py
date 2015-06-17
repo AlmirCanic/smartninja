@@ -20,6 +20,7 @@ class User(ndb.Model):
     linkedin_url = ndb.StringProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)
+    grade_top_student = ndb.IntegerProperty(default=0)  # How many times did student receive Top student award by instructor
     job_searching = ndb.BooleanProperty(default=False)
     deleted = ndb.BooleanProperty(default=False)
 
