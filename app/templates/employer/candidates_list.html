@@ -20,21 +20,6 @@
     </div>
     <!-- Breadcrumb end -->
 
-    <div class="row">
-        <div class="col-lg-4 pull-right">
-            <form method="post" action="/employer">
-                <div class="input-group">
-                    <input class="form-control" placeholder="Search by skill (one skill per search)" name="skill">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Go!</button>
-                    </span>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <br>
-
     {% if candidates %}
         {% for candidate in candidates %}
         <div class="row">

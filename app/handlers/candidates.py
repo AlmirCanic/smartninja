@@ -41,17 +41,6 @@ class EmployerCandidatesListHandler(Handler):
         params = {"candidates": candidates}
         return self.render_template("employer/candidates_list.html", params)
 
-    @employer_required
-    def post(self):
-        skill = self.request.get("skill")
-
-        candidates = User.query(User.job_searching == True,
-                                User.grade_all_tags == skill,
-                                User.grade_avg_score >= 3.0).order(-User.grade_avg_score).fetch()
-
-        params = {"candidates": candidates}
-        return self.render_template("employer/candidates_list.html", params)
-
 
 class EmployerCandidateDetailsHandler(Handler):
     @employer_required
