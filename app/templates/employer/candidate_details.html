@@ -103,7 +103,6 @@
 
             <p>
                 <i class="fa fa-calendar"></i> <strong>Date:</strong> {{application.created.strftime('%b %Y')}}
-                <a href="/course/{{application.course_id}}" target="_blank">(see course details)</a>
             </p>
 
             <p data-toggle="tooltip" data-placement="left" title="1 is the worst, 4 is the best">
@@ -124,7 +123,7 @@
                 <i class="fa fa-institution"></i>
                  <strong>Instructor summary:</strong>
                 <br>
-                {{application.grade_summary}}
+                {{application.grade_summary|nl2br}}
             </p>
         </div>
     </div>
