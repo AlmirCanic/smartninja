@@ -52,35 +52,19 @@
                 <a href="/employer/candidate/{{candidate.get_id}}"><h3>{{candidate.get_full_name}}</h3></a>
 
 
-                <h5><i class="fa fa-certificate"></i>
+                <p><i class="fa fa-certificate"></i> <strong>Skills from courses:</strong>
                     {% for tag in candidate.grade_all_tags %}
                         {{ tag }}{% if not loop.last %},{% endif %}
                     {% endfor %}
-                </h5>
+                </p>
                 <br>
 
-                <h5><i class="fa fa-location-arrow"></i> {{candidate.current_town}}</h5>
+                <p><i class="fa fa-location-arrow"></i> <strong>Current town:</strong> {{candidate.current_town}}</p>
                 <br>
 
-                <p><i class="fa fa-comment"></i> {{candidate.summary}}</p>
+                <p><i class="fa fa-comment"></i> <strong>About me:</strong> {{candidate.summary}}</p>
             </div>
 
-            <div class="col-lg-1" data-toggle="tooltip" data-placement="left" title="1.0 (the worst), 4.0 (the best)">
-                <h1>
-                    {% if candidate.grade_avg_score >= 3.5 %}
-                    <span class="label label-success">
-                    {% elif candidate.grade_avg_score >= 2.5 and candidate.grade_avg_score < 3.5 %}
-                    <span class="label label-info">
-                    {% elif candidate.grade_avg_score >= 1.5 and candidate.grade_avg_score < 2.5 %}
-                    <span class="label label-warning">
-                    {% elif candidate.grade_avg_score >= 0.0 and candidate.grade_avg_score < 1.5 %}
-                    <span class="label label-danger">
-                    {% endif %}
-                        {{candidate.grade_avg_score}}
-                    </span>
-                </h1>
-                <span class="full-grade">out of 4.0</span>
-            </div>
         </div>
 
         <hr>

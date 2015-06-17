@@ -157,13 +157,14 @@ class StudentProfileEditHandler(Handler):
             current_town = self.request.get("current_town")
             summary = self.request.get("summary")
             github_url = self.request.get("github_url")
+            linkedin_url = self.request.get("linkedin_url")
             photo_url = self.request.get("photo_url")
             job_searching = self.request.get("searching")
             phone_number = self.request.get("phone_number")
             dob = self.request.get("dob")
             User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob, github=github_url, job_searching=bool(job_searching),
-                    current_town=current_town)
+                    current_town=current_town, linkedin=linkedin_url)
             logga("Student %s profile edited." % profile.get_id)
             self.redirect_to("student-profile")
 
