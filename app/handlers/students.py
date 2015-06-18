@@ -1,5 +1,7 @@
 import datetime
 from google.appengine.api import users
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.contact_candidate import ContactCandidate
@@ -127,8 +129,42 @@ class StudentProfileDetailsHandler(Handler):
         if not profile:
             return self.redirect_to("forbidden")
 
-        params = {"profile": profile}
+        upload_url = blobstore.create_upload_url(success_path='/student/profile/upload-cv',
+                                                 max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
+
+        params = {"profile": profile, "upload_url": upload_url}
         self.render_template("student/profile.html", params)
+
+
+class StudentCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
+    @student_required
+    def post(self):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email()).lower()).get()
+
+        try:
+            upload = self.get_uploads()[0]
+
+            profile.cv_blob = upload.key()
+
+            profile.put()
+
+            self.redirect_to('student-profile')
+
+        except Exception, e:
+            self.response.out.write("upload failed: %s" % e)
+
+
+class StudentCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
+    @student_required
+    def get(self, ):
+        current_user = users.get_current_user()
+        profile = User.query(User.email == str(current_user.email()).lower()).get()
+
+        if not blobstore.get(profile.cv_blob):
+            self.redirect_to('student-profile')
+        else:
+            self.send_blob(profile.cv_blob, save_as="%s.pdf" % profile.get_id)
 
 
 class StudentProfileEditHandler(Handler):

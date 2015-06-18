@@ -38,7 +38,10 @@
     <p>LinkedIn: <a href="{{ this_user.linkedin_url }}" target="_blank">{{ this_user.linkedin_url }}</a></p>
 
     <p>
-        CV: <a href="/admin/user/{{this_user.get_id}}/cv">Open CV</a>
+        CV:
+        {% if this_user.cv_blob %}
+        <a href="/admin/user/{{this_user.get_id}}/cv">Open CV</a>
+        {% endif %}
         <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
     </p>
 

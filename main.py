@@ -44,7 +44,7 @@ from app.handlers.reports import InstructorReportAddHandler, InstructorReportDet
     InstructorReportDeleteHandler, AdminReportsListHandler, AdminCourseReportsHandler, AdminReportDetailsHandler
 from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
     StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler, \
-    StudentContactedByEmployersListHandler
+    StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler
 from app.utils.localhost_data import LocalhostFakeDataHandler
@@ -225,6 +225,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/student/course/<course_id:\d+>', StudentCourseDetailsHandler, name="student-course-details"),
     webapp2.Route('/student/course/<course_id:\d+>/lesson/<lesson_id:\d+>', StudentLessonDetailsHandler, name="student-lesson-details"),
     webapp2.Route('/student/profile', StudentProfileDetailsHandler, name="student-profile"),
+    webapp2.Route('/student/profile/upload-cv', StudentCVUploadHandler, name="student-profile-upload-cv"),
+    webapp2.Route('/student/profile/cv', StudentCVDownloadHandler, name="student-profile-download-cv"),
     webapp2.Route('/student/profile/edit', StudentProfileEditHandler, name="student-profile-edit"),
     webapp2.Route('/student/contacted', StudentContactedByEmployersListHandler, name="student-contacted-list"),
 

@@ -31,10 +31,50 @@
     <p><strong>Short description:</strong> {{ profile.summary }}</p>
     <p><strong>GitHub:</strong> <a href="{{profile.github_url}}">{{ profile.github_url }}</a></p>
     <p><strong>LinkedIn:</strong> <a href="{{profile.linkedin_url}}">{{ profile.linkedin_url }}</a></p>
+
+    <p>
+        <strong>CV:</strong>
+        {% if profile.cv_blob %}
+        <a href="/student/profile/cv">Open CV</a>
+        {% endif %}
+        <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+    </p>
+
     <p><strong>Job searching:</strong> {{ profile.job_searching }}<sup>*</sup></p>
 
     <p><sup>*</sup> Set this on True, if you want to have your profile presented to potential employers.</p>
 
     <a href="/student/profile/edit"><button class="btn btn-success">Edit your profile</button></a>
+
+    <hr>
 </div>
+
+<!-- Modal - upload CV -->
+<div class="modal fade" id="uploadCVModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" action="{{upload_url}}" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Upload your CV</h4>
+                </div>
+
+
+                <div class="modal-body">
+                    <p>Upload your CV (.pdf). The maximum size is 1 MB. If you don't have a CV yet,
+                        <a href="https://europass.cedefop.europa.eu/en/home" target="_blank">use Europass to write it.
+                        </a>
+                    </p>
+                    <input type="file" name="cv-file" accept="application/pdf">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Upload CV</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End modal - upload CV -->
 {% endblock main_content %}
