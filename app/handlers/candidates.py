@@ -1,4 +1,6 @@
 from google.appengine.api import users
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
 from app.emails.contact_candidate import email_employer_contact_candidate
 from app.handlers.base import Handler
 from app.models.auth import User
@@ -73,6 +75,17 @@ class EmployerCandidateDetailsHandler(Handler):
 
         params = {"contact_success": True, "candidate": candidate, "applications": applications}
         return self.render_template("employer/candidate_details.html", params)
+
+
+class EmployerCandidateCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
+    @employer_required
+    def get(self, candidate_id):
+        candidate = User.get_by_id(int(candidate_id))
+
+        if not blobstore.get(candidate.cv_blob):
+            self.redirect_to('user-details', user_id=candidate_id)
+        else:
+            self.send_blob(candidate.cv_blob, save_as="%s.pdf" % candidate_id)
 
 
 class EmployerContactedCandidatesListHandler(Handler):

@@ -14,7 +14,8 @@ from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlog
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
     InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
 from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler, \
-    EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler, AdminSuccessfullyEmployedHandler
+    EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler, AdminSuccessfullyEmployedHandler, \
+    EmployerCandidateCVDownloadHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
@@ -216,6 +217,7 @@ app = webapp2.WSGIApplication([
 # EMPLOYER URLS
     webapp2.Route('/employer', EmployerCandidatesListHandler, name="employer-candidates-list"),
     webapp2.Route('/employer/candidate/<candidate_id:\d+>', EmployerCandidateDetailsHandler, name="employer-candidate-details"),
+    webapp2.Route('/employer/candidate/<candidate_id:\d+>/cv', EmployerCandidateCVDownloadHandler, name="employer-candidate-cv"),
     webapp2.Route('/employer/contacted', EmployerContactedCandidatesListHandler, name="employer-contacted-list"),
     webapp2.Route('/employer/profile', EmployerProfileDetailsHandler, name="employer-profile"),
     webapp2.Route('/employer/profile/edit', EmployerProfileEditHandler, name="employer-profile-edit"),

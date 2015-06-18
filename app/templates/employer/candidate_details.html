@@ -36,23 +36,50 @@
 
         <div class="col-lg-7">
 
-            <h5><i class="fa fa-certificate"></i>
+            <p><i class="fa fa-certificate"></i>
+                <strong>Skills from courses:</strong>
                 {% for tag in candidate.grade_all_tags %}
                     {{ tag }}{% if not loop.last %},{% endif %}
                 {% endfor %}
-            </h5>
+            </p>
+
+            {% if candidate.current_town and candidate.current_town != "None" %}
+            <p><i class="fa fa-location-arrow"></i>
+                <strong>Current town</strong>
+                {{candidate.current_town}}
+            </p>
+            {% endif %}
+
+            {% if candidate.github_url and candidate.github_url != "None" %}
+            <p>
+                <i class="fa fa-github"></i>
+                <strong>GitHub: </strong>
+                <a href="{{candidate.github_url}}">{{candidate.github_url}}</a>
+            </p>
+            {% endif %}
+
+            {% if candidate.linkedin_url and candidate.linkedin_url != "None" %}
+            <p>
+                <i class="fa fa-linkedin"></i>
+                <strong>LinkedIn: </strong>
+                <a href="{{candidate.linkedin_url}}">{{candidate.linkedin_url}}</a>
+            </p>
+            {% endif %}
+
+            {% if candidate.summary and candidate.summary != "None" %}
+            <p><i class="fa fa-comment"></i>
+                <strong>About me: </strong>
+                {{candidate.summary}}
+            </p>
+            {% endif %}
 
             <br>
 
-            <p><i class="fa fa-comment"></i> {{candidate.summary}}</p>
-
-            <br>
-
-            <h5><i class="fa fa-location-arrow"></i> {{candidate.current_town}}</h5>
-
-            <br>
-
-            <i class="fa fa-github"></i> <a href="{{candidate.github_url}}">{{candidate.github_url}}</a>
+            {% if candidate.cv_blob %}
+            <a href="/employer/candidate/{{candidate.get_id}}/cv">
+                <button class="btn btn-warning">Download my CV</button>
+            </a>
+            {% endif %}
         </div>
 
         {% if candidate.grade_top_student > 0 %}
