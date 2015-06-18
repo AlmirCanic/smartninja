@@ -1,3 +1,5 @@
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.settings import ADMINS
@@ -36,8 +38,41 @@ class AdminUserDetailsHandler(Handler):
         admin = False
         if user.email in ADMINS:
             admin = True
-        params = {"this_user": user, "admin": admin}
+
+        upload_url = blobstore.create_upload_url(success_path='/admin/user/%s/upload-cv' % user_id,
+                                                 max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
+
+        params = {"this_user": user, "admin": admin, "upload_url": upload_url}
         self.render_template("admin/user_details.html", params)
+
+
+class AdminUserCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
+    @admin_required
+    def post(self, user_id):
+        try:
+            upload = self.get_uploads()[0]
+
+            user = User.get_by_id(int(user_id))
+
+            user.cv_blob = upload.key()
+
+            user.put()
+
+            self.redirect_to('user-details', user_id=user_id)
+
+        except Exception, e:
+            self.response.out.write("upload failed: %s" % e)
+
+
+class AdminUserCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
+    @admin_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+
+        if not blobstore.get(user.cv_blob):
+            self.redirect_to('user-details', user_id=user_id)
+        else:
+            self.send_blob(user.cv_blob, save_as="%s.pdf" % user_id)
 
 
 class AdminUserDeleteHandler(Handler):

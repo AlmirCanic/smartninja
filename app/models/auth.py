@@ -18,6 +18,7 @@ class User(ndb.Model):
     photo_url = ndb.StringProperty()
     github_url = ndb.StringProperty()
     linkedin_url = ndb.StringProperty()
+    cv_blob = ndb.BlobKeyProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)
     grade_top_student = ndb.IntegerProperty(default=0)  # How many times did student receive Top student award by instructor
