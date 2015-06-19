@@ -2,6 +2,7 @@ from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.employer import Employer
+from app.models.partner import Partner
 from app.utils.decorators import admin_required, employer_required
 from app.utils.other import logga
 
@@ -18,20 +19,28 @@ class AdminEmployersListHandler(Handler):
 class AdminEmployerAddHandler(Handler):
     @admin_required
     def get(self):
-        self.render_template("admin/employer_add.html")
+        partners = Partner.query(Partner.deleted == False).fetch()
+        params = {"partners": partners}
+        self.render_template("admin/employer_add.html", params)
 
     @admin_required
     def post(self):
         email = self.request.get("email")
         first_name = self.request.get("first-name")
         last_name = self.request.get("last-name")
+        partner_id = self.request.get("partner")
+
+        if partner_id:
+            partner = Partner.get_by_id(int(partner_id))
+        else:
+            partner = None
 
         user = User.get_by_email(email=email)
 
         if not user:
             user = User.short_create(email=email, first_name=first_name, last_name=last_name)
 
-        employer = Employer.create(full_name=user.get_full_name, email=email, user_id=user.get_id)
+        employer = Employer.create(full_name=user.get_full_name, email=email, user_id=user.get_id, partner=partner)
         logga("Employer %s added." % employer.get_id)
 
         return self.redirect_to("admin-employers-list")

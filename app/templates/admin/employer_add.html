@@ -12,7 +12,7 @@
                     <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
                 </li>
                 <li>
-                    <i class="fa fa-users"></i>  <a href="/admin/users/employer">Employers</a>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/employers">Employers</a>
                 </li>
             </ol>
 
@@ -40,6 +40,16 @@
                 <div class="form-group">
                     <label>Employer last name (if new user)</label>
                     <input type="text" class="form-control" placeholder="Last name" name="last-name">
+                </div>
+
+                <div class="form-group">
+                    <label>Company</label>
+                    <select class="form-control" name="partner">
+                        <option value="" selected>Select company</option>
+                        {% for partner in partners %}
+                            <option value="{{ partner.get_id }}">{{ partner.title }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <button type="submit" class="btn btn-success">Add employer</button>

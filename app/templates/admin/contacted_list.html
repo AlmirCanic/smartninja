@@ -38,7 +38,13 @@
                             {% for contact in contacted_list %}
                             <tr>
                                 <td><a href="/admin/user/{{contact.candidate_user_id}}">{{contact.candidate_name}}</a> ({{contact.candidate_email}})</td>
-                                <td><a href="/admin/user/{{contact.employer_user_id}}">{{contact.employer_name}}</a> ({{contact.employer_email}})</td>
+                                <td><a href="/admin/user/{{contact.employer_user_id}}">
+                                    {{contact.employer_name}}</a>
+                                    ({{contact.employer_email}})
+                                    {% if contact.employer_company_title %}
+                                        <br> {{contact.employer_company_title}}
+                                    {% endif %}
+                                </td>
                                 <td>{{contact.created.strftime('%d.%m.%Y')}}</td>
                                 <td>{{contact.message}}</td>
                                 <td>

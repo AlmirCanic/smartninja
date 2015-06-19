@@ -8,6 +8,8 @@ class ContactCandidate(ndb.Model):
     employer_name = ndb.StringProperty()
     employer_user_id = ndb.IntegerProperty()
     employer_email = ndb.StringProperty()
+    employer_company_id = ndb.IntegerProperty()
+    employer_company_title = ndb.StringProperty()
     message = ndb.TextProperty()
     successful_employment = ndb.BooleanProperty(default=False)
     deleted = ndb.BooleanProperty(default=False)

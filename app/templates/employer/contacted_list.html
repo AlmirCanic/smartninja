@@ -15,6 +15,9 @@
 
             <h1 class="page-header">
                 Contacted candidates
+                {% if employer.partner_title %}
+                    by {{employer.partner_title}}
+                {% endif %}
             </h1>
         </div>
     </div>
@@ -30,7 +33,7 @@
                                 <th>Candidate name</th>
                                 <th>Candidate email</th>
                                 <th>Date contacted</th>
-                                <th>Message</th>
+                                <th>Who contacted them</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +42,7 @@
                                 <td><a href="/employer/candidate/{{contact.candidate_user_id}}">{{contact.candidate_name}}</a></td>
                                 <td>{{contact.candidate_email}}</td>
                                 <td>{{contact.created.strftime('%d.%m.%Y')}}</td>
-                                <td>{{contact.message}}</td>
+                                <td>{{contact.employer_name}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

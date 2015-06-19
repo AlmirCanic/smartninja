@@ -6,6 +6,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.contact_candidate import ContactCandidate
 from app.models.course import CourseApplication
+from app.models.employer import Employer
 from app.settings import is_local
 from app.utils.decorators import employer_required, admin_required
 
@@ -61,10 +62,16 @@ class EmployerCandidateDetailsHandler(Handler):
         message = self.request.get("message")
 
         candidate = User.get_by_id(int(candidate_id))
-        employer = users.get_current_user()
-        employer_user = User.get_by_email(email=employer.email())
+        current_user = users.get_current_user()
+        employer_user = User.get_by_email(email=current_user.email())
 
         contact_candidate = ContactCandidate.create(candidate=candidate, employer_user=employer_user, message=message)
+
+        employer = Employer.query(Employer.user_id == employer_user.get_id).get()
+
+        contact_candidate.employer_company_id = employer.partner_id
+        contact_candidate.employer_company_title = employer.partner_title
+        contact_candidate.put()
 
         if not is_local():
             email_employer_contact_candidate(contact_candidate)
@@ -91,11 +98,16 @@ class EmployerCandidateCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHan
 class EmployerContactedCandidatesListHandler(Handler):
     @employer_required
     def get(self):
-        employer = users.get_current_user()
+        user = users.get_current_user()
+        employer = Employer.query(Employer.email == user.email()).get()
 
-        contacted_list = ContactCandidate.query(ContactCandidate.employer_email == employer.email(),
-                                                ContactCandidate.deleted == False).fetch()
+        if employer.partner_id:
+            contacted_list = ContactCandidate.query(ContactCandidate.employer_company_id == employer.partner_id,
+                                                    ContactCandidate.deleted == False).fetch()
+        else:
+            contacted_list = ContactCandidate.query(ContactCandidate.employer_email == user.email(),
+                                                    ContactCandidate.deleted == False).fetch()
 
-        params = {"contacted_list": contacted_list}
+        params = {"contacted_list": contacted_list, "employer": employer}
 
         return self.render_template("employer/contacted_list.html", params)

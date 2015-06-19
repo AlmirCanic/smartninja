@@ -50,6 +50,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Company</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -58,6 +59,10 @@
                         <tr>
                             <td><a href="/admin/user/{{employer.user_id}}">{{ employer.full_name }}</a></td>
                             <td>{{ employer.email }}</td>
+                            <td>{% if employer.partner_title %}
+                                    {{ employer.partner_title }}
+                                {% endif %}
+                            </td>
                             <td><a href="/admin/users/employer/{{ employer.get_id }}/delete">Delete</a></td>
                         </tr>
                         {% endfor %}
