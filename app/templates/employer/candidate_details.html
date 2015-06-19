@@ -93,7 +93,7 @@
             {% endif %}
 
 
-            {% if employer.partner_id in candidate.contacted_by or employer.user_id in candidate.contacted_by %}
+            {% if employer.partner_id in candidate.contacted_by or employer.get_id in candidate.contacted_by %}
                 <div class="col-lg-6"  data-toggle="tooltip" data-placement="bottom" title="Already contacted">
                     <h1><span class="label label-primary"><i class="fa fa-check"></i></span></h1>
                 </div>
