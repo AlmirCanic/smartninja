@@ -41,7 +41,10 @@ class EmployerCandidatesListHandler(Handler):
         candidates = User.query(User.job_searching == True,
                                 User.grade_avg_score >= 3.0).order(-User.grade_avg_score).fetch()
 
-        params = {"candidates": candidates}
+        current_user = users.get_current_user()
+        employer = Employer.query(Employer.email == current_user.email().lower()).get()
+
+        params = {"candidates": candidates, "employer": employer}
         return self.render_template("employer/candidates_list.html", params)
 
 
@@ -54,7 +57,10 @@ class EmployerCandidateDetailsHandler(Handler):
                                                CourseApplication.deleted == False,
                                                CourseApplication.grade_score != None).fetch()
 
-        params = {"candidate": candidate, "applications": applications}
+        current_user = users.get_current_user()
+        employer = Employer.query(Employer.email == current_user.email().lower()).get()
+
+        params = {"candidate": candidate, "applications": applications, "employer": employer}
         return self.render_template("employer/candidate_details.html", params)
 
     @employer_required
@@ -63,7 +69,7 @@ class EmployerCandidateDetailsHandler(Handler):
 
         candidate = User.get_by_id(int(candidate_id))
         current_user = users.get_current_user()
-        employer_user = User.get_by_email(email=current_user.email())
+        employer_user = User.get_by_email(email=current_user.email().lower())
 
         contact_candidate = ContactCandidate.create(candidate=candidate, employer_user=employer_user, message=message)
 
@@ -73,6 +79,15 @@ class EmployerCandidateDetailsHandler(Handler):
         contact_candidate.employer_company_title = employer.partner_title
         contact_candidate.put()
 
+        # partner or employer id added to candidate, so they know who they already contacted
+        if employer.partner_id:
+            if employer.partner_id not in candidate.contacted_by:
+                candidate.contacted_by += (employer.partner_id, )
+        else:
+            if employer.get_id not in candidate.contacted_by:
+                candidate.contacted_by += (employer.get_id, )
+        candidate.put()
+
         if not is_local():
             email_employer_contact_candidate(contact_candidate)
 
@@ -80,7 +95,7 @@ class EmployerCandidateDetailsHandler(Handler):
                                                CourseApplication.deleted == False,
                                                CourseApplication.grade_score != None).fetch()
 
-        params = {"contact_success": True, "candidate": candidate, "applications": applications}
+        params = {"contact_success": True, "candidate": candidate, "applications": applications, "employer": employer}
         return self.render_template("employer/candidate_details.html", params)
 
 
@@ -99,13 +114,13 @@ class EmployerContactedCandidatesListHandler(Handler):
     @employer_required
     def get(self):
         user = users.get_current_user()
-        employer = Employer.query(Employer.email == user.email()).get()
+        employer = Employer.query(Employer.email == user.email().lower()).get()
 
         if employer.partner_id:
             contacted_list = ContactCandidate.query(ContactCandidate.employer_company_id == employer.partner_id,
                                                     ContactCandidate.deleted == False).fetch()
         else:
-            contacted_list = ContactCandidate.query(ContactCandidate.employer_email == user.email(),
+            contacted_list = ContactCandidate.query(ContactCandidate.employer_email == user.email().lower(),
                                                     ContactCandidate.deleted == False).fetch()
 
         params = {"contacted_list": contacted_list, "employer": employer}

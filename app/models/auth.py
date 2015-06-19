@@ -23,6 +23,7 @@ class User(ndb.Model):
     grade_all_tags = ndb.StringProperty(repeated=True)
     grade_top_student = ndb.IntegerProperty(default=0)  # How many times did student receive Top student award by instructor
     job_searching = ndb.BooleanProperty(default=False)
+    contacted_by = ndb.IntegerProperty(repeated=True)  # companies (partner ids) or employers that contacted user for a job opportunity
     deleted = ndb.BooleanProperty(default=False)
 
     @property
