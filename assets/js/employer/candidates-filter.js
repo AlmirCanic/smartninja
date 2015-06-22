@@ -58,8 +58,10 @@ $(document).ready(function() {
 
         var candidate;
         for(candidate in candidatesList) {
-            var canId = $("#"+candidatesList[candidate].userId); //.hide();
+            var canId = $("#"+candidatesList[candidate].userId);
             var user = candidatesList[candidate];
+
+            canId.show();
 
             for(ss in skillsList) {
                 if(jQuery.inArray(skillsList[ss], user.tags) === -1) {
