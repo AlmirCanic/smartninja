@@ -22,7 +22,8 @@ $(document).ready(function() {
         //alert(candidatesList);
     });
 
-    $("#filter-top-students").click(function() {
+    $("#filter-top-students").click(function(e) {
+        e.preventDefault();
         var candidate;
         for(candidate in candidatesList) {
             if(candidatesList[candidate].topStudent == 0) {
@@ -33,14 +34,16 @@ $(document).ready(function() {
         }
     });
 
-    $("#filter-show-all").click(function() {
+    $("#filter-show-all").click(function(e) {
+        e.preventDefault();
         var candidate;
         for(candidate in candidatesList) {
             $("#"+candidatesList[candidate].userId).show();
         }
     });
 
-    $("#searchButton").click(function() {
+    $("#searchButton").click(function(e) {
+        e.preventDefault();
         var skills = $("#skillSearch").val();
 
         var skillsList = skills.split(",");
