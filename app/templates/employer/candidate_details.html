@@ -66,6 +66,14 @@
             </p>
             {% endif %}
 
+            {% if candidate.homepage_url and candidate.homepage_url != "None" %}
+            <p>
+                <i class="fa fa-home"></i>
+                <strong>Homepage: </strong>
+                <a href="{{candidate.homepage_url}}">{{candidate.homepage_url}}</a>
+            </p>
+            {% endif %}
+
             {% if candidate.summary and candidate.summary != "None" %}
             <p><i class="fa fa-comment"></i>
                 <strong>About me: </strong>
