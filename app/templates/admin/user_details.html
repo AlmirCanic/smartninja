@@ -50,13 +50,6 @@
     <p>Job searching: {{ this_user.job_searching }}</p>
     <p>Deleted: {{ this_user.deleted }}</p>
 
-    <hr>
-
-    <h3>Grades</h3>
-    <p>Score: {{ this_user.grade_avg_score }}</p>
-    <p>Tags: {{ this_user.grade_all_tags }}</p>
-    <br>
-
     {% if not admin %}
         <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit user</button></a>
         <a href="/admin/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
@@ -65,6 +58,46 @@
             <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your profile</button></a>
         {% endif %}
     {% endif %}
+
+    <hr>
+
+    <h3>Grades</h3>
+    <p>Score: {{ this_user.grade_avg_score }}</p>
+    <p>Tags: {{ this_user.grade_all_tags }}</p>
+
+    {% if applications %}
+        <h3>Course applications</h3>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course title</th>
+                                <th>Application created</th>
+                                <th>Paid</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for application in applications %}
+                            <tr>
+                                <td><a href="/admin/course/{{application.course_id}}">{{application.course_title}}</a></td>
+                                <td>{{application.created.strftime('%d.%m.%Y')}}</td>
+                                <td>{{application.payment_status}}</td>
+                                <td><a href="/admin/grade/{{application.get_id}}">Grade ({{application.grade_score}})</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <hr>
+    <p class="text-center">SmartNinja.org</p>
 </div>
 
 <!-- Modal - upload CV -->
@@ -95,4 +128,6 @@
     </div>
 </div>
 <!-- End modal - upload CV -->
+
+
 {% endblock main_content %}

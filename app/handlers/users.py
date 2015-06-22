@@ -2,6 +2,7 @@ from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
 from app.models.auth import User
+from app.models.course import CourseApplication
 from app.settings import ADMINS
 from app.utils.decorators import admin_required
 from app.utils.other import logga
@@ -42,7 +43,10 @@ class AdminUserDetailsHandler(Handler):
         upload_url = blobstore.create_upload_url(success_path='/admin/user/%s/upload-cv' % user_id,
                                                  max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
 
-        params = {"this_user": user, "admin": admin, "upload_url": upload_url}
+        applications = CourseApplication.query(CourseApplication.student_id == int(user_id),
+                                               CourseApplication.deleted == False).fetch()
+
+        params = {"this_user": user, "admin": admin, "upload_url": upload_url, "applications": applications}
         self.render_template("admin/user_details.html", params)
 
 
