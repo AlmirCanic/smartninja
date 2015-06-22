@@ -20,61 +20,90 @@
     </div>
     <!-- Breadcrumb end -->
 
-    {% if candidates %}
-        {% for candidate in candidates %}
-        <div class="row">
-            <div class="col-lg-3">
-                <a href="/employer/candidate/{{candidate.get_id}}">
-                    {% if candidate.photo_url == "None" or candidate.photo_url == "" %}
-                        <img class="img-responsive img-thumbnail" src="/assets/img/public/facebook.jpg" alt="{{candidate.get_full_name}}" width="200px">
-                    {% else %}
-                        <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}" width="200px">
-                    {% endif %}
-                </a>
-            </div>
-
-            <div class="col-lg-7">
-                <a href="/employer/candidate/{{candidate.get_id}}"><h3>{{candidate.get_full_name}}</h3></a>
-
-
-                <p><i class="fa fa-certificate"></i> <strong>Skills from courses:</strong>
-                    {% for tag in candidate.grade_all_tags %}
-                        {{ tag }}{% if not loop.last %},{% endif %}
-                    {% endfor %}
-                </p>
-                <br>
-
-                <p><i class="fa fa-location-arrow"></i> <strong>Current town:</strong> {{candidate.current_town}}</p>
-                <br>
-
-                <p><i class="fa fa-comment"></i> <strong>About me:</strong> {{candidate.summary}}</p>
-            </div>
-
-            <div class="col-lg-2">
-                <div class="row">
-
-                {% if candidate.grade_top_student > 0 %}
-                    <div class="col-lg-6"  data-toggle="tooltip" data-placement="bottom" title="Top student">
-                        <h1><span class="label label-warning"><i class="fa fa-star"></i></span></h1>
-                    </div>
-                {% endif %}
-
-
-                {% if employer.partner_id in candidate.contacted_by or employer.get_id in candidate.contacted_by %}
-                    <div class="col-lg-6"  data-toggle="tooltip" data-placement="bottom" title="Already contacted">
-                        <h1><span class="label label-primary"><i class="fa fa-check"></i></span></h1>
-                    </div>
-                {% endif %}
-                </div>
-            </div>
+    <!-- Search -->
+    <div class="row">
+        <div class="col-lg-8 pull-left">
 
         </div>
 
-        <hr>
-        {% endfor %}
-    {% else %}
-        <p>No candidates... yet. New courses will bring new forces :)</p>
-    {% endif %}
+        <div class="col-lg-4 pull-right">
+            <form>
+                <div class="input-group">
+                    <input class="form-control" placeholder="Search by skills (separate by comma)" id="skillSearch">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" id="searchButton">Go!</button>
+                    </span>
+                </div>
+            </form>
+            <a href="#showAll" id="filter-show-all">Show all candidates</a> |
+            <a href="#showAll" id="filter-top-students">Show only top students</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Candidates list -->
+        <div class="col-lg-12">
+            {% if candidates %}
+                {% for candidate in candidates %}
+                <div class="row each-candidate" data-grade-tags="{{candidate.grade_all_tags}}"
+                     data-grade-score="{{candidate.grade_avg_score}}" data-current-town="{{candidate.current_town}}"
+                     data-top-student="{{candidate.grade_top_student}}" id="{{candidate.get_id}}">
+                    <br>
+                    <br>
+                    <div class="col-lg-3">
+                        <a href="/employer/candidate/{{candidate.get_id}}">
+                            {% if candidate.photo_url == "None" or candidate.photo_url == "" %}
+                                <img class="img-responsive img-thumbnail" src="/assets/img/public/facebook.jpg" alt="{{candidate.get_full_name}}" width="200px">
+                            {% else %}
+                                <img class="img-responsive img-thumbnail" src="{{candidate.photo_url}}" alt="{{candidate.get_full_name}}" width="200px">
+                            {% endif %}
+                        </a>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <a href="/employer/candidate/{{candidate.get_id}}"><h3>{{candidate.get_full_name}}</h3></a>
+
+
+                        <p><i class="fa fa-certificate"></i> <strong>Skills from courses:</strong>
+                            {% for tag in candidate.grade_all_tags %}
+                                {{ tag }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </p>
+                        <br>
+
+                        <p><i class="fa fa-location-arrow"></i> <strong>Current town:</strong> {{candidate.current_town}}</p>
+                        <br>
+
+                        <p><i class="fa fa-comment"></i> <strong>About me:</strong> {{candidate.summary}}</p>
+
+
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="row">
+
+                        {% if candidate.grade_top_student > 0 %}
+                            <div class="col-lg-6"  data-toggle="tooltip" data-placement="bottom" title="Top student">
+                                <h1><span class="label label-warning"><i class="fa fa-star"></i></span></h1>
+                            </div>
+                        {% endif %}
+
+
+                        {% if employer.partner_id in candidate.contacted_by or employer.get_id in candidate.contacted_by %}
+                            <div class="col-lg-6"  data-toggle="tooltip" data-placement="bottom" title="Already contacted">
+                                <h1><span class="label label-primary"><i class="fa fa-check"></i></span></h1>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No candidates... yet. New courses will bring new forces :)</p>
+            {% endif %}
+        </div>
+    </div>
+
 
 </div>
 {% endblock main_content %}
@@ -85,4 +114,6 @@
         $('[data-toggle="tooltip"]').tooltip()
     })
 </script>
+
+<script src="/assets/js/employer/candidates-filter.js"></script>
 {% endblock scripts %}
