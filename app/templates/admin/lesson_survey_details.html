@@ -50,7 +50,17 @@
                         {% for statement in survey.questions %}
                         <tr>
                             <td>{{statement}}</td>
-                            <td>{{survey.questions[statement]}}</td>
+                            <td>{{survey.questions[statement]}} -
+                                {% if survey.questions[statement] == "1" %}
+                                    Completely disagree
+                                {% elif survey.questions[statement] == "2" %}
+                                    Disagree
+                                {% elif survey.questions[statement] == "3" %}
+                                    Agree
+                                {% elif survey.questions[statement] == "4" %}
+                                    Totally agree
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
