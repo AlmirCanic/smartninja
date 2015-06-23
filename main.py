@@ -31,6 +31,7 @@ from app.handlers.grades import InstructorGradeStudentDetailsHandler, Instructor
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
+from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
     InstructorLessonDetailsHandler, StudentLessonDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
@@ -170,6 +171,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/contacted', AdminContactedCandidatesListHandler, name="admin-contacted-list"),
     webapp2.Route('/admin/contacted/<contacted_candidate_id:\d+>/success', AdminSuccessfullyEmployedHandler, name="admin-successfully-employed"),
 
+    # lesson surveys
+    webapp2.Route('/admin/lesson-surveys', AdminLessonSurveyList, name="admin-lesson-survey-list"),
+    webapp2.Route('/admin/lesson-survey/<lesson_survey_id:\d+>', AdminLessonSurveyDetails, name="admin-lesson-survey-details"),
+
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
     webapp2.Route('/partner/profile', PartnerProfileDetailsHandler, name="partner-profile"),
@@ -214,6 +219,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/instructor/grade/<application_id:\d+>', InstructorGradeStudentDetailsHandler, name="instructor-grade-student"),
     webapp2.Route('/instructor/grade/<application_id:\d+>/edit', InstructorGradeStudentEditHandler, name="instructor-grade-student-edit"),
 
+    # lesson surveys
+    webapp2.Route('/instructor/lesson-surveys', InstructorLessonSurveyList, name="instructor-lesson-survey-list"),
+    webapp2.Route('/instructor/lesson-survey/<lesson_survey_id:\d+>', InstructorLessonSurveyDetails, name="instructor-lesson-survey-details"),
+
 # EMPLOYER URLS
     webapp2.Route('/employer', EmployerCandidatesListHandler, name="employer-candidates-list"),
     webapp2.Route('/employer/candidate/<candidate_id:\d+>', EmployerCandidateDetailsHandler, name="employer-candidate-details"),
@@ -226,6 +235,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/student', StudentCourseListHandler, name="student"),
     webapp2.Route('/student/course/<course_id:\d+>', StudentCourseDetailsHandler, name="student-course-details"),
     webapp2.Route('/student/course/<course_id:\d+>/lesson/<lesson_id:\d+>', StudentLessonDetailsHandler, name="student-lesson-details"),
+    webapp2.Route('/student/course/<course_id:\d+>/lesson/<lesson_id:\d+>/grade', StudentLessonSurveyAdd, name="student-lesson-grade-add"),
     webapp2.Route('/student/profile', StudentProfileDetailsHandler, name="student-profile"),
     webapp2.Route('/student/profile/upload-cv', StudentCVUploadHandler, name="student-profile-upload-cv"),
     webapp2.Route('/student/profile/cv', StudentCVDownloadHandler, name="student-profile-download-cv"),

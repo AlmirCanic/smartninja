@@ -1,0 +1,71 @@
+{% extends "instructor/base.html" %}
+
+{% block title %}Survey for {{survey.lesson_title}}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-check"></i> <a href="/instructor/lesson-surveys">Lesson surveys</a>
+                </li>
+
+                <li class="active">
+                    <i class="fa fa-book"></i> Survey for lesson {{survey.lesson_title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Survey for lesson {{survey.lesson_title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p><strong>Course: </strong><a href="/instructor/course/{{survey.course_id}}">{{survey.course_title}}</a></p>
+            <p><strong>Lesson: </strong><a href="/instructor/lesson/{{survey.lesson_id}}">{{survey.lesson_title}}</a></p>
+            <p><strong>Instructor: </strong>{{survey.instructor_name}}</p>
+            <p><strong>Survey created: </strong>{{survey.created.strftime('%d.%m.%Y at %H:%M')}}</p>
+        </div>
+    </div>
+
+    <!-- Statements -->
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Statements</h3>
+            <p>1 - I do not agree at all, 4 - I totally agree.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Statement</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for statement in survey.questions %}
+                        <tr>
+                            <td>{{statement}}</td>
+                            <td>{{survey.questions[statement]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open opinion -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Written opinion</h3>
+            <p>{{survey.text|nl2br}}</p>
+        </div>
+    </div>
+
+</div>
+{% endblock main_content %}

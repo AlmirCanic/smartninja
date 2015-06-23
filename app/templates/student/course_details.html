@@ -69,6 +69,7 @@
                                 <th>Title</th>
                                 <th>Order</th>
                                 <th>Created</th>
+                                <th>Lesson grade</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,6 +78,7 @@
                                 <td><a href="/student/course/{{course.get_id}}/lesson/{{lesson.get_id}}">{{lesson.title}}</a></td>
                                 <td>{{lesson.order}}</td>
                                 <td>{{lesson.created.strftime('%d.%m.%Y')}}</td>
+                                <td><a href="/student/course/{{course.get_id}}/lesson/{{lesson.get_id}}/grade">grade this lesson</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>

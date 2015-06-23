@@ -1,3 +1,7 @@
+"""
+Course applications handlers
+"""
+
 import datetime
 from app.emails.apply import email_course_application_thank_you, email_course_app_to_smartninja, \
     email_course_application_thank_you_2

@@ -1,0 +1,99 @@
+{% extends "student/base.html" %}
+
+{% block title %}A survey for lesson {{ lesson.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/student">Courses</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/student/course/{{course.get_id}}">{{course.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-book"></i> <a href="/student/course/{{course.get_id}}/lesson/{{lesson.get_id}}">{{lesson.title}}</a>
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Survey for lesson {{ lesson.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p>Please grade lesson "{{ lesson.title }}" and instructor {% for instructor in course.course_instructors %}{{ instructor.name }}{% endfor %}.
+        <strong>This survey is completely anonymous.</strong></p>
+
+    <form action="" method="post">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Statements</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Statement</th>
+                                <th>1 - I do not agree at all</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4 - I completely agree</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for question in questions %}
+                            <tr>
+                                <td>
+                                    {{question}}
+                                </td>
+
+                                <td>
+                                    <input type="radio" name="questions{{loop.index}}" value="1">
+                                </td>
+
+                                <td>
+                                    <input type="radio" name="questions{{loop.index}}" value="2">
+                                </td>
+
+                                <td>
+                                    <input type="radio" name="questions{{loop.index}}" value="3">
+                                </td>
+
+                                <td>
+                                    <input type="radio" name="questions{{loop.index}}" value="4">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 form-group">
+                <h4>Open opinion</h4>
+                <ul>
+                    <li>What did you like the most in this lesson? What was the most interesting? What was the most useful?</li>
+                    <li>What did you dislike in this lesson?</li>
+                    <li>What would you change? Any other recommendation?</li>
+                </ul>
+
+                <textarea class="form-control" name="text"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="submit" class="btn btn-primary center-block">Submit the survey</button>
+                <br>
+                <p class="text-center">Thank you :)</p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock main_content %}
