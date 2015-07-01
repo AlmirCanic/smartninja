@@ -198,7 +198,7 @@ Hello!
 I'd like to discuss with you a possible job opportunity. Please send me an email to {{ user.email() }} if you're interested.
 
 Kind regards,
-{{user.nickname()}}</textarea>
+{{employer.full_name}}{% if employer.partner_title %}, {{employer.partner_title}}{% endif %}</textarea>
                     </div>
 
                     <div class="modal-footer">

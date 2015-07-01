@@ -38,7 +38,7 @@ class CourseInstructor(ndb.Model):
 class Course(ndb.Model):
     title = ndb.StringProperty()
     course_type = ndb.IntegerProperty()
-    level = ndb.IntegerProperty()
+    level = ndb.IntegerProperty()  # 1-beginner, 2-intermediate, 3-advanced
     city = ndb.StringProperty()
     place = ndb.StringProperty()
     category = ndb.StringProperty()

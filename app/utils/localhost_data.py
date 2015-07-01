@@ -38,7 +38,7 @@ class LocalhostFakeDataHandler(Handler):
                                     prices=[Price(price_dot=99.0, price_comma="99,00", summary="All")],
                                     category="Programming", course_instructors=[instructor], currency="EUR",
                                     image_url="http://i.imgur.com/9Dy2wa8.jpg", partners=[],
-                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), level="Beginner")
+                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), level=1)
 
             course2 = Course.create(title="Startup marketing", course_type=curriculum.get_id, city="Ljubljana",
                                     place="TPLJ", spots=10, summary="juhu", description="juhu bruhu",
@@ -46,7 +46,7 @@ class LocalhostFakeDataHandler(Handler):
                                     prices=[Price(price_dot=99.0, price_comma="99,00", summary="All")],
                                     category="Marketing", course_instructors=[instructor], currency="EUR",
                                     image_url="http://i.imgur.com/Wo2RFcg.jpg", partners=[],
-                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), level="Beginner")
+                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), level=1)
 
             # create new users (job searching true)
             student1 = User.short_create(email="bjanko@gmail.com", first_name="Janko", last_name="Bananko")
