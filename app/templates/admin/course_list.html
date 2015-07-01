@@ -43,12 +43,10 @@
                         {% for course in future_courses %}
                         <tr>
                             <td>
-                                <a href="/admin/course/{{course.get_id}}">
-                                    {{ course.title }}
-                                    {% if course.applications_closed %}
+                                <a href="/admin/course/{{course.get_id}}">{{ course.title }}</a>
+                                {% if course.applications_closed %}
                                     <span class="label label-danger">Closed</span>
-                                    {% endif %}
-                                </a>
+                                {% endif %}
                             </td>
                             <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
