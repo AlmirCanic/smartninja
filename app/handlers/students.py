@@ -199,9 +199,19 @@ class StudentProfileEditHandler(Handler):
             job_searching = self.request.get("searching")
             phone_number = self.request.get("phone_number")
             dob = self.request.get("dob")
+
+            programming_year = self.request.get("programming-year")
+            programming_month = self.request.get("programming-month")
+
+            if programming_month and programming_year:
+                started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
+            else:
+                started_programming = None
+
             User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob, github=github_url, job_searching=bool(job_searching),
-                    current_town=current_town, linkedin=linkedin_url, homepage=homepage_url)
+                    current_town=current_town, linkedin=linkedin_url, homepage=homepage_url,
+                    started_programming=started_programming)
             logga("Student %s profile edited." % profile.get_id)
             self.redirect_to("student-profile")
 

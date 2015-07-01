@@ -122,7 +122,10 @@ class AdminUserEditHandler(Handler):
         programming_year = self.request.get("programming-year")
         programming_month = self.request.get("programming-month")
 
-        started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
+        if programming_month and programming_year:
+            started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
+        else:
+            started_programming = None
 
         User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob, github=github, job_searching=bool(job_searching),

@@ -14,7 +14,7 @@
             </ol>
 
             <h1 class="page-header">
-                Job candidates
+                Job candidates {{today}}
             </h1>
         </div>
     </div>
@@ -83,7 +83,12 @@
                                 {{ tag }}{% if not loop.last %},{% endif %}
                             {% endfor %}
                         </p>
-                        <br>
+
+                        {% if candidate.started_programming %}
+                            <p><i class="fa fa-code"></i> <strong>Started programming:</strong> {{candidate.started_programming.strftime('%B %Y')}}</p>
+                        {% else %}
+                            <br>
+                        {% endif %}
 
                         <p><i class="fa fa-location-arrow"></i> <strong>Current town:</strong> {{candidate.current_town}}</p>
                         <br>

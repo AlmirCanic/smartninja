@@ -77,6 +77,48 @@
                     <p>Short summary of yourself (up to 100 chars)</p>
                     <input type="text" class="form-control" placeholder="Summary" value="{{profile.summary}}" name="summary" id="summary">
                 </div>
+                
+                <div class="form-group">
+                    <label>Started programming<sup>*</sup></label>
+                    <p>When did you start programming?</p>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <p>Month</p>
+                            <select class="form-control" name="programming-month">
+                                <option value="{{profile.started_programming.month}}" selected>
+                                    {% if profile.started_programming %}
+                                        {{ profile.started_programming.strftime('%m - %B') }}
+                                    {% endif %}
+                                </option>
+                                <option disabled>------------------------------</option>
+                                <option value="1">01 - January</option>
+                                <option value="2">02 - February</option>
+                                <option value="3">03 - March</option>
+                                <option value="4">04 - April</option>
+                                <option value="5">05 - May</option>
+                                <option value="6">06 - June</option>
+                                <option value="7">07 - July</option>
+                                <option value="8">08 - August</option>
+                                <option value="9">09 - September</option>
+                                <option value="10">10 - October</option>
+                                <option value="11">11 - November</option>
+                                <option value="12">12 - December</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <p>Year</p>
+                            <select class="form-control" name="programming-year">
+                                <option value="{{profile.started_programming.year}}" selected>{{ profile.started_programming.year }}</option>
+                                <option disabled>------------------------------</option>
+                                {% for year in range(1980, 2020)|sort(reverse=True) %}
+                                <option value="{{year}}">{{year}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label>Photo URL<sup>*</sup></label>

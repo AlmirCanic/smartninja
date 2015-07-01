@@ -86,20 +86,24 @@
                     <p>When did you start programming?</p>
 
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <p>Month</p>
                             <select class="form-control" name="programming-month">
-                                <option value="{{this_user.started_programming.month}}" selected>{{ this_user.started_programming.strftime('%m - %b') }}</option>
+                                <option value="{{this_user.started_programming.month}}" selected>
+                                    {% if this_user.started_programming %}
+                                        {{ this_user.started_programming.strftime('%m - %B') }}
+                                    {% endif %}
+                                </option>
                                 <option disabled>------------------------------</option>
-                                <option value="1">1 - January</option>
-                                <option value="2">2 - February</option>
-                                <option value="3">3 - March</option>
-                                <option value="4">4 - April</option>
-                                <option value="5">5 - May</option>
-                                <option value="6">6 - June</option>
-                                <option value="7">7 - July</option>
-                                <option value="8">8 - August</option>
-                                <option value="9">9 - September</option>
+                                <option value="1">01 - January</option>
+                                <option value="2">02 - February</option>
+                                <option value="3">03 - March</option>
+                                <option value="4">04 - April</option>
+                                <option value="5">05 - May</option>
+                                <option value="6">06 - June</option>
+                                <option value="7">07 - July</option>
+                                <option value="8">08 - August</option>
+                                <option value="9">09 - September</option>
                                 <option value="10">10 - October</option>
                                 <option value="11">11 - November</option>
                                 <option value="12">12 - December</option>

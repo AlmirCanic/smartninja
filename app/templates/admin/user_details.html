@@ -48,7 +48,11 @@
 
     <p>Date of birth: {{ this_user.dob }}</p>
     <p>Summary: {{ this_user.summary }}</p>
-    <p>Started programming: {{ this_user.started_programming.strftime('%b %Y') }}</p>
+    <p>Started programming:
+        {% if this_user.started_programming %}
+            {{ this_user.started_programming.strftime('%B %Y') }}
+        {% endif %}
+    </p>
     <p>Job searching: {{ this_user.job_searching }}</p>
     <p>Deleted: {{ this_user.deleted }}</p>
 
@@ -57,7 +61,7 @@
         <a href="/admin/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
     {% else %}
         {% if user.email() == this_user.email %}
-            <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your profile</button></a>
+            <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your this_user</button></a>
         {% endif %}
     {% endif %}
 

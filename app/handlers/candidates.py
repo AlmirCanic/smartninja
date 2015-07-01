@@ -1,3 +1,4 @@
+import datetime
 from google.appengine.api import users
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
@@ -44,7 +45,7 @@ class EmployerCandidatesListHandler(Handler):
         current_user = users.get_current_user()
         employer = Employer.query(Employer.email == current_user.email().lower()).get()
 
-        params = {"candidates": candidates, "employer": employer}
+        params = {"candidates": candidates, "employer": employer, "today": datetime.date.today()}
         return self.render_template("employer/candidates_list.html", params)
 
 

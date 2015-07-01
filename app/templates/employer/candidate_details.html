@@ -43,6 +43,10 @@
                 {% endfor %}
             </p>
 
+            {% if candidate.started_programming %}
+                <p><i class="fa fa-code"></i> <strong>Started programming:</strong> {{candidate.started_programming.strftime('%B %Y')}}</p>
+            {% endif %}
+
             {% if candidate.current_town and candidate.current_town != "None" %}
             <p><i class="fa fa-location-arrow"></i>
                 <strong>Current town</strong>
