@@ -26,17 +26,31 @@
 
         </div>
 
-        <div class="col-lg-5 pull-right">
-            <form action="#">
-                <div class="input-group">
-                    <input class="form-control" placeholder="Search by skills and location (separate by comma)" id="skillSearch">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit" id="searchButton">Go!</button>
-                    </span>
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="row">
+                <form action="#">
+                    <div class="input-group input-group-lg">
+                        <input class="form-control" placeholder="Search by skills and location (separate by comma)" id="skillSearch">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" id="searchButton">Go!</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <a href="#showAll" id="filter-show-all">
+                        <button class="btn btn-primary btn-sm"><i class="fa fa-users"></i> Show all candidates</button>
+                    </a>
+                    <a href="#showAll" id="filter-top-students">
+                        <button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Show only top students</button>
+                    </a>
                 </div>
-            </form>
-            <a href="#showAll" id="filter-show-all">Show all candidates</a> |
-            <a href="#showAll" id="filter-top-students">Show only top students</a>
+            </div>
+
         </div>
     </div>
 
