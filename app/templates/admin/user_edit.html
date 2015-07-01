@@ -82,6 +82,45 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Started programming</label>
+                    <p>When did you start programming?</p>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <p>Month</p>
+                            <select class="form-control" name="programming-month">
+                                <option value="{{this_user.started_programming.month}}" selected>{{ this_user.started_programming.strftime('%m - %b') }}</option>
+                                <option disabled>------------------------------</option>
+                                <option value="1">1 - January</option>
+                                <option value="2">2 - February</option>
+                                <option value="3">3 - March</option>
+                                <option value="4">4 - April</option>
+                                <option value="5">5 - May</option>
+                                <option value="6">6 - June</option>
+                                <option value="7">7 - July</option>
+                                <option value="8">8 - August</option>
+                                <option value="9">9 - September</option>
+                                <option value="10">10 - October</option>
+                                <option value="11">11 - November</option>
+                                <option value="12">12 - December</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <p>Year</p>
+                            <select class="form-control" name="programming-year">
+                                <option value="{{this_user.started_programming.year}}" selected>{{ this_user.started_programming.year }}</option>
+                                <option disabled>------------------------------</option>
+                                {% for year in range(1980, 2020)|sort(reverse=True) %}
+                                <option value="{{year}}">{{year}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
                     <label>Photo URL</label>
                     <input type="text" class="form-control" placeholder="A link (URL) to your photo" value="{{this_user.photo_url}}" name="photo_url" id="photoURL">
                 </div>

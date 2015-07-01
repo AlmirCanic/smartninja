@@ -1,3 +1,4 @@
+import datetime
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
@@ -118,10 +119,14 @@ class AdminUserEditHandler(Handler):
         github = self.request.get("github_url")
         linkedin = self.request.get("linkedin_url")
         homepage = self.request.get("homepage_url")
+        programming_year = self.request.get("programming-year")
+        programming_month = self.request.get("programming-month")
+
+        started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
 
         User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob, github=github, job_searching=bool(job_searching),
-                    current_town=current_town, linkedin=linkedin, homepage=homepage)
+                    current_town=current_town, linkedin=linkedin, homepage=homepage, started_programming=started_programming)
 
         logga("User %s edited." % user_id)
         self.redirect_to("user-details", user_id=int(user_id))

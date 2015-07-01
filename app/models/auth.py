@@ -20,6 +20,7 @@ class User(ndb.Model):
     linkedin_url = ndb.StringProperty()
     homepage_url = ndb.StringProperty()
     cv_blob = ndb.BlobKeyProperty()
+    started_programming = ndb.DateProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)
     grade_top_student = ndb.IntegerProperty(default=0)  # How many times did student receive Top student award by instructor
@@ -64,7 +65,8 @@ class User(ndb.Model):
 
     @classmethod
     def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None,
-               instructor=False, github=None, job_searching=None, current_town=None, linkedin=None, homepage=None):
+               instructor=False, github=None, job_searching=None, current_town=None, linkedin=None, homepage=None,
+               started_programming=None):
         change_name(user, first_name, last_name)
 
         user.address = address
@@ -84,6 +86,8 @@ class User(ndb.Model):
             user.current_town = current_town
         if homepage != None:
             user.homepage_url = homepage
+        if started_programming != None:
+            user.started_programming = started_programming
         user.dob = dob
         user.put()
         return user
