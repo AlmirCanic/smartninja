@@ -61,7 +61,7 @@
         <a href="/admin/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
     {% else %}
         {% if user.email() == this_user.email %}
-            <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your this_user</button></a>
+            <a href="/admin/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your profile</button></a>
         {% endif %}
     {% endif %}
 
