@@ -13,6 +13,9 @@ from app.utils.decorators import employer_required, admin_required
 
 
 # ADMIN
+from app.utils.other import convert_markdown_to_html
+
+
 class AdminContactedCandidatesListHandler(Handler):
     @admin_required
     def get(self):
@@ -60,6 +63,9 @@ class EmployerCandidateDetailsHandler(Handler):
 
         current_user = users.get_current_user()
         employer = Employer.query(Employer.email == current_user.email().lower()).get()
+
+        if candidate.long_description:
+            candidate.long_description = convert_markdown_to_html(candidate.long_description)
 
         params = {"candidate": candidate, "applications": applications, "employer": employer}
         return self.render_template("employer/candidate_details.html", params)

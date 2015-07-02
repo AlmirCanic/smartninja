@@ -2,6 +2,16 @@
 
 {% block title %}Edit user{% endblock title %}
 
+{% block scripts %}
+    <link rel="stylesheet" href="/assets/css/public/bootstrap-markdown.min.css">
+
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.sl.js"></script>
+    <script src="/assets/js/bootstrap-markdown/markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/to-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/script.js"></script>
+{% endblock scripts %}
+
 {% block main_content %}
 <div class="main">
     <!-- Breadcrumb -->
@@ -76,6 +86,13 @@
                     <label>Summary<sup>*</sup></label>
                     <p>Short summary of yourself (up to 100 chars)</p>
                     <input type="text" class="form-control" placeholder="Summary" value="{{profile.summary}}" name="summary" id="summary">
+                </div>
+                
+                <div class="form-group">
+                    <label>Long description<sup>*</sup></label>
+                    <p>Write a bit more <strong>about yourself</strong>, about <strong>projects</strong> you're most proud of (add links) and about your
+                        <strong>working experience</strong> (add months and years).</p>
+                    <textarea name="long-description" class="form-control markdown" rows="6">{{profile.long_description}}</textarea><br>
                 </div>
                 
                 <div class="form-group">

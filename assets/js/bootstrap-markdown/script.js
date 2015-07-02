@@ -1,3 +1,3 @@
 $(function() {
-    $('textarea.markdown').markdown({ language: 'sl' });
+    $('textarea.markdown').markdown({ language: 'en' });
 });

@@ -67,11 +67,17 @@
 
     <hr>
 
+    <h3>Description</h3>
+    <p>{{ this_user.long_description }}</p>
+
+    <hr>
+
     <h3>Grades</h3>
     <p>Score: {{ this_user.grade_avg_score }}</p>
     <p>Tags: {{ this_user.grade_all_tags }}</p>
 
     {% if applications %}
+    <hr>
         <h3>Course applications</h3>
 
         <div class="row">

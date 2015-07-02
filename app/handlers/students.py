@@ -9,7 +9,7 @@ from app.models.course import Course
 from app.models.lesson import Lesson
 from app.models.student import StudentCourse
 from app.utils.decorators import admin_required, student_required
-from app.utils.other import logga
+from app.utils.other import logga, convert_markdown_to_html
 
 
 class AdminStudentCourseList(Handler):
@@ -132,6 +132,9 @@ class StudentProfileDetailsHandler(Handler):
         upload_url = blobstore.create_upload_url(success_path='/student/profile/upload-cv',
                                                  max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
 
+        if profile.long_description:
+            profile.long_description = convert_markdown_to_html(profile.long_description)
+
         params = {"profile": profile, "upload_url": upload_url}
         self.render_template("student/profile.html", params)
 
@@ -203,15 +206,17 @@ class StudentProfileEditHandler(Handler):
             programming_year = self.request.get("programming-year")
             programming_month = self.request.get("programming-month")
 
+            long_description = self.request.get("long-description")
+
             if programming_month and programming_year:
                 started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
             else:
                 started_programming = None
 
             User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
-                    summary=summary, photo_url=photo_url, dob=dob, github=github_url, job_searching=bool(job_searching),
-                    current_town=current_town, linkedin=linkedin_url, homepage=homepage_url,
-                    started_programming=started_programming)
+                        summary=summary, photo_url=photo_url, dob=dob, github=github_url, job_searching=bool(job_searching),
+                        current_town=current_town, linkedin=linkedin_url, homepage=homepage_url,
+                        started_programming=started_programming, long_description=long_description)
             logga("Student %s profile edited." % profile.get_id)
             self.redirect_to("student-profile")
 

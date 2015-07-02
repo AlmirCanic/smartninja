@@ -23,6 +23,9 @@
     <img src="{{profile.photo_url}}" class="img-thumbnail" width="200px">
     <br>
     <br>
+    <a href="/student/profile/edit"><button class="btn btn-success">Edit your profile</button></a>
+    <br>
+    <br>
     <p><strong>Email:</strong> {{ profile.email }}</p>
     <p><strong>Address:</strong> {{ profile.address }}</p>
     <p><strong>Current town:</strong> {{ profile.current_town }}</p>
@@ -52,9 +55,15 @@
 
     <p><sup>*</sup> Set this on True, if you want to have your profile presented to potential employers.</p>
 
-    <a href="/student/profile/edit"><button class="btn btn-success">Edit your profile</button></a>
+
 
     <hr>
+
+    <h3>Long description</h3>
+    <p>{{ profile.long_description }}</p>
+
+    <hr>
+
 </div>
 
 <!-- Modal - upload CV -->

@@ -15,6 +15,7 @@ class User(ndb.Model):
     instructor_courses = ndb.StringProperty(repeated=True)  # list of course IDs where this user is instructor
     instructor = ndb.BooleanProperty(default=False)  # is user an instructor?
     summary = ndb.StringProperty()
+    long_description = ndb.TextProperty()
     photo_url = ndb.StringProperty()
     github_url = ndb.StringProperty()
     linkedin_url = ndb.StringProperty()
@@ -66,7 +67,7 @@ class User(ndb.Model):
     @classmethod
     def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None,
                instructor=False, github=None, job_searching=None, current_town=None, linkedin=None, homepage=None,
-               started_programming=None):
+               started_programming=None, long_description=None):
         change_name(user, first_name, last_name)
 
         user.address = address
@@ -88,6 +89,8 @@ class User(ndb.Model):
             user.homepage_url = homepage
         if started_programming != None:
             user.started_programming = started_programming
+        if long_description != None:
+            user.long_description = long_description
         user.dob = dob
         user.put()
         return user

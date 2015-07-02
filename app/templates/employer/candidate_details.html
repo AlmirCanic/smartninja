@@ -130,6 +130,11 @@
         </div>
     </div>
 
+    {% if candidate.long_description %}
+    <h2>Description</h2>
+    <p>{{candidate.long_description}}</p>
+    {% endif %}
+
     <!-- Courses -->
     <h2>{{candidate.first_name}}'s courses</h2>
     <br>
