@@ -1,8 +1,23 @@
 $(document).ready(function() {
     var candidatesList = [];
 
+    // only unique values when joining two arrays. Usage: var array3 = arrayUnique(array1.concat(array2));
+    function arrayUnique(array) {
+        var a = array.concat();
+        for(var i=0; i<a.length; ++i) {
+            for(var j=i+1; j<a.length; ++j) {
+                if(a[i] === a[j])
+                    a.splice(j--, 1);
+            }
+        }
+
+        return a;
+    };
+
+    // init
     $(".each-candidate").each(function() {
         var gradeTag = $(this).attr("data-grade-tags");
+        var otherSkills = $(this).attr("data-other-skills");
         var userId = $(this).attr("id");
         var currentTown = $(this).attr("data-current-town");
         var gradeScore = $(this).attr("data-grade-score");
@@ -10,13 +25,18 @@ $(document).ready(function() {
 
         // remove python list brackets and unicode u'
         gradeTag = gradeTag.replace("[", "").replace("]", "").replace(/u'/g, "").replace(/'/g, "");
+        otherSkills = otherSkills.replace("[", "").replace("]", "").replace(/u'/g, "").replace(/'/g, "");
         var allTags = gradeTag.split(", ");
+        var otherSkillsList = otherSkills.split(", ");
+
         allTags = $.map(allTags, function(n,i){return n.toLowerCase();}); // change tags (skills) to lowercase
+        otherSkillsList = $.map(otherSkillsList, function(n,i){return n.toLowerCase();}); // change tags (skills) to lowercase
 
         var currentTownList = currentTown.split(", ");
         currentTownList = $.map(currentTownList, function(n,i){return n.toLowerCase();}); // change towns to lowercase
 
-        allTags = allTags.concat(currentTownList);
+        allTags = arrayUnique(allTags.concat(currentTownList));
+        allTags = arrayUnique(allTags.concat(otherSkillsList));
 
         var candidate = {userId: userId, tags: allTags, score: gradeScore, topStudent: topStudent};
 
@@ -25,6 +45,7 @@ $(document).ready(function() {
         //alert(candidatesList);
     });
 
+    // show only top candidates
     $("#filter-top-students").click(function(e) {
         e.preventDefault();
         var candidate;
@@ -37,6 +58,7 @@ $(document).ready(function() {
         }
     });
 
+    // Show all candidates
     $("#filter-show-all").click(function(e) {
         e.preventDefault();
         var candidate;
@@ -45,6 +67,7 @@ $(document).ready(function() {
         }
     });
 
+    // search
     $("#searchButton").click(function(e) {
         e.preventDefault();
 
@@ -63,7 +86,7 @@ $(document).ready(function() {
         skillsList = $.map(skillsList, function(n,i){return n.toLowerCase();}); // change skills to lowercase
 
         // remove redundant white spaces
-        for(s in skillsList) {
+        for(var s in skillsList) {
             if(skillsList[s].charAt(0) == " ") {
                 skillsList[s] = skillsList[s].substring(1);
             }
@@ -83,5 +106,7 @@ $(document).ready(function() {
             }
         }
     });
+
+
 });
 

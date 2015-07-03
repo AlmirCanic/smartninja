@@ -9,7 +9,7 @@ from app.models.course import Course
 from app.models.lesson import Lesson
 from app.models.student import StudentCourse
 from app.utils.decorators import admin_required, student_required
-from app.utils.other import logga, convert_markdown_to_html
+from app.utils.other import logga, convert_markdown_to_html, convert_tags_to_string, convert_tags_to_list
 
 
 class AdminStudentCourseList(Handler):
@@ -135,7 +135,9 @@ class StudentProfileDetailsHandler(Handler):
         if profile.long_description:
             profile.long_description = convert_markdown_to_html(profile.long_description)
 
-        params = {"profile": profile, "upload_url": upload_url}
+        all_skills = list(set(profile.grade_all_tags + profile.other_skills))
+
+        params = {"profile": profile, "upload_url": upload_url, "all_skills": all_skills}
         self.render_template("student/profile.html", params)
 
 
@@ -176,10 +178,14 @@ class StudentProfileEditHandler(Handler):
         current_user = users.get_current_user()
         profile = User.query(User.email == str(current_user.email()).lower()).get()
 
+        courses_skills = convert_tags_to_string(profile.grade_all_tags)
+
+        other_skills = convert_tags_to_string(profile.other_skills)
+
         if not profile:
             return self.redirect_to("forbidden")
         else:
-            params = {"profile": profile}
+            params = {"profile": profile, "other_skills": other_skills, "courses_skills": courses_skills}
             self.render_template("student/profile_edit.html", params)
 
     @student_required
@@ -208,6 +214,10 @@ class StudentProfileEditHandler(Handler):
 
             long_description = self.request.get("long-description")
 
+            other_skills = self.request.get("skills")
+
+            skills_list = convert_tags_to_list(other_skills)
+
             if programming_month and programming_year:
                 started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
             else:
@@ -216,7 +226,8 @@ class StudentProfileEditHandler(Handler):
             User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                         summary=summary, photo_url=photo_url, dob=dob, github=github_url, job_searching=bool(job_searching),
                         current_town=current_town, linkedin=linkedin_url, homepage=homepage_url,
-                        started_programming=started_programming, long_description=long_description)
+                        started_programming=started_programming, long_description=long_description,
+                        other_skills=skills_list)
             logga("Student %s profile edited." % profile.get_id)
             self.redirect_to("student-profile")
 

@@ -48,6 +48,7 @@
 
     <p>Date of birth: {{ this_user.dob }}</p>
     <p>Summary: {{ this_user.summary }}</p>
+    <p>Skills: {{ other_skills }}</p>
     <p>Started programming:
         {% if this_user.started_programming %}
             {{ this_user.started_programming.strftime('%B %Y') }}
@@ -74,7 +75,7 @@
 
     <h3>Grades</h3>
     <p>Score: {{ this_user.grade_avg_score }}</p>
-    <p>Tags: {{ this_user.grade_all_tags }}</p>
+    <p>Tags: {{ grade_all_tags }}</p>
 
     {% if applications %}
     <hr>

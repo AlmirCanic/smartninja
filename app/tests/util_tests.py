@@ -24,7 +24,7 @@ def test_converting_prices_data():
 
 
 def test_converting_tags_to_list():
-    data = "12 weeks,programming,Ljubljana"
+    data = " 12 weeks, programming ,Ljubljana "
 
     l = convert_tags_to_list(data)
 
@@ -43,7 +43,7 @@ def test_converting_tags_to_string():
     print("test_converting_tags_to_string() test passed successfully.")
 
 # RUN TESTS
-test_converting_markdown_to_html()
-test_converting_prices_data()
+#test_converting_markdown_to_html()
+#test_converting_prices_data()
 test_converting_tags_to_list()
-test_converting_tags_to_string()
+#test_converting_tags_to_string()

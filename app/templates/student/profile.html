@@ -32,6 +32,11 @@
     <p><strong>Phone number:</strong> {{ profile.phone_number }}</p>
     <p><strong>Date of birth:</strong> {{ profile.dob }}</p>
     <p><strong>Short description:</strong> {{ profile.summary }}</p>
+    <p><strong>Skills:</strong>
+        {% for tag in all_skills %}
+            {{ tag }}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    </p>
 
     <p><strong>Started programming:</strong>
         {% if profile.started_programming %}

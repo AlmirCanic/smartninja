@@ -61,7 +61,8 @@
                 {% for candidate in candidates %}
                 <div class="row each-candidate" data-grade-tags="{{candidate.grade_all_tags}}"
                      data-grade-score="{{candidate.grade_avg_score}}" data-current-town="{{candidate.current_town}}"
-                     data-top-student="{{candidate.grade_top_student}}" id="{{candidate.get_id}}">
+                     data-top-student="{{candidate.grade_top_student}}" data-other-skills="{{candidate.other_skills}}"
+                     id="{{candidate.get_id}}">
                     <br>
                     <br>
                     <div class="col-lg-3">
@@ -84,14 +85,23 @@
                             {% endfor %}
                         </p>
 
-                        {% if candidate.started_programming %}
-                            <p><i class="fa fa-code"></i> <strong>Started programming:</strong> {{candidate.started_programming.strftime('%B %Y')}}</p>
+                        {% if candidate.other_skills %}
+                        <p><i class="fa fa-certificate"></i> <strong>Other skills:</strong>
+                            {% for tag in candidate.other_skills %}
+                                {{ tag }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </p>
                         {% else %}
                             <br>
                         {% endif %}
 
                         <p><i class="fa fa-location-arrow"></i> <strong>Current town:</strong> {{candidate.current_town}}</p>
-                        <br>
+
+                        {% if candidate.started_programming %}
+                            <p><i class="fa fa-code"></i> <strong>Started programming:</strong> {{candidate.started_programming.strftime('%B %Y')}}</p>
+                        {% else %}
+                            <br>
+                        {% endif %}
 
                         <p><i class="fa fa-comment"></i> <strong>About me:</strong> {{candidate.summary}}</p>
 

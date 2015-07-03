@@ -39,7 +39,20 @@ def convert_partners_data(data):
 
 
 def convert_tags_to_list(tags):
-    return tags.split(",")
+    tags = tags.split(",")
+
+    new_tags = []
+
+    for tag in tags:
+        if tag.startswith(" "):
+            tag = tag[1:]
+
+        if tag.endswith(" "):
+            tag = tag[:-1]
+
+        new_tags.append(tag)
+
+    return new_tags
 
 
 def convert_tags_to_string(tags):

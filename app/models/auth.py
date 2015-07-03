@@ -20,10 +20,11 @@ class User(ndb.Model):
     github_url = ndb.StringProperty()
     linkedin_url = ndb.StringProperty()
     homepage_url = ndb.StringProperty()
+    other_skills = ndb.StringProperty(repeated=True)  # skills put in by the user
     cv_blob = ndb.BlobKeyProperty()
     started_programming = ndb.DateProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
-    grade_all_tags = ndb.StringProperty(repeated=True)
+    grade_all_tags = ndb.StringProperty(repeated=True)  # skills user acquired at smartninja courses. Other skills are under other_skills field
     grade_top_student = ndb.IntegerProperty(default=0)  # How many times did student receive Top student award by instructor
     job_searching = ndb.BooleanProperty(default=False)
     contacted_by = ndb.IntegerProperty(repeated=True)  # companies (partner ids) or employers that contacted user for a job opportunity
@@ -67,7 +68,7 @@ class User(ndb.Model):
     @classmethod
     def update(cls, user, first_name, last_name, address, phone_number, summary, photo_url, dob, email=None,
                instructor=False, github=None, job_searching=None, current_town=None, linkedin=None, homepage=None,
-               started_programming=None, long_description=None):
+               started_programming=None, long_description=None, other_skills=None):
         change_name(user, first_name, last_name)
 
         user.address = address
@@ -91,6 +92,8 @@ class User(ndb.Model):
             user.started_programming = started_programming
         if long_description != None:
             user.long_description = long_description
+        if other_skills != None:
+            user.other_skills = other_skills
         user.dob = dob
         user.put()
         return user

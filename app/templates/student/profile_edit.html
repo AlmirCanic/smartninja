@@ -87,6 +87,13 @@
                     <p>Short summary of yourself (up to 100 chars)</p>
                     <input type="text" class="form-control" placeholder="Summary" value="{{profile.summary}}" name="summary" id="summary">
                 </div>
+
+                <div class="form-group">
+                    <label>Skills<sup>*</sup></label>
+                    <p>You have these skills from courses: {{courses_skills}}. Add some other programming skills.
+                        Separate by comma (e.g.: Python, JavaScript, HTML).</p>
+                    <input type="text" class="form-control" placeholder="Add your skills (separate by comma), e.g.: HTML, CSS, Python" value="{{other_skills}}" name="skills">
+                </div>
                 
                 <div class="form-group">
                     <label>Long description<sup>*</sup></label>
