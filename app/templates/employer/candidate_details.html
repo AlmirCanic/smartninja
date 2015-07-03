@@ -171,11 +171,41 @@
             </p>
 
             <p data-toggle="tooltip" data-placement="left" title="1 is the worst, 4 is the best">
-                <i class="fa fa-graduation-cap"></i> <strong>Grade:</strong> {{application.grade_score}}
-                {% if application.grade_top_student %}
-                    <i class="fa fa-star"></i> Top student
+                <i class="fa fa-graduation-cap"></i> <strong>Grade:</strong>
+
+                {% if application.grade_score == 0 %}
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.grade_score == 1 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.grade_score == 2 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.grade_score == 3 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.grade_score == 4 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
                 {% endif %}
+
+                ({{application.grade_score}}/4)
             </p>
+
+            {% if application.grade_top_student %}
+                <p><i class="fa fa-star"></i> Top student</p>
+            {% endif %}
 
             <p>
                 <i class="fa fa-certificate"></i>
