@@ -43,6 +43,14 @@
                 {% endfor %}
             </p>
 
+            {% if candidate.other_skills %}
+            <p><i class="fa fa-certificate"></i> <strong>Other skills:</strong>
+                {% for tag in candidate.other_skills %}
+                    {{ tag }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            </p>
+            {% endif %}
+
             {% if candidate.started_programming %}
                 <p><i class="fa fa-code"></i> <strong>Started programming:</strong> {{candidate.started_programming.strftime('%B %Y')}}</p>
             {% endif %}

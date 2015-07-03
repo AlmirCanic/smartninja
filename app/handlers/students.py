@@ -218,6 +218,13 @@ class StudentProfileEditHandler(Handler):
 
             skills_list = convert_tags_to_list(other_skills)
 
+            # add only skilly that are not already in skills from courses (grade_all_tags)
+            skills_list_clean = []
+
+            for skill in skills_list:
+                if skill not in profile.grade_all_tags:
+                    skills_list_clean.append(skill)
+
             if programming_month and programming_year:
                 started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
             else:
@@ -227,7 +234,7 @@ class StudentProfileEditHandler(Handler):
                         summary=summary, photo_url=photo_url, dob=dob, github=github_url, job_searching=bool(job_searching),
                         current_town=current_town, linkedin=linkedin_url, homepage=homepage_url,
                         started_programming=started_programming, long_description=long_description,
-                        other_skills=skills_list)
+                        other_skills=skills_list_clean)
             logga("Student %s profile edited." % profile.get_id)
             self.redirect_to("student-profile")
 
