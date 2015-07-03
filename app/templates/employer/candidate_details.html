@@ -43,7 +43,7 @@
                 {% endfor %}
             </p>
 
-            {% if candidate.other_skills %}
+            {% if candidate.other_skills or candidate.other_skills != [] %}
             <p><i class="fa fa-certificate"></i> <strong>Other skills:</strong>
                 {% for tag in candidate.other_skills %}
                     {{ tag }}{% if not loop.last %},{% endif %}
