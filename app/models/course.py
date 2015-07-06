@@ -52,6 +52,8 @@ class Course(ndb.Model):
     price = ndb.FloatProperty(repeated=True)
     instructor = ndb.IntegerProperty()
     instructor_name = ndb.StringProperty()
+    franchise_id = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
     currency = ndb.StringProperty()
     image_url = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)

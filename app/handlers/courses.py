@@ -14,7 +14,12 @@ from app.utils.other import convert_markdown_to_html, convert_prices_data, conve
 class AdminCourseListHandler(Handler):
     @admin_required
     def get(self):
-        courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+        franchise_id = self.request.get("franchise")  # there might be no franchise id in the request (check URL)
+        if franchise_id:
+            courses = Course.query(Course.deleted == False, Course.franchise_id == int(franchise_id)).order(Course.start_date).fetch()
+        else:
+            courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+
         past_courses = []
         current_courses = []
         future_courses = []

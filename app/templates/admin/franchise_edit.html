@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Add new franchise{% endblock title %}
+{% block title %}Edit franchise{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -11,13 +11,16 @@
                 <li>
                     <i class="fa fa-institution"></i>  <a href="/admin/franchises">Franchises</a>
                 </li>
+                <li>
+                    <i class="fa fa-table"></i>  <a href="/admin/franchise/{{franchise.get_id}}">{{franchise.title}}</a>
+                </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> Add new franchise
+                    <i class="fa fa-plus-square-o"></i> Edit franchise
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Add new franchise
+                Edit {{franchise.title}}
             </h1>
         </div>
     </div>
@@ -25,51 +28,51 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/admin/franchise/add" method="post">
+            <form action="/admin/franchise/{{franchise.get_id}}/edit" method="post">
 
                 <div class="form-group">
                     <label>Title</label>
                     <p>Franchise title within SmartNinja group</p>
-                    <input type="text" class="form-control" placeholder="Title" name="title">
+                    <input type="text" class="form-control" value="{{franchise.title}}" name="title">
                 </div>
 
                 <div class="form-group">
                     <label>Company name</label>
                     <p>Full company name</p>
-                    <input type="text" class="form-control" placeholder="Company full name" name="company">
+                    <input type="text" class="form-control" value="{{franchise.company_full_name}}" name="company">
                 </div>
 
                 <div class="form-group">
                     <label>Street address</label>
-                    <input type="text" class="form-control" placeholder="Street address" name="street">
+                    <input type="text" class="form-control" value="{{franchise.street}}" name="street">
                 </div>
 
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" class="form-control" placeholder="City" name="city">
+                    <input type="text" class="form-control" value="{{franchise.city}}" name="city">
                 </div>
 
                 <div class="form-group">
                     <label>ZIP</label>
-                    <input type="text" class="form-control" placeholder="ZIP" name="zip">
+                    <input type="text" class="form-control" value="{{franchise.zip}}" name="zip">
                 </div>
 
                 <div class="form-group">
                     <label>Country</label>
-                    <input type="text" class="form-control" placeholder="Country" name="country">
+                    <input type="text" class="form-control" value="{{franchise.country}}" name="country">
                 </div>
 
                 <div class="form-group">
                     <label>Website</label>
-                    <input type="text" class="form-control" placeholder="Website URL" name="website">
+                    <input type="text" class="form-control" value="{{franchise.website}}" name="website">
                 </div>
 
                 <div class="form-group">
                     <label>Tax number</label>
-                    <input type="text" class="form-control" placeholder="Tax number" name="tax-number">
+                    <input type="text" class="form-control" value="{{franchise.tax_number}}" name="tax-number">
                 </div>
 
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Update</button>
             </form>
         </div>
     </div>
