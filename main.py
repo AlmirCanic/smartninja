@@ -84,7 +84,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
 
     # franchise big button updates
-    webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
+    #webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
 
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),

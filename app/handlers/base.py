@@ -50,10 +50,4 @@ class SecuredSiteHandler(Handler):
 class FranchiseUpdateButtonHandler(Handler):
     @admin_required
     def post(self):
-        courses = Course.query().fetch()
-        franchise_list = Franchise.query().fetch()
-
-        for course in courses:
-            course.franchise_id = franchise_list[0].get_id
-            course.franchise_title = franchise_list[0].title
-            course.put()
+        pass
