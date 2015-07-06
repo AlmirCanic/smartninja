@@ -2,6 +2,8 @@ import os
 import jinja2
 import webapp2
 from google.appengine.api import users
+from app.models.course import Course
+from app.models.franchise import Franchise
 from app.utils import filters
 from app.utils.decorators import admin_required
 
@@ -43,3 +45,15 @@ class SecuredSiteHandler(Handler):
     @admin_required
     def get(self):
         self.render_template("admin/secured.html")
+
+
+class FranchiseUpdateButtonHandler(Handler):
+    @admin_required
+    def post(self):
+        courses = Course.query().fetch()
+        franchise_list = Franchise.query().fetch()
+
+        for course in courses:
+            course.franchise_id = franchise_list[0].get_id
+            course.franchise_title = franchise_list[0].title
+            course.put()

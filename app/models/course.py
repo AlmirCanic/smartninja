@@ -52,6 +52,8 @@ class Course(ndb.Model):
     price = ndb.FloatProperty(repeated=True)
     instructor = ndb.IntegerProperty()
     instructor_name = ndb.StringProperty()
+    franchise_id = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
     currency = ndb.StringProperty()
     image_url = ndb.StringProperty()
     deleted = ndb.BooleanProperty(default=False)
@@ -67,17 +69,17 @@ class Course(ndb.Model):
 
     @classmethod
     def create(cls, title, course_type, city, place, spots, summary, description, start_date, end_date, prices, currency,
-               category, course_instructors, image_url, partners, tags, level=None):
+               category, course_instructors, image_url, partners, tags, franchise, level=None):
         course = cls(title=title, course_type=course_type, city=city, place=place, spots=spots, summary=summary,
                      description=description, start_date=start_date, end_date=end_date, prices=prices, currency=currency,
                      category=category, course_instructors=course_instructors, image_url=image_url, partners=partners,
-                     tags=tags, level=level)
+                     tags=tags, level=level, franchise_id=franchise.get_id, franchise_title=franchise.title)
         course.put()
         return course
 
     @classmethod
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
-               currency, category, course_instructors, image_url, partners, tags, closed, level):
+               currency, category, course_instructors, image_url, partners, tags, closed, franchise, level):
 
         if course.title != title or course.start_date != start_date or course.city != city or course.level != level:
             applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
@@ -112,6 +114,8 @@ class Course(ndb.Model):
         course.image_url = image_url
         course.tags = tags
         course.level = level
+        course.franchise_id = franchise.get_id
+        course.franchise_title = franchise.title
         course.applications_closed = closed
         course.put()
         return course

@@ -1,0 +1,61 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Franchises{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-institution"></i> Franchises
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> <a href="/admin/franchise/add">Add new franchise</a>
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Franchises
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    {% if franchises %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th>Website</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for franchise in franchises %}
+                        <tr>
+                            <td><a href="/admin/franchise/{{franchise.get_id}}">{{ franchise.title }}</a></td>
+                            <td>{{ franchise.city }}</td>
+                            <td>{{ franchise.country }}</td>
+                            <td><a href="{{ franchise.website }}">{{ franchise.website }}</a></td>
+                            <td>{{ franchise.created.strftime('%d.%m.%Y at %H:%M') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No franchises</p>
+    {% endif %}
+
+</div>
+{% endblock main_content %}

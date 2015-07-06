@@ -3,6 +3,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, Price, CourseInstructor, CourseApplication
 from app.models.employer import Employer
+from app.models.franchise import Franchise
 from app.models.instructor import Instructor
 from app.models.student import StudentCourse
 from app.utils.decorators import admin_required
@@ -31,6 +32,11 @@ class LocalhostFakeDataHandler(Handler):
             instructor = CourseInstructor(name=admin.get_full_name, summary=admin.summary,
                                           photo_url=admin.photo_url, user_id=admin.get_id)
 
+            # generate franchise
+            franchise = Franchise.create(title="SmartNinja Slovenija", full_company_name="SNIT d.o.o.", street="Bla 12",
+                                         city="Novo mesto", zip="8000", country="Slovenia", website="je ni",
+                                         tax_number="32543254")
+
             # create courses
             course1 = Course.create(title="HTML Weekend", course_type=curriculum.get_id, city="Ljubljana",
                                     place="Poligon", spots=10, summary="bla", description="bla bla",
@@ -38,7 +44,7 @@ class LocalhostFakeDataHandler(Handler):
                                     prices=[Price(price_dot=99.0, price_comma="99,00", summary="All")],
                                     category="Programming", course_instructors=[instructor], currency="EUR",
                                     image_url="http://i.imgur.com/9Dy2wa8.jpg", partners=[],
-                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), level=1)
+                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), franchise=franchise, level=1)
 
             course2 = Course.create(title="Startup marketing", course_type=curriculum.get_id, city="Ljubljana",
                                     place="TPLJ", spots=10, summary="juhu", description="juhu bruhu",
@@ -46,7 +52,7 @@ class LocalhostFakeDataHandler(Handler):
                                     prices=[Price(price_dot=99.0, price_comma="99,00", summary="All")],
                                     category="Marketing", course_instructors=[instructor], currency="EUR",
                                     image_url="http://i.imgur.com/Wo2RFcg.jpg", partners=[],
-                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), level=1)
+                                    tags=convert_tags_to_list("2 days,HTML,Ljubljana"), franchise=franchise, level=1)
 
             # create new users (job searching true)
             student1 = User.short_create(email="bjanko@gmail.com", first_name="Janko", last_name="Bananko")

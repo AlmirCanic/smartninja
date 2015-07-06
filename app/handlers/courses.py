@@ -3,6 +3,7 @@ import datetime
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType, CourseInstructor
+from app.models.franchise import Franchise
 from app.models.instructor import Instructor
 from app.models.partner import Partner
 from app.utils.csrf import get_csrf
@@ -14,7 +15,12 @@ from app.utils.other import convert_markdown_to_html, convert_prices_data, conve
 class AdminCourseListHandler(Handler):
     @admin_required
     def get(self):
-        courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+        franchise_id = self.request.get("franchise")  # there might be no franchise id in the request (check URL)
+        if franchise_id:
+            courses = Course.query(Course.deleted == False, Course.franchise_id == int(franchise_id)).order(Course.start_date).fetch()
+        else:
+            courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
+
         past_courses = []
         current_courses = []
         future_courses = []
@@ -62,11 +68,14 @@ class AdminCourseAddHandler(Handler):
         course_types = CourseType.query(CourseType.deleted == False).fetch()
         instructors = Instructor.query().fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
-        params = {"course_types": course_types, "instructors": instructors, "partners": partners}
+        franchise_list = Franchise.query(Franchise.deleted == False).fetch()
+        params = {"course_types": course_types, "instructors": instructors, "partners": partners,
+                  "franchises": franchise_list}
         self.render_template("admin/course_add.html", params)
 
     @admin_required
     def post(self):
+        franchise_id = self.request.get("franchise")
         course_type = self.request.get("course-type")
         title = self.request.get("title")
         city = self.request.get("city")
@@ -105,11 +114,13 @@ class AdminCourseAddHandler(Handler):
             start = start_date.split("/")
             end = end_date.split("/")
 
+            franchise = Franchise.get_by_id(int(franchise_id))
+
             course = Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
                           description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
                           end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
                           category=category, course_instructors=[course_instructor], image_url=image_url,
-                          partners=partners, tags=tags, level=int(level))
+                          partners=partners, tags=tags, franchise=franchise, level=int(level))
             logga("Course %s added." % course.get_id)
             self.redirect_to("course-list")
 
@@ -158,6 +169,7 @@ class AdminCourseEditHandler(Handler):
         tags = self.request.get("tags")
         closed = self.request.get("closed")
         level = self.request.get("level")
+        franchise_id = self.request.get("franchise")
 
         course = Course.get_by_id(int(course_id))
 
@@ -180,11 +192,14 @@ class AdminCourseEditHandler(Handler):
             start = start_date.split("/")
             end = end_date.split("/")
 
+            franchise = Franchise.get_by_id(int(franchise_id))
+
             Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
                           description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
                           end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
                           summary=summary, category=category, course_instructors=[course_instructor],
-                          image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level))
+                          image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level),
+                          franchise=franchise)
             logga("Course %s edited." % course_id)
             self.redirect_to("course-details", course_id=int(course_id))
 

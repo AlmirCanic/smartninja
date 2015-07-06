@@ -9,7 +9,7 @@ from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
     AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler, AdminCourseApplicationMoveStudentHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
     OopsHandler
-from app.handlers.base import SecuredSiteHandler, AdminHandler
+from app.handlers.base import SecuredSiteHandler, AdminHandler, FranchiseUpdateButtonHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
     InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
@@ -27,6 +27,8 @@ from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTyp
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
 from app.handlers.employers import AdminEmployersListHandler, AdminEmployerAddHandler, AdminEmployerDeleteHandler, \
     EmployerProfileDetailsHandler, EmployerProfileEditHandler
+from app.handlers.franchises import AdminFranchiseListHandler, AdminFranchiseAddHandler, AdminFranchiseDetailsHandler, \
+    AdminFranchiseEditHandler, AdminFranchiseDeleteHandler
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
@@ -81,9 +83,19 @@ app = webapp2.WSGIApplication([
     # fake localhost data
     webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
 
+    # franchise big button updates
+    webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
+
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
+
+    # courses
+    webapp2.Route('/admin/franchises', AdminFranchiseListHandler, name="admin-franchise-list"),
+    webapp2.Route('/admin/franchise/add', AdminFranchiseAddHandler, name="admin-franchise-add"),
+    webapp2.Route('/admin/franchise/<franchise_id:\d+>', AdminFranchiseDetailsHandler, name="admin-franchise-details"),
+    webapp2.Route('/admin/franchise/<franchise_id:\d+>/edit', AdminFranchiseEditHandler, name="admin-franchise-edit"),
+    webapp2.Route('/admin/franchise/<franchise_id:\d+>/delete', AdminFranchiseDeleteHandler, name="admin-franchise-delete"),
 
     # courses
     webapp2.Route('/admin/courses', AdminCourseListHandler, name="course-list"),
