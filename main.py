@@ -27,6 +27,7 @@ from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTyp
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
 from app.handlers.employers import AdminEmployersListHandler, AdminEmployerAddHandler, AdminEmployerDeleteHandler, \
     EmployerProfileDetailsHandler, EmployerProfileEditHandler
+from app.handlers.franchises import AdminFranchiseListHandler, AdminFranchiseAddHandler
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
@@ -84,6 +85,10 @@ app = webapp2.WSGIApplication([
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
+
+    # courses
+    webapp2.Route('/admin/franchises', AdminFranchiseListHandler, name="admin-franchise-list"),
+    webapp2.Route('/admin/franchise/add', AdminFranchiseAddHandler, name="admin-franchise-add"),
 
     # courses
     webapp2.Route('/admin/courses', AdminCourseListHandler, name="course-list"),
