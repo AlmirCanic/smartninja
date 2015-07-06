@@ -53,8 +53,20 @@
     <div class="row">
         <div class="col-lg-7">
             <form action="/admin/course/{{course.get_id}}/edit" method="post">
+
                 <div class="form-group">
-                    <label>Type</label>
+                    <label>Franchise</label>
+                    <select class="form-control" name="franchise">
+                        <option value="{{course.franchise_id}}" selected>{{ course.franchise_title }}</option>
+                        <option disabled>------------------------------</option>
+                        {% for franchise in franchises %}
+                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Curriculum</label>
                     <select class="form-control" name="course-type" id="courseType">
                         <option value="{{course.course_type}}" selected>{{ selected_course_type.title }}</option>
                         <option disabled>------------------------------</option>
@@ -120,7 +132,13 @@
 
                 <div class="form-group">
                     <label>Category (like Programming, Graphic design etc.)</label>
-                    <input type="text" class="form-control" value="{{course.category}}" placeholder="Category" name="category" id="courseCategory">
+                    <select class="form-control" name="category">
+                        <option value="{{course.category}}" selected>{{ course.category }}</option>
+                        <option disabled>------------------------------</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Graphic design">Graphic design</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

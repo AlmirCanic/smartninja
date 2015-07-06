@@ -32,6 +32,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Franchise</th>
                             <th>Place</th>
                             <th>Start date</th>
                             <th>End date</th>
@@ -48,6 +49,7 @@
                                     <span class="label label-danger">Closed</span>
                                 {% endif %}
                             </td>
+                            <td>{{ course.franchise_title }}</td>
                             <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
                             <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>

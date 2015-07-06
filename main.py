@@ -9,7 +9,7 @@ from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
     AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler, AdminCourseApplicationMoveStudentHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
     OopsHandler
-from app.handlers.base import SecuredSiteHandler, AdminHandler
+from app.handlers.base import SecuredSiteHandler, AdminHandler, FranchiseUpdateButtonHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
     InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
@@ -82,6 +82,9 @@ app = webapp2.WSGIApplication([
 # ADMIN URLS
     # fake localhost data
     webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
+
+    # franchise big button updates
+    webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
 
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
