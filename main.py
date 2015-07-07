@@ -21,7 +21,7 @@ from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
     AdminCourseAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, PublicCourseListHandler, \
-    PublicCourseDetailsHandler, AdminCourseExportDataHandler
+    PublicCourseDetailsHandler, AdminCourseExportDataHandler, ManagerCourseListHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
@@ -192,6 +192,9 @@ app = webapp2.WSGIApplication([
     # lesson surveys
     webapp2.Route('/admin/lesson-surveys', AdminLessonSurveyList, name="admin-lesson-survey-list"),
     webapp2.Route('/admin/lesson-survey/<lesson_survey_id:\d+>', AdminLessonSurveyDetails, name="admin-lesson-survey-details"),
+
+# MANAGER URLS
+    webapp2.Route('/manager', ManagerCourseListHandler, name="manager"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

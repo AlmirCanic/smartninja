@@ -2,6 +2,7 @@ from google.appengine.api import users
 from webapp2 import redirect_to
 from app.models.employer import Employer
 from app.models.instructor import Instructor
+from app.models.manager import Manager
 from app.models.partner import PartnerUserCourse
 from app.models.student import StudentCourse
 from app.settings import ADMINS
@@ -13,6 +14,21 @@ def admin_required(handler):
         if user:
             email = user.email().lower()
             if email in ADMINS:
+                return handler(self, *args, **kwargs)
+            else:
+                return redirect_to("forbidden")
+        else:
+            return self.redirect(users.create_login_url(self.request.uri))
+    return check_login
+
+
+def manager_required(handler):
+    def check_login(self, *args, **kwargs):
+        user = users.get_current_user()
+        if user:
+            email = user.email().lower()
+            managers = Manager.query(Manager.email == email).fetch()
+            if managers:
                 return handler(self, *args, **kwargs)
             else:
                 return redirect_to("forbidden")

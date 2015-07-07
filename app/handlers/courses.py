@@ -1,17 +1,20 @@
 import csv
 import datetime
+from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication, CourseType, CourseInstructor
 from app.models.franchise import Franchise
 from app.models.instructor import Instructor
+from app.models.manager import Manager
 from app.models.partner import Partner
 from app.utils.csrf import get_csrf
-from app.utils.decorators import admin_required
+from app.utils.decorators import admin_required, manager_required
 from app.utils.other import convert_markdown_to_html, convert_prices_data, convert_partners_data, convert_tags_to_list, \
     convert_tags_to_string, logga
 
 
+# ADMIN
 class AdminCourseListHandler(Handler):
     @admin_required
     def get(self):
@@ -307,3 +310,28 @@ class PublicCourseDetailsHandler(Handler):
 
         params = {"course": course, "instructor": instructor, "courses": courses, "csrf": csrf}
         return self.render_template("public/course_details.html", params=params)
+
+
+# MANAGER
+class ManagerCourseListHandler(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+        if not manager:
+            return self.redirect_to("forbidden")
+
+        courses = Course.query(Course.deleted == False, Course.franchise_id == manager.franchise_id).order(Course.start_date).fetch()
+
+        past_courses = []
+        current_courses = []
+        future_courses = []
+        for course in courses:
+            if course.start_date >= datetime.date.today():
+                future_courses.append(course)
+            elif course.start_date < datetime.date.today() and course.end_date >= datetime.date.today():
+                current_courses.append(course)
+            else:
+                past_courses.append(course)
+        params = {"future_courses": future_courses, "past_courses": past_courses, "current_courses": current_courses}
+        self.render_template("manager/course_list.html", params)

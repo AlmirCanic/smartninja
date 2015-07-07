@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Courses{% endblock title %}
 
@@ -12,7 +12,7 @@
                     <i class="fa fa-certificate"></i> Courses
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/admin/course/add">Add new course</a>
+                    <i class="fa fa-plus-square-o"></i> <a href="/manager/course/add">Add new course</a>
                 </li>
             </ol>
 
@@ -44,7 +44,7 @@
                         {% for course in future_courses %}
                         <tr>
                             <td>
-                                <a href="/admin/course/{{course.get_id}}">{{ course.title }}</a>
+                                <a href="/manager/course/{{course.get_id}}">{{ course.title }}</a>
                                 {% if course.applications_closed %}
                                     <span class="label label-danger">Closed</span>
                                 {% endif %}
@@ -56,7 +56,7 @@
                             <td>{{ course.taken }}/{{ course.spots }}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
@@ -94,7 +94,7 @@
                         {% for course in current_courses %}
                         <tr>
                             <td>
-                                <a href="/admin/course/{{course.get_id}}">{{ course.title }}</a>
+                                <a href="/manager/course/{{course.get_id}}">{{ course.title }}</a>
                                 {% if course.applications_closed %}
                                     <span class="label label-danger">Closed</span>
                                 {% endif %}
@@ -106,7 +106,7 @@
                             <td>{{ course.taken }}/{{ course.spots }}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
@@ -144,7 +144,7 @@
                         {% for course in past_courses %}
                         <tr>
                             <td>
-                                <a href="/admin/course/{{course.get_id}}">{{ course.title }}</a>
+                                <a href="/manager/course/{{course.get_id}}">{{ course.title }}</a>
                                 {% if course.applications_closed %}
                                     <span class="label label-danger">Closed</span>
                                 {% endif %}
@@ -156,7 +156,7 @@
                             <td>{{ course.taken }}/{{ course.spots }}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
