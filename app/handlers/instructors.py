@@ -4,6 +4,7 @@ from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication
+from app.models.franchise import Franchise, FranchiseList
 from app.models.instructor import Instructor
 from app.models.report import Report
 from app.utils.decorators import admin_required, instructor_required
@@ -15,26 +16,34 @@ class AdminInstructorsListHandler(Handler):
     def get(self):
         instructors = Instructor.query().fetch()
         params = {"instructors": instructors}
-        self.render_template("admin/instructor_list.html", params)
+        return self.render_template("admin/instructor_list.html", params)
 
 
 class AdminInstructorAddHandler(Handler):
     @admin_required
     def get(self):
-        self.render_template("admin/instructor_add.html")
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+        params = {"franchises": franchises}
+        return self.render_template("admin/instructor_add.html", params)
 
     @admin_required
     def post(self):
         email = self.request.get("email")
         first_name = self.request.get("first-name")
         last_name = self.request.get("last-name")
+        franchise_id = self.request.get("franchise")
+
+        franchise = Franchise.get_by_id(int(franchise_id))
+
+        franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
 
         user = User.get_by_email(email=email)
 
         if not user:
             user = User.short_create(email=email, first_name=first_name, last_name=last_name)
 
-        instructor = Instructor.create(full_name=user.get_full_name, email=email, user_id=user.get_id)
+        instructor = Instructor.create(full_name=user.get_full_name, email=email, user_id=user.get_id,
+                                       franchises=[franchise_list_item])
         logga("Instructor %s added." % instructor.get_id)
 
         return self.redirect_to("admin-instructors-list")
@@ -45,13 +54,13 @@ class AdminInstructorDeleteHandler(Handler):
     def get(self, instructor_id):
         instructor = Instructor.get_by_id(int(instructor_id))
         params = {"instructor": instructor}
-        self.render_template("admin/instructor_delete.html", params)
+        return self.render_template("admin/instructor_delete.html", params)
     @admin_required
     def post(self, instructor_id):
         instructor = Instructor.get_by_id(int(instructor_id))
         instructor.key.delete()
         logga("Instructor %s removed." % instructor_id)
-        self.redirect_to("admin-instructors-list")
+        return self.redirect_to("admin-instructors-list")
 
 
 # INSTRUCTOR
@@ -74,7 +83,7 @@ class InstructorCourseListHandler(Handler):
                 else:
                     past_courses.append(course)
             params = {"future_courses": future_courses, "past_courses": past_courses}
-            self.render_template("instructor/course_list.html", params)
+            return self.render_template("instructor/course_list.html", params)
 
 
 class InstructorCourseDetailsHandler(Handler):
@@ -117,7 +126,7 @@ class InstructorProfileDetailsHandler(Handler):
             return self.redirect_to("forbidden")
 
         params = {"profile": profile}
-        self.render_template("instructor/profile.html", params)
+        return self.render_template("instructor/profile.html", params)
 
 
 class InstructorProfileEditHandler(Handler):
@@ -130,7 +139,7 @@ class InstructorProfileEditHandler(Handler):
             return self.redirect_to("forbidden")
         else:
             params = {"profile": profile}
-            self.render_template("instructor/profile_edit.html", params)
+            return self.render_template("instructor/profile_edit.html", params)
 
     @instructor_required
     def post(self):
@@ -150,4 +159,4 @@ class InstructorProfileEditHandler(Handler):
             user = User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob)
             logga("User %s edited." % user.get_id)
-            self.redirect_to("instructor-profile")
+            return self.redirect_to("instructor-profile")

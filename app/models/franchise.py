@@ -36,3 +36,9 @@ class Franchise(ndb.Model):
         franchise.tax_number = tax_number
         franchise.put()
         return franchise
+
+
+class FranchiseList(ndb.Model):
+    """A model to be used as a Structured property in some other models, likeCourseType, Instructor, Blog Post etc."""
+    franchise_id = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
