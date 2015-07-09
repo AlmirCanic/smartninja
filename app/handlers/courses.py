@@ -367,10 +367,18 @@ class ManagerCourseDetailsHandler(Handler):
 class ManagerCourseEditHandler(Handler):
     @manager_required
     def get(self, course_id):
-        course_types = CourseType.query(CourseType.deleted == False).fetch()  # TODO: only curriculums in the franchise
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
         course = Course.get_by_id(int(course_id))
+
+        # manager cannot edit a course outside their franchise
+        if manager.franchise_id != course.franchise_id:
+            return self.redirect_to("forbidden")
+
+        course_types = CourseType.query(CourseType.deleted == False).fetch()  # TODO: only curriculums in the franchise
+
         selected_course_type = CourseType.get_by_id(course.course_type)
-        instructors = Instructor.query().fetch()  # TODO: only instructors in the franchise
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()  # TODO: only instructors in the franchise
         partners = Partner.query(Partner.deleted == False).fetch()  # TODO: only partners in the franchise
 
         tags = convert_tags_to_string(course.tags)
@@ -445,3 +453,70 @@ class ManagerCourseEditHandler(Handler):
 
             logga("Course %s edited." % course_id)
             return self.redirect_to("manager-course-details", course_id=int(course_id))
+
+
+class ManagerCourseAddHandler(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        course_types = CourseType.query(CourseType.deleted == False).fetch()  # TODO
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
+        partners = Partner.query(Partner.deleted == False).fetch()  # TODO
+        params = {"course_types": course_types, "instructors": instructors, "partners": partners}
+        return self.render_template("manager/course_add.html", params)
+
+    @manager_required
+    def post(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        course_type = self.request.get("course-type")
+        title = self.request.get("title")
+        city = self.request.get("city")
+        place = self.request.get("place")
+        start_date = self.request.get("start-date")
+        end_date = self.request.get("end-date")
+        currency = self.request.get("currency")
+        summary = self.request.get("summary")
+        description = self.request.get("description")
+        category = self.request.get("category")
+        spots = self.request.get("spots")
+        instructor = self.request.get("instructor")
+        partner_id = self.request.get("partner")
+        image_url = self.request.get("image_url")
+        prices_data_string = self.request.get("all-prices-data")
+        tags = self.request.get("tags")
+        level = self.request.get("level")
+
+        if course_type and title and city and place and start_date and end_date and currency and instructor and prices_data_string:
+            # convert prices data string to list of Price objects
+            prices = convert_prices_data(data=prices_data_string)
+
+            # instructors
+            instructor_id, instructor_name = instructor.split("|")
+            user_instructor = User.get_by_id(int(instructor_id))
+            course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
+                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id))
+
+            # tags
+            tags = convert_tags_to_list(tags)
+
+            # partner
+            partners = convert_partners_data(partner_id)
+
+            # course date
+            start = start_date.split("/")
+            end = end_date.split("/")
+
+            franchise = Franchise.get_by_id(int(manager.franchise_id))
+
+            course = Course.create(title=title, course_type=int(course_type), city=city, place=place, spots=int(spots), summary=summary,
+                          description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
+                          end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
+                          category=category, course_instructors=[course_instructor], image_url=image_url,
+                          partners=partners, tags=tags, franchise=franchise, level=int(level))
+
+            logga("Course %s added." % course.get_id)
+            return self.redirect_to("manager-course-list")

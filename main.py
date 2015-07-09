@@ -22,7 +22,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     AdminCourseAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, PublicCourseListHandler, \
     PublicCourseDetailsHandler, AdminCourseExportDataHandler, ManagerCourseListHandler, ManagerCourseDetailsHandler, \
-    ManagerCourseEditHandler
+    ManagerCourseEditHandler, ManagerCourseAddHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
@@ -86,7 +86,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
 
     # franchise big button updates
-    webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
+    #webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
 
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
@@ -201,9 +201,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/courses', ManagerCourseListHandler, name="manager-course-list"),
     webapp2.Route('/manager/course/<course_id:\d+>', ManagerCourseDetailsHandler, name="manager-course-details"),
     webapp2.Route('/manager/course/<course_id:\d+>/edit', ManagerCourseEditHandler, name="manager-course-edit"),
-    #webapp2.Route('/manager/course/<course_id:\d+>/delete', AdminCourseDeleteHandler, name="manager-course-delete"),
+    #webapp2.Route('/manager/course/<course_id:\d+>/delete', ManagerCourseDeleteHandler, name="manager-course-delete"),
     #webapp2.Route('/manager/course/<course_id:\d+>/export', AdminCourseExportDataHandler, name="manager-course-export"),
-    #webapp2.Route('/manager/course/add', AdminCourseAddHandler, name="course-add"),
+    webapp2.Route('/manager/course/add', ManagerCourseAddHandler, name="manager-course-add"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
