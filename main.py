@@ -22,7 +22,7 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     AdminCourseAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, PublicCourseListHandler, \
     PublicCourseDetailsHandler, AdminCourseExportDataHandler, ManagerCourseListHandler, ManagerCourseDetailsHandler, \
-    ManagerCourseEditHandler, ManagerCourseAddHandler
+    ManagerCourseEditHandler, ManagerCourseAddHandler, ManagerCourseExportDataHandler, ManagerCourseDeleteHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
@@ -201,8 +201,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/courses', ManagerCourseListHandler, name="manager-course-list"),
     webapp2.Route('/manager/course/<course_id:\d+>', ManagerCourseDetailsHandler, name="manager-course-details"),
     webapp2.Route('/manager/course/<course_id:\d+>/edit', ManagerCourseEditHandler, name="manager-course-edit"),
-    #webapp2.Route('/manager/course/<course_id:\d+>/delete', ManagerCourseDeleteHandler, name="manager-course-delete"),
-    #webapp2.Route('/manager/course/<course_id:\d+>/export', AdminCourseExportDataHandler, name="manager-course-export"),
+    webapp2.Route('/manager/course/<course_id:\d+>/delete', ManagerCourseDeleteHandler, name="manager-course-delete"),
+    webapp2.Route('/manager/course/<course_id:\d+>/export', ManagerCourseExportDataHandler, name="manager-course-export"),
     webapp2.Route('/manager/course/add', ManagerCourseAddHandler, name="manager-course-add"),
 
 # PARTNER URLS

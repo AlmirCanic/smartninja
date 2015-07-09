@@ -520,3 +520,71 @@ class ManagerCourseAddHandler(Handler):
 
             logga("Course %s added." % course.get_id)
             return self.redirect_to("manager-course-list")
+
+
+class ManagerCourseExportDataHandler(Handler):
+    @manager_required
+    def post(self, course_id):
+        applications = CourseApplication.query(CourseApplication.course_id == int(course_id),
+                                               CourseApplication.deleted == False).fetch()
+
+        self.response.headers['Content-Type'] = 'text/csv'
+        self.response.headers['Content-Disposition'] = 'attachment; filename=students_%s.csv' % course_id
+        writer = csv.DictWriter(self.response.out, fieldnames=["First name", "Last name", "Email", "Laptop", "Shirt",
+                                                               "Price", "Paid", "Invoice", "Company", "Company title",
+                                                               "Company address", "Company town", "Company ZIP",
+                                                               "Company tax number"])
+        writer.writeheader()
+
+        for app in applications:
+            student = User.get_by_id(int(app.student_id))
+            if app.company_invoice:
+                writer.writerow({"First name": student.first_name.encode('utf-8'),
+                                 "Last name": student.last_name.encode('utf-8'),
+                                 "Email": student.email.encode('utf-8'),
+                                 "Laptop": app.laptop, "Shirt": app.shirt, "Price": app.price,
+                                 "Paid": app.payment_status, "Invoice": app.invoice, "Company": app.company_invoice,
+                                 "Company title": app.company_title.encode('utf-8'),
+                                 "Company address": app.company_address.encode('utf-8'),
+                                 "Company town": app.company_town.encode('utf-8'),
+                                 "Company ZIP": app.company_zip, "Company tax number": app.company_tax_number})
+            else:
+                writer.writerow({"First name": student.first_name.encode('utf-8'),
+                                 "Last name": student.last_name.encode('utf-8'),
+                                 "Email": student.email.encode('utf-8'),
+                                 "Laptop": app.laptop, "Shirt": app.shirt, "Price": app.price, "Paid": app.payment_status,
+                                 "Invoice": app.invoice, "Company": app.company_invoice})
+
+
+class ManagerCourseDeleteHandler(Handler):
+    @manager_required
+    def get(self, course_id):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        course = Course.get_by_id(int(course_id))
+
+        # manager cannot edit a course outside their franchise
+        if manager.franchise_id != course.franchise_id:
+            return self.redirect_to("forbidden")
+
+        params = {"course": course}
+        return self.render_template("manager/course_delete.html", params)
+
+    @manager_required
+    def post(self, course_id):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        course = Course.get_by_id(int(course_id))
+
+        # manager cannot edit a course outside their franchise
+        if manager.franchise_id != course.franchise_id:
+            return self.redirect_to("forbidden")
+
+        course.deleted = True
+        course.put()
+
+        logga("Course %s deleted." % course_id)
+
+        return self.redirect_to("manager-course-list")
