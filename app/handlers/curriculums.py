@@ -1,5 +1,6 @@
 from app.handlers.base import Handler
 from app.models.course import CourseType
+from app.models.franchise import Franchise, FranchiseList
 from app.models.lesson import Lesson
 from app.utils.decorators import admin_required, instructor_required
 
@@ -28,16 +29,23 @@ class AdminCourseTypeDetailsHandler(Handler):
 class AdminCourseTypeAddHandler(Handler):
     @admin_required
     def get(self):
-        self.render_template("admin/course_type_add.html")
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+        params = {"franchises": franchises}
+        self.render_template("admin/course_type_add.html", params)
 
     @admin_required
     def post(self):
         title = self.request.get("title")
         curriculum = self.request.get("curriculum")
         description = self.request.get("description")
+        franchise_id = self.request.get("franchise")
+
+        franchise = Franchise.get_by_id(int(franchise_id))
+        franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
 
         if title and curriculum:
-            cur = CourseType.create(title=title, curriculum=curriculum, description=description)
+            cur = CourseType.create(title=title, curriculum=curriculum, description=description,
+                                    franchises=[franchise_list_item])
             logga("Curriculum %s added." % cur.get_id)
             self.redirect_to("course-types-list")
 
@@ -46,16 +54,24 @@ class AdminCourseTypeEditHandler(Handler):
     @admin_required
     def get(self, course_type_id):
         course_type = CourseType.get_by_id(int(course_type_id))
-        params = {"course_type": course_type}
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+        params = {"course_type": course_type, "franchises": franchises}
         self.render_template("admin/course_type_edit.html", params)
 
     @admin_required
     def post(self, course_type_id):
         course_type = CourseType.get_by_id(int(course_type_id))
-        course_type.title = self.request.get("title")
-        course_type.curriculum = self.request.get("curriculum")
-        course_type.description = self.request.get("description")
-        course_type.put()
+        title = self.request.get("title")
+        curriculum = self.request.get("curriculum")
+        description = self.request.get("description")
+        franchise_id = self.request.get("franchise")
+
+        franchise = Franchise.get_by_id(int(franchise_id))
+        franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
+
+        CourseType.update(course_type=course_type, title=title, curriculum=curriculum, description=description,
+                          franchises=[franchise_list_item])
+
         logga("Curriculum %s edited." % course_type_id)
         self.redirect_to("course-type-details", course_type_id=int(course_type_id))
 

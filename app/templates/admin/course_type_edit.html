@@ -36,6 +36,19 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Franchise</label>
+                    <select class="form-control" name="franchise">
+                        {% if course_type.franchises[0] %}
+                        <option value="{{course_type.franchises[0].franchise_id}}" selected>{{course_type.franchises[0].franchise_title}}</option>
+                        {% endif %}
+                        <option disabled>------------------------------</option>
+                        {% for franchise in franchises %}
+                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>Curriculum on Google Drive (URL)</label>
                     <input type="text" class="form-control" value="{{course_type.curriculum}}" placeholder="URL" name="curriculum" id="curriculum">
                 </div>

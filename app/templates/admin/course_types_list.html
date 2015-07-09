@@ -31,6 +31,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Franchises</th>
                             <th>GIT</th>
                             <th>Created</th>
                         </tr>
@@ -39,6 +40,11 @@
                         {% for course_type in course_types %}
                         <tr>
                             <td><a href="/admin/course/type/{{course_type.get_id}}">{{ course_type.title }}</a></td>
+                            <td>
+                                {% for franchise in course_type.franchises %}
+                                    {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            </td>
                             <td><a href="{{ course_type.curriculum }}">{{ course_type.curriculum }}</a></td>
                             <td>{{ course_type.created.strftime('%d.%m.%Y') }}</td>
                         </tr>

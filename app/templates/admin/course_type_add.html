@@ -33,6 +33,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Franchise</label>
+                    <select class="form-control" name="franchise">
+                        <option value="" selected>Select franchise</option>
+                        {% for franchise in franchises %}
+                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>Curriculum URL</label>
                     <input type="text" class="form-control" placeholder="Link to the curriculum on Google Drive" name="curriculum" id="courseCurriculum">
                 </div>

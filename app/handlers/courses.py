@@ -375,11 +375,12 @@ class ManagerCourseEditHandler(Handler):
         if manager.franchise_id != course.franchise_id:
             return self.redirect_to("forbidden")
 
-        course_types = CourseType.query(CourseType.deleted == False).fetch()  # TODO: only curriculums in the franchise
+        course_types = CourseType.query(CourseType.deleted == False,
+                                        CourseType.franchises.franchise_id == manager.franchise_id).fetch()
 
         selected_course_type = CourseType.get_by_id(course.course_type)
-        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()  # TODO: only instructors in the franchise
-        partners = Partner.query(Partner.deleted == False).fetch()  # TODO: only partners in the franchise
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
+        partners = Partner.query(Partner.deleted == False, Partner.franchise_id == manager.franchise_id).fetch()
 
         tags = convert_tags_to_string(course.tags)
 
@@ -461,9 +462,10 @@ class ManagerCourseAddHandler(Handler):
         current_user = users.get_current_user()
         manager = Manager.query(Manager.email == current_user.email().lower()).get()
 
-        course_types = CourseType.query(CourseType.deleted == False).fetch()  # TODO
+        course_types = CourseType.query(CourseType.deleted == False,
+                                        CourseType.franchises.franchise_id == manager.franchise_id).fetch()
         instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
-        partners = Partner.query(Partner.deleted == False).fetch()  # TODO
+        partners = Partner.query(Partner.deleted == False, Partner.franchise_id == manager.franchise_id).fetch()
         params = {"course_types": course_types, "instructors": instructors, "partners": partners}
         return self.render_template("manager/course_add.html", params)
 

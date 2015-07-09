@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from app.models.franchise import FranchiseList
 from app.models.partner import Partner, PartnerUserCourse
 from app.utils.course_utils import update_student_grade
 
@@ -7,6 +8,7 @@ class CourseType(ndb.Model):
     title = ndb.StringProperty()
     curriculum = ndb.StringProperty()
     description = ndb.TextProperty()
+    franchises = ndb.StructuredProperty(modelclass=FranchiseList, repeated=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
 
@@ -15,8 +17,17 @@ class CourseType(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, curriculum, description):
-        course_type = cls(title=title, curriculum=curriculum, description=description)
+    def create(cls, title, curriculum, description, franchises):
+        course_type = cls(title=title, curriculum=curriculum, description=description, franchises=franchises)
+        course_type.put()
+        return course_type
+
+    @classmethod
+    def update(cls, course_type, title, curriculum, description, franchises):
+        course_type.title = title
+        course_type.curriculum = curriculum
+        course_type.description = description
+        course_type.franchises = franchises
         course_type.put()
         return course_type
 
