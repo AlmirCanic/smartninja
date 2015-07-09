@@ -1,6 +1,7 @@
 import datetime
 from app.models.auth import User
 from app.models.course import Course, CourseApplication
+from app.models.franchise import Franchise, FranchiseList
 from app.utils.decorators import admin_required, partner_required
 from app.handlers.base import Handler
 from app.models.partner import Partner, PartnerUserCourse
@@ -22,19 +23,23 @@ class AdminPartnersListHandler(Handler):
 class AdminPartnerAddHandler(Handler):
     @admin_required
     def get(self):
-        params = {}
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+        params = {"franchises": franchises}
         self.render_template("admin/partner_add.html", params)
 
     @admin_required
     def post(self):
         title = self.request.get("title")
-        country = self.request.get("country")
         website = self.request.get("website")
         logo = self.request.get("logo")
         summary = self.request.get("summary")
         description = self.request.get("description")
+        franchise_id = self.request.get("franchise")
 
-        partner = Partner.create(title=title, country=country, website=website, logo=logo, summary=summary, description=description)
+        franchise = Franchise.get_by_id(int(franchise_id))
+
+        partner = Partner.create(title=title, website=website, logo=logo, summary=summary, description=description,
+                                 franchise=franchise)
         logga("Partner %s added." % partner.get_id)
 
         self.redirect_to("admin-partners-list")
@@ -68,22 +73,25 @@ class AdminPartnerEditHandler(Handler):
     @admin_required
     def get(self, partner_id):
         partner = Partner.get_by_id(int(partner_id))
-        params = {"partner": partner}
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+        params = {"partner": partner, "franchises": franchises}
         self.render_template("admin/partner_edit.html", params)
 
     @admin_required
     def post(self, partner_id):
         title = self.request.get("title")
-        country = self.request.get("country")
         website = self.request.get("website")
         logo = self.request.get("logo")
         summary = self.request.get("summary")
         description = self.request.get("description")
+        franchise_id = self.request.get("franchise")
+
+        franchise = Franchise.get_by_id(int(franchise_id))
 
         partner = Partner.get_by_id(int(partner_id))
 
-        Partner.update(partner=partner, title=title, country=country, website=website, logo=logo, summary=summary,
-                       description=description)
+        Partner.update(partner=partner, title=title, website=website, logo=logo, summary=summary,
+                       description=description, franchise=franchise)
         logga("Partner %s updated." % partner_id)
 
         self.redirect_to("admin-partner-details", partner_id=partner_id)

@@ -33,8 +33,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Country</label>
-                    <input type="text" class="form-control" placeholder="Country" name="country">
+                    <label>Franchise</label>
+                    <select class="form-control" name="franchise">
+                        <option value="" selected>Select franchise</option>
+                        {% for franchise in franchises %}
+                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-group">

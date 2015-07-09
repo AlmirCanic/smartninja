@@ -32,7 +32,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Country</th>
+                            <th>Franchise</th>
                             <th>Website</th>
                             <th>Created</th>
                         </tr>
@@ -41,7 +41,7 @@
                         {% for partner in partners %}
                         <tr>
                             <td><a href="/admin/partner/{{partner.get_id}}">{{ partner.title }}</a></td>
-                            <td>{{ partner.country }}</td>
+                            <td>{{partner.franchise_title}}</td>
                             <td><a href="{{ partner.website }}">{{ partner.website }}</a></td>
                             <td>{{ partner.created }}</td>
                         </tr>

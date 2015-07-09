@@ -5,9 +5,10 @@ class Partner(ndb.Model):
     title = ndb.StringProperty()
     summary = ndb.StringProperty()
     website = ndb.StringProperty()
-    country = ndb.StringProperty()
     logo = ndb.StringProperty()
     description = ndb.TextProperty()
+    franchise_id = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
     partner_id = ndb.IntegerProperty()  # needed because structuredproperty in course doesnt have an id
@@ -17,20 +18,22 @@ class Partner(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, summary, website, country, logo, description):
-        partner = cls(title=title, summary=summary, website=website, description=description, country=country, logo=logo)
+    def create(cls, title, summary, website, logo, description, franchise):
+        partner = cls(title=title, summary=summary, website=website, description=description, logo=logo,
+                      franchise_id=franchise.get_id, franchise_title=franchise.title)
         partner.put()
         partner.partner_id = partner.get_id
         partner.put()
         return partner
 
     @classmethod
-    def update(cls, partner, title, summary, website, country, logo, description):
+    def update(cls, partner, title, summary, website, logo, description, franchise):
         partner.title = title
         partner.summary = summary
         partner.website = website
-        partner.country = country
         partner.logo = logo
+        partner.franchise_id = franchise.get_id
+        partner.franchise_title = franchise.title
         partner.description = description
         partner.put()
         return partner

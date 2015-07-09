@@ -36,8 +36,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Country</label>
-                    <input type="text" class="form-control" value="{{ partner.country }}" name="country">
+                    <label>Franchise</label>
+                    <select class="form-control" name="franchise">
+                        <option value="{{partner.franchise_id}}" selected>{{partner.franchise_title}}</option>
+                        <option disabled>------------------------------</option>
+                        {% for franchise in franchises %}
+                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-group">
