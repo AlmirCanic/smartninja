@@ -5,6 +5,7 @@ from app.models.course import CourseType, Course, Price, CourseInstructor, Cours
 from app.models.employer import Employer
 from app.models.franchise import Franchise
 from app.models.instructor import Instructor
+from app.models.manager import Manager
 from app.models.student import StudentCourse
 from app.utils.decorators import admin_required
 from app.settings import is_local
@@ -21,13 +22,14 @@ class LocalhostFakeDataHandler(Handler):
 
             # generate user (out of admin)
             admin = User.short_create(email="matej.ramuta@gmail.com", first_name="Matej", last_name="Ramuta")
-            admin.photo_url = "http://localhost:20080/assets/img/public/matej_ramuta.jpg"
+            admin.photo_url = "http://smartninja.org/assets/img/public/matej_ramuta.jpg"
             admin.summary = "Experienced web and mobile developer, mostly working with Python and Android."
             admin.put()
 
             # add user to employer, instructor lists
             Instructor.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email)
             Employer.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email)
+
 
             instructor = CourseInstructor(name=admin.get_full_name, summary=admin.summary,
                                           photo_url=admin.photo_url, user_id=admin.get_id)
@@ -36,6 +38,9 @@ class LocalhostFakeDataHandler(Handler):
             franchise = Franchise.create(title="SmartNinja Slovenija", full_company_name="SNIT d.o.o.", street="Bla 12",
                                          city="Novo mesto", zip="8000", country="Slovenia", website="je ni",
                                          tax_number="32543254")
+
+            # manager
+            Manager.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email, franchise=franchise)
 
             # create courses
             course1 = Course.create(title="HTML Weekend", course_type=curriculum.get_id, city="Ljubljana",
@@ -79,13 +84,13 @@ class LocalhostFakeDataHandler(Handler):
             application1.payment_status = True
             StudentCourse.create(user_id=student1.get_id, user_name=student1.get_full_name, user_email=student1.email,
                                  course=course1)
-            CourseApplication.grade_student(application=application1, score=3, summary="Very good", tags=["HTML", "CSS"])
+            CourseApplication.grade_student(application=application1, score=4, summary="Very good", tags=["HTML", "CSS"])
             application1.put()
 
             application2 = CourseApplication.create(course=course1, currency="EUR", laptop="yes", price=99.0,
                                                     shirt="L", student_email=student2.email, student_id=student2.get_id,
                                                     student_name=student2.get_full_name)
-            CourseApplication.grade_student(application=application2, score=2, summary="Medium", tags=["HTML"])
+            CourseApplication.grade_student(application=application2, score=3, summary="Medium", tags=["HTML"])
             application2.payment_status = True
             StudentCourse.create(user_id=student2.get_id, user_name=student2.get_full_name, user_email=student2.email,
                                  course=course1)

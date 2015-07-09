@@ -35,7 +35,7 @@ class AdminCourseListHandler(Handler):
             else:
                 past_courses.append(course)
         params = {"future_courses": future_courses, "past_courses": past_courses, "current_courses": current_courses}
-        self.render_template("admin/course_list.html", params)
+        return self.render_template("admin/course_list.html", params)
 
 
 class AdminCourseDetailsHandler(Handler):
@@ -62,7 +62,7 @@ class AdminCourseDetailsHandler(Handler):
                   "no_laptop": num_no_laptop,
                   "total_paid": total_paid,
                   "tags": tags}
-        self.render_template("admin/course_details.html", params)
+        return self.render_template("admin/course_details.html", params)
 
 
 class AdminCourseAddHandler(Handler):
@@ -74,7 +74,7 @@ class AdminCourseAddHandler(Handler):
         franchise_list = Franchise.query(Franchise.deleted == False).fetch()
         params = {"course_types": course_types, "instructors": instructors, "partners": partners,
                   "franchises": franchise_list}
-        self.render_template("admin/course_add.html", params)
+        return self.render_template("admin/course_add.html", params)
 
     @admin_required
     def post(self):
@@ -125,7 +125,7 @@ class AdminCourseAddHandler(Handler):
                           category=category, course_instructors=[course_instructor], image_url=image_url,
                           partners=partners, tags=tags, franchise=franchise, level=int(level))
             logga("Course %s added." % course.get_id)
-            self.redirect_to("course-list")
+            return self.redirect_to("course-list")
 
 
 class AdminCourseEditHandler(Handler):
@@ -150,7 +150,7 @@ class AdminCourseEditHandler(Handler):
                   "tags": tags,
                   "start_date": start_date,
                   "end_date": end_date}
-        self.render_template("admin/course_edit.html", params)
+        return self.render_template("admin/course_edit.html", params)
 
     @admin_required
     def post(self, course_id):
@@ -204,7 +204,7 @@ class AdminCourseEditHandler(Handler):
                           image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level),
                           franchise=franchise)
             logga("Course %s edited." % course_id)
-            self.redirect_to("course-details", course_id=int(course_id))
+            return self.redirect_to("course-details", course_id=int(course_id))
 
 
 class AdminCourseDeleteHandler(Handler):
@@ -212,7 +212,7 @@ class AdminCourseDeleteHandler(Handler):
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
         params = {"course": course}
-        self.render_template("admin/course_delete.html", params)
+        return self.render_template("admin/course_delete.html", params)
 
     @admin_required
     def post(self, course_id):
@@ -220,7 +220,7 @@ class AdminCourseDeleteHandler(Handler):
         course.deleted = True
         course.put()
         logga("Course %s deleted." % course_id)
-        self.redirect_to("course-list")
+        return self.redirect_to("course-list")
 
 
 class AdminCourseExportDataHandler(Handler):
@@ -287,7 +287,7 @@ class PublicCourseListHandler(Handler):
         tags = list(set(tags))
 
         params = {"courses": courses, "tags": tags}
-        self.render_template("public/course_list.html", params=params)
+        return self.render_template("public/course_list.html", params=params)
 
 
 class PublicCourseDetailsHandler(Handler):
@@ -334,4 +334,114 @@ class ManagerCourseListHandler(Handler):
             else:
                 past_courses.append(course)
         params = {"future_courses": future_courses, "past_courses": past_courses, "current_courses": current_courses}
-        self.render_template("manager/course_list.html", params)
+        return self.render_template("manager/course_list.html", params)
+
+
+class ManagerCourseDetailsHandler(Handler):
+    @manager_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+
+        num_paid = 0
+        num_no_laptop = 0
+        total_paid = 0.0
+        for application in applications:
+            if application.payment_status:
+                num_paid += 1
+                total_paid += application.price
+            if application.laptop == "no":
+                num_no_laptop += 1
+
+        tags = convert_tags_to_string(course.tags)
+
+        params = {"course": course,
+                  "applications": applications,
+                  "num_paid": num_paid,
+                  "no_laptop": num_no_laptop,
+                  "total_paid": total_paid,
+                  "tags": tags}
+        return self.render_template("manager/course_details.html", params)
+
+
+class ManagerCourseEditHandler(Handler):
+    @manager_required
+    def get(self, course_id):
+        course_types = CourseType.query(CourseType.deleted == False).fetch()  # TODO: only curriculums in the franchise
+        course = Course.get_by_id(int(course_id))
+        selected_course_type = CourseType.get_by_id(course.course_type)
+        instructors = Instructor.query().fetch()  # TODO: only instructors in the franchise
+        partners = Partner.query(Partner.deleted == False).fetch()  # TODO: only partners in the franchise
+
+        tags = convert_tags_to_string(course.tags)
+
+        start_date = "{0}/{1}/{2}".format(course.start_date.month, course.start_date.day, course.start_date.year)
+        end_date = "{0}/{1}/{2}".format(course.end_date.month, course.end_date.day, course.end_date.year)
+
+        params = {"course": course,
+                  "course_types": course_types,
+                  "selected_course_type": selected_course_type,
+                  "instructors": instructors,
+                  "partners": partners,
+                  "tags": tags,
+                  "start_date": start_date,
+                  "end_date": end_date}
+        return self.render_template("manager/course_edit.html", params)
+
+    @manager_required
+    def post(self, course_id):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        course = Course.get_by_id(int(course_id))
+
+        # manager cannot edit a course outside their franchise
+        if manager.franchise_id != course.franchise_id:
+            return self.redirect_to("forbidden")
+
+        course_type = self.request.get("course-type")
+        title = self.request.get("title")
+        city = self.request.get("city")
+        place = self.request.get("place")
+        start_date = self.request.get("start-date")
+        end_date = self.request.get("end-date")
+        currency = self.request.get("currency")
+        summary = self.request.get("summary")
+        description = self.request.get("description")
+        category = self.request.get("category")
+        spots = self.request.get("spots")
+        instructor = self.request.get("instructor")
+        image_url = self.request.get("image_url")
+        prices_data_string = self.request.get("all-prices-data")
+        partner_id = self.request.get("partner")
+        tags = self.request.get("tags")
+        closed = self.request.get("closed")
+        level = self.request.get("level")
+
+        if course_type and title and city and place and start_date and end_date and currency and instructor and prices_data_string:
+            # convert prices data string to list of Price objects
+            prices = convert_prices_data(data=prices_data_string)
+
+            # instructors
+            instructor_id, instructor_name = instructor.split("|")
+            user_instructor = User.get_by_id(int(instructor_id))
+            course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
+                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id))
+
+            # tags
+            tags = convert_tags_to_list(tags)
+
+            # partner
+            partners = convert_partners_data(partner_id)
+
+            start = start_date.split("/")
+            end = end_date.split("/")
+
+            Course.update(course=course, title=title, course_type=int(course_type), city=city, place=place, spots=int(spots),
+                          description=description, start_date=datetime.date(int(start[2]), int(start[0]), int(start[1])),
+                          end_date=datetime.date(int(end[2]), int(end[0]), int(end[1])), prices=prices, currency=currency,
+                          summary=summary, category=category, course_instructors=[course_instructor],
+                          image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level))
+
+            logga("Course %s edited." % course_id)
+            return self.redirect_to("manager-course-details", course_id=int(course_id))

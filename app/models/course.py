@@ -79,7 +79,7 @@ class Course(ndb.Model):
 
     @classmethod
     def update(cls, course, title, course_type, city, place, spots, summary, description, start_date, end_date, prices,
-               currency, category, course_instructors, image_url, partners, tags, closed, franchise, level):
+               currency, category, course_instructors, image_url, partners, tags, closed, level, franchise=None):
 
         if course.title != title or course.start_date != start_date or course.city != city or course.level != level:
             applications = CourseApplication.query(CourseApplication.course_id == course.get_id).fetch()
@@ -114,8 +114,9 @@ class Course(ndb.Model):
         course.image_url = image_url
         course.tags = tags
         course.level = level
-        course.franchise_id = franchise.get_id
-        course.franchise_title = franchise.title
+        if franchise != None:  # needed because manager cannot edit franchise (only admin can)
+            course.franchise_id = franchise.get_id
+            course.franchise_title = franchise.title
         course.applications_closed = closed
         course.put()
         return course

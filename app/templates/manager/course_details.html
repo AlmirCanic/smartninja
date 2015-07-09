@@ -1,0 +1,229 @@
+{% extends "manager/base.html" %}
+
+{% block title %}{{ course.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-certificate"></i>  <a href="/manager/courses">Courses</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Course details
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ course.title }} <a href="/course/{{course.get_id}}" target="_blank"><i class="fa fa-globe"></i></a>
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{course.taken}}/{{ course.spots }}</div>
+                            <div>Number of students</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ num_paid }}/{{ course.spots }}</div>
+                            <div>Paid</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-laptop fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ no_laptop }}</div>
+                            <div>Without laptop</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ total_paid }}</div>
+                            <div>TOTAL paid ({{course.currency}})</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if course.applications_closed %}
+        <h2 style="color: red;">Applications are closed!</h2>
+    {% endif %}
+
+    <h3>Student applications</h3>
+    {% if applications %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Email</th>
+                                <th>Laptop</th>
+                                <th>T-shirt</th>
+                                <th>Price</th>
+                                <th>Paid</th>
+                                <th>Invoice</th>
+                                <th>Company</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for application in applications %}
+                            <tr {% if application.payment_status %} class="success" {% else %} class="danger" {% endif %}>
+                                <td><a href="/manager/application/{{application.get_id}}">{{application.student_name}}</a></td>
+                                <td>{{application.student_email}}</td>
+                                <td>{{application.laptop}}</td>
+                                <td>{{application.shirt}}</td>
+                                <td>{{application.price}} {{application.currency}}</td>
+                                <td>{{application.payment_status}}</td>
+                                <td>{{application.invoice}}</td>
+                                <td>
+                                    {% if application.company_invoice %}
+                                        <strong>{{application.company_invoice}}</strong>
+                                    {% else %}
+                                        {{application.company_invoice}}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" action="/manager/course/{{course.get_id}}/export">
+            <button class="btn btn-warning">Export data (CSV)</button>
+        </form>
+    {% else %}
+        <p>No applications yet :(</p>
+    {% endif %}
+
+    <h3>About course</h3>
+
+    <p>{{ course.summary }}</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Level</th>
+                            <th>City</th>
+                            <th>Place</th>
+                            <th>Instructor</th>
+                            <th>Partner</th>
+                            <th>Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>
+                                {% if course.level == 1 %}
+                                    Beginner
+                                {% elif course.level == 2 %}
+                                    Intermediate
+                                {% elif course.level == 3 %}
+                                    Advanced
+                                {% endif %}
+                            </td>
+                            <td>{{course.city}}</td>
+                            <td>{{course.place}}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %}
+                                    <a href="/manager/user/{{ instructor.user_id }}">
+                                        {{ instructor.name }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for partner in course.partners %}
+                                    <a href="/manager/partner/{{ partner.get_id }}">
+                                        {{ partner.title }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                            <td>{{tags}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <h3>Course prices</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Price</th>
+                            <th>Summary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for price in course.prices %}
+                        <tr>
+                            <td>{{price.price_comma}} {{course.currency}}</td>
+                            <td>{{price.summary}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a href="/manager/course/{{course.get_id}}/edit"><button class="btn btn-success">Edit course</button></a>
+    <a href="/manager/course/{{course.get_id}}/delete"><button class="btn btn-danger">Delete course</button></a>
+</div>
+{% endblock main_content %}

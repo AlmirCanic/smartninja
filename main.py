@@ -21,7 +21,8 @@ from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
 from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandler, \
     AdminCourseAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, PublicCourseListHandler, \
-    PublicCourseDetailsHandler, AdminCourseExportDataHandler, ManagerCourseListHandler
+    PublicCourseDetailsHandler, AdminCourseExportDataHandler, ManagerCourseListHandler, ManagerCourseDetailsHandler, \
+    ManagerCourseEditHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
@@ -91,7 +92,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
 
-    # courses
+    # franchises
     webapp2.Route('/admin/franchises', AdminFranchiseListHandler, name="admin-franchise-list"),
     webapp2.Route('/admin/franchise/add', AdminFranchiseAddHandler, name="admin-franchise-add"),
     webapp2.Route('/admin/franchise/<franchise_id:\d+>', AdminFranchiseDetailsHandler, name="admin-franchise-details"),
@@ -195,6 +196,14 @@ app = webapp2.WSGIApplication([
 
 # MANAGER URLS
     webapp2.Route('/manager', ManagerCourseListHandler, name="manager"),
+
+    # courses
+    webapp2.Route('/manager/courses', ManagerCourseListHandler, name="manager-course-list"),
+    webapp2.Route('/manager/course/<course_id:\d+>', ManagerCourseDetailsHandler, name="manager-course-details"),
+    webapp2.Route('/manager/course/<course_id:\d+>/edit', ManagerCourseEditHandler, name="manager-course-edit"),
+    #webapp2.Route('/manager/course/<course_id:\d+>/delete', AdminCourseDeleteHandler, name="manager-course-delete"),
+    #webapp2.Route('/manager/course/<course_id:\d+>/export', AdminCourseExportDataHandler, name="manager-course-export"),
+    #webapp2.Route('/manager/course/add', AdminCourseAddHandler, name="course-add"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
