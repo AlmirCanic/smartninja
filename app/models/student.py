@@ -19,10 +19,14 @@ class StudentCourse(ndb.Model):
 
     @classmethod
     def create(cls, user_id, user_name, user_email, course):
-        student = cls(user_id=user_id, user_name=user_name, user_email=user_email.lower(), course_id=course.get_id,
-                      course_title=course.title, course_city=course.city, course_start_date=course.start_date)
-        student.put()
-        return student
+        student_course = cls.query(cls.user_id == user_id, cls.course_id == course.get_id).fetch()
+        if not student_course:
+            student = cls(user_id=user_id, user_name=user_name, user_email=user_email.lower(), course_id=course.get_id,
+                          course_title=course.title, course_city=course.city, course_start_date=course.start_date)
+            student.put()
+            return student
+        else:
+            return student_course
 
     @classmethod
     def update(cls, student, user_id, user_name, user_email, course):

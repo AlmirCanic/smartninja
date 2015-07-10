@@ -136,6 +136,7 @@ class AdminCourseEditHandler(Handler):
         selected_course_type = CourseType.get_by_id(course.course_type)
         instructors = Instructor.query().fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
+        franchise_list = Franchise.query(Franchise.deleted == False).fetch()
 
         tags = convert_tags_to_string(course.tags)
 
@@ -149,7 +150,8 @@ class AdminCourseEditHandler(Handler):
                   "partners": partners,
                   "tags": tags,
                   "start_date": start_date,
-                  "end_date": end_date}
+                  "end_date": end_date,
+                  "franchises": franchise_list}
         return self.render_template("admin/course_edit.html", params)
 
     @admin_required
@@ -318,8 +320,6 @@ class ManagerCourseListHandler(Handler):
     def get(self):
         current_user = users.get_current_user()
         manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
-        if not manager:
-            return self.redirect_to("forbidden")
 
         courses = Course.query(Course.deleted == False, Course.franchise_id == manager.franchise_id).order(Course.start_date).fetch()
 

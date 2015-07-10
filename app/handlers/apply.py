@@ -3,18 +3,21 @@ Course applications handlers
 """
 
 import datetime
+from google.appengine.api import users
 from app.emails.apply import email_course_application_thank_you, email_course_app_to_smartninja, \
     email_course_application_thank_you_2
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course, CourseApplication
+from app.models.manager import Manager
 from app.models.student import StudentCourse
 from app.settings import is_local
 from app.utils.csrf import check_csrf
-from app.utils.decorators import admin_required
+from app.utils.decorators import admin_required, manager_required
 from app.utils.other import logga
 
 
+# ADMIN
 class AdminCourseApplicationDetailsHandler(Handler):
     @admin_required
     def get(self, application_id):
@@ -159,3 +162,98 @@ class PublicCourseApplicationAddHandler(Handler):
                 return self.redirect_to("oops")
         else:
             return self.redirect_to("oops")
+
+
+# MANAGER
+class ManagerCourseApplicationDetailsHandler(Handler):
+    @manager_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        user_id = application.student_id
+        user = User.get_by_id(user_id)
+        params = {"application": application, "this_user": user}
+        self.render_template("manager/application_details.html", params)
+
+    @manager_required
+    def post(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+
+        # check if manager has permissions to edit this application (if in the same franchise)
+        course = Course.get_by_id(application.course_id)
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        if course.franchise_id != manager.franchise_id:
+            return self.redirect_to("forbidden")
+
+        # edit and save changes for course application
+        application.payment_status = bool(self.request.get("paid"))
+        application.price = float(self.request.get("price"))
+        application.invoice = self.request.get("invoice")
+        application.put()
+
+        if application.payment_status:
+            StudentCourse.create(user_id=application.student_id, user_name=application.student_name,
+                                 user_email=application.student_email, course=course)
+
+        logga("Course application %s edited." % application_id)
+        return self.redirect_to("manager-course-details", course_id=application.course_id)
+
+
+class ManagerCourseApplicationDeleteHandler(Handler):
+    @manager_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+        params = {"application": application}
+        self.render_template("manager/application_delete.html", params)
+
+    @manager_required
+    def post(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+
+        # check if manager has permissions to edit this application (if in the same franchise)
+        course = Course.get_by_id(application.course_id)
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        if course.franchise_id != manager.franchise_id:
+            return self.redirect_to("forbidden")
+        else:
+            CourseApplication.delete(application=application)
+            logga("Course application %s deleted." % application_id)
+            return self.redirect_to("manager-course-details", course_id=application.course_id)
+
+
+class ManagerCourseApplicationMoveStudentHandler(Handler):
+    @manager_required
+    def get(self, application_id):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        application = CourseApplication.get_by_id(int(application_id))
+
+        courses = Course.query(Course.deleted == False,
+                               Course.start_date > datetime.datetime.now(),
+                               Course.franchise_id == manager.franchise_id).order(Course.start_date).fetch()
+        params = {"application": application, "courses": courses}
+        self.render_template("manager/application_move_student.html", params)
+
+    @manager_required
+    def post(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+
+        # check if manager has permissions to edit this application (if in the same franchise)
+        course = Course.get_by_id(application.course_id)
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == current_user.email().lower()).get()
+
+        if course.franchise_id != manager.franchise_id:
+            return self.redirect_to("forbidden")
+
+        course_id = self.request.get("course")
+        new_course = Course.get_by_id(int(course_id))
+
+        CourseApplication.move_student_to_another_course(application=application, old_course=course, new_course=new_course)
+
+        logga("Student application %s moved to another course." % application_id)
+        self.redirect_to("manager-course-details", course_id=application.course_id)

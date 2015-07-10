@@ -6,7 +6,9 @@
 import webapp2
 
 from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
-    AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler, AdminCourseApplicationMoveStudentHandler
+    AdminCourseApplicationDeleteHandler, PublicCourseApplicationAddHandler, AdminCourseApplicationMoveStudentHandler, \
+    ManagerCourseApplicationDetailsHandler, ManagerCourseApplicationDeleteHandler, \
+    ManagerCourseApplicationMoveStudentHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
     OopsHandler
 from app.handlers.base import SecuredSiteHandler, AdminHandler, FranchiseUpdateButtonHandler
@@ -204,6 +206,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/course/<course_id:\d+>/delete', ManagerCourseDeleteHandler, name="manager-course-delete"),
     webapp2.Route('/manager/course/<course_id:\d+>/export', ManagerCourseExportDataHandler, name="manager-course-export"),
     webapp2.Route('/manager/course/add', ManagerCourseAddHandler, name="manager-course-add"),
+
+    # course applications
+    webapp2.Route('/manager/application/<application_id:\d+>', ManagerCourseApplicationDetailsHandler, name="manager-application-details"),
+    webapp2.Route('/manager/application/<application_id:\d+>/delete', ManagerCourseApplicationDeleteHandler, name="manager-application-delete"),
+    webapp2.Route('/manager/application/<application_id:\d+>/move-student', ManagerCourseApplicationMoveStudentHandler, name="manager-application-move-student"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

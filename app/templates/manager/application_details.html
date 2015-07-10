@@ -1,0 +1,129 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Course application{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-certificate"></i>  <a href="/manager/courses">Courses</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/manager/course/{{application.course_id}}">{{ application.course_title }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Course application
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Application by {{ application.student_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- APPLICATION DETAILS -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>DOB</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/manager/user/{{ application.student_id }}">{{ application.student_name }}</a></td>
+                            <td>{{ application.course_title }}</td>
+                            <td>{{ this_user.dob }}</td>
+                            <td>{{ this_user.email }}</td>
+                            <td>{{ this_user.phone_number }}</td>
+                            <td>{{ this_user.address }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a href="/manager/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit user</button></a>
+    <a href="/manager/application/{{application.get_id}}/delete"><button class="btn btn-danger">Delete application</button></a>
+    <a href="/manager/application/{{application.get_id}}/move-student"><button class="btn btn-primary">Move student to another course</button></a>
+
+    <!-- OTHER INFO -->
+    <h3 class="page-header">Other info</h3>
+    <p>{{application.other_info}}</p>
+
+    {% if application.company_invoice %}
+    <!-- COMPANY DATA -->
+    <h3 class="page-header">Company data</h3>
+    <p>Invoice on company. See details below</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Address</th>
+                            <th>ZIP</th>
+                            <th>Town</th>
+                            <th>Tax number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{application.company_title}}</td>
+                            <td>{{application.company_address}}</td>
+                            <td>{{application.company_zip}}</td>
+                            <td>{{application.company_town}}</td>
+                            <td>{{application.company_tax_number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- PAYMENT DETAILS -->
+    <h3 class="page-header">Payment details</h3>
+    <p>Selected price: {{application.price}} {{application.currency}}</p>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/manager/application/{{application.get_id}}" method="post">
+                <div class="form-group">
+                    <label>Paid</label>
+                    <br>
+                    <input type="checkbox" placeholder="Paid" name="paid" id="paid"
+                        {% if application.payment_status %}checked{% endif %}
+                    > Check if student has paid
+                </div>
+
+                <div class="form-group">
+                    <label>Price paid ({{application.currency}})</label>
+                    <input type="text" class="form-control" value="{{application.price}}" placeholder="Price paid" name="price" id="pricePaid">
+                </div>
+
+                <div class="form-group">
+                    <label>Invoice number</label>
+                    <input type="text" class="form-control" value="{{application.invoice}}" placeholder="Invoice number" name="invoice" id="invoice">
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

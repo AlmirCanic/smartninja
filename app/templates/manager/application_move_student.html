@@ -1,0 +1,48 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Move student to another course{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-certificate"></i>  <a href="/manager/courses">Courses</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/manager/course/{{application.course_id}}">{{ application.course_title }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Move student to another course
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Choose a course you want {{ application.student_name }} move to
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-5">
+            <form action="/manager/application/{{application.get_id}}/move-student" method="post">
+                <div class="form-group">
+                    <label>Course</label>
+                    <select class="form-control" name="course" id="course">
+                        <option value="" selected>Select course</option>
+                        {% for course in courses %}
+                            <option value="{{ course.get_id }}">{{ course.title }}, {{course.city}}
+                                ({{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button class="btn btn-success">Move</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
