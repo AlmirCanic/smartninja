@@ -19,7 +19,7 @@ from app.utils.other import convert_markdown_to_html
 class AdminContactedCandidatesListHandler(Handler):
     @admin_required
     def get(self):
-        contacted_list = ContactCandidate.query(ContactCandidate.deleted == False).fetch()
+        contacted_list = ContactCandidate.query(ContactCandidate.deleted == False).order(-ContactCandidate.created).fetch()
 
         params = {"contacted_list": contacted_list}
 
@@ -125,10 +125,10 @@ class EmployerContactedCandidatesListHandler(Handler):
 
         if employer.partner_id:
             contacted_list = ContactCandidate.query(ContactCandidate.employer_company_id == employer.partner_id,
-                                                    ContactCandidate.deleted == False).fetch()
+                                                    ContactCandidate.deleted == False).order(-ContactCandidate.created).fetch()
         else:
             contacted_list = ContactCandidate.query(ContactCandidate.employer_email == user.email().lower(),
-                                                    ContactCandidate.deleted == False).fetch()
+                                                    ContactCandidate.deleted == False).order(-ContactCandidate.created).fetch()
 
         params = {"contacted_list": contacted_list, "employer": employer}
 

@@ -16,6 +16,19 @@ indexes:
   - name: created
     direction: desc
 
+- kind: ContactCandidate
+  properties:
+  - name: deleted
+  - name: created
+    direction: desc
+
+- kind: ContactCandidate
+  properties:
+  - name: deleted
+  - name: employer_email
+  - name: created
+    direction: desc
+
 - kind: Course
   properties:
   - name: deleted
