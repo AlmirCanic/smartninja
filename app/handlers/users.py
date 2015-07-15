@@ -5,10 +5,11 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseApplication
 from app.settings import ADMINS
-from app.utils.decorators import admin_required
+from app.utils.decorators import admin_required, manager_required
 from app.utils.other import logga, convert_markdown_to_html, convert_tags_to_string, convert_tags_to_list
 
 
+# ADMIN
 class AdminUsersListHandler(Handler):
     @admin_required
     def get(self):
@@ -159,3 +160,29 @@ class AdminUserEditHandler(Handler):
 
         logga("User %s edited." % user_id)
         self.redirect_to("user-details", user_id=int(user_id))
+
+
+# MANAGER
+class ManagerUserDetailsHandler(Handler):
+    @manager_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+        admin = False
+        if user.email in ADMINS:
+            admin = True
+
+        upload_url = blobstore.create_upload_url(success_path='/manager/user/%s/upload-cv' % user_id,
+                                                 max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
+
+        applications = CourseApplication.query(CourseApplication.student_id == int(user_id),
+                                               CourseApplication.deleted == False).fetch()
+
+        if user.long_description:
+            user.long_description = convert_markdown_to_html(user.long_description)
+
+        other_skills = convert_tags_to_string(user.other_skills)
+        grade_all_tags = convert_tags_to_string(user.grade_all_tags)
+
+        params = {"this_user": user, "admin": admin, "upload_url": upload_url, "applications": applications,
+                  "other_skills": other_skills, "grade_all_tags": grade_all_tags}
+        self.render_template("manager/user_details.html", params)

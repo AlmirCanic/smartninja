@@ -24,10 +24,8 @@
 <section id="main_content">
     <div class="container">
 
+        <!-- Current courses -->
         <div class="row">
-
-
-
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <ol class="breadcrumb">
                     <li><a href="#" id="allcourses">Vsi</a></li>
@@ -36,6 +34,8 @@
                     {% endfor %}
                 </ol>
 
+                <h2>Novi tečaji</h2>
+                <br>
                 <div class="row">
                     {% for course in courses %}
                     <!-- COURSE -->
@@ -50,6 +50,15 @@
 
                                     <!--<a class="category">{{course.category}}</a>-->
                                     <a class="category">{{course.city}}</a>
+                                    <!--<span class="label label-primary">
+                                        {% if course.level == 1 %}
+                                            Beginner
+                                        {% elif course.level == 2 %}
+                                            Intermediate
+                                        {% elif course.level == 3 %}
+                                            Advanced
+                                        {% endif %}
+                                    </span>-->
 
                                     <span class="pull-right">
                                         <i class=" icon-calendar"></i>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}
@@ -82,6 +91,61 @@
 
         <hr>
 
+        <!-- Past courses -->
+        <h2>Pretekli tečaji</h2>
+        <br>
+        <div class="row">
+            {% for course in old_courses %}
+            <!-- COURSE -->
+            <div class="col-lg-4 col-md-6 somecourse">
+                <input type="hidden" value="{{course.tags_string}}">
+                <div class="col-item">
+                    <span class=""></span>
+
+                    <div class="photo">
+                        <a href="/course/{{course.get_id}}"><img src="{{course.image_url}}" /></a>
+                        <div class="cat_row">
+
+                            <!--<a class="category">{{course.category}}</a>-->
+                            <a class="category">{{course.city}}</a>
+                            <!--<span class="label label-primary">
+                                {% if course.level == 1 %}
+                                    Beginner
+                                {% elif course.level == 2 %}
+                                    Intermediate
+                                {% elif course.level == 3 %}
+                                    Advanced
+                                {% endif %}
+                            </span>-->
+
+                            <span class="pull-right">
+                                <i class=" icon-calendar"></i>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <div class="row">
+                            <div class="course_info col-md-12 col-sm-12">
+                                <h4><a href="/course/{{course.get_id}}">{{course.title}}</a></h4>
+                                <p> {{course.summary}} </p>
+                                <div class="price pull-right">Že za {{course.price_min}} {{course.currency}}</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="separator clearfix">
+                            <p class="btn-add"> <a href="/course/{{course.get_id}}#pricesTable"><i class="icon-export-4"></i> Prijave zaprte</a></p>
+                            <p class="btn-details"> <a href="/course/{{course.get_id}}"><i class=" icon-list"></i> Več ...</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div><!-- End row -->
+
+
+        <hr>
 
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3 text-center">

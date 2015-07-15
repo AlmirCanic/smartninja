@@ -1,0 +1,146 @@
+{% extends "manager/base.html" %}
+
+{% block title %}{{ this_user.get_full_name }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> User details
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ this_user.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+    
+    <img src="{{this_user.photo_url}}" class="img-thumbnail" width="200px">
+    <br>
+    <br>
+    <p>
+        Email: {{ this_user.email }}
+        <a href="/manager/user/{{this_user.get_id}}/change-email">
+            <button class="btn btn-warning btn-xs">Edit email</button>
+        </a>
+    </p>
+    <p>Phone Number : {{ this_user.phone_number }}</p>
+    <p>Address: {{ this_user.address }}</p>
+    <p>GitHub: <a href="{{ this_user.github_url }}" target="_blank">{{ this_user.github_url }}</a></p>
+    <p>LinkedIn: <a href="{{ this_user.linkedin_url }}" target="_blank">{{ this_user.linkedin_url }}</a></p>
+    <p>Homepage: <a href="{{ this_user.homepage_url }}" target="_blank">{{ this_user.homepage_url }}</a></p>
+
+    <p>
+        CV:
+        {% if this_user.cv_blob %}
+        <a href="/manager/user/{{this_user.get_id}}/cv">Open CV</a>
+        {% endif %}
+        <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+    </p>
+
+    <p>Date of birth: {{ this_user.dob }}</p>
+    <p>Summary: {{ this_user.summary }}</p>
+    <p>Skills: {{ other_skills }}</p>
+    <p>Started programming:
+        {% if this_user.started_programming %}
+            {{ this_user.started_programming.strftime('%B %Y') }}
+        {% endif %}
+    </p>
+    <p>Job searching: {{ this_user.job_searching }}</p>
+    <p>Deleted: {{ this_user.deleted }}</p>
+
+    {% if not admin %}
+        <a href="/manager/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit user</button></a>
+        <a href="/manager/user/{{this_user.get_id}}/delete"><button class="btn btn-danger">Delete user</button></a>
+    {% else %}
+        {% if user.email() == this_user.email %}
+            <a href="/manager/user/{{this_user.get_id}}/edit"><button class="btn btn-success">Edit your profile</button></a>
+        {% endif %}
+    {% endif %}
+
+    <hr>
+
+    <h3>Description</h3>
+    <p>{{ this_user.long_description }}</p>
+
+    <hr>
+
+    <h3>Grades</h3>
+    <p>Score: {{ this_user.grade_avg_score }}</p>
+    <p>Tags: {{ grade_all_tags }}</p>
+
+    {% if applications %}
+    <hr>
+        <h3>Course applications</h3>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course title</th>
+                                <th>Application created</th>
+                                <th>Paid</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for application in applications %}
+                            <tr>
+                                <td><a href="/manager/course/{{application.course_id}}">{{application.course_title}}</a></td>
+                                <td>{{application.created.strftime('%d.%m.%Y')}}</td>
+                                <td>{{application.payment_status}}</td>
+                                <td><a href="/manager/grade/{{application.get_id}}">Grade ({{application.grade_score}})</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <hr>
+    <p class="text-center">SmartNinja.org</p>
+</div>
+
+<!-- Modal - upload CV -->
+<div class="modal fade" id="uploadCVModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" action="{{upload_url}}" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Upload your CV</h4>
+                </div>
+
+
+                <div class="modal-body">
+                    <p>Upload your CV (.pdf). The maximum size is 1 MB. If you don't have a CV yet,
+                        <a href="https://europass.cedefop.europa.eu/en/home" target="_blank">use Europass to write it.
+                        </a>
+                    </p>
+                    <input type="file" name="cv-file" accept="application/pdf">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Upload CV</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End modal - upload CV -->
+
+
+{% endblock main_content %}

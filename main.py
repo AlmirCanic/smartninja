@@ -54,7 +54,8 @@ from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd,
     StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler, \
     StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
-    AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler
+    AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler, \
+    ManagerUserDetailsHandler
 from app.utils.localhost_data import LocalhostFakeDataHandler
 
 
@@ -211,6 +212,17 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/application/<application_id:\d+>', ManagerCourseApplicationDetailsHandler, name="manager-application-details"),
     webapp2.Route('/manager/application/<application_id:\d+>/delete', ManagerCourseApplicationDeleteHandler, name="manager-application-delete"),
     webapp2.Route('/manager/application/<application_id:\d+>/move-student', ManagerCourseApplicationMoveStudentHandler, name="manager-application-move-student"),
+
+    # users
+    #webapp2.Route('/manager/users', ManagerUsersListHandler, name="manager-users-list"),
+    #webapp2.Route('/manager/users/all', ManagerUsersAllListHandler, name="manager-users-all-list"),
+    webapp2.Route('/manager/user/<user_id:\d+>', ManagerUserDetailsHandler, name="manager-user-details"),
+    #webapp2.Route('/manager/user/<user_id:\d+>/upload-cv', ManagerUserCVUploadHandler, name="manager-user-upload-cv"),
+    #webapp2.Route('/manager/user/<user_id:\d+>/cv', ManagerUserCVDownloadHandler, name="manager-user-download-cv"),
+    #webapp2.Route('/manager/user/<user_id:\d+>/delete', ManagerUserDeleteHandler, name="manager-user-delete"),
+    #webapp2.Route('/manager/user/<user_id:\d+>/edit', ManagerUserEditHandler, name="manager-user-edit"),
+    #webapp2.Route('/manager/user/<user_id:\d+>/change-email', ManagerUserChangeEmailHandler, name="manager-user-change-email"),
+    #webapp2.Route('/manager/user/join/<user_id_1:\d+>/<user_id_2:\d+>', ManagerUserJoinAccountsHandler, name="manager-user-join-accounts"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

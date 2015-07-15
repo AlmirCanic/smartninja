@@ -263,10 +263,13 @@ class AdminCourseExportDataHandler(Handler):
 
 class PublicCourseListHandler(Handler):
     def get(self):
-        course_list = Course.query(Course.deleted == False, Course.start_date >= datetime.datetime.now()).order(Course.start_date).fetch()
+        course_list = Course.query(Course.deleted == False,
+                                   Course.start_date >= datetime.datetime.now() - datetime.timedelta(days=90))\
+            .order(Course.start_date).fetch()
 
         # replace .0 price with ,00 (european system vs US)
         courses = []
+        old_courses = []
         for course in course_list:
             try:
                 course.price_min = str(course.price[0]).replace(".", ",0")
@@ -279,7 +282,10 @@ class PublicCourseListHandler(Handler):
 
             course.tags_string = tags_string[:-1]
 
-            courses.append(course)
+            if datetime.datetime(course.start_date.year, course.start_date.month, course.start_date.day) >= datetime.datetime.now():
+                courses.append(course)
+            else:
+                old_courses.append(course)
 
         # get all the tags from courses
         tags = []
@@ -288,7 +294,7 @@ class PublicCourseListHandler(Handler):
 
         tags = list(set(tags))
 
-        params = {"courses": courses, "tags": tags}
+        params = {"courses": courses, "old_courses": old_courses, "tags": tags}
         return self.render_template("public/course_list.html", params=params)
 
 
