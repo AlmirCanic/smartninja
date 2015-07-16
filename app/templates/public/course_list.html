@@ -46,7 +46,7 @@
 
                             <div class="photo">
                                 {% if course.applications_closed %}
-                                    <a href="/course/{{course.get_id}}"><img src="http://i.imgur.com/4B8MQ7O.jpg" /></a>
+                                    <a href="/course/{{course.get_id}}"><img src="http://i.imgur.com/3QMGlvu.jpg" /></a>
                                 {% else %}
                                     <a href="/course/{{course.get_id}}"><img src="{{course.image_url}}" /></a>
                                 {% endif %}
@@ -97,6 +97,7 @@
         <hr>
 
         <!-- Past courses -->
+        {% if old_courses %}
         <h2>Pretekli tečaji</h2>
         <br>
         <div class="row">
@@ -148,9 +149,8 @@
             {% endfor %}
 
         </div><!-- End row -->
-
-
         <hr>
+        {% endif %}
 
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3 text-center">

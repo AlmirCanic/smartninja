@@ -29,6 +29,11 @@ class PublicFaqHandler(Handler):
         self.render_template("public/faq.html")
 
 
+class PublicCoursesSummaryHandler(Handler):
+    def get(self):
+        self.render_template("public/courses_summary.html")
+
+
 class PublicCareersHandler(Handler):
     def get(self):
         self.render_template("public/careers.html")
