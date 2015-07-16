@@ -3,7 +3,7 @@ from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseType, Course, Price, CourseInstructor, CourseApplication
 from app.models.employer import Employer
-from app.models.franchise import Franchise
+from app.models.franchise import Franchise, FranchiseList
 from app.models.instructor import Instructor
 from app.models.manager import Manager
 from app.models.student import StudentCourse
@@ -16,9 +16,16 @@ class LocalhostFakeDataHandler(Handler):
     @admin_required
     def get(self):
         if is_local():
+            # generate franchise
+            franchise = Franchise.create(title="SmartNinja Slovenija", full_company_name="SNIT d.o.o.", street="Bla 12",
+                                         city="Novo mesto", zip="8000", country="Slovenia", website="je ni",
+                                         tax_number="32543254")
+
+            franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
+
             # generate a curriculum
             curriculum = CourseType.create(title="Programming Weekend",
-                                           curriculum="/", description="/")
+                                           curriculum="/", description="/", franchises=[franchise_list_item])
 
             # generate user (out of admin)
             admin = User.short_create(email="matej.ramuta@gmail.com", first_name="Matej", last_name="Ramuta")
@@ -27,17 +34,14 @@ class LocalhostFakeDataHandler(Handler):
             admin.put()
 
             # add user to employer, instructor lists
-            Instructor.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email)
+            Instructor.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email, franchises=[franchise_list_item])
             Employer.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email)
 
 
             instructor = CourseInstructor(name=admin.get_full_name, summary=admin.summary,
                                           photo_url=admin.photo_url, user_id=admin.get_id)
 
-            # generate franchise
-            franchise = Franchise.create(title="SmartNinja Slovenija", full_company_name="SNIT d.o.o.", street="Bla 12",
-                                         city="Novo mesto", zip="8000", country="Slovenia", website="je ni",
-                                         tax_number="32543254")
+
 
             # manager
             Manager.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email, franchise=franchise)

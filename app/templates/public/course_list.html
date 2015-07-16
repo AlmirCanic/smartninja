@@ -45,7 +45,12 @@
                             <span class=""></span>
 
                             <div class="photo">
-                                <a href="/course/{{course.get_id}}"><img src="{{course.image_url}}" /></a>
+                                {% if course.applications_closed %}
+                                    <a href="/course/{{course.get_id}}"><img src="http://i.imgur.com/4B8MQ7O.jpg" /></a>
+                                {% else %}
+                                    <a href="/course/{{course.get_id}}"><img src="{{course.image_url}}" /></a>
+                                {% endif %}
+
                                 <div class="cat_row">
 
                                     <!--<a class="category">{{course.category}}</a>-->
