@@ -105,7 +105,8 @@ class AdminCourseAddHandler(Handler):
             instructor_id, instructor_name = instructor.split("|")
             user_instructor = User.get_by_id(int(instructor_id))
             course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
-                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id))
+                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id),
+                                                 long_description=user_instructor.long_description)
 
             # tags
             tags = convert_tags_to_list(tags)
@@ -186,7 +187,8 @@ class AdminCourseEditHandler(Handler):
             instructor_id, instructor_name = instructor.split("|")
             user_instructor = User.get_by_id(int(instructor_id))
             course_instructor = CourseInstructor(name=instructor_name, summary=user_instructor.summary,
-                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id))
+                                                 photo_url=user_instructor.photo_url, user_id=int(instructor_id),
+                                                 long_description=user_instructor.long_description)
 
             # tags
             tags = convert_tags_to_list(tags)

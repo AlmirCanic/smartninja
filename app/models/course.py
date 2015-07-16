@@ -42,6 +42,7 @@ class Price(ndb.Model):
 class CourseInstructor(ndb.Model):
     name = ndb.StringProperty()
     summary = ndb.StringProperty()
+    long_description = ndb.TextProperty()
     photo_url = ndb.StringProperty()
     user_id = ndb.IntegerProperty()
 

@@ -562,14 +562,34 @@
                     {% for instructor in course.course_instructors %}
                     <div class="media">
                         <div class="pull-right">
-                            <img src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="">
+                            <img data-toggle="modal" data-target="#instructorMoreModal" src="{{instructor.photo_url}}" height="50px" class="img-circle" alt="{{instructor.name}}">
                         </div>
 
                         <div class="media-body">
-                            <h5 class="media-heading"><a>{{instructor.name}}</a></h5>
+                            <h5 class="media-heading"><a href="#" data-toggle="modal" data-target="#instructorMoreModal">{{instructor.name}}</a></h5>
                             <p>{{instructor.summary}}</p>
                         </div>
                     </div>
+
+                    <!-- Modal - instructor long description -->
+                    <div class="modal fade" id="instructorMoreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" style="border-bottom: 0; padding-bottom: 0;">{{instructor.name}}</h4>
+                                </div>
+
+                                <div class="modal-body" style="min-height: 200px;">
+                                    <p>
+                                        <img src="{{instructor.photo_url}}" height="150px" class="img-circle" style="float: right;" alt="{{instructor.name}}">
+                                        {{instructor.long_description|nl2br}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End modal - contact the candidate -->
                     {% endfor %}
 
                     {% if course.partners %}
@@ -592,7 +612,6 @@
                 </div>
             </aside> <!-- End col-md-4 -->
         </div><!-- End row -->
-
     </div><!-- End container -->
 </section><!-- End main_content -->
 
