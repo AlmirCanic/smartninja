@@ -1,0 +1,171 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Edit user{% endblock title %}
+
+{% block scripts %}
+    <link rel="stylesheet" href="/assets/css/public/bootstrap-markdown.min.css">
+
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.sl.js"></script>
+    <script src="/assets/js/bootstrap-markdown/markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/to-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/script.js"></script>
+{% endblock scripts %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/manager/user/{{this_user.get_id}}">{{ this_user.get_full_name }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Edit user
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ this_user.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/manager/user/{{this_user.get_id}}/edit" method="post">
+
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" class="form-control" placeholder="First name" value="{{this_user.first_name}}" name="first_name" id="firstName">
+                </div>
+
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" class="form-control" placeholder="Last name" value="{{this_user.last_name}}" name="last_name" id="lastName">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" placeholder="Address" value="{{this_user.address}}" name="address" id="address">
+                </div>
+
+                <div class="form-group">
+                    <label>Current town</label>
+                    <input type="text" class="form-control" placeholder="Current town" value="{{this_user.current_town}}" name="current-town">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone number</label>
+                    <input type="text" class="form-control" placeholder="Phone number" value="{{this_user.phone_number}}" name="phone_number" id="phoneNumber">
+                </div>
+
+                <div class="form-group">
+                    <label>Date of birth</label>
+                    <input type="text" class="form-control" placeholder="Date of birth" value="{{this_user.dob}}" name="dob" id="dob">
+                </div>
+
+                <div class="form-group">
+                    <label>GitHub URL</label>
+                    <input type="text" class="form-control" placeholder="GitHub URL" value="{{this_user.github_url}}" name="github_url">
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn URL</label>
+                    <input type="text" class="form-control" placeholder="LinkedIn URL" value="{{this_user.linkedin_url}}" name="linkedin_url">
+                </div>
+
+                <div class="form-group">
+                    <label>Homepage URL (if you have one)</label>
+                    <input type="text" class="form-control" placeholder="Homepage URL" value="{{this_user.homepage_url}}" name="homepage_url">
+                </div>
+
+                <div class="form-group">
+                    <label>Skills</label>
+                    <p>You have these skills from courses: {{courses_skills}}. Add some other programming skills.
+                        Separate by comma (e.g.: Python, JavaScript, HTML).</p>
+                    <input type="text" class="form-control" placeholder="Add your skills (separate by comma), e.g.: HTML, CSS, Python" value="{{other_skills}}" name="skills">
+                </div>
+
+                <div class="form-group">
+                    <label>Summary</label>
+                    <p>Short summary of what you do (up to 100 chars)</p>
+                    <input type="text" class="form-control" placeholder="Summary" value="{{this_user.summary}}" name="summary" id="summary">
+                </div>
+
+                <div class="form-group">
+                    <label>Long description</label>
+                    <p>Write a bit more <strong>about yourself</strong>, about <strong>projects</strong> you're most proud of (add links) and about your
+                        <strong>working experience</strong> (add months and years).</p>
+                    <textarea name="long-description" class="form-control markdown" rows="6">{{this_user.long_description}}</textarea><br>
+                </div>
+
+                <div class="form-group">
+                    <label>Started programming</label>
+                    <p>When did you start programming?</p>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <p>Month</p>
+                            <select class="form-control" name="programming-month">
+                                <option value="{{this_user.started_programming.month}}" selected>
+                                    {% if this_user.started_programming %}
+                                        {{ this_user.started_programming.strftime('%m - %B') }}
+                                    {% endif %}
+                                </option>
+                                <option disabled>------------------------------</option>
+                                <option value="1">01 - January</option>
+                                <option value="2">02 - February</option>
+                                <option value="3">03 - March</option>
+                                <option value="4">04 - April</option>
+                                <option value="5">05 - May</option>
+                                <option value="6">06 - June</option>
+                                <option value="7">07 - July</option>
+                                <option value="8">08 - August</option>
+                                <option value="9">09 - September</option>
+                                <option value="10">10 - October</option>
+                                <option value="11">11 - November</option>
+                                <option value="12">12 - December</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <p>Year</p>
+                            <select class="form-control" name="programming-year">
+                                <option value="{{this_user.started_programming.year}}" selected>{{ this_user.started_programming.year }}</option>
+                                <option disabled>------------------------------</option>
+                                {% for year in range(1980, 2020)|sort(reverse=True) %}
+                                <option value="{{year}}">{{year}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Photo URL</label>
+                    <input type="text" class="form-control" placeholder="A link (URL) to your photo" value="{{this_user.photo_url}}" name="photo_url" id="photoURL">
+                </div>
+
+                <div class="form-group">
+                    <label>Job searching</label>
+                    <br>
+                    <input type="checkbox" placeholder="Job searching" name="searching"
+                        {% if this_user.job_searching %}checked{% endif %}
+                    > Check if this user is searching for a job
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

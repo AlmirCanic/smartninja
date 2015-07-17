@@ -251,3 +251,20 @@ class ManagerUserEditHandler(Handler):
 
         logga("User %s edited." % user_id)
         self.redirect_to("manager-user-details", user_id=int(user_id))
+
+
+class ManagerUserDeleteHandler(Handler):
+    @manager_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+        params = {"this_user": user}
+        self.render_template("manager/user_delete.html", params)
+
+    @manager_required
+    def post(self, user_id):
+        user = User.get_by_id(int(user_id))
+        if user.email not in ADMINS:
+            user.deleted = True
+            user.put()
+            logga("User %s deleted." % user_id)
+        self.redirect_to("manager-users-list")
