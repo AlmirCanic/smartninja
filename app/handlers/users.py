@@ -1,4 +1,5 @@
 import datetime
+from google.appengine.api import users
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
@@ -167,6 +168,7 @@ class ManagerUserDetailsHandler(Handler):
     @manager_required
     def get(self, user_id):
         user = User.get_by_id(int(user_id))
+
         admin = False
         if user.email in ADMINS:
             admin = True
@@ -186,3 +188,66 @@ class ManagerUserDetailsHandler(Handler):
         params = {"this_user": user, "admin": admin, "upload_url": upload_url, "applications": applications,
                   "other_skills": other_skills, "grade_all_tags": grade_all_tags}
         self.render_template("manager/user_details.html", params)
+
+
+class ManagerUserEditHandler(Handler):
+    @manager_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+
+        if user.email in ADMINS and not users.get_current_user().email() in ADMINS:
+            return self.redirect_to("forbidden")
+
+        courses_skills = convert_tags_to_string(user.grade_all_tags)
+
+        other_skills = convert_tags_to_string(user.other_skills)
+
+        params = {"this_user": user, "other_skills": other_skills, "courses_skills": courses_skills}
+        self.render_template("manager/user_edit.html", params)
+
+    @manager_required
+    def post(self, user_id):
+        user = User.get_by_id(int(user_id))
+
+        if user.email in ADMINS and not users.get_current_user().email() in ADMINS:
+            return self.redirect_to("forbidden")
+
+        first_name = self.request.get("first_name")
+        last_name = self.request.get("last_name")
+        address = self.request.get("address")
+        current_town = self.request.get("current-town")
+        summary = self.request.get("summary")
+        photo_url = self.request.get("photo_url")
+        phone_number = self.request.get("phone_number")
+        dob = self.request.get("dob")
+        job_searching = self.request.get("searching")
+        github = self.request.get("github_url")
+        linkedin = self.request.get("linkedin_url")
+        homepage = self.request.get("homepage_url")
+        programming_year = self.request.get("programming-year")
+        programming_month = self.request.get("programming-month")
+        long_description = self.request.get("long-description")
+        other_skills = self.request.get("skills")
+
+        skills_list = convert_tags_to_list(other_skills)
+
+        # add only skilly that are not already in skills from courses (grade_all_tags)
+        skills_list_clean = []
+
+        for skill in skills_list:
+            if skill not in user.grade_all_tags:
+                skills_list_clean.append(skill)
+
+        if programming_month and programming_year:
+            started_programming = datetime.date(year=int(programming_year), month=int(programming_month), day=10)
+        else:
+            started_programming = None
+
+        User.update(user=user, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
+                    summary=summary, photo_url=photo_url, dob=dob, github=github, job_searching=bool(job_searching),
+                    current_town=current_town, linkedin=linkedin, homepage=homepage,
+                    started_programming=started_programming, long_description=long_description,
+                    other_skills=skills_list_clean)
+
+        logga("User %s edited." % user_id)
+        self.redirect_to("manager-user-details", user_id=int(user_id))
