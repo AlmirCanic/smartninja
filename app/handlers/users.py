@@ -268,3 +268,32 @@ class ManagerUserDeleteHandler(Handler):
             user.put()
             logga("User %s deleted." % user_id)
         self.redirect_to("manager-users-list")
+
+
+class ManagerUserCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
+    @manager_required
+    def post(self, user_id):
+        try:
+            upload = self.get_uploads()[0]
+
+            user = User.get_by_id(int(user_id))
+
+            user.cv_blob = upload.key()
+
+            user.put()
+
+            self.redirect_to('manager-user-details', user_id=user_id)
+
+        except Exception, e:
+            self.response.out.write("upload failed: %s" % e)
+
+
+class ManagerUserCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
+    @manager_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+
+        if not blobstore.get(user.cv_blob):
+            self.redirect_to('manager-user-details', user_id=user_id)
+        else:
+            self.send_blob(user.cv_blob, save_as="%s.pdf" % user_id)

@@ -55,7 +55,8 @@ from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd,
     StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler, \
-    ManagerUserDetailsHandler, ManagerUserEditHandler, ManagerUserDeleteHandler
+    ManagerUserDetailsHandler, ManagerUserEditHandler, ManagerUserDeleteHandler, ManagerUserCVUploadHandler, \
+    ManagerUserCVDownloadHandler
 from app.utils.localhost_data import LocalhostFakeDataHandler
 
 
@@ -218,8 +219,8 @@ app = webapp2.WSGIApplication([
     #webapp2.Route('/manager/users', ManagerUsersListHandler, name="manager-users-list"),
     #webapp2.Route('/manager/users/all', ManagerUsersAllListHandler, name="manager-users-all-list"),
     webapp2.Route('/manager/user/<user_id:\d+>', ManagerUserDetailsHandler, name="manager-user-details"),
-    #webapp2.Route('/manager/user/<user_id:\d+>/upload-cv', ManagerUserCVUploadHandler, name="manager-user-upload-cv"),
-    #webapp2.Route('/manager/user/<user_id:\d+>/cv', ManagerUserCVDownloadHandler, name="manager-user-download-cv"),
+    webapp2.Route('/manager/user/<user_id:\d+>/upload-cv', ManagerUserCVUploadHandler, name="manager-user-upload-cv"),
+    webapp2.Route('/manager/user/<user_id:\d+>/cv', ManagerUserCVDownloadHandler, name="manager-user-download-cv"),
     webapp2.Route('/manager/user/<user_id:\d+>/delete', ManagerUserDeleteHandler, name="manager-user-delete"),
     webapp2.Route('/manager/user/<user_id:\d+>/edit', ManagerUserEditHandler, name="manager-user-edit"),
     #webapp2.Route('/manager/user/<user_id:\d+>/change-email', ManagerUserChangeEmailHandler, name="manager-user-change-email"),
