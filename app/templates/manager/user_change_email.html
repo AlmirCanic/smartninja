@@ -1,0 +1,51 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Edit user{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/manager/user/{{this_user.get_id}}">{{ this_user.get_full_name }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Edit user's email
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{ this_user.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p>Change email address for {{this_user.get_full_name}}</p>
+    <p>
+        IMPORTANT: This will also change user's email in other places, like course application and access collections.
+        This <strong>takes a lot of resources (and thus money)</strong>, like database queryies, so don't use to often.
+    </p>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/manager/user/{{this_user.get_id}}/change-email" method="post">
+
+                <div class="form-group">
+                    <label>Change user's email</label>
+                    <input type="email" class="form-control" placeholder="Email" value="{{this_user.email}}" name="email">
+                </div>
+
+                <button type="submit" class="btn btn-warning">Change email</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

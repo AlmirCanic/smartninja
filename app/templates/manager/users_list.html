@@ -1,0 +1,66 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Managers{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  Users
+                </li>
+
+                <li>
+                    <i class="fa fa-users"></i>  Managers
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Managers
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Tabs start -->
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="/manager/users">Managers</a></li>
+        <li role="presentation"><a href="/manager/users/employers">Employers</a></li>
+        <li role="presentation"><a href="/manager/users/instructors">Instructors</a></li>
+        <li role="presentation"><a href="/manager/partner-courses">Partner Users</a></li>
+        <li role="presentation"><a href="/manager/users/students">Student access</a></li>
+        <li role="presentation"><a href="/manager/users/all">All users</a></li>
+    </ul>
+    <!-- End Tabs -->
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Managers</h3>
+            {% if managers %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for manager in managers %}
+                        <tr>
+                            <td><a href="/manager/user/{{manager.get_id}}">{{ manager.full_name }}</a></td>
+                            <td>{{ manager.email }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p>No managers yet</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
