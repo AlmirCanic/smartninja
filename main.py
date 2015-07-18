@@ -36,7 +36,8 @@ from app.handlers.franchises import AdminFranchiseListHandler, AdminFranchiseAdd
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
     AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
-    InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler
+    InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler, \
+    ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler
 from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
     InstructorLessonDetailsHandler, StudentLessonDetailsHandler
@@ -218,7 +219,6 @@ app = webapp2.WSGIApplication([
 
     # users
     webapp2.Route('/manager/users', ManagerUsersListHandler, name="manager-users-list"),
-    #webapp2.Route('/manager/users/all', ManagerUsersAllListHandler, name="manager-users-all-list"),
     webapp2.Route('/manager/user/<user_id:\d+>', ManagerUserDetailsHandler, name="manager-user-details"),
     webapp2.Route('/manager/user/<user_id:\d+>/upload-cv', ManagerUserCVUploadHandler, name="manager-user-upload-cv"),
     webapp2.Route('/manager/user/<user_id:\d+>/cv', ManagerUserCVDownloadHandler, name="manager-user-download-cv"),
@@ -226,6 +226,17 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/user/<user_id:\d+>/edit', ManagerUserEditHandler, name="manager-user-edit"),
     webapp2.Route('/manager/user/<user_id:\d+>/change-email', ManagerUserChangeEmailHandler, name="manager-user-change-email"),
     webapp2.Route('/manager/user/join/<user_id_1:\d+>/<user_id_2:\d+>', ManagerUserJoinAccountsHandler, name="manager-user-join-accounts"),
+
+    # instructors
+    webapp2.Route('/manager/users/instructors', ManagerInstructorsListHandler, name="manager-instructors-list"),
+    webapp2.Route('/manager/users/instructor/add', ManagerInstructorAddHandler, name="manager-instructor-add"),
+    webapp2.Route('/manager/users/instructor/<instructor_id:\d+>/delete', ManagerInstructorDeleteHandler, name="manager-instructor-delete"),
+
+    # student access to courses
+    #webapp2.Route('/admin/users/students', AdminStudentCourseList, name="admin-student-course-list"),
+    #webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
+    #webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
+    #webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

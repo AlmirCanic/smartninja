@@ -6,11 +6,13 @@ from app.models.auth import User
 from app.models.course import Course, CourseApplication
 from app.models.franchise import Franchise, FranchiseList
 from app.models.instructor import Instructor
+from app.models.manager import Manager
 from app.models.report import Report
-from app.utils.decorators import admin_required, instructor_required
+from app.utils.decorators import admin_required, instructor_required, manager_required
 from app.utils.other import logga
 
 
+# ADMIN
 class AdminInstructorsListHandler(Handler):
     @admin_required
     def get(self):
@@ -42,9 +44,10 @@ class AdminInstructorAddHandler(Handler):
         if not user:
             user = User.short_create(email=email, first_name=first_name, last_name=last_name)
 
-        instructor = Instructor.create(full_name=user.get_full_name, email=email, user_id=user.get_id,
-                                       franchises=[franchise_list_item])
-        logga("Instructor %s added." % instructor.get_id)
+        instructor = Instructor.add_or_create(full_name=user.get_full_name, user_id=user.get_id, email=user.email,
+                                              franchises=[franchise_list_item])
+
+        logga("Instructor %s added to franchise %s." % (instructor.get_id, franchise.get_id))
 
         return self.redirect_to("admin-instructors-list")
 
@@ -156,7 +159,89 @@ class InstructorProfileEditHandler(Handler):
             photo_url = self.request.get("photo_url")
             phone_number = self.request.get("phone_number")
             dob = self.request.get("dob")
+
             user = User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob)
+
             logga("User %s edited." % user.get_id)
             return self.redirect_to("instructor-profile")
+
+
+# MANAGER
+class ManagerInstructorsListHandler(Handler):
+    @manager_required
+    def get(self):
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
+
+        params = {"instructors": instructors}
+        return self.render_template("manager/instructor_list.html", params)
+
+
+class ManagerInstructorAddHandler(Handler):
+    @manager_required
+    def get(self):
+        return self.render_template("manager/instructor_add.html")
+
+    @manager_required
+    def post(self):
+        email = self.request.get("email")
+        first_name = self.request.get("first-name")
+        last_name = self.request.get("last-name")
+
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        franchise = Franchise.get_by_id(manager.franchise_id)
+
+        franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
+
+        user = User.get_by_email(email=email)
+
+        if not user:
+            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+
+        instructor = Instructor.add_or_create(full_name=user.get_full_name, user_id=user.get_id, email=user.email,
+                                              franchises=[franchise_list_item])
+
+        logga("Instructor %s added to franchise %s." % (instructor.get_id, franchise.get_id))
+
+        return self.redirect_to("manager-instructors-list")
+
+
+class ManagerInstructorDeleteHandler(Handler):
+    @manager_required
+    def get(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+
+        params = {"instructor": instructor}
+        return self.render_template("manager/instructor_delete.html", params)
+
+    @manager_required
+    def post(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        manager_franchise = []
+        other_franchises = []
+
+        for instructor_franchise in instructor.franchises:
+            if manager.franchise_id != instructor_franchise.franchise_id:
+                other_franchises.append(instructor_franchise)
+            else:
+                manager_franchise.append(instructor_franchise)
+
+        if not other_franchises:
+            instructor.key.delete()
+            logga("Instructor %s removed." % instructor_id)
+        elif manager_franchise and other_franchises:
+            existing_franchises = instructor.franchises
+            existing_franchises.remove(manager_franchise[0])
+            instructor.franchises = existing_franchises
+            instructor.put()
+
+        return self.redirect_to("manager-instructors-list")

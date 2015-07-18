@@ -1,6 +1,6 @@
 {% extends "manager/base.html" %}
 
-{% block title %}Managers{% endblock title %}
+{% block title %}Instructors{% endblock title %}
 
 {% block main_content %}
 <div class="main">
@@ -13,12 +13,16 @@
                 </li>
 
                 <li>
-                    <i class="fa fa-users"></i>  Managers
+                    <i class="fa fa-users"></i>  Instructors
+                </li>
+
+                <li>
+                    <i class="fa fa-plus-square-o"></i>  <a href="/manager/users/instructor/add">Add new instructor</a>
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Managers
+                Instructors
             </h1>
         </div>
     </div>
@@ -26,37 +30,45 @@
 
     <!-- Tabs start -->
     <ul class="nav nav-pills">
-        <li role="presentation" class="active"><a href="/manager/users">Managers</a></li>
+        <li role="presentation"><a href="/manager/users">Managers</a></li>
         <li role="presentation"><a href="/manager/users/employers">Employers</a></li>
-        <li role="presentation"><a href="/manager/users/instructors">Instructors</a></li>
+        <li role="presentation" class="active"><a href="/manager/users/instructors">Instructors</a></li>
         <li role="presentation"><a href="/manager/users/students">Student access</a></li>
     </ul>
     <!-- End Tabs -->
 
     <div class="row">
-        <div class="col-lg-6">
-            <h3>Managers</h3>
-            {% if managers %}
+        <div class="col-lg-10">
+            <h3>Instructors</h3>
+            {% if instructors %}
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Franchises</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for manager in managers %}
+                        {% for instructor in instructors %}
                         <tr>
-                            <td><a href="/manager/user/{{manager.get_id}}">{{ manager.full_name }}</a></td>
-                            <td>{{ manager.email }}</td>
+                            <td><a href="/manager/user/{{instructor.user_id}}">{{ instructor.full_name }}</a></td>
+                            <td>{{ instructor.email }}</td>
+                            <td>
+                                {% for franchise in instructor.franchises %}
+                                    {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="/manager/users/instructor/{{ instructor.get_id }}/delete">Delete</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
             {% else %}
-                <p>No managers yet</p>
+                <p>No instructors yet</p>
             {% endif %}
         </div>
     </div>

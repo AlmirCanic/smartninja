@@ -166,9 +166,13 @@ class AdminUserEditHandler(Handler):
 
 # MANAGER
 class ManagerUsersListHandler(Handler):
-    @admin_required
+    @manager_required
     def get(self):
-        managers = Manager.query().fetch()
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        managers = Manager.query(Manager.franchise_id == manager.franchise_id).fetch()
+
         params = {"managers": managers}
         self.render_template("manager/users_list.html", params)
 
