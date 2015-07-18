@@ -15,7 +15,12 @@ class Manager(ndb.Model):
 
     @classmethod
     def create(cls, full_name, user_id, email, franchise):
-        manager = cls(full_name=full_name, user_id=user_id, email=email.lower(), franchise_id=franchise.get_id,
-                      franchise_title=franchise.title)
-        manager.put()
-        return manager
+        existing_manager = cls.query(Manager.email == email).get()
+
+        if not existing_manager:
+            manager = cls(full_name=full_name, user_id=user_id, email=email.lower(), franchise_id=franchise.get_id,
+                          franchise_title=franchise.title)
+            manager.put()
+            return manager
+        else:
+            return existing_manager
