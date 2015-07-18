@@ -5,6 +5,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseApplication
+from app.models.manager import Manager
 from app.settings import ADMINS
 from app.utils.decorators import admin_required, manager_required
 from app.utils.other import logga, convert_markdown_to_html, convert_tags_to_string, convert_tags_to_list
@@ -164,6 +165,14 @@ class AdminUserEditHandler(Handler):
 
 
 # MANAGER
+class ManagerUsersListHandler(Handler):
+    @admin_required
+    def get(self):
+        managers = Manager.query().fetch()
+        params = {"managers": managers}
+        self.render_template("manager/users_list.html", params)
+
+
 class ManagerUserDetailsHandler(Handler):
     @manager_required
     def get(self, user_id):

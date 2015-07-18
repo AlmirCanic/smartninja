@@ -47,6 +47,14 @@ class User(ndb.Model):
         return user
 
     @classmethod
+    def get_by_id_non_deleted(cls, user_id):
+        user = User.get_by_id(user_id)
+        if user and not user.deleted:
+            return user
+        else:
+            return None
+
+    @classmethod
     def short_create(cls, email, first_name=None, last_name=None):
         user = cls(email=email.lower(),
                    first_name=first_name,
