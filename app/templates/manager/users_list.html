@@ -48,7 +48,7 @@
                     <tbody>
                         {% for manager in managers %}
                         <tr>
-                            <td><a href="/manager/user/{{manager.get_id}}">{{ manager.full_name }}</a></td>
+                            <td><a href="/manager/user/{{manager.user_id}}">{{ manager.full_name }}</a></td>
                             <td>{{ manager.email }}</td>
                         </tr>
                         {% endfor %}
