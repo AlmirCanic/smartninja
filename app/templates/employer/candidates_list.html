@@ -76,8 +76,14 @@
                     </div>
 
                     <div class="col-lg-7">
-                        <a href="/employer/candidate/{{candidate.get_id}}"><h3>{{candidate.get_full_name}}</h3></a>
 
+                        <h3>
+                            <a href="/employer/candidate/{{candidate.get_id}}">{{candidate.get_full_name}}</a>
+
+                            <a href="/employer/candidate/{{candidate.get_id}}">
+                                <button class="btn btn-default btn-xs">See full profile</button>
+                            </a>
+                        </h3>
 
                         <p><i class="fa fa-certificate"></i> <strong>Skills from courses:</strong>
                             {% for tag in candidate.grade_all_tags %}

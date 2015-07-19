@@ -43,7 +43,20 @@ indexes:
 - kind: Course
   properties:
   - name: deleted
+  - name: franchise_id
   - name: start_date
+    direction: desc
+
+- kind: Course
+  properties:
+  - name: deleted
+  - name: start_date
+
+- kind: Course
+  properties:
+  - name: deleted
+  - name: start_date
+    direction: desc
 
 - kind: CourseApplication
   properties:

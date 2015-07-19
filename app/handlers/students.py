@@ -7,8 +7,9 @@ from app.models.auth import User
 from app.models.contact_candidate import ContactCandidate
 from app.models.course import Course
 from app.models.lesson import Lesson
+from app.models.manager import Manager
 from app.models.student import StudentCourse
-from app.utils.decorators import admin_required, student_required
+from app.utils.decorators import admin_required, student_required, manager_required
 from app.utils.other import logga, convert_markdown_to_html, convert_tags_to_string, convert_tags_to_list
 
 
@@ -16,8 +17,34 @@ class AdminStudentCourseList(Handler):
     @admin_required
     def get(self):
         courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
-        params = {"courses": courses}
+
+        current_courses = []
+        future_courses = []
+        for course in courses:
+            if course.start_date >= datetime.date.today():
+                future_courses.append(course)
+            elif course.start_date < datetime.date.today() and course.end_date >= datetime.date.today():
+                current_courses.append(course)
+
+        params = {"future_courses": future_courses, "current_courses": current_courses}
+
         self.render_template("admin/student_course_list.html", params)
+
+
+class AdminStudentPastCoursesList(Handler):
+    @admin_required
+    def get(self):
+        courses = Course.query(Course.deleted == False).order(-Course.start_date).fetch()
+
+        past_courses = []
+
+        for course in courses:
+            if course.start_date < datetime.date.today():
+                past_courses.append(course)
+
+        params = {"past_courses": past_courses}
+
+        self.render_template("admin/student_course_past_list.html", params)
 
 
 class AdminStudentCourseAccessHandler(Handler):
@@ -70,8 +97,48 @@ class AdminStudentCourseDelete(Handler):
         self.redirect_to("admin-student-course-list")
 
 
-# STUDENT
+# MANAGER
+class ManagerStudentCourseList(Handler):
+    @manager_required
+    def get(self):
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
 
+        courses = Course.query(Course.deleted == False, Course.franchise_id == manager.franchise_id).order(Course.start_date).fetch()
+
+        current_courses = []
+        future_courses = []
+        for course in courses:
+            if course.start_date >= datetime.date.today():
+                future_courses.append(course)
+            elif course.start_date < datetime.date.today() and course.end_date >= datetime.date.today():
+                current_courses.append(course)
+
+        params = {"future_courses": future_courses, "current_courses": current_courses}
+
+        self.render_template("manager/student_course_list.html", params)
+
+
+class ManagerStudentPastCoursesList(Handler):
+    @manager_required
+    def get(self):
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        courses = Course.query(Course.deleted == False, Course.franchise_id == manager.franchise_id).order(-Course.start_date).fetch()
+
+        past_courses = []
+
+        for course in courses:
+            if course.start_date < datetime.date.today():
+                past_courses.append(course)
+
+        params = {"past_courses": past_courses}
+
+        self.render_template("manager/student_course_past_list.html", params)
+
+
+# STUDENT
 class StudentCourseListHandler(Handler):
     @student_required
     def get(self):

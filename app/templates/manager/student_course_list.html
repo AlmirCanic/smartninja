@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Student access{% endblock title %}
 
@@ -9,13 +9,13 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
                 </li>
                 <li>
                     <i class="fa fa-users"></i>  Student access to courses
                 </li>
                 <li>
-                    <i class="fa fa-plus-square-o"></i>  <a href="/admin/users/students/add">Add new student to course</a>
+                    <i class="fa fa-plus-square-o"></i>  <a href="/manager/users/students/add">Add new student to course</a>
                 </li>
             </ol>
 
@@ -28,13 +28,10 @@
 
     <!-- Tabs start -->
     <ul class="nav nav-pills">
-        <li role="presentation"><a href="/admin/users">Admins</a></li>
-        <li role="presentation"><a href="/admin/users/managers">Managers</a></li>
-        <li role="presentation"><a href="/admin/users/employers">Employers</a></li>
-        <li role="presentation"><a href="/admin/users/instructors">Instructors</a></li>
-        <li role="presentation"><a href="/admin/partner-courses">Partner Users</a></li>
-        <li role="presentation" class="active"><a href="/admin/users/students">Student access</a></li>
-        <li role="presentation"><a href="/admin/users/all">All users</a></li>
+        <li role="presentation"><a href="/manager/users">Managers</a></li>
+        <li role="presentation"><a href="/manager/users/employers">Employers</a></li>
+        <li role="presentation"><a href="/manager/users/instructors">Instructors</a></li>
+        <li role="presentation" class="active"><a href="/manager/users/students">Student access</a></li>
     </ul>
     <!-- End Tabs -->
 
@@ -60,13 +57,13 @@
                     <tbody>
                         {% for course in future_courses %}
                         <tr>
-                            <td><a href="/admin/course/{{course.get_id}}/student-access">{{ course.title }}</a></td>
+                            <td><a href="/manager/course/{{course.get_id}}/student-access">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
                             <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
@@ -98,13 +95,13 @@
                     <tbody>
                         {% for course in current_courses %}
                         <tr>
-                            <td><a href="/admin/course/{{course.get_id}}/student-access">{{ course.title }}</a></td>
+                            <td><a href="/manager/course/{{course.get_id}}/student-access">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
                             <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
@@ -120,7 +117,7 @@
             <!-- End Current courses -->
 
             <hr>
-            <a href="/admin/users/students/past-courses"><button class="btn btn-info">See past courses</button></a>
+            <a href="/manager/users/students/past-courses"><button class="btn btn-info">See past courses</button></a>
         </div>
     </div>
 </div>

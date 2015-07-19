@@ -55,7 +55,8 @@ from app.handlers.reports import InstructorReportAddHandler, InstructorReportDet
     InstructorReportDeleteHandler, AdminReportsListHandler, AdminCourseReportsHandler, AdminReportDetailsHandler
 from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
     StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler, \
-    StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler
+    StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler, \
+    AdminStudentPastCoursesList, ManagerStudentCourseList, ManagerStudentPastCoursesList
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler, \
     ManagerUserDetailsHandler, ManagerUserEditHandler, ManagerUserDeleteHandler, ManagerUserCVUploadHandler, \
@@ -178,6 +179,7 @@ app = webapp2.WSGIApplication([
 
     # student access to courses
     webapp2.Route('/admin/users/students', AdminStudentCourseList, name="admin-student-course-list"),
+    webapp2.Route('/admin/users/students/past-courses', AdminStudentPastCoursesList, name="admin-student-past-course-list"),
     webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
     webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
     webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
@@ -234,7 +236,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/users/instructor/<instructor_id:\d+>/delete', ManagerInstructorDeleteHandler, name="manager-instructor-delete"),
 
     # student access to courses
-    #webapp2.Route('/admin/users/students', AdminStudentCourseList, name="admin-student-course-list"),
+    webapp2.Route('/manager/users/students', ManagerStudentCourseList, name="manager-student-course-list"),
+    webapp2.Route('/manager/users/students/past-courses', ManagerStudentPastCoursesList, name="manager-student-past-course-list"),
     #webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
     #webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
     #webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
