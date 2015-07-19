@@ -80,7 +80,7 @@ class AdminStudentCourseAdd(Handler):
         student = StudentCourse.create(user_id=user.get_id, user_name=user.get_full_name, user_email=email, course=course)
         logga("StudentCourse %s added." % student.get_id)
 
-        return self.redirect_to("admin-student-course-list")
+        return self.redirect_to("admin-student-course-access", course_id=course_id)
 
 
 class AdminStudentCourseDelete(Handler):
@@ -89,6 +89,7 @@ class AdminStudentCourseDelete(Handler):
         student = StudentCourse.get_by_id(int(student_id))
         params = {"student": student}
         self.render_template("admin/student_course_delete.html", params)
+
     @admin_required
     def post(self, student_id):
         student = StudentCourse.get_by_id(int(student_id))
@@ -135,7 +136,70 @@ class ManagerStudentPastCoursesList(Handler):
 
         params = {"past_courses": past_courses}
 
-        self.render_template("manager/student_course_past_list.html", params)
+        return self.render_template("manager/student_course_past_list.html", params)
+
+
+class ManagerStudentCourseAccessHandler(Handler):
+    @manager_required
+    def get(self, course_id):
+        students = StudentCourse.query(StudentCourse.course_id == int(course_id)).fetch()
+        course = Course.get_by_id(int(course_id))
+        params = {"students": students, "course": course}
+        return self.render_template("manager/student_access_per_course.html", params)
+
+
+class ManagerStudentCourseAdd(Handler):
+    @manager_required
+    def get(self):
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        courses = Course.query(Course.deleted == False, Course.franchise_id == manager.franchise_id).order(Course.start_date).fetch()
+
+        params = {"courses": courses}
+        return self.render_template("manager/student_course_add.html", params)
+
+    @manager_required
+    def post(self):
+        email = self.request.get("email")
+        first_name = self.request.get("first-name")
+        last_name = self.request.get("last-name")
+        course_id = self.request.get("course")
+
+        user = User.get_by_email(email=email)
+
+        if not user:
+            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+
+        course = Course.get_by_id(int(course_id))
+
+        student = StudentCourse.create(user_id=user.get_id, user_name=user.get_full_name, user_email=email, course=course)
+        logga("StudentCourse %s added." % student.get_id)
+
+        return self.redirect_to("manager-student-course-access", course_id=course_id)
+
+
+class ManagerStudentCourseDelete(Handler):
+    @manager_required
+    def get(self, student_id):
+        student = StudentCourse.get_by_id(int(student_id))
+        params = {"student": student}
+        return self.render_template("manager/student_course_delete.html", params)
+
+    @manager_required
+    def post(self, student_id):
+        student = StudentCourse.get_by_id(int(student_id))
+
+        course = Course.get_by_id(student.course_id)
+
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        if course.franchise_id == manager.franchise_id:
+            student.key.delete()  # delete directly from the database, because not that important
+            logga("StudentCourse %s deleted." % student_id)
+
+        return self.redirect_to("manager-student-course-access", course_id=course.get_id)
 
 
 # STUDENT

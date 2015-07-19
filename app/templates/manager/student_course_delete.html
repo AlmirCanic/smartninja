@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Remove student's access to a course{% endblock title %}
 
@@ -9,10 +9,10 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
                 </li>
                 <li>
-                    <i class="fa fa-briefcase"></i>  <a href="/admin/users/students">Students</a>
+                    <i class="fa fa-briefcase"></i>  <a href="/manager/users/students">Students</a>
                 </li>
                 <li class="active">
                     <i class="fa fa-remove"></i> Remove student's access to a course
@@ -28,13 +28,13 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <form action="/admin/users/students/{{student.get_id}}/delete" method="post">
+            <form action="/manager/users/students/{{student.get_id}}/delete" method="post">
                 <button class="btn btn-danger">Delete</button>
             </form>
         </div>
 
         <div class="col-lg-3">
-            <a href="/admin/course/{{student.course_id}}/student-access"><button class="btn btn-default">Cancel</button></a>
+            <a href="/manager/course/{{student.course_id}}/student-access"><button class="btn btn-default">Cancel</button></a>
         </div>
     </div>
 </div>

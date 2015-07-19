@@ -1,0 +1,66 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Add new student to a course{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/manager/users/students">Students</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> Add new student to a course
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Add new student to a course
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/manager/users/students/add" method="post">
+
+                <div class="form-group">
+                    <label>Partner user email</label>
+                    <input type="text" class="form-control" placeholder="Student email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label>User first name (if new user)</label>
+                    <input type="text" class="form-control" placeholder="First name" name="first-name">
+                </div>
+
+                <div class="form-group">
+                    <label>User last name (if new user)</label>
+                    <input type="text" class="form-control" placeholder="Last name" name="last-name">
+                </div>
+
+                <div class="form-group">
+                    <label>Course</label>
+                    <select class="form-control" name="course" id="course">
+                        <option value="" selected>Select course</option>
+                        {% for course in courses %}
+                            <option value="{{ course.get_id }}">{{ course.title }}, {{course.city}}
+                                ({{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">Add user</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

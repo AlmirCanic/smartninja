@@ -56,7 +56,8 @@ from app.handlers.reports import InstructorReportAddHandler, InstructorReportDet
 from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
     StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler, \
     StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler, \
-    AdminStudentPastCoursesList, ManagerStudentCourseList, ManagerStudentPastCoursesList
+    AdminStudentPastCoursesList, ManagerStudentCourseList, ManagerStudentPastCoursesList, \
+    ManagerStudentCourseAccessHandler, ManagerStudentCourseAdd, ManagerStudentCourseDelete
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler, \
     ManagerUserDetailsHandler, ManagerUserEditHandler, ManagerUserDeleteHandler, ManagerUserCVUploadHandler, \
@@ -238,9 +239,9 @@ app = webapp2.WSGIApplication([
     # student access to courses
     webapp2.Route('/manager/users/students', ManagerStudentCourseList, name="manager-student-course-list"),
     webapp2.Route('/manager/users/students/past-courses', ManagerStudentPastCoursesList, name="manager-student-past-course-list"),
-    #webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
-    #webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
-    #webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
+    webapp2.Route('/manager/users/students/add', ManagerStudentCourseAdd, name="manager-student-course-add"),
+    webapp2.Route('/manager/users/students/<student_id:\d+>/delete', ManagerStudentCourseDelete, name="manager-student-course-delete"),
+    webapp2.Route('/manager/course/<course_id:\d+>/student-access', ManagerStudentCourseAccessHandler, name="manager-student-course-access"),
 
     # partners
     webapp2.Route('/manager/partners', ManagerPartnersListHandler, name="manager-partners-list"),
