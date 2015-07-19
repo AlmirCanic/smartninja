@@ -25,7 +25,8 @@ from app.handlers.courses import AdminCourseListHandler, AdminCourseDetailsHandl
     AdminCourseAddHandler, AdminCourseEditHandler, \
     AdminCourseDeleteHandler, PublicCourseListHandler, \
     PublicCourseDetailsHandler, AdminCourseExportDataHandler, ManagerCourseListHandler, ManagerCourseDetailsHandler, \
-    ManagerCourseEditHandler, ManagerCourseAddHandler, ManagerCourseExportDataHandler, ManagerCourseDeleteHandler
+    ManagerCourseEditHandler, ManagerCourseAddHandler, ManagerCourseExportDataHandler, ManagerCourseDeleteHandler, \
+    AdminCoursesPastListHandler, ManagerCoursesPastListHandler
 from app.handlers.curriculums import AdminCourseTypesListHandler, AdminCourseTypeDetailsHandler, \
     AdminCourseTypeEditHandler, AdminCourseTypeDeleteHandler, AdminCourseTypeAddHandler, \
     InstructorCurriculumsListHandler, InstructorCurriculumDetailsHandler
@@ -111,6 +112,7 @@ app = webapp2.WSGIApplication([
 
     # courses
     webapp2.Route('/admin/courses', AdminCourseListHandler, name="course-list"),
+    webapp2.Route('/admin/courses/past', AdminCoursesPastListHandler, name="admin-past-course-list"),
     webapp2.Route('/admin/course/<course_id:\d+>', AdminCourseDetailsHandler, name="course-details"),
     webapp2.Route('/admin/course/<course_id:\d+>/edit', AdminCourseEditHandler, name="course-edit"),
     webapp2.Route('/admin/course/<course_id:\d+>/delete', AdminCourseDeleteHandler, name="course-delete"),
@@ -210,6 +212,7 @@ app = webapp2.WSGIApplication([
 
     # courses
     webapp2.Route('/manager/courses', ManagerCourseListHandler, name="manager-course-list"),
+    webapp2.Route('/manager/courses/past', ManagerCoursesPastListHandler, name="manager-past-course-list"),
     webapp2.Route('/manager/course/<course_id:\d+>', ManagerCourseDetailsHandler, name="manager-course-details"),
     webapp2.Route('/manager/course/<course_id:\d+>/edit', ManagerCourseEditHandler, name="manager-course-edit"),
     webapp2.Route('/manager/course/<course_id:\d+>/delete', ManagerCourseDeleteHandler, name="manager-course-delete"),

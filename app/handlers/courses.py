@@ -24,7 +24,6 @@ class AdminCourseListHandler(Handler):
         else:
             courses = Course.query(Course.deleted == False).order(Course.start_date).fetch()
 
-        past_courses = []
         current_courses = []
         future_courses = []
         for course in courses:
@@ -32,10 +31,28 @@ class AdminCourseListHandler(Handler):
                 future_courses.append(course)
             elif course.start_date < datetime.date.today() and course.end_date >= datetime.date.today():
                 current_courses.append(course)
-            else:
-                past_courses.append(course)
-        params = {"future_courses": future_courses, "past_courses": past_courses, "current_courses": current_courses}
+
+        params = {"future_courses": future_courses, "current_courses": current_courses}
         return self.render_template("admin/course_list.html", params)
+
+
+class AdminCoursesPastListHandler(Handler):
+    @admin_required
+    def get(self):
+        franchise_id = self.request.get("franchise")  # there might be no franchise id in the request (check URL)
+        if franchise_id:
+            courses = Course.query(Course.deleted == False, Course.franchise_id == int(franchise_id)).order(-Course.start_date).fetch()
+        else:
+            courses = Course.query(Course.deleted == False).order(-Course.start_date).fetch()
+
+        past_courses = []
+
+        for course in courses:
+            if course.start_date < datetime.date.today():
+                past_courses.append(course)
+
+        params = {"past_courses": past_courses}
+        return self.render_template("admin/courses_past_list.html", params)
 
 
 class AdminCourseDetailsHandler(Handler):
@@ -126,7 +143,8 @@ class AdminCourseAddHandler(Handler):
                           category=category, course_instructors=[course_instructor], image_url=image_url,
                           partners=partners, tags=tags, franchise=franchise, level=int(level))
             logga("Course %s added." % course.get_id)
-            return self.redirect_to("course-list")
+
+        return self.redirect_to("course-list")
 
 
 class AdminCourseEditHandler(Handler):
@@ -208,7 +226,8 @@ class AdminCourseEditHandler(Handler):
                           image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level),
                           franchise=franchise)
             logga("Course %s edited." % course_id)
-            return self.redirect_to("course-details", course_id=int(course_id))
+
+        return self.redirect_to("course-details", course_id=int(course_id))
 
 
 class AdminCourseDeleteHandler(Handler):
@@ -345,6 +364,24 @@ class ManagerCourseListHandler(Handler):
         return self.render_template("manager/course_list.html", params)
 
 
+class ManagerCoursesPastListHandler(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        courses = Course.query(Course.deleted == False, Course.franchise_id == manager.franchise_id).order(-Course.start_date).fetch()
+
+        past_courses = []
+
+        for course in courses:
+            if course.start_date < datetime.date.today():
+                past_courses.append(course)
+
+        params = {"past_courses": past_courses}
+        return self.render_template("manager/courses_past_list.html", params)
+
+
 class ManagerCourseDetailsHandler(Handler):
     @manager_required
     def get(self, course_id):
@@ -461,7 +498,8 @@ class ManagerCourseEditHandler(Handler):
                           image_url=image_url, partners=partners, tags=tags, closed=bool(closed), level=int(level))
 
             logga("Course %s edited." % course_id)
-            return self.redirect_to("manager-course-details", course_id=int(course_id))
+
+        return self.redirect_to("manager-course-details", course_id=int(course_id))
 
 
 class ManagerCourseAddHandler(Handler):
@@ -529,7 +567,8 @@ class ManagerCourseAddHandler(Handler):
                           partners=partners, tags=tags, franchise=franchise, level=int(level))
 
             logga("Course %s added." % course.get_id)
-            return self.redirect_to("manager-course-list")
+
+        return self.redirect_to("manager-course-list")
 
 
 class ManagerCourseExportDataHandler(Handler):
