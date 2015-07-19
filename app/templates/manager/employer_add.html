@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Add new employer{% endblock title %}
 
@@ -9,10 +9,10 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                    <i class="fa fa-users"></i>  <a href="/manager/users">Users</a>
                 </li>
                 <li>
-                    <i class="fa fa-users"></i>  <a href="/admin/users/employers">Employers</a>
+                    <i class="fa fa-users"></i>  <a href="/manager/users/employers">Employers</a>
                 </li>
             </ol>
 
@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/admin/users/employer/add" method="post">
+            <form action="/manager/users/employer/add" method="post">
 
                 <div class="form-group">
                     <label>Employer email</label>
@@ -48,16 +48,6 @@
                         <option value="" selected>Select company</option>
                         {% for partner in partners %}
                             <option value="{{ partner.get_id }}">{{ partner.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Franchise</label>
-                    <select class="form-control" name="franchise">
-                        <option value="" selected>Select franchise</option>
-                        {% for franchise in franchises %}
-                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
                         {% endfor %}
                     </select>
                 </div>
