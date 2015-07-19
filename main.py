@@ -46,7 +46,8 @@ from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
     AdminPartnerUserCourseAdd, AdminPartnerUserCourseDelete, PartnerCourseListHandler, PartnerCourseDetailsHandler, \
-    PartnerProfileDetailsHandler, PartnerProfileEditHandler
+    PartnerProfileDetailsHandler, PartnerProfileEditHandler, ManagerPartnersListHandler, ManagerPartnerDetailsHandler, \
+    ManagerPartnerAddHandler, ManagerPartnerEditHandler, ManagerPartnerDeleteHandler
 from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler, PublicCareersHandler, PublicCoursesSummaryHandler
@@ -237,6 +238,13 @@ app = webapp2.WSGIApplication([
     #webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
     #webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
     #webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
+
+    # partners
+    webapp2.Route('/manager/partners', ManagerPartnersListHandler, name="manager-partners-list"),
+    webapp2.Route('/manager/partner/add', ManagerPartnerAddHandler, name="manager-partner-add"),
+    webapp2.Route('/manager/partner/<partner_id:\d+>', ManagerPartnerDetailsHandler, name="manager-partner-details"),
+    webapp2.Route('/manager/partner/<partner_id:\d+>/delete', ManagerPartnerDeleteHandler, name="manager-partner-delete"),
+    webapp2.Route('/manager/partner/<partner_id:\d+>/edit', ManagerPartnerEditHandler, name="manager-partner-edit"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

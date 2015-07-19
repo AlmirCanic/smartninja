@@ -1,0 +1,66 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Edit partner{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-briefcase"></i>  <a href="/manager/partners">Partners</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/manager/partner/{{partner.get_id}}">{{ partner.title }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> Edit partner
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Edit {{ partner.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/manager/partner/{{partner.get_id}}/edit" method="post">
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" value="{{ partner.title }}" name="title">
+                </div>
+
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="text" class="form-control" value="{{ partner.website }}" name="website">
+                </div>
+
+                <div class="form-group">
+                    <label>Logo image URL</label>
+                    <p>Image size: 200x200 px</p>
+                    <input type="text" class="form-control" value="{{ partner.logo }}" name="logo">
+                </div>
+
+                <div class="form-group">
+                    <label>Summary (short description, up to 120 chars)</label>
+                    <input type="text" class="form-control" value="{{ partner.summary }}" name="summary">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" style="height: 300px;" name="description">{{ partner.description }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

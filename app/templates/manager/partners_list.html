@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Partners{% endblock title %}
 
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/admin/partner/add">Add new partner</a>
+                    <i class="fa fa-plus-square-o"></i> <a href="/manager/partner/add">Add new partner</a>
                 </li>
             </ol>
 
@@ -25,14 +25,13 @@
     <!-- Breadcrumb end -->
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-9">
             {% if partners %}
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Franchise</th>
                             <th>Website</th>
                             <th>Added</th>
                         </tr>
@@ -40,8 +39,7 @@
                     <tbody>
                         {% for partner in partners %}
                         <tr>
-                            <td><a href="/admin/partner/{{partner.get_id}}">{{ partner.title }}</a></td>
-                            <td>{{partner.franchise_title}}</td>
+                            <td><a href="/manager/partner/{{partner.get_id}}">{{ partner.title }}</a></td>
                             <td><a href="{{ partner.website }}">{{ partner.website }}</a></td>
                             <td>{{ partner.created.strftime('%d.%m.%Y') }}</td>
                         </tr>

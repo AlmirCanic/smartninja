@@ -1,17 +1,16 @@
 import datetime
 from app.models.auth import User
 from app.models.course import Course, CourseApplication
-from app.models.franchise import Franchise, FranchiseList
-from app.utils.decorators import admin_required, partner_required
+from app.models.franchise import Franchise
+from app.models.manager import Manager
+from app.utils.decorators import admin_required, partner_required, manager_required
 from app.handlers.base import Handler
 from app.models.partner import Partner, PartnerUserCourse
 from google.appengine.api import users
-
-
-# ADMIN
 from app.utils.other import logga
 
 
+# ADMIN
 class AdminPartnersListHandler(Handler):
     @admin_required
     def get(self):
@@ -98,8 +97,6 @@ class AdminPartnerEditHandler(Handler):
 
 
 # Partner User Course
-
-
 class AdminPartnerUserCourseList(Handler):
     @admin_required
     def get(self):
@@ -150,8 +147,104 @@ class AdminPartnerUserCourseDelete(Handler):
         self.redirect_to("admin-partner-user-course-list")
 
 
-# PUBLIC
+# MANAGER
+class ManagerPartnersListHandler(Handler):
+    @manager_required
+    def get(self):
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
 
+        partners = Partner.query(Partner.deleted == False, Partner.franchise_id == manager.franchise_id).fetch()
+        params = {"partners": partners}
+        self.render_template("manager/partners_list.html", params)
+
+
+class ManagerPartnerDetailsHandler(Handler):
+    @manager_required
+    def get(self, partner_id):
+        partner = Partner.get_by_id(int(partner_id))
+        params = {"partner": partner}
+        self.render_template("manager/partner_details.html", params)
+
+
+class ManagerPartnerAddHandler(Handler):
+    @manager_required
+    def get(self):
+        self.render_template("manager/partner_add.html")
+
+    @manager_required
+    def post(self):
+        title = self.request.get("title")
+        website = self.request.get("website")
+        logo = self.request.get("logo")
+        summary = self.request.get("summary")
+        description = self.request.get("description")
+
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        franchise = Franchise.get_by_id(manager.franchise_id)
+
+        partner = Partner.create(title=title, website=website, logo=logo, summary=summary, description=description,
+                                 franchise=franchise)
+
+        logga("Partner %s added." % partner.get_id)
+
+        self.redirect_to("manager-partners-list")
+
+
+class ManagerPartnerEditHandler(Handler):
+    @manager_required
+    def get(self, partner_id):
+        partner = Partner.get_by_id(int(partner_id))
+        params = {"partner": partner}
+        self.render_template("manager/partner_edit.html", params)
+
+    @manager_required
+    def post(self, partner_id):
+        title = self.request.get("title")
+        website = self.request.get("website")
+        logo = self.request.get("logo")
+        summary = self.request.get("summary")
+        description = self.request.get("description")
+
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        franchise = Franchise.get_by_id(manager.franchise_id)
+
+        partner = Partner.get_by_id(int(partner_id))
+
+        Partner.update(partner=partner, title=title, website=website, logo=logo, summary=summary,
+                       description=description, franchise=franchise)
+
+        logga("Partner %s updated." % partner_id)
+
+        self.redirect_to("manager-partner-details", partner_id=partner_id)
+
+
+class ManagerPartnerDeleteHandler(Handler):
+    @manager_required
+    def get(self, partner_id):
+        partner = Partner.get_by_id(int(partner_id))
+        params = {"partner": partner}
+        self.render_template("manager/partner_delete.html", params)
+
+    @manager_required
+    def post(self, partner_id):
+        partner = Partner.get_by_id(int(partner_id))
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        if manager.franchise_id == partner.franchise_id:
+            partner.deleted = True
+            partner.put()
+            logga("Partner %s deleted." % partner_id)
+
+        self.redirect_to("manager-partners-list")
+
+
+# PUBLIC
 class PublicPartnersHandler(Handler):
     def get(self):
         partners = Partner.query(Partner.deleted == False).fetch()
@@ -160,7 +253,6 @@ class PublicPartnersHandler(Handler):
 
 
 # PARTNER
-
 class PartnerCourseListHandler(Handler):
     @partner_required
     def get(self):
