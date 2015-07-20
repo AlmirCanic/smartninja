@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Edit curriculum{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/admin/course/types">Curriculums</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/admin/course/type/{{course_type.get_id}}">{{ course_type.title }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> Edit curriculum
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Edit {{ course_type.title }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/admin/course/type/{{course_type.get_id}}/edit" method="post">
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" value="{{course_type.title}}" placeholder="Title" name="title" id="typeTitle">
+                </div>
+
+                <div class="form-group">
+                    <label>Franchise</label>
+                    <select class="form-control" name="franchise">
+                        {% if course_type.franchises[0] %}
+                        <option value="{{course_type.franchises[0].franchise_id}}" selected>{{course_type.franchises[0].franchise_title}}</option>
+                        {% endif %}
+                        <option disabled>------------------------------</option>
+                        {% for franchise in franchises %}
+                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Curriculum on Google Drive (URL)</label>
+                    <input type="text" class="form-control" value="{{course_type.curriculum}}" placeholder="URL" name="curriculum" id="curriculum">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description" id="typeDescription">{{course_type.description}}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

@@ -1,0 +1,63 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Curriculums{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  Curriculums
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> <a href="/manager/course/type/add">Add new curriculum</a>
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Curriculums
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    {% if course_types %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Franchises</th>
+                            <th>GIT</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course_type in course_types %}
+                        <tr>
+                            <td><a href="/manager/course/type/{{course_type.get_id}}">{{ course_type.title }}</a></td>
+                            <td>
+                                {% for franchise in course_type.franchises %}
+                                    {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ course_type.curriculum }}">{{ course_type.curriculum }}</a></td>
+                            <td>{{ course_type.created.strftime('%d.%m.%Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No Curriculums</p>
+    {% endif %}
+
+</div>
+{% endblock main_content %}
