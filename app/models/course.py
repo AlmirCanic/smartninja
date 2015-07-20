@@ -23,11 +23,14 @@ class CourseType(ndb.Model):
         return course_type
 
     @classmethod
-    def update(cls, course_type, title, curriculum, description, franchises):
+    def update(cls, course_type, title, curriculum, description, franchises=None):
         course_type.title = title
         course_type.curriculum = curriculum
         course_type.description = description
-        course_type.franchises = franchises
+
+        if franchises != None:
+            course_type.franchises = franchises
+
         course_type.put()
         return course_type
 

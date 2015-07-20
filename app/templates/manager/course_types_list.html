@@ -12,7 +12,7 @@
                     <i class="fa fa-puzzle-piece"></i>  Curriculums
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/manager/course/type/add">Add new curriculum</a>
+                    <i class="fa fa-plus-square-o"></i> <a href="/manager/curriculum/add">Add new curriculum</a>
                 </li>
             </ol>
 
@@ -39,7 +39,7 @@
                     <tbody>
                         {% for course_type in course_types %}
                         <tr>
-                            <td><a href="/manager/course/type/{{course_type.get_id}}">{{ course_type.title }}</a></td>
+                            <td><a href="/manager/curriculum/{{course_type.get_id}}">{{ course_type.title }}</a></td>
                             <td>
                                 {% for franchise in course_type.franchises %}
                                     {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
