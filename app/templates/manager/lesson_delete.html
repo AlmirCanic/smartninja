@@ -1,0 +1,41 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Delete {{ lesson.title }}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/manager/curriculums">Curriculums</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/manager/curriculum/{{course_type.get_id}}">{{course_type.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-book"></i> {{lesson.title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Do you want to delete {{ lesson.title }} lesson?
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/manager/lesson/{{lesson.get_id}}/delete" method="post">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3">
+            <a href="/manager/lesson/{{lesson.get_id}}"><button class="btn btn-default">Cancel</button></a>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

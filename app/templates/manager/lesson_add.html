@@ -1,0 +1,66 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Add new lesson{% endblock title %}
+
+{% block scripts %}
+    <link rel="stylesheet" href="/assets/css/public/bootstrap-markdown.min.css">
+
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/bootstrap-markdown.sl.js"></script>
+    <script src="/assets/js/bootstrap-markdown/markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/to-markdown.js"></script>
+    <script src="/assets/js/bootstrap-markdown/script.js"></script>
+{% endblock scripts %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-puzzle-piece"></i>  <a href="/manager/curriculums">Curriculums</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> <a href="/manager/curriculum/{{course_type.get_id}}">{{course_type.title}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> Add new lesson
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Add new lesson
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/manager/curriculum/{{course_type.get_id}}/add-lesson" method="post">
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" placeholder="Title" name="title">
+                </div>
+
+                <div class="form-group">
+                    <label>Order</label>
+                    <input type="number" class="form-control" value="1" name="order">
+                </div>
+
+                <div class="form-group">
+                    <label>Text</label>
+                    <p>See <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown CheatSheet</a></p>
+                    <textarea name="text" class="form-control markdown" rows="6"></textarea><br>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

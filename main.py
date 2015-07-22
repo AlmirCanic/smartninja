@@ -44,7 +44,8 @@ from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructo
     ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler
 from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
-    InstructorLessonDetailsHandler, StudentLessonDetailsHandler
+    InstructorLessonDetailsHandler, StudentLessonDetailsHandler, ManagerLessonDetailsHandler, ManagerLessonAddHandler, \
+    ManagerLessonEditHandler, ManagerLessonDeleteHandler
 from app.handlers.managers import AdminManagersListHandler, AdminManagerAddHandler, AdminManagerDeleteHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
@@ -267,6 +268,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/curriculum/<course_type_id:\d+>/edit', ManagerCourseTypeEditHandler, name="manager-course-type-edit"),
     webapp2.Route('/manager/curriculum/<course_type_id:\d+>/delete', ManagerCourseTypeDeleteHandler, name="manager-course-type-delete"),
     webapp2.Route('/manager/curriculum/add', ManagerCourseTypeAddHandler, name="manager-course-type-add"),
+
+    # lessons
+    webapp2.Route('/manager/curriculum/<course_type_id:\d+>/add-lesson', ManagerLessonAddHandler, name="manager-lesson-add"),
+    webapp2.Route('/manager/lesson/<lesson_id:\d+>', ManagerLessonDetailsHandler, name="manager-lesson-details"),
+    webapp2.Route('/manager/lesson/<lesson_id:\d+>/edit', ManagerLessonEditHandler, name="manager-lesson-edit"),
+    webapp2.Route('/manager/lesson/<lesson_id:\d+>/delete', ManagerLessonDeleteHandler, name="manager-lesson-delete"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
