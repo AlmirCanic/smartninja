@@ -1,6 +1,6 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
-{% block title %}Add new blog post{% endblock title %}
+{% block title %}Edit blog post{% endblock title %}
 
 {% block scripts %}
     <link rel="stylesheet" href="/assets/css/public/bootstrap-markdown.min.css">
@@ -10,8 +10,6 @@
     <script src="/assets/js/bootstrap-markdown/markdown.js"></script>
     <script src="/assets/js/bootstrap-markdown/to-markdown.js"></script>
     <script src="/assets/js/bootstrap-markdown/script.js"></script>
-
-    <script type="text/javascript" src="/assets/js/admin/slugify.js"></script>
 {% endblock scripts %}
 
 {% block main_content %}
@@ -21,15 +19,18 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-book"></i>  <a href="/admin/blog">Blog</a>
+                    <i class="fa fa-book"></i>  <a href="/manager/blog">Blog</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> Add new blog post
+                    <i class="fa fa-file"></i>  <a href="/manager/blog/{{post.get_id}}">{{ post.title }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-plus-square-o"></i> Edit blog post
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Add new blog post
+                {{post.title}}
             </h1>
         </div>
     </div>
@@ -37,28 +38,28 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/admin/blog/add" method="post">
+            <form action="/manager/blog/{{post.get_id}}/edit" method="post">
 
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Title" name="title" id="blogTitle">
+                    <input type="text" class="form-control" value="{{post.title}}" name="title" id="blogTitle">
                 </div>
 
                 <div class="form-group">
                     <label>Slug</label>
-                    <input type="text" class="form-control" placeholder="Slug" name="slug" id="blogSlug">
+                    <input type="text" class="form-control" value="{{post.slug}}" name="slug" id="blogSlug">
                 </div>
 
                 <div class="form-group">
                     <label>Cover image URL</label>
-                    <p>Add cover image URL. Width should be at least 750px (height around 500px).</p>
-                    <input type="text" class="form-control" placeholder="Cover image URL" name="image" id="blogImage">
+                    <input type="text" class="form-control" value="{{post.cover_image}}" name="image" id="blogImage">
                 </div>
 
                 <div class="form-group">
                     <label>Author</label>
                     <select class="form-control" name="author" id="author">
-                        <option value="" selected>Select author</option>
+                        <option value="{{post.author_id}}" selected>{{post.author_name}}</option>
+                        <option disabled>------------------------------</option>
                         {% for author in authors %}
                             <option value="{{ author.get_id }}">{{ author.get_full_name }}</option>
                         {% endfor %}
@@ -66,24 +67,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Franchise</label>
-                    <select class="form-control" name="franchise">
-                        <option value="" selected>Select franchise</option>
-                        {% for franchise in franchises %}
-                            <option value="{{ franchise.get_id }}">{{ franchise.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
                     <label>Text</label>
                     <p>See <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown CheatSheet</a></p>
-                    <textarea name="text" placeholder="Content" class="form-control markdown" rows="6"></textarea><br>
+                    <textarea name="text" class="form-control markdown" rows="6">{{post.text}}</textarea><br>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
             </form>
         </div>
     </div>
+
+    <br>
 </div>
 {% endblock main_content %}

@@ -35,7 +35,7 @@ class LocalhostFakeDataHandler(Handler):
 
             # add user to employer, instructor lists
             Instructor.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email, franchises=[franchise_list_item])
-            Employer.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email)
+            Employer.create(full_name=admin.get_full_name, user_id=admin.get_id, email=admin.email, franchise=franchise)
 
 
             instructor = CourseInstructor(name=admin.get_full_name, summary=admin.summary,

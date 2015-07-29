@@ -14,7 +14,8 @@ from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, Pro
 from app.handlers.base import SecuredSiteHandler, AdminHandler, FranchiseUpdateButtonHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
-    InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler
+    InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler, \
+    ManagerBlogListHandler, ManagerBlogAddHandler
 from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler, \
     EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler, AdminSuccessfullyEmployedHandler, \
     EmployerCandidateCVDownloadHandler
@@ -274,6 +275,13 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/lesson/<lesson_id:\d+>', ManagerLessonDetailsHandler, name="manager-lesson-details"),
     webapp2.Route('/manager/lesson/<lesson_id:\d+>/edit', ManagerLessonEditHandler, name="manager-lesson-edit"),
     webapp2.Route('/manager/lesson/<lesson_id:\d+>/delete', ManagerLessonDeleteHandler, name="manager-lesson-delete"),
+
+    # manager blog
+    webapp2.Route('/manager/blog', ManagerBlogListHandler, name="manager-blog-list"),
+    webapp2.Route('/manager/blog/add', ManagerBlogAddHandler, name="manager-blog-add"),
+    #webapp2.Route('/instructor/blog/<post_id:\d+>', InstructorBlogDetailsHandler, name="instructor-blog-details"),
+    #webapp2.Route('/instructor/blog/<post_id:\d+>/edit', InstructorBlogEditHandler, name="instructor-blog-edit"),
+    #webapp2.Route('/instructor/blog/<post_id:\d+>/delete', InstructorBlogDeleteHandler, name="instructor-blog-delete"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

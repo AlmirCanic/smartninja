@@ -7,6 +7,8 @@ class BlogPost(ndb.Model):
     text = ndb.TextProperty()
     author_name = ndb.StringProperty()
     author_id = ndb.IntegerProperty()
+    franchise_id = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
     cover_image = ndb.StringProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
@@ -16,13 +18,15 @@ class BlogPost(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, title, slug, text, author_name, author_id, cover_image):
+    def create(cls, title, slug, text, author_name, author_id, cover_image, franchise):
         post = cls(title=title,
                    slug=slug,
                    text=text,
                    author_name=author_name,
                    author_id=author_id,
-                   cover_image=cover_image)
+                   cover_image=cover_image,
+                   franchise_id=franchise.get_id,
+                   franchise_title=franchise.title)
         post.put()
         return post
 

@@ -1,4 +1,4 @@
-{% extends "instructor/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Blog{% endblock title %}
 
@@ -12,7 +12,7 @@
                     <i class="fa fa-book"></i> Blog
                 </li>
                 <li class="active">
-                    <i class="fa fa-plus-square-o"></i> <a href="/instructor/blog/add">Add new blog post</a>
+                    <i class="fa fa-plus-square-o"></i> <a href="/manager/blog/add">Add new blog post</a>
                 </li>
             </ol>
 
@@ -32,17 +32,15 @@
                         <tr>
                             <th>Title</th>
                             <th>Author</th>
-                            <th>Franchise</th>
                             <th>Created</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for post in posts %}
                         <tr>
-                            <td><a href="/instructor/blog/{{post.get_id}}">{{ post.title }}</a></td>
+                            <td><a href="/manager/blog/{{post.get_id}}">{{ post.title }}</a></td>
                             <td>{{ post.author_name }}</td>
-                            <td>{{ post.franchise_title }}</td>
-                            <td>{{ post.created.strftime('%d.%m.%Y') }}</td>
+                            <td>{{ post.created.strftime('%d.%m.%Y at %H:%M') }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -53,6 +51,12 @@
     <!-- /.row -->
     {% else %}
         <p>No blog posts</p>
+    {% endif %}
+
+    {% if next %}
+    <ul class="pager">
+        <li class="previous"><a href="/manager/blog?page={{next}}"><span aria-hidden="true">&larr;</span> Starejši članki</a></li>
+    </ul>
     {% endif %}
 
 </div>

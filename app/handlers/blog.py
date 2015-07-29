@@ -3,11 +3,14 @@ from google.appengine.datastore.datastore_query import Cursor
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.blog import BlogPost
+from app.models.franchise import Franchise
 from app.models.instructor import Instructor
-from app.utils.decorators import admin_required, instructor_required
+from app.models.manager import Manager
+from app.utils.decorators import admin_required, instructor_required, manager_required
 from app.utils.other import strip_tags, convert_markdown_to_html, logga
 
 
+# PUBLIC
 class PublicBlogHandler(Handler):
     def get(self):
         curs = Cursor(urlsafe=self.request.get('page'))
@@ -25,7 +28,8 @@ class PublicBlogHandler(Handler):
 
         if more and next_curs:
             params["next"] = next_curs.urlsafe()
-        self.render_template("public/blog.html", params)
+
+        return self.render_template("public/blog.html", params)
 
 
 class PublicBlogDetailsHandler(Handler):
@@ -36,9 +40,10 @@ class PublicBlogDetailsHandler(Handler):
         summary = strip_tags(post.text.replace('\"', ""))[:300]
 
         params = {"post": post, "posts": posts, "summary": summary}
-        self.render_template("public/blog_post.html", params)
+        return self.render_template("public/blog_post.html", params)
 
 
+# ADMIN
 class AdminBlogListHandler(Handler):
     @admin_required
     def get(self):
@@ -50,7 +55,7 @@ class AdminBlogListHandler(Handler):
         if more and next_curs:
             params["next"] = next_curs.urlsafe()
 
-        self.render_template("admin/blog_list.html", params)
+        return self.render_template("admin/blog_list.html", params)
 
 
 class AdminBlogAddHandler(Handler):
@@ -60,11 +65,15 @@ class AdminBlogAddHandler(Handler):
         current_user = User.get_by_email(users.get_current_user().email().lower())
         authors.append(current_user)
         instructors = Instructor.query().fetch()
+
         for instructor in instructors:
             some_user = User.get_by_id(instructor.user_id)
             authors.append(some_user)
-        params = {"authors": authors}
-        self.render_template("admin/blog_add.html", params=params)
+
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+
+        params = {"authors": authors, "franchises": franchises}
+        return self.render_template("admin/blog_add.html", params=params)
 
     @admin_required
     def post(self):
@@ -73,17 +82,24 @@ class AdminBlogAddHandler(Handler):
         image = self.request.get("image")
         text = self.request.get("text")
         author_id = self.request.get("author")
+        franchise_id = self.request.get("franchise")
+
         author = User.get_by_id(int(author_id))
         user = User.get_by_email(users.get_current_user().email().lower())
+
+        franchise = Franchise.get_by_id(int(franchise_id))
+
         if title and slug and image and text:
             blogpost = BlogPost.create(title=title,
                                        slug=slug,
                                        cover_image=image,
                                        text=text,
                                        author_id=author.get_id,
-                                       author_name=author.get_full_name)
+                                       author_name=author.get_full_name,
+                                       franchise=franchise)
             logga("Blog %s added by %s." % (blogpost.get_id, user.get_id))
-        self.redirect_to("admin-blog-list")
+
+        return self.redirect_to("admin-blog-list")
 
 
 class AdminBlogDetailsHandler(Handler):
@@ -92,7 +108,7 @@ class AdminBlogDetailsHandler(Handler):
         post = BlogPost.get_by_id(int(post_id))
         post.text = convert_markdown_to_html(post.text)
         params = {"post": post}
-        self.render_template("admin/blog_post_details.html", params)
+        return self.render_template("admin/blog_post_details.html", params)
 
 
 class AdminBlogEditHandler(Handler):
@@ -104,12 +120,13 @@ class AdminBlogEditHandler(Handler):
         current_user = User.get_by_email(users.get_current_user().email().lower())
         authors.append(current_user)
         instructors = Instructor.query().fetch()
+
         for instructor in instructors:
             some_user = User.get_by_id(instructor.user_id)
             authors.append(some_user)
 
         params = {"post": post, "authors": authors}
-        self.render_template("admin/blog_post_edit.html", params)
+        return self.render_template("admin/blog_post_edit.html", params)
 
     @admin_required
     def post(self, post_id):
@@ -118,8 +135,10 @@ class AdminBlogEditHandler(Handler):
         image = self.request.get("image")
         text = self.request.get("text")
         author_id = self.request.get("author")
+
         author = User.get_by_id(int(author_id))
         user = User.get_by_email(users.get_current_user().email().lower())
+
         if title and slug and image and text:
             post = BlogPost.get_by_id(int(post_id))
             BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
@@ -127,7 +146,8 @@ class AdminBlogEditHandler(Handler):
             post.author_name = author.get_full_name
             post.put()
             logga("Blog %s edited by %s." % (post_id, user.get_id))
-        self.redirect_to("admin-blog-details", post_id=post_id)
+
+        return self.redirect_to("admin-blog-details", post_id=post_id)
 
 
 class AdminBlogDeleteHandler(Handler):
@@ -135,7 +155,7 @@ class AdminBlogDeleteHandler(Handler):
     def get(self, post_id):
         post = BlogPost.get_by_id(int(post_id))
         params = {"post": post}
-        self.render_template("admin/blog_post_delete.html", params)
+        return self.render_template("admin/blog_post_delete.html", params)
 
     @admin_required
     def post(self, post_id):
@@ -143,23 +163,77 @@ class AdminBlogDeleteHandler(Handler):
         post.deleted = True
         post.put()
         logga("Blog %s deleted." % post_id)
-        self.redirect_to("admin-blog-list")
+        return self.redirect_to("admin-blog-list")
+
+
+# MANAGER
+class ManagerBlogListHandler(Handler):
+    @manager_required
+    def get(self):
+        curr_user = users.get_current_user()
+        manager = Manager.query(Manager.email == curr_user.email().lower()).get()
+
+        posts = BlogPost.query(BlogPost.deleted == False,
+                               BlogPost.franchise_id == manager.franchise_id).order(-BlogPost.created).fetch()
+
+        params = {"posts": posts}
+        return self.render_template("manager/blog_list.html", params)
+
+
+class ManagerBlogAddHandler(Handler):
+    @manager_required
+    def get(self):
+        authors = []
+        current_user = User.get_by_email(users.get_current_user().email().lower())
+        authors.append(current_user)
+        instructors = Instructor.query().fetch()
+
+        for instructor in instructors:
+            some_user = User.get_by_id(instructor.user_id)
+            authors.append(some_user)
+
+        params = {"authors": authors}
+
+        return self.render_template("manager/blog_add.html", params)
+
+    @manager_required
+    def post(self):
+        title = self.request.get("title")
+        slug = self.request.get("slug")
+        image = self.request.get("image")
+        text = self.request.get("text")
+
+        manager = Manager.query(Manager.email == users.get_current_user().email().lower()).get()
+
+        franchise = Franchise.get_by_id(manager.franchise_id)
+
+        if title and slug and image and text:
+            blogpost = BlogPost.create(title=title,
+                                       slug=slug,
+                                       cover_image=image,
+                                       text=text,
+                                       author_id=manager.user_id,
+                                       author_name=manager.full_name,
+                                       franchise=franchise)
+            logga("Blog %s added." % blogpost.get_id)
+        return self.redirect_to("manager-blog-list")
 
 
 # INSTRUCTOR
-
 class InstructorBlogListHandler(Handler):
     @instructor_required
     def get(self):
         posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
         params = {"posts": posts}
-        self.render_template("instructor/blog_list.html", params)
+        return self.render_template("instructor/blog_list.html", params)
 
 
 class InstructorBlogAddHandler(Handler):
     @instructor_required
     def get(self):
-        self.render_template("instructor/blog_add.html")
+        instructor = Instructor.query(Instructor.email == users.get_current_user().email().lower()).get()
+        params = {"instructor": instructor}
+        return self.render_template("instructor/blog_add.html", params)
 
     @instructor_required
     def post(self):
@@ -167,16 +241,22 @@ class InstructorBlogAddHandler(Handler):
         slug = self.request.get("slug")
         image = self.request.get("image")
         text = self.request.get("text")
+        franchise_id = self.request.get("franchise")
+
         user = User.get_by_email(users.get_current_user().email().lower())
+
+        franchise = Franchise.get_by_id(int(franchise_id))
+
         if title and slug and image and text:
             blogpost = BlogPost.create(title=title,
                                        slug=slug,
                                        cover_image=image,
                                        text=text,
                                        author_id=user.get_id,
-                                       author_name=user.get_full_name)
+                                       author_name=user.get_full_name,
+                                       franchise=franchise)
             logga("Blog %s added." % blogpost.get_id)
-        self.redirect_to("instructor-blog-list")
+        return self.redirect_to("instructor-blog-list")
 
 
 class InstructorBlogDetailsHandler(Handler):
@@ -189,7 +269,7 @@ class InstructorBlogDetailsHandler(Handler):
         if post.author_id == user.get_id:
             can_edit = True
         params = {"post": post, "can_edit": can_edit}
-        self.render_template("instructor/blog_post_details.html", params)
+        return self.render_template("instructor/blog_post_details.html", params)
 
 
 class InstructorBlogEditHandler(Handler):
@@ -199,9 +279,9 @@ class InstructorBlogEditHandler(Handler):
         params = {"post": post}
         user = User.get_by_email(users.get_current_user().email().lower())
         if post.author_id == user.get_id:
-            self.render_template("instructor/blog_post_edit.html", params)
+            return self.render_template("instructor/blog_post_edit.html", params)
         else:
-            self.redirect_to("forbidden")
+            return self.redirect_to("forbidden")
 
     @instructor_required
     def post(self, post_id):
@@ -217,7 +297,8 @@ class InstructorBlogEditHandler(Handler):
             if post.author_id == user.get_id:
                 BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
                 logga("Blog %s edited." % post_id)
-        self.redirect_to("instructor-blog-details", post_id=post_id)
+
+        return self.redirect_to("instructor-blog-details", post_id=post_id)
 
 
 class InstructorBlogDeleteHandler(Handler):
@@ -227,9 +308,9 @@ class InstructorBlogDeleteHandler(Handler):
         params = {"post": post}
         user = User.get_by_email(users.get_current_user().email().lower())
         if post.author_id == user.get_id:
-            self.render_template("instructor/blog_post_delete.html", params)
+            return self.render_template("instructor/blog_post_delete.html", params)
         else:
-            self.redirect_to("forbidden")
+            return self.redirect_to("forbidden")
 
     @instructor_required
     def post(self, post_id):
@@ -239,4 +320,5 @@ class InstructorBlogDeleteHandler(Handler):
             post.deleted = True
             post.put()
             logga("Blog %s deleted." % post_id)
-        self.redirect_to("instructor-blog-list")
+
+        return self.redirect_to("instructor-blog-list")

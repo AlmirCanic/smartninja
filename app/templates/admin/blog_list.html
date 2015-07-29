@@ -32,6 +32,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Author</th>
+                            <th>Franchise</th>
                             <th>Created</th>
                         </tr>
                     </thead>
@@ -40,6 +41,7 @@
                         <tr>
                             <td><a href="/admin/blog/{{post.get_id}}">{{ post.title }}</a></td>
                             <td>{{ post.author_name }}</td>
+                            <td>{{ post.franchise_title }}</td>
                             <td>{{ post.created.strftime('%d.%m.%Y at %H:%M') }}</td>
                         </tr>
                         {% endfor %}
