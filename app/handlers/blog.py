@@ -186,7 +186,10 @@ class ManagerBlogAddHandler(Handler):
         authors = []
         current_user = User.get_by_email(users.get_current_user().email().lower())
         authors.append(current_user)
-        instructors = Instructor.query().fetch()
+
+        manager = Manager.query(Manager.email == current_user.email).get()
+
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
 
         for instructor in instructors:
             some_user = User.get_by_id(instructor.user_id)
@@ -217,6 +220,59 @@ class ManagerBlogAddHandler(Handler):
                                        franchise=franchise)
             logga("Blog %s added." % blogpost.get_id)
         return self.redirect_to("manager-blog-list")
+
+
+class ManagerBlogDetailsHandler(Handler):
+    @manager_required
+    def get(self, post_id):
+        post = BlogPost.get_by_id(int(post_id))
+        post.text = convert_markdown_to_html(post.text)
+        params = {"post": post}
+        return self.render_template("manager/blog_post_details.html", params)
+
+
+class ManagerBlogEditHandler(Handler):
+    @manager_required
+    def get(self, post_id):
+        post = BlogPost.get_by_id(int(post_id))
+
+        manager = Manager.query(Manager.email == users.get_current_user().email().lower()).get()
+
+        authors = []
+        current_user = User.get_by_email(users.get_current_user().email().lower())
+        authors.append(current_user)
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
+
+        for instructor in instructors:
+            some_user = User.get_by_id(instructor.user_id)
+            authors.append(some_user)
+
+        params = {"post": post, "authors": authors}
+        return self.render_template("manager/blog_post_edit.html", params)
+
+    @manager_required
+    def post(self, post_id):
+        title = self.request.get("title")
+        slug = self.request.get("slug")
+        image = self.request.get("image")
+        text = self.request.get("text")
+        author_id = self.request.get("author")
+
+        author = User.get_by_id(int(author_id))
+        user = User.get_by_email(users.get_current_user().email().lower())
+
+        manager = Manager.query(Manager.email == user.email).get()
+
+        if title and slug and image and text:
+            post = BlogPost.get_by_id(int(post_id))
+            if manager.franchise_id == post.franchise_id:
+                BlogPost.update(blog_post=post, title=title, slug=slug, cover_image=image, text=text)
+                post.author_id = int(author_id)
+                post.author_name = author.get_full_name
+                post.put()
+                logga("Blog %s edited by %s." % (post_id, user.get_id))
+
+        return self.redirect_to("manager-blog-details", post_id=post_id)
 
 
 # INSTRUCTOR
