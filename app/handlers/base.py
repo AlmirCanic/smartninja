@@ -2,7 +2,7 @@ import os
 import jinja2
 import webapp2
 from google.appengine.api import users
-from app.models.employer import Employer
+from app.models.blog import BlogPost
 from app.models.franchise import Franchise
 from app.utils import filters
 from app.utils.decorators import admin_required
@@ -50,12 +50,12 @@ class SecuredSiteHandler(Handler):
 class FranchiseUpdateButtonHandler(Handler):
     @admin_required
     def post(self):
-        employers = Employer.query().fetch()
+        blogs = BlogPost.query().fetch()
         franchises = Franchise.query().fetch()
 
         franchise = franchises[0]
 
-        for employer in employers:
-            employer.franchise_id = franchise.get_id
-            employer.franchise_title = franchise.title
-            #employer.put()
+        for blog in blogs:
+            blog.franchise_id = franchise.get_id
+            blog.franchise_title = franchise.title
+            #blog.put()

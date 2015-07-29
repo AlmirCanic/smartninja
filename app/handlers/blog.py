@@ -173,10 +173,16 @@ class ManagerBlogListHandler(Handler):
         curr_user = users.get_current_user()
         manager = Manager.query(Manager.email == curr_user.email().lower()).get()
 
-        posts = BlogPost.query(BlogPost.deleted == False,
-                               BlogPost.franchise_id == manager.franchise_id).order(-BlogPost.created).fetch()
+        curs = Cursor(urlsafe=self.request.get('page'))
+
+        posts, next_curs, more = BlogPost.query(BlogPost.deleted == False,
+                                                BlogPost.franchise_id == manager.franchise_id).order(-BlogPost.created).fetch_page(10, start_cursor=curs)
 
         params = {"posts": posts}
+
+        if more and next_curs:
+            params["next"] = next_curs.urlsafe()
+
         return self.render_template("manager/blog_list.html", params)
 
 
@@ -299,8 +305,14 @@ class ManagerBlogDeleteHandler(Handler):
 class InstructorBlogListHandler(Handler):
     @instructor_required
     def get(self):
-        posts = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch()
+        curs = Cursor(urlsafe=self.request.get('page'))
+        posts, next_curs, more = BlogPost.query(BlogPost.deleted == False).order(-BlogPost.created).fetch_page(10, start_cursor=curs)
+
         params = {"posts": posts}
+
+        if more and next_curs:
+            params["next"] = next_curs.urlsafe()
+
         return self.render_template("instructor/blog_list.html", params)
 
 
