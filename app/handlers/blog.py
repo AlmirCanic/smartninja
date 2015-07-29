@@ -275,6 +275,26 @@ class ManagerBlogEditHandler(Handler):
         return self.redirect_to("manager-blog-details", post_id=post_id)
 
 
+class ManagerBlogDeleteHandler(Handler):
+    @manager_required
+    def get(self, post_id):
+        post = BlogPost.get_by_id(int(post_id))
+        params = {"post": post}
+        return self.render_template("manager/blog_post_delete.html", params)
+
+    @manager_required
+    def post(self, post_id):
+        manager = Manager.query(Manager.email == users.get_current_user().email().lower()).get()
+        post = BlogPost.get_by_id(int(post_id))
+
+        if manager.franchise_id == post.franchise_id:
+            post.deleted = True
+            post.put()
+            logga("Blog %s deleted." % post_id)
+
+        return self.redirect_to("manager-blog-list")
+
+
 # INSTRUCTOR
 class InstructorBlogListHandler(Handler):
     @instructor_required
