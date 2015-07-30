@@ -1,4 +1,4 @@
-{% extends "instructor/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Edit user{% endblock title %}
 
@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-user"></i>  <a href="/instructor/profile">Profile</a>
+                    <i class="fa fa-user"></i>  <a href="/manager/profile">Profile</a>
                 </li>
                 <li class="active">
                     <i class="fa fa-table"></i> Edit your profile
@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-lg-7">
-            <form action="/instructor/profile/edit" method="post">
+            <form action="/manager/profile/edit" method="post">
 
                 <div class="form-group">
                     <label>First name</label>
@@ -56,12 +56,6 @@
                     <label>Summary</label>
                     <p>Short summary of what you do (up to 100 chars)</p>
                     <input type="text" class="form-control" placeholder="Summary" value="{{profile.summary}}" name="summary" id="summary">
-                </div>
-
-                <div class="form-group">
-                    <label>Long description</label>
-                    <p>Write a bit more about yourself and your experience.</p>
-                    <textarea name="long-description" class="form-control markdown" rows="6">{{profile.long_description}}</textarea><br>
                 </div>
 
                 <div class="form-group">

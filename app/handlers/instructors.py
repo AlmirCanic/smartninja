@@ -159,9 +159,11 @@ class InstructorProfileEditHandler(Handler):
             photo_url = self.request.get("photo_url")
             phone_number = self.request.get("phone_number")
             dob = self.request.get("dob")
+            description = self.request.get("long-description")
 
-            user = User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
-                    summary=summary, photo_url=photo_url, dob=dob)
+            user = User.update(user=profile, first_name=first_name, last_name=last_name, address=address,
+                               phone_number=phone_number, summary=summary, photo_url=photo_url, dob=dob,
+                               long_description=description)
 
             logga("User %s edited." % user.get_id)
             return self.redirect_to("instructor-profile")

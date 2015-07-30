@@ -48,7 +48,8 @@ from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurve
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
     InstructorLessonDetailsHandler, StudentLessonDetailsHandler, ManagerLessonDetailsHandler, ManagerLessonAddHandler, \
     ManagerLessonEditHandler, ManagerLessonDeleteHandler
-from app.handlers.managers import AdminManagersListHandler, AdminManagerAddHandler, AdminManagerDeleteHandler
+from app.handlers.managers import AdminManagersListHandler, AdminManagerAddHandler, AdminManagerDeleteHandler, \
+    ManagerProfileEditHandler, ManagerProfileDetailsHandler
 from app.handlers.newsletter import NewsletterSubscribeHandler
 from app.handlers.partners import AdminPartnersListHandler, AdminPartnerAddHandler, AdminPartnerDetailsHandler, \
     AdminPartnerDeleteHandler, AdminPartnerEditHandler, PublicPartnersHandler, AdminPartnerUserCourseList, \
@@ -216,6 +217,10 @@ app = webapp2.WSGIApplication([
 # MANAGER URLS
     webapp2.Route('/manager', ManagerCourseListHandler, name="manager"),
 
+    # manager profile
+    webapp2.Route('/manager/profile', ManagerProfileDetailsHandler, name="manager-profile"),
+    webapp2.Route('/manager/profile/edit', ManagerProfileEditHandler, name="manager-profile-edit"),
+
     # courses
     webapp2.Route('/manager/courses', ManagerCourseListHandler, name="manager-course-list"),
     webapp2.Route('/manager/courses/past', ManagerCoursesPastListHandler, name="manager-past-course-list"),
@@ -296,6 +301,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/instructor/courses', InstructorCourseListHandler, name="instructor-course-list"),
     webapp2.Route('/instructor/course/<course_id:\d+>', InstructorCourseDetailsHandler, name="instructor-course-details"),
 
+    # instructor profile
     webapp2.Route('/instructor/profile', InstructorProfileDetailsHandler, name="instructor-profile"),
     webapp2.Route('/instructor/profile/edit', InstructorProfileEditHandler, name="instructor-profile-edit"),
 

@@ -1,4 +1,4 @@
-{% extends "instructor/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}{{ profile.get_full_name }}{% endblock title %}
 
@@ -29,12 +29,6 @@
     <p>Date of birth: {{ profile.dob }}</p>
     <p>Short description: {{ profile.summary }}</p>
 
-    <h3>Description</h3>
-    <p>{{ profile.long_description|nl2br }}</p>
-
-    <hr>
-
-    <a href="/instructor/profile/edit"><button class="btn btn-success">Edit your profile</button></a>
-    <hr>
+    <a href="/manager/profile/edit"><button class="btn btn-success">Edit your profile</button></a>
 </div>
 {% endblock main_content %}
