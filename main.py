@@ -60,7 +60,8 @@ from app.handlers.public import MainHandler, \
     PublicAboutHandler, PublicComingSoonHandler, PublicApplyThankYouHandler, PublicNewsletterThankYouHandler, \
     PublicNewsletterThankYou2Handler, PublicFaqHandler, PublicCareersHandler, PublicCoursesSummaryHandler
 from app.handlers.reports import InstructorReportAddHandler, InstructorReportDetailsHandler, InstructorReportEditHandler, \
-    InstructorReportDeleteHandler, AdminReportsListHandler, AdminCourseReportsHandler, AdminReportDetailsHandler
+    InstructorReportDeleteHandler, AdminReportsListHandler, AdminCourseReportsHandler, AdminReportDetailsHandler, \
+    AdminReportsPastListHandler, ManagerReportsListHandler, ManagerReportsPastListHandler, ManagerCourseReportsHandler, ManagerReportDetailsHandler
 from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd, AdminStudentCourseDelete, \
     StudentCourseListHandler, StudentCourseDetailsHandler, StudentProfileDetailsHandler, StudentProfileEditHandler, AdminStudentCourseAccessHandler, \
     StudentContactedByEmployersListHandler, StudentCVDownloadHandler, StudentCVUploadHandler, \
@@ -133,6 +134,7 @@ app = webapp2.WSGIApplication([
 
     # reports
     webapp2.Route('/admin/reports', AdminReportsListHandler, name="admin-reports-list"),
+    webapp2.Route('/admin/reports/past', AdminReportsPastListHandler, name="admin-reports-past-list"),
     webapp2.Route('/admin/course/<course_id:\d+>/reports', AdminCourseReportsHandler, name="admin-course-reports"),
     webapp2.Route('/admin/report/<report_id:\d+>', AdminReportDetailsHandler, name="admin-report-details"),
 
@@ -221,7 +223,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/profile', ManagerProfileDetailsHandler, name="manager-profile"),
     webapp2.Route('/manager/profile/edit', ManagerProfileEditHandler, name="manager-profile-edit"),
 
-    # courses
+    # manager courses
     webapp2.Route('/manager/courses', ManagerCourseListHandler, name="manager-course-list"),
     webapp2.Route('/manager/courses/past', ManagerCoursesPastListHandler, name="manager-past-course-list"),
     webapp2.Route('/manager/course/<course_id:\d+>', ManagerCourseDetailsHandler, name="manager-course-details"),
@@ -230,12 +232,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/course/<course_id:\d+>/export', ManagerCourseExportDataHandler, name="manager-course-export"),
     webapp2.Route('/manager/course/add', ManagerCourseAddHandler, name="manager-course-add"),
 
-    # course applications
+    # manager course applications
     webapp2.Route('/manager/application/<application_id:\d+>', ManagerCourseApplicationDetailsHandler, name="manager-application-details"),
     webapp2.Route('/manager/application/<application_id:\d+>/delete', ManagerCourseApplicationDeleteHandler, name="manager-application-delete"),
     webapp2.Route('/manager/application/<application_id:\d+>/move-student', ManagerCourseApplicationMoveStudentHandler, name="manager-application-move-student"),
 
-    # users
+    # manager users
     webapp2.Route('/manager/users', ManagerUsersListHandler, name="manager-users-list"),
     webapp2.Route('/manager/user/<user_id:\d+>', ManagerUserDetailsHandler, name="manager-user-details"),
     webapp2.Route('/manager/user/<user_id:\d+>/upload-cv', ManagerUserCVUploadHandler, name="manager-user-upload-cv"),
@@ -245,38 +247,38 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/user/<user_id:\d+>/change-email', ManagerUserChangeEmailHandler, name="manager-user-change-email"),
     webapp2.Route('/manager/user/join/<user_id_1:\d+>/<user_id_2:\d+>', ManagerUserJoinAccountsHandler, name="manager-user-join-accounts"),
 
-    # instructors
+    # manager instructors
     webapp2.Route('/manager/users/instructors', ManagerInstructorsListHandler, name="manager-instructors-list"),
     webapp2.Route('/manager/users/instructor/add', ManagerInstructorAddHandler, name="manager-instructor-add"),
     webapp2.Route('/manager/users/instructor/<instructor_id:\d+>/delete', ManagerInstructorDeleteHandler, name="manager-instructor-delete"),
 
-    # employers
+    # manager employers
     webapp2.Route('/manager/users/employers', ManagerEmployersListHandler, name="manager-employers-list"),
     webapp2.Route('/manager/users/employer/add', ManagerEmployerAddHandler, name="manager-employer-add"),
     webapp2.Route('/manager/users/employer/<employer_id:\d+>/delete', ManagerEmployerDeleteHandler, name="manager-employer-delete"),
 
-    # student access to courses
+    # manager student access to courses
     webapp2.Route('/manager/users/students', ManagerStudentCourseList, name="manager-student-course-list"),
     webapp2.Route('/manager/users/students/past-courses', ManagerStudentPastCoursesList, name="manager-student-past-course-list"),
     webapp2.Route('/manager/users/students/add', ManagerStudentCourseAdd, name="manager-student-course-add"),
     webapp2.Route('/manager/users/students/<student_id:\d+>/delete', ManagerStudentCourseDelete, name="manager-student-course-delete"),
     webapp2.Route('/manager/course/<course_id:\d+>/student-access', ManagerStudentCourseAccessHandler, name="manager-student-course-access"),
 
-    # partners
+    # manager partners
     webapp2.Route('/manager/partners', ManagerPartnersListHandler, name="manager-partners-list"),
     webapp2.Route('/manager/partner/add', ManagerPartnerAddHandler, name="manager-partner-add"),
     webapp2.Route('/manager/partner/<partner_id:\d+>', ManagerPartnerDetailsHandler, name="manager-partner-details"),
     webapp2.Route('/manager/partner/<partner_id:\d+>/delete', ManagerPartnerDeleteHandler, name="manager-partner-delete"),
     webapp2.Route('/manager/partner/<partner_id:\d+>/edit', ManagerPartnerEditHandler, name="manager-partner-edit"),
 
-    # course types/curriculums
+    # manager course types/curriculums
     webapp2.Route('/manager/curriculums', ManagerCourseTypesListHandler, name="manager-course-types-list"),
     webapp2.Route('/manager/curriculum/<course_type_id:\d+>', ManagerCourseTypeDetailsHandler, name="manager-course-type-details"),
     webapp2.Route('/manager/curriculum/<course_type_id:\d+>/edit', ManagerCourseTypeEditHandler, name="manager-course-type-edit"),
     webapp2.Route('/manager/curriculum/<course_type_id:\d+>/delete', ManagerCourseTypeDeleteHandler, name="manager-course-type-delete"),
     webapp2.Route('/manager/curriculum/add', ManagerCourseTypeAddHandler, name="manager-course-type-add"),
 
-    # lessons
+    # manager lessons
     webapp2.Route('/manager/curriculum/<course_type_id:\d+>/add-lesson', ManagerLessonAddHandler, name="manager-lesson-add"),
     webapp2.Route('/manager/lesson/<lesson_id:\d+>', ManagerLessonDetailsHandler, name="manager-lesson-details"),
     webapp2.Route('/manager/lesson/<lesson_id:\d+>/edit', ManagerLessonEditHandler, name="manager-lesson-edit"),
@@ -288,6 +290,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/blog/<post_id:\d+>', ManagerBlogDetailsHandler, name="manager-blog-details"),
     webapp2.Route('/manager/blog/<post_id:\d+>/edit', ManagerBlogEditHandler, name="manager-blog-edit"),
     webapp2.Route('/manager/blog/<post_id:\d+>/delete', ManagerBlogDeleteHandler, name="manager-blog-delete"),
+
+    # manager reports
+    webapp2.Route('/manager/reports', ManagerReportsListHandler, name="manager-reports-list"),
+    webapp2.Route('/manager/reports/past', ManagerReportsPastListHandler, name="manager-reports-past-list"),
+    webapp2.Route('/manager/course/<course_id:\d+>/reports', ManagerCourseReportsHandler, name="manager-course-reports"),
+    webapp2.Route('/manager/report/<report_id:\d+>', ManagerReportDetailsHandler, name="manager-report-details"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Reports{% endblock title %}
 
@@ -9,19 +9,23 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-archive"></i> Reports
+                    <i class="fa fa-archive"></i> <a href="/manager/reports">Reports</a>
+                </li>
+
+                <li>
+                    <i class="fa fa-archive"></i> Reports for past courses
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Reports per course
+                Reports per course (past courses)
             </h1>
         </div>
     </div>
     <!-- Breadcrumb end -->
 
-    <h3>Reports for current courses</h3>
-    {% if current_courses %}
+    <h3>Reports for past courses</h3>
+    {% if past_courses %}
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -36,15 +40,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for course in current_courses %}
+                        {% for course in past_courses %}
                         <tr>
-                            <td><a href="/admin/course/{{course.get_id}}/reports">{{ course.title }}</a></td>
+                            <td><a href="/manager/course/{{course.get_id}}/reports">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
                             <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
@@ -58,11 +62,8 @@
     </div>
     <!-- /.row -->
     {% else %}
-        <p>No reports for current courses</p>
+        <p>No reports for past courses</p>
     {% endif %}
-
-    <hr>
-    <a href="/admin/reports/past"><button class="btn btn-info">See past courses</button></a>
 
 </div>
 {% endblock main_content %}

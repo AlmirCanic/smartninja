@@ -9,19 +9,19 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-archive"></i> Reports
+                    <i class="fa fa-archive"></i> Reports for past courses
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Reports per course
+                Reports per course (past courses)
             </h1>
         </div>
     </div>
     <!-- Breadcrumb end -->
 
-    <h3>Reports for current courses</h3>
-    {% if current_courses %}
+    <h3>Reports for past courses</h3>
+    {% if past_courses %}
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for course in current_courses %}
+                        {% for course in past_courses %}
                         <tr>
                             <td><a href="/admin/course/{{course.get_id}}/reports">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
@@ -58,11 +58,8 @@
     </div>
     <!-- /.row -->
     {% else %}
-        <p>No reports for current courses</p>
+        <p>No reports for past courses</p>
     {% endif %}
-
-    <hr>
-    <a href="/admin/reports/past"><button class="btn btn-info">See past courses</button></a>
 
 </div>
 {% endblock main_content %}

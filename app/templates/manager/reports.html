@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Reports{% endblock title %}
 
@@ -38,13 +38,13 @@
                     <tbody>
                         {% for course in current_courses %}
                         <tr>
-                            <td><a href="/admin/course/{{course.get_id}}/reports">{{ course.title }}</a></td>
+                            <td><a href="/manager/course/{{course.get_id}}/reports">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
                             <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
                             <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
                             <td>
                                 {% for instructor in course.course_instructors %}
-                                    <a href="/admin/user/{{ instructor.user_id }}">
+                                    <a href="/manager/user/{{ instructor.user_id }}">
                                         {{ instructor.name }}
                                     </a>
                                 {% endfor %}
@@ -62,7 +62,7 @@
     {% endif %}
 
     <hr>
-    <a href="/admin/reports/past"><button class="btn btn-info">See past courses</button></a>
+    <a href="/manager/reports/past"><button class="btn btn-info">See past courses</button></a>
 
 </div>
 {% endblock main_content %}

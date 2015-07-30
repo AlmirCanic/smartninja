@@ -45,6 +45,12 @@ indexes:
   properties:
   - name: deleted
   - name: franchise_id
+  - name: end_date
+
+- kind: Course
+  properties:
+  - name: deleted
+  - name: franchise_id
   - name: start_date
 
 - kind: Course
