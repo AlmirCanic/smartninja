@@ -67,7 +67,7 @@ def email_course_app_to_smartninja(course, user, application):
                application.other_info.encode('utf-8'))
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
-                                to="info@smartninja.org",
+                                to="info@smartninja.si",
                                 subject="New application for {0}".format(course.title.encode('utf-8')),
                                 reply_to="%s" % user.email,
                                 body=message_body,

@@ -1,4 +1,4 @@
-from app.emails.contact import email_contact_us_to_smartninja
+from app.emails.contact import email_contact_us_to_smartninja_si
 from app.handlers.base import Handler
 from app.settings import is_local
 
@@ -17,8 +17,8 @@ class PublicContactUsHandler(Handler):
 
         if first_name and email and message:
             if not is_local():
-                email_contact_us_to_smartninja(first_name=first_name, last_name=last_name, email=email, phone=phone,
-                                               message=message)
+                email_contact_us_to_smartninja_si(first_name=first_name, last_name=last_name, email=email, phone=phone,
+                                                  message=message)
 
         return self.redirect_to("public-contact-thanks")
 
