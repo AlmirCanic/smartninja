@@ -25,7 +25,7 @@ class AdminReportsPastListHandler(Handler):
     @admin_required
     def get(self):
         courses = Course.query(Course.deleted == False,
-                               Course.end_date < datetime.date.today()).order(Course.end_date).fetch()
+                               Course.end_date < datetime.date.today()).order(-Course.end_date).fetch()
 
         params = {"past_courses": courses}
         return self.render_template("admin/reports_past_list.html", params=params)
@@ -72,7 +72,7 @@ class ManagerReportsPastListHandler(Handler):
 
         courses = Course.query(Course.deleted == False,
                                Course.franchise_id == manager.franchise_id,
-                               Course.end_date < datetime.date.today()).order(Course.end_date).fetch()
+                               Course.end_date < datetime.date.today()).order(-Course.end_date).fetch()
 
         params = {"past_courses": courses}
         return self.render_template("manager/reports_past_list.html", params=params)
