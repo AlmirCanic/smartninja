@@ -40,7 +40,8 @@ from app.handlers.employers import AdminEmployersListHandler, AdminEmployerAddHa
 from app.handlers.franchises import AdminFranchiseListHandler, AdminFranchiseAddHandler, AdminFranchiseDetailsHandler, \
     AdminFranchiseEditHandler, AdminFranchiseDeleteHandler
 from app.handlers.grades import InstructorGradeStudentDetailsHandler, InstructorGradeStudentEditHandler, \
-    AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler
+    AdminGradeStudentDetailsHandler, AdminGradesListHandler, AdminCourseGradesHandler, ManagerGradesListHandler, \
+    ManagerCourseGradesHandler, ManagerGradeStudentDetailsHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler, \
     ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler
@@ -296,6 +297,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/reports/past', ManagerReportsPastListHandler, name="manager-reports-past-list"),
     webapp2.Route('/manager/course/<course_id:\d+>/reports', ManagerCourseReportsHandler, name="manager-course-reports"),
     webapp2.Route('/manager/report/<report_id:\d+>', ManagerReportDetailsHandler, name="manager-report-details"),
+
+    # manager grades for students
+    webapp2.Route('/manager/grades', ManagerGradesListHandler, name="manager-grades-list"),
+    webapp2.Route('/manager/course/<course_id:\d+>/grades', ManagerCourseGradesHandler, name="manager-course-grades"),
+    webapp2.Route('/manager/grade/<application_id:\d+>', ManagerGradeStudentDetailsHandler, name="manager-grade-student"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

@@ -1,8 +1,10 @@
+import datetime
 from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import CourseApplication, Course
-from app.utils.decorators import instructor_required, admin_required
+from app.models.manager import Manager
+from app.utils.decorators import instructor_required, admin_required, manager_required
 from app.utils.other import logga, convert_tags_to_string, convert_tags_to_list
 
 
@@ -10,7 +12,8 @@ from app.utils.other import logga, convert_tags_to_string, convert_tags_to_list
 class AdminGradesListHandler(Handler):
     @admin_required
     def get(self):
-        courses = Course.query(Course.deleted == False).order(Course.end_date).fetch()
+        courses = Course.query(Course.deleted == False,
+                               Course.start_date < datetime.date.today()).order(-Course.start_date).fetch()
 
         params = {"courses": courses}
         self.render_template("admin/grades.html", params=params)
@@ -20,7 +23,8 @@ class AdminCourseGradesHandler(Handler):
     @admin_required
     def get(self, course_id):
         course = Course.get_by_id(int(course_id))
-        applications = CourseApplication.query(CourseApplication.course_id == int(course_id), CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+        applications = CourseApplication.query(CourseApplication.course_id == int(course_id),
+                                               CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
 
         params = {"course": course, "applications": applications}
         self.render_template("admin/grades_for_course.html", params=params)
@@ -35,6 +39,43 @@ class AdminGradeStudentDetailsHandler(Handler):
 
         params = {"application": application, "tags": tags}
         self.render_template("admin/grade_details.html", params)
+
+
+# MANAGER
+class ManagerGradesListHandler(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        courses = Course.query(Course.deleted == False,
+                               Course.franchise_id == manager.franchise_id,
+                               Course.start_date < datetime.date.today()).order(-Course.start_date).fetch()
+
+        params = {"courses": courses}
+        self.render_template("manager/grades.html", params=params)
+
+
+class ManagerCourseGradesHandler(Handler):
+    @manager_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        applications = CourseApplication.query(CourseApplication.course_id == int(course_id),
+                                               CourseApplication.deleted == False).order(-CourseApplication.created).fetch()
+
+        params = {"course": course, "applications": applications}
+        self.render_template("manager/grades_for_course.html", params=params)
+
+
+class ManagerGradeStudentDetailsHandler(Handler):
+    @manager_required
+    def get(self, application_id):
+        application = CourseApplication.get_by_id(int(application_id))
+
+        tags = convert_tags_to_string(application.grade_tags)
+
+        params = {"application": application, "tags": tags}
+        self.render_template("manager/grade_details.html", params)
 
 
 # INSTRUCTOR

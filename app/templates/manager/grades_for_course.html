@@ -1,0 +1,106 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Grades for {{course.title}}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-archive"></i> <a href="/manager/grades">Grades</a>
+                </li>
+                <li>
+                    <i class="fa fa-table"></i> Grades for {{course.title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Grades for {{course.title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <h3>Student grades</h3>
+    {% if applications %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Grade</th>
+                                <th>Email</th>
+                                <th>Price</th>
+                                <th>Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for application in applications %}
+                            <tr {% if application.payment_status %} class="success" {% else %} class="danger" {% endif %}>
+                                <td><a href="/manager/user/{{application.student_id}}">{{application.student_name}}</a></td>
+                                <td>{{application.grade_score}} <a href="/manager/grade/{{application.get_id}}">(read more)</a></td>
+                                <td>{{application.student_email}}</td>
+                                <td>{{application.price}} {{application.currency}}</td>
+                                <td>{{application.payment_status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>No applications yet :(</p>
+    {% endif %}
+
+    <h3>About course</h3>
+    <p>{{ course.summary }}</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>City</th>
+                            <th>Place</th>
+                            <th>Instructor</th>
+                            <th>Partner</th>
+                            <th>Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>{{course.city}}</td>
+                            <td>{{course.place}}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %}
+                                    <a href="/manager/user/{{ instructor.user_id }}">
+                                        {{ instructor.name }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for partner in course.partners %}
+                                    <a href="/manager/partner/{{ partner.get_id }}">
+                                        {{ partner.title }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                            <td>{{tags}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock main_content %}
