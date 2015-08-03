@@ -58,11 +58,11 @@
                                                         <td>{{ stat_item.statement }}</td>
                                                         <td>
                                                             {{ stat_item.score|round(2) }} -
-                                                            {% if stat_item.score <= 1 %}
+                                                            {% if stat_item.score <= 1.75 %}
                                                                 Completely disagree
-                                                            {% elif stat_item.score <= 2 %}
+                                                            {% elif stat_item.score <= 2.5 %}
                                                                 Disagree
-                                                            {% elif stat_item.score <= 3 %}
+                                                            {% elif stat_item.score <= 3.25 %}
                                                                 Agree
                                                             {% elif stat_item.score <= 4 %}
                                                                 Totally agree
