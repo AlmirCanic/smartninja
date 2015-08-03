@@ -1,25 +1,56 @@
 """
     Users who attend a course can grade a certain lesson and instructor's presentation
 """
+import datetime
 from google.appengine.api import users
+import operator
 from app.handlers.base import Handler
 from app.models.auth import User
 from app.models.course import Course
 from app.models.lesson import Lesson
 from app.models.lesson_survey import LessonSurvey
 from app.utils.decorators import student_required, admin_required, instructor_required
-from app.utils.lesson_survey_utils import statements
+from app.utils.lesson_survey_utils import statements, survey_statements_summary, group_statements_by_lesson
 
 
 # ADMIN
 class AdminLessonSurveyList(Handler):
     @admin_required
     def get(self):
-        surveys = LessonSurvey.query(LessonSurvey.deleted == False).fetch()
+        courses = Course.query(Course.deleted == False,
+                               Course.end_date >= datetime.date.today()).order(Course.end_date).fetch()
 
-        params = {"surveys": surveys}
+        params = {"current_courses": courses}
 
         return self.render_template("admin/lesson_survey_list.html", params)
+
+
+class AdminLessonSurveyPastList(Handler):
+    @admin_required
+    def get(self):
+        courses = Course.query(Course.deleted == False,
+                               Course.end_date < datetime.date.today()).order(Course.end_date).fetch()
+
+        params = {"past_courses": courses}
+
+        return self.render_template("admin/lesson_survey_past_list.html", params)
+
+
+class AdminCourseSurveysHandler(Handler):
+    @admin_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        surveys = LessonSurvey.query(LessonSurvey.course_id == int(course_id),
+                                     LessonSurvey.deleted == False).order(-LessonSurvey.created).fetch()
+
+        survey_summary = survey_statements_summary(surveys)
+
+        summary_groups = group_statements_by_lesson(survey_summary)
+
+        summary_groups.sort(key=operator.attrgetter("lesson_order"))
+
+        params = {"course": course, "surveys": surveys, "summary": summary_groups}
+        return self.render_template("admin/lesson_surveys_for_course.html", params=params)
 
 
 class AdminLessonSurveyDetails(Handler):
@@ -32,7 +63,7 @@ class AdminLessonSurveyDetails(Handler):
         return self.render_template("admin/lesson_survey_details.html", params)
 
 
-# ADMIN
+# INSTRUCTOR
 class InstructorLessonSurveyList(Handler):
     @instructor_required
     def get(self):

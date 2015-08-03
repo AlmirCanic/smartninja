@@ -2,8 +2,8 @@ import os
 import jinja2
 import webapp2
 from google.appengine.api import users
-from app.models.blog import BlogPost
-from app.models.franchise import Franchise
+from app.models.lesson import Lesson
+from app.models.lesson_survey import LessonSurvey
 from app.utils import filters
 from app.utils.decorators import admin_required
 
@@ -50,12 +50,9 @@ class SecuredSiteHandler(Handler):
 class FranchiseUpdateButtonHandler(Handler):
     @admin_required
     def post(self):
-        blogs = BlogPost.query().fetch()
-        franchises = Franchise.query().fetch()
+        surveys = LessonSurvey.query().fetch()
 
-        franchise = franchises[0]
-
-        for blog in blogs:
-            blog.franchise_id = franchise.get_id
-            blog.franchise_title = franchise.title
-            #blog.put()
+        for survey in surveys:
+            lesson = Lesson.get_by_id(survey.lesson_id)
+            survey.lesson_order = lesson.order
+            #survey.put()

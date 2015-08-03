@@ -103,6 +103,13 @@ indexes:
   - name: deleted
   - name: order
 
+- kind: LessonSurvey
+  properties:
+  - name: course_id
+  - name: deleted
+  - name: created
+    direction: desc
+
 - kind: Report
   properties:
   - name: course_id

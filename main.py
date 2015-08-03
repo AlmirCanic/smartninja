@@ -45,7 +45,8 @@ from app.handlers.grades import InstructorGradeStudentDetailsHandler, Instructor
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler, \
     ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler
-from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails
+from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails, \
+    AdminLessonSurveyPastList, AdminCourseSurveysHandler
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
     InstructorLessonDetailsHandler, StudentLessonDetailsHandler, ManagerLessonDetailsHandler, ManagerLessonAddHandler, \
     ManagerLessonEditHandler, ManagerLessonDeleteHandler
@@ -215,6 +216,8 @@ app = webapp2.WSGIApplication([
 
     # lesson surveys
     webapp2.Route('/admin/lesson-surveys', AdminLessonSurveyList, name="admin-lesson-survey-list"),
+    webapp2.Route('/admin/lesson-surveys/past', AdminLessonSurveyPastList, name="admin-lesson-survey-past-list"),
+    webapp2.Route('/admin/course/<course_id:\d+>/surveys', AdminCourseSurveysHandler, name="admin-course-surveys"),
     webapp2.Route('/admin/lesson-survey/<lesson_survey_id:\d+>', AdminLessonSurveyDetails, name="admin-lesson-survey-details"),
 
 # MANAGER URLS

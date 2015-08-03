@@ -9,20 +9,24 @@
         <div class="col-lg-12">
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-check"></i> Lesson surveys
+                    <i class="fa fa-check"></i> <a href="/admin/lesson-surveys">Lesson surveys</a>
+                </li>
+
+                <li>
+                    <i class="fa fa-check"></i> Lesson surveys for past courses
                 </li>
             </ol>
 
             <h1 class="page-header">
-                Lesson surveys
+                Lesson surveys for past courses
             </h1>
         </div>
     </div>
     <!-- Breadcrumb end -->
 
-    <h3>Lesson surveys for current or future courses</h3>
+    <h3>Lesson surveys for past courses</h3>
 
-    {% if current_courses %}
+    {% if past_courses %}
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -37,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for course in current_courses %}
+                        {% for course in past_courses %}
                         <tr>
                             <td><a href="/admin/course/{{course.get_id}}/surveys">{{ course.title }}</a></td>
                             <td>{{ course.city }}, {{ course.place }}</td>
@@ -59,11 +63,8 @@
     </div>
     <!-- /.row -->
     {% else %}
-        <p>No current or future courses</p>
+        <p>No past courses</p>
     {% endif %}
-
-    <hr>
-    <a href="/admin/lesson-surveys/past"><button class="btn btn-info">See past courses</button></a>
 
 </div>
 {% endblock main_content %}
