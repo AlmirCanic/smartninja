@@ -1,0 +1,70 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Lesson surveys{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-check"></i> <a href="/manager/lesson-surveys">Lesson surveys</a>
+                </li>
+
+                <li>
+                    <i class="fa fa-check"></i> Lesson surveys for past courses
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Lesson surveys for past courses
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <h3>Lesson surveys for past courses</h3>
+
+    {% if past_courses %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Place</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in past_courses %}
+                        <tr>
+                            <td><a href="/manager/course/{{course.get_id}}/surveys">{{ course.title }}</a></td>
+                            <td>{{ course.city }}, {{ course.place }}</td>
+                            <td>{{course.start_date.day}}.{{course.start_date.month}}.{{course.start_date.year}}</td>
+                            <td>{{course.end_date.day}}.{{course.end_date.month}}.{{course.end_date.year}}</td>
+                            <td>
+                                {% for instructor in course.course_instructors %}
+                                    <a href="/manager/user/{{ instructor.user_id }}">
+                                        {{ instructor.name }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No past courses</p>
+    {% endif %}
+
+</div>
+{% endblock main_content %}

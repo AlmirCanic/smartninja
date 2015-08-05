@@ -1,0 +1,85 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Survey for {{survey.lesson_title}}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-check"></i> <a href="/manager/lesson-surveys">Lesson surveys</a>
+                </li>
+
+                <li>
+                    <i class="fa fa-check"></i> <a href="/manager/course/{{survey.course_id}}/surveys">{{survey.course_title}}</a>
+                </li>
+
+                <li class="active">
+                    <i class="fa fa-book"></i> Survey for lesson {{survey.lesson_title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Survey for lesson {{survey.lesson_title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p><strong>Course: </strong><a href="/manager/course/{{survey.course_id}}">{{survey.course_title}}</a></p>
+            <p><strong>Lesson: </strong><a href="/manager/lesson/{{survey.lesson_id}}">{{survey.lesson_title}}</a></p>
+            <p><strong>Instructor: </strong><a href="/manager/user/{{survey.instructor_user_id}}">{{survey.instructor_name}}</a></p>
+            <p><strong>Survey created: </strong>{{survey.created.strftime('%d.%m.%Y at %H:%M')}}</p>
+        </div>
+    </div>
+
+    <!-- Statements -->
+    <div class="row">
+        <div class="col-lg-8">
+            <h3>Statements</h3>
+            <p>1 - I do not agree at all, 4 - I totally agree.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Statement</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for statement in survey.questions %}
+                        <tr>
+                            <td>{{statement}}</td>
+                            <td>{{survey.questions[statement]}} -
+                                {% if survey.questions[statement] == "1" %}
+                                    Completely disagree
+                                {% elif survey.questions[statement] == "2" %}
+                                    Disagree
+                                {% elif survey.questions[statement] == "3" %}
+                                    Agree
+                                {% elif survey.questions[statement] == "4" %}
+                                    Totally agree
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open opinion -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Written opinion</h3>
+            <p>{{survey.text|nl2br}}</p>
+        </div>
+    </div>
+
+</div>
+{% endblock main_content %}

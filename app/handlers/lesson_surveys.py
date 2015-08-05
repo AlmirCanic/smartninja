@@ -9,7 +9,8 @@ from app.models.auth import User
 from app.models.course import Course
 from app.models.lesson import Lesson
 from app.models.lesson_survey import LessonSurvey
-from app.utils.decorators import student_required, admin_required, instructor_required
+from app.models.manager import Manager
+from app.utils.decorators import student_required, admin_required, instructor_required, manager_required
 from app.utils.lesson_survey_utils import statements, survey_statements_summary, group_statements_by_lesson
 
 
@@ -61,6 +62,64 @@ class AdminLessonSurveyDetails(Handler):
         params = {"survey": survey}
 
         return self.render_template("admin/lesson_survey_details.html", params)
+
+
+# MANAGER
+class ManagerLessonSurveyList(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        courses = Course.query(Course.deleted == False,
+                               Course.franchise_id == manager.franchise_id,
+                               Course.end_date >= datetime.date.today()).order(Course.end_date).fetch()
+
+        params = {"current_courses": courses}
+
+        return self.render_template("manager/lesson_survey_list.html", params)
+
+
+class ManagerLessonSurveyPastList(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        courses = Course.query(Course.deleted == False,
+                               Course.franchise_id == manager.franchise_id,
+                               Course.end_date < datetime.date.today()).order(Course.end_date).fetch()
+
+        params = {"past_courses": courses}
+
+        return self.render_template("manager/lesson_survey_past_list.html", params)
+
+
+class ManagerCourseSurveysHandler(Handler):
+    @manager_required
+    def get(self, course_id):
+        course = Course.get_by_id(int(course_id))
+        surveys = LessonSurvey.query(LessonSurvey.course_id == int(course_id),
+                                     LessonSurvey.deleted == False).order(-LessonSurvey.created).fetch()
+
+        survey_summary = survey_statements_summary(surveys)
+
+        summary_groups = group_statements_by_lesson(survey_summary)
+
+        summary_groups.sort(key=operator.attrgetter("lesson_order"))
+
+        params = {"course": course, "surveys": surveys, "summary": summary_groups}
+        return self.render_template("manager/lesson_surveys_for_course.html", params=params)
+
+
+class ManagerLessonSurveyDetails(Handler):
+    @manager_required
+    def get(self, lesson_survey_id):
+        survey = LessonSurvey.get_by_id(int(lesson_survey_id))
+
+        params = {"survey": survey}
+
+        return self.render_template("manager/lesson_survey_details.html", params)
 
 
 # INSTRUCTOR

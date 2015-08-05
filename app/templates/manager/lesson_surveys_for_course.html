@@ -1,0 +1,119 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Lesson surveys{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-check"></i> <a href="/manager/lesson-surveys">Lesson surveys</a>
+                </li>
+
+                <li>
+                    <i class="fa fa-check"></i> Lesson surveys for {{course.title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Lesson surveys for {{course.title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <p>Lesson surveys are added by students for a particular lesson. In the survey they grade both the lesson and
+        the instructor.</p>
+
+    {% if summary %}
+        <h3>Summary per lesson</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-group" id="accordion">
+                    {% for item in summary %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{loop.index}}">{{item.lesson_order}} - {{item.lesson_title}}<i class="indicator icon-plus pull-right"></i></a>
+                            </h4>
+                        </div>
+
+                        <div id="collapse{{loop.index}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Statement</th>
+                                                        <th>AVG score (1-4)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for stat_item in item.statements %}
+                                                    <tr>
+                                                        <td>{{ stat_item.statement }}</td>
+                                                        <td>
+                                                            {{ stat_item.score|round(2) }} -
+                                                            {% if stat_item.score <= 1.75 %}
+                                                                Completely disagree
+                                                            {% elif stat_item.score <= 2.5 %}
+                                                                Disagree
+                                                            {% elif stat_item.score <= 3.25 %}
+                                                                Agree
+                                                            {% elif stat_item.score <= 4 %}
+                                                                Totally agree
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if surveys %}
+    <h3>See all surveys for the course</h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Survey created</th>
+                            <th>Lesson</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for survey in surveys %}
+                        <tr>
+                            <td>{{ survey.created.strftime('%d.%m.%Y at %H:%M') }} <a href="/manager/lesson-survey/{{survey.get_id}}">(see the results)</a></td>
+                            <td>{{ survey.lesson_title }}</td>
+                            <td>{{ survey.instructor_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    {% else %}
+        <p>No lesson surveys</p>
+    {% endif %}
+
+</div>
+{% endblock main_content %}

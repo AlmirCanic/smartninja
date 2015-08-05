@@ -46,7 +46,8 @@ from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructo
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler, \
     ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler
 from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails, \
-    AdminLessonSurveyPastList, AdminCourseSurveysHandler
+    AdminLessonSurveyPastList, AdminCourseSurveysHandler, ManagerLessonSurveyList, ManagerLessonSurveyPastList, \
+    ManagerCourseSurveysHandler, ManagerLessonSurveyDetails
 from app.handlers.lessons import AdminLessonAddHandler, AdminLessonDetailsHandler, AdminLessonEditHandler, AdminLessonDeleteHandler, \
     InstructorLessonDetailsHandler, StudentLessonDetailsHandler, ManagerLessonDetailsHandler, ManagerLessonAddHandler, \
     ManagerLessonEditHandler, ManagerLessonDeleteHandler
@@ -305,6 +306,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/grades', ManagerGradesListHandler, name="manager-grades-list"),
     webapp2.Route('/manager/course/<course_id:\d+>/grades', ManagerCourseGradesHandler, name="manager-course-grades"),
     webapp2.Route('/manager/grade/<application_id:\d+>', ManagerGradeStudentDetailsHandler, name="manager-grade-student"),
+
+    # lesson surveys
+    webapp2.Route('/manager/lesson-surveys', ManagerLessonSurveyList, name="manager-lesson-survey-list"),
+    webapp2.Route('/manager/lesson-surveys/past', ManagerLessonSurveyPastList, name="manager-lesson-survey-past-list"),
+    webapp2.Route('/manager/course/<course_id:\d+>/surveys', ManagerCourseSurveysHandler, name="manager-course-surveys"),
+    webapp2.Route('/manager/lesson-survey/<lesson_survey_id:\d+>', ManagerLessonSurveyDetails, name="manager-lesson-survey-details"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),
