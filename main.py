@@ -19,7 +19,7 @@ from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlog
     ManagerBlogDeleteHandler
 from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler, \
     EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler, AdminSuccessfullyEmployedHandler, \
-    EmployerCandidateCVDownloadHandler
+    EmployerCandidateCVDownloadHandler, ManagerContactedCandidatesListHandler, ManagerSuccessfullyEmployedHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler, \
     ManagerUserChangeEmailHandler, ManagerUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
@@ -108,7 +108,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
 
     # franchise big button updates
-    #webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
+    webapp2.Route('/franchise-big-button', FranchiseUpdateButtonHandler, name="admin-franchise-big-button"),
 
     # basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
@@ -307,11 +307,15 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manager/course/<course_id:\d+>/grades', ManagerCourseGradesHandler, name="manager-course-grades"),
     webapp2.Route('/manager/grade/<application_id:\d+>', ManagerGradeStudentDetailsHandler, name="manager-grade-student"),
 
-    # lesson surveys
+    # manager lesson surveys
     webapp2.Route('/manager/lesson-surveys', ManagerLessonSurveyList, name="manager-lesson-survey-list"),
     webapp2.Route('/manager/lesson-surveys/past', ManagerLessonSurveyPastList, name="manager-lesson-survey-past-list"),
     webapp2.Route('/manager/course/<course_id:\d+>/surveys', ManagerCourseSurveysHandler, name="manager-course-surveys"),
     webapp2.Route('/manager/lesson-survey/<lesson_survey_id:\d+>', ManagerLessonSurveyDetails, name="manager-lesson-survey-details"),
+
+    # manager contacted
+    webapp2.Route('/manager/contacted', ManagerContactedCandidatesListHandler, name="manager-contacted-list"),
+    webapp2.Route('/manager/contacted/<contacted_candidate_id:\d+>/success', ManagerSuccessfullyEmployedHandler, name="manager-successfully-employed"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "manager/base.html" %}
 
 {% block title %}Contacted candidates list{% endblock title %}
 
@@ -20,9 +20,11 @@
     </div>
     <!-- Breadcrumb end -->
 
+    <!--
     <form method="post" action="/franchise-big-button">
         <button class="btn btn-danger">FRANCHISE BIG BUTTON</button>
     </form>
+    -->
 
     {% if contacted_list %}
         <div class="row">
@@ -41,14 +43,13 @@
                         <tbody>
                             {% for contact in contacted_list %}
                             <tr>
-                                <td><a href="/admin/user/{{contact.candidate_user_id}}">{{contact.candidate_name}}</a> ({{contact.candidate_email}})</td>
-                                <td><a href="/admin/user/{{contact.employer_user_id}}">
+                                <td><a href="/manager/user/{{contact.candidate_user_id}}">{{contact.candidate_name}}</a> ({{contact.candidate_email}})</td>
+                                <td><a href="/manager/user/{{contact.employer_user_id}}">
                                     {{contact.employer_name}}</a>
                                     ({{contact.employer_email}})
                                     {% if contact.employer_company_title %}
                                         <br> {{contact.employer_company_title}}
                                     {% endif %}
-                                    <br> {{contact.franchise_title}}
                                 </td>
                                 <td>{{contact.created.strftime('%d.%m.%Y')}}</td>
                                 <td>{{contact.message}}</td>
@@ -61,7 +62,7 @@
                             <!-- Modal - contact the candidate -->
                             <div class="modal fade" id="successfullyEmployed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <form method="post" action="/admin/contacted/{{contact.get_id}}/success">
+                                    <form method="post" action="/manager/contacted/{{contact.get_id}}/success">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

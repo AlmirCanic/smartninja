@@ -10,6 +10,8 @@ class ContactCandidate(ndb.Model):
     employer_email = ndb.StringProperty()
     employer_company_id = ndb.IntegerProperty()
     employer_company_title = ndb.StringProperty()
+    franchise_id = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
     message = ndb.TextProperty()
     successful_employment = ndb.BooleanProperty(default=False)
     deleted = ndb.BooleanProperty(default=False)
@@ -20,11 +22,11 @@ class ContactCandidate(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, candidate, employer_user, message):
+    def create(cls, candidate, employer_user, message, franchise_id, franchise_title):
         contact_candidate = cls(candidate_name=candidate.get_full_name, candidate_user_id=candidate.get_id,
                                 candidate_email=candidate.email, employer_name=employer_user.get_full_name,
                                 employer_user_id=employer_user.get_id, employer_email=employer_user.email,
-                                message=message)
+                                message=message, franchise_id=franchise_id, franchise_title=franchise_title)
         contact_candidate.put()
         return contact_candidate
 

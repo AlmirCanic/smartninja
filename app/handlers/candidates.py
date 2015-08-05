@@ -8,14 +8,13 @@ from app.models.auth import User
 from app.models.contact_candidate import ContactCandidate
 from app.models.course import CourseApplication
 from app.models.employer import Employer
+from app.models.manager import Manager
 from app.settings import is_local
-from app.utils.decorators import employer_required, admin_required
-
-
-# ADMIN
+from app.utils.decorators import employer_required, admin_required, manager_required
 from app.utils.other import convert_markdown_to_html
 
 
+# ADMIN
 class AdminContactedCandidatesListHandler(Handler):
     @admin_required
     def get(self):
@@ -36,6 +35,38 @@ class AdminSuccessfullyEmployedHandler(Handler):
         contacted.put()
 
         return self.redirect_to("admin-contacted-list")
+
+
+# MANAGER
+class ManagerContactedCandidatesListHandler(Handler):
+    @manager_required
+    def get(self):
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        contacted_list = ContactCandidate.query(ContactCandidate.deleted == False,
+                                                ContactCandidate.franchise_id == manager.franchise_id).order(-ContactCandidate.created).fetch()
+
+        params = {"contacted_list": contacted_list}
+
+        return self.render_template("manager/contacted_list.html", params)
+
+
+class ManagerSuccessfullyEmployedHandler(Handler):
+    @manager_required
+    def post(self, contacted_candidate_id):
+        employed = self.request.get("employed")
+
+        contacted = ContactCandidate.get_by_id(int(contacted_candidate_id))
+
+        current_user = users.get_current_user()
+        manager = Manager.query(Manager.email == str(current_user.email()).lower()).get()
+
+        if contacted.franchise_id == manager.franchise_id:
+            contacted.successful_employment = bool(employed)
+            contacted.put()
+
+        return self.redirect_to("manager-contacted-list")
 
 
 # EMPLOYER
@@ -78,9 +109,11 @@ class EmployerCandidateDetailsHandler(Handler):
         current_user = users.get_current_user()
         employer_user = User.get_by_email(email=current_user.email().lower())
 
-        contact_candidate = ContactCandidate.create(candidate=candidate, employer_user=employer_user, message=message)
-
         employer = Employer.query(Employer.user_id == employer_user.get_id).get()
+
+        contact_candidate = ContactCandidate.create(candidate=candidate, employer_user=employer_user, message=message,
+                                                    franchise_id=employer.franchise_id,
+                                                    franchise_title=employer.franchise_title)
 
         contact_candidate.employer_company_id = employer.partner_id
         contact_candidate.employer_company_title = employer.partner_title

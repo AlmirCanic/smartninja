@@ -36,6 +36,13 @@ indexes:
   - name: created
     direction: desc
 
+- kind: ContactCandidate
+  properties:
+  - name: deleted
+  - name: franchise_id
+  - name: created
+    direction: desc
+
 - kind: Course
   properties:
   - name: deleted

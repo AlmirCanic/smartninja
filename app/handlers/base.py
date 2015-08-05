@@ -2,8 +2,9 @@ import os
 import jinja2
 import webapp2
 from google.appengine.api import users
-from app.models.lesson import Lesson
-from app.models.lesson_survey import LessonSurvey
+from app.models.auth import User
+from app.models.contact_candidate import ContactCandidate
+from app.models.employer import Employer
 from app.utils import filters
 from app.utils.decorators import admin_required
 
@@ -50,9 +51,11 @@ class SecuredSiteHandler(Handler):
 class FranchiseUpdateButtonHandler(Handler):
     @admin_required
     def post(self):
-        surveys = LessonSurvey.query().fetch()
+        contacted = ContactCandidate.query().fetch()
 
-        for survey in surveys:
-            lesson = Lesson.get_by_id(survey.lesson_id)
-            survey.lesson_order = lesson.order
-            #survey.put()
+        for contact in contacted:
+            employer_user = User.get_by_id(contact.employer_user_id)
+            employer = Employer.query(Employer.user_id == employer_user.get_id).get()
+            contact.franchise_id = employer.franchise_id
+            contact.franchise_title = employer.franchise_title
+            contact.put()
