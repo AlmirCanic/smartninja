@@ -11,7 +11,7 @@ from app.handlers.apply import AdminCourseApplicationDetailsHandler, \
     ManagerCourseApplicationMoveStudentHandler
 from app.handlers.auth import LoginHandler, LogoutHandler, ForbiddenHandler, ProfileHandler, NotExistHandler, \
     OopsHandler
-from app.handlers.base import SecuredSiteHandler, AdminHandler, FranchiseUpdateButtonHandler
+from app.handlers.base import SecuredSiteHandler, AdminHandler
 from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlogAddHandler, AdminBlogDetailsHandler, \
     AdminBlogEditHandler, AdminBlogDeleteHandler, PublicBlogDetailsHandler, InstructorBlogListHandler, \
     InstructorBlogAddHandler, InstructorBlogDetailsHandler, InstructorBlogEditHandler, InstructorBlogDeleteHandler, \
