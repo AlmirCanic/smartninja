@@ -32,6 +32,13 @@ indexes:
 - kind: ContactCandidate
   properties:
   - name: deleted
+  - name: employer_company_id
+  - name: created
+    direction: desc
+
+- kind: ContactCandidate
+  properties:
+  - name: deleted
   - name: employer_email
   - name: created
     direction: desc

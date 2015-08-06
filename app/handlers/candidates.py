@@ -109,7 +109,7 @@ class EmployerCandidateDetailsHandler(Handler):
         current_user = users.get_current_user()
         employer_user = User.get_by_email(email=current_user.email().lower())
 
-        employer = Employer.query(Employer.user_id == employer_user.get_id).get()
+        employer = Employer.query(Employer.email == current_user.email().lower()).get()
 
         contact_candidate = ContactCandidate.create(candidate=candidate, employer_user=employer_user, message=message,
                                                     franchise_id=employer.franchise_id,
