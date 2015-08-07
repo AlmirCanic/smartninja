@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+
+{% block title %}User photo upload{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i>  <a href="/admin/user/{{this_user.get_id}}">{{ this_user.get_full_name }}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> User photo upload
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Upload photo for {{ this_user.get_full_name }}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="{{upload_url}}" enctype="multipart/form-data" method="post">
+
+                <div class="form-group">
+                    <label>Upload profile photo</label>
+                    <p>Photo should be square (200x200 px) and not larger than 1 MB.</p>
+                    <input type="file" name="user-photo" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-success">Upload photo</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

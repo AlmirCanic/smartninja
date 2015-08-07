@@ -22,6 +22,7 @@ class User(ndb.Model):
     homepage_url = ndb.StringProperty()
     other_skills = ndb.StringProperty(repeated=True)  # skills put in by the user
     cv_blob = ndb.BlobKeyProperty()
+    photo_blob = ndb.BlobKeyProperty()
     started_programming = ndb.DateProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)  # skills user acquired at smartninja courses. Other skills are under other_skills field

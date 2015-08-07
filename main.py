@@ -74,7 +74,7 @@ from app.handlers.students import AdminStudentCourseList, AdminStudentCourseAdd,
 from app.handlers.users import AdminUsersListHandler, AdminUserDetailsHandler, AdminUserDeleteHandler, \
     AdminUserEditHandler, AdminUsersAllListHandler, AdminUserCVUploadHandler, AdminUserCVDownloadHandler, \
     ManagerUserDetailsHandler, ManagerUserEditHandler, ManagerUserDeleteHandler, ManagerUserCVUploadHandler, \
-    ManagerUserCVDownloadHandler, ManagerUsersListHandler
+    ManagerUserCVDownloadHandler, ManagerUsersListHandler, AdminUserPhotoUploadHandler, AdminUserPhotoHandler
 from app.utils.localhost_data import LocalhostFakeDataHandler
 
 
@@ -162,6 +162,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/user/<user_id:\d+>/edit', AdminUserEditHandler, name="user-edit"),
     webapp2.Route('/admin/user/<user_id:\d+>/change-email', AdminUserChangeEmailHandler, name="admin-user-change-email"),
     webapp2.Route('/admin/user/join/<user_id_1:\d+>/<user_id_2:\d+>', AdminUserJoinAccountsHandler, name="admin-user-join-accounts"),
+    webapp2.Route('/admin/user/<user_id:\d+>/photo', AdminUserPhotoHandler, name="admin-user-photo"),
+    webapp2.Route('/admin/user/<user_id:\d+>/photo/upload', AdminUserPhotoUploadHandler, name="admin-user-photo-upload"),
 
     # instructors
     webapp2.Route('/admin/users/instructors', AdminInstructorsListHandler, name="admin-instructors-list"),

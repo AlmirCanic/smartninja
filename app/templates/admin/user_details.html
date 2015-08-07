@@ -23,13 +23,16 @@
     </div>
     <!-- Breadcrumb end -->
     
-    <img src="{{this_user.photo_url}}" class="img-thumbnail" width="200px">
+    <img src="{{photo_url}}=s200-c" class="img-thumbnail" width="200px">
+    <br>
+    <br>
+    <a href="/admin/user/{{this_user.get_id}}/photo"><button class="btn btn-warning btn-xs">Upload photo</button></a>
     <br>
     <br>
     <p>
         Email: {{ this_user.email }}
         <a href="/admin/user/{{this_user.get_id}}/change-email">
-            <button class="btn btn-warning btn-xs">Edit email</button>
+            <button class="btn btn-info btn-xs">Edit email</button>
         </a>
     </p>
     <p>Phone Number : {{ this_user.phone_number }}</p>
@@ -43,7 +46,7 @@
         {% if this_user.cv_blob %}
         <a href="/admin/user/{{this_user.get_id}}/cv">Open CV</a>
         {% endif %}
-        <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
     </p>
 
     <p>Date of birth: {{ this_user.dob }}</p>

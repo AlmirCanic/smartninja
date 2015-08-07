@@ -1,6 +1,7 @@
 import datetime
 from google.appengine.api import users
 from google.appengine.ext import blobstore
+from google.appengine.api import images
 from google.appengine.ext.webapp import blobstore_handlers
 from app.handlers.base import Handler
 from app.models.auth import User
@@ -24,7 +25,7 @@ class AdminUsersListHandler(Handler):
                 admins.append(user)
 
         params = {"admins": admins}
-        self.render_template("admin/users_list.html", params)
+        return self.render_template("admin/users_list.html", params)
 
 
 class AdminUsersAllListHandler(Handler):
@@ -33,7 +34,7 @@ class AdminUsersAllListHandler(Handler):
         users = User.query(User.deleted == False).fetch()
 
         params = {"users": users}
-        self.render_template("admin/users_all_list.html", params)
+        return self.render_template("admin/users_all_list.html", params)
 
 
 class AdminUserDetailsHandler(Handler):
@@ -44,21 +45,32 @@ class AdminUserDetailsHandler(Handler):
         if user.email in ADMINS:
             admin = True
 
-        upload_url = blobstore.create_upload_url(success_path='/admin/user/%s/upload-cv' % user_id,
-                                                 max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
+        # get url to upload CV
+        cv_upload_url = blobstore.create_upload_url(success_path='/admin/user/%s/upload-cv' % user_id,
+                                                    max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
 
+        # get all the courses that user applied to
         applications = CourseApplication.query(CourseApplication.student_id == int(user_id),
                                                CourseApplication.deleted == False).fetch()
 
+        # convert long description from markdown to html
         if user.long_description:
             user.long_description = convert_markdown_to_html(user.long_description)
 
+        # convert skills and grade tags to string
         other_skills = convert_tags_to_string(user.other_skills)
         grade_all_tags = convert_tags_to_string(user.grade_all_tags)
 
-        params = {"this_user": user, "admin": admin, "upload_url": upload_url, "applications": applications,
-                  "other_skills": other_skills, "grade_all_tags": grade_all_tags}
-        self.render_template("admin/user_details.html", params)
+        # get profile image url
+        if user.photo_blob:
+            photo_url = images.get_serving_url(blob_key=user.photo_blob)
+        else:
+            photo_url = user.photo_url
+
+
+        params = {"this_user": user, "admin": admin, "upload_url": cv_upload_url, "applications": applications,
+                  "other_skills": other_skills, "grade_all_tags": grade_all_tags, "photo_url": photo_url}
+        return self.render_template("admin/user_details.html", params)
 
 
 class AdminUserCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
@@ -73,10 +85,10 @@ class AdminUserCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 
             user.put()
 
-            self.redirect_to('user-details', user_id=user_id)
+            return self.redirect_to('user-details', user_id=user_id)
 
         except Exception, e:
-            self.response.out.write("upload failed: %s" % e)
+            return self.response.out.write("upload failed: %s" % e)
 
 
 class AdminUserCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
@@ -85,9 +97,34 @@ class AdminUserCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
         user = User.get_by_id(int(user_id))
 
         if not blobstore.get(user.cv_blob):
-            self.redirect_to('user-details', user_id=user_id)
+            return self.redirect_to('user-details', user_id=user_id)
         else:
-            self.send_blob(user.cv_blob, save_as="%s.pdf" % user_id)
+            return self.send_blob(user.cv_blob, save_as="%s.pdf" % user_id)
+
+
+class AdminUserPhotoHandler(Handler):
+    @admin_required
+    def get(self, user_id):
+        user = User.get_by_id(int(user_id))
+
+        photo_upload_url = blobstore.create_upload_url(success_path='/admin/user/%s/photo/upload' % user_id,
+                                                       max_bytes_per_blob=1000000, max_bytes_total=1000000)  # max 1 MB
+
+        params = {"this_user": user, "upload_url": photo_upload_url}
+        return self.render_template("admin/user_photo_upload.html", params)
+
+
+class AdminUserPhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
+    @admin_required
+    def post(self, user_id):
+        try:
+            upload = self.get_uploads()[0]
+            user = User.get_by_id(int(user_id))
+            user.photo_blob = upload.key()
+            user.put()
+            return self.redirect_to('user-details', user_id=user_id)
+        except Exception, e:
+            return self.response.out.write("upload failed: %s" % e)
 
 
 class AdminUserDeleteHandler(Handler):
@@ -95,7 +132,7 @@ class AdminUserDeleteHandler(Handler):
     def get(self, user_id):
         user = User.get_by_id(int(user_id))
         params = {"this_user": user}
-        self.render_template("admin/user_delete.html", params)
+        return self.render_template("admin/user_delete.html", params)
 
     @admin_required
     def post(self, user_id):
@@ -104,7 +141,7 @@ class AdminUserDeleteHandler(Handler):
             user.deleted = True
             user.put()
             logga("User %s deleted." % user_id)
-        self.redirect_to("users-list")
+        return self.redirect_to("users-list")
 
 
 class AdminUserEditHandler(Handler):
@@ -117,7 +154,7 @@ class AdminUserEditHandler(Handler):
         other_skills = convert_tags_to_string(user.other_skills)
 
         params = {"this_user": user, "other_skills": other_skills, "courses_skills": courses_skills}
-        self.render_template("admin/user_edit.html", params)
+        return self.render_template("admin/user_edit.html", params)
 
     @admin_required
     def post(self, user_id):
@@ -161,7 +198,7 @@ class AdminUserEditHandler(Handler):
                     other_skills=skills_list_clean)
 
         logga("User %s edited." % user_id)
-        self.redirect_to("user-details", user_id=int(user_id))
+        return self.redirect_to("user-details", user_id=int(user_id))
 
 
 # MANAGER
@@ -174,7 +211,7 @@ class ManagerUsersListHandler(Handler):
         managers = Manager.query(Manager.franchise_id == manager.franchise_id).fetch()
 
         params = {"managers": managers}
-        self.render_template("manager/users_list.html", params)
+        return self.render_template("manager/users_list.html", params)
 
 
 class ManagerUserDetailsHandler(Handler):
@@ -200,7 +237,8 @@ class ManagerUserDetailsHandler(Handler):
 
         params = {"this_user": user, "admin": admin, "upload_url": upload_url, "applications": applications,
                   "other_skills": other_skills, "grade_all_tags": grade_all_tags}
-        self.render_template("manager/user_details.html", params)
+
+        return self.render_template("manager/user_details.html", params)
 
 
 class ManagerUserEditHandler(Handler):
@@ -216,7 +254,7 @@ class ManagerUserEditHandler(Handler):
         other_skills = convert_tags_to_string(user.other_skills)
 
         params = {"this_user": user, "other_skills": other_skills, "courses_skills": courses_skills}
-        self.render_template("manager/user_edit.html", params)
+        return self.render_template("manager/user_edit.html", params)
 
     @manager_required
     def post(self, user_id):
@@ -263,7 +301,7 @@ class ManagerUserEditHandler(Handler):
                     other_skills=skills_list_clean)
 
         logga("User %s edited." % user_id)
-        self.redirect_to("manager-user-details", user_id=int(user_id))
+        return self.redirect_to("manager-user-details", user_id=int(user_id))
 
 
 class ManagerUserDeleteHandler(Handler):
@@ -271,7 +309,7 @@ class ManagerUserDeleteHandler(Handler):
     def get(self, user_id):
         user = User.get_by_id(int(user_id))
         params = {"this_user": user}
-        self.render_template("manager/user_delete.html", params)
+        return self.render_template("manager/user_delete.html", params)
 
     @manager_required
     def post(self, user_id):
@@ -280,7 +318,7 @@ class ManagerUserDeleteHandler(Handler):
             user.deleted = True
             user.put()
             logga("User %s deleted." % user_id)
-        self.redirect_to("manager-users-list")
+        return self.redirect_to("manager-users-list")
 
 
 class ManagerUserCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
@@ -295,10 +333,10 @@ class ManagerUserCVUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 
             user.put()
 
-            self.redirect_to('manager-user-details', user_id=user_id)
+            return self.redirect_to('manager-user-details', user_id=user_id)
 
         except Exception, e:
-            self.response.out.write("upload failed: %s" % e)
+            return self.response.out.write("upload failed: %s" % e)
 
 
 class ManagerUserCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
@@ -307,6 +345,6 @@ class ManagerUserCVDownloadHandler(blobstore_handlers.BlobstoreDownloadHandler):
         user = User.get_by_id(int(user_id))
 
         if not blobstore.get(user.cv_blob):
-            self.redirect_to('manager-user-details', user_id=user_id)
+            return self.redirect_to('manager-user-details', user_id=user_id)
         else:
-            self.send_blob(user.cv_blob, save_as="%s.pdf" % user_id)
+            return self.send_blob(user.cv_blob, save_as="%s.pdf" % user_id)
