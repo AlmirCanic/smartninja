@@ -20,6 +20,7 @@ from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlog
 from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler, \
     EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler, AdminSuccessfullyEmployedHandler, \
     EmployerCandidateCVDownloadHandler, ManagerContactedCandidatesListHandler, ManagerSuccessfullyEmployedHandler
+from app.handlers.careers import ManagerCareersDetailsHandler, ManagerCareersEditHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler, \
     ManagerUserChangeEmailHandler, ManagerUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
@@ -313,6 +314,10 @@ app = webapp2.WSGIApplication([
     # manager contacted
     webapp2.Route('/manager/contacted', ManagerContactedCandidatesListHandler, name="manager-contacted-list"),
     webapp2.Route('/manager/contacted/<contacted_candidate_id:\d+>/success', ManagerSuccessfullyEmployedHandler, name="manager-successfully-employed"),
+
+    # manager careers
+    webapp2.Route('/manager/careers', ManagerCareersDetailsHandler, name="manager-careers-details"),
+    webapp2.Route('/manager/careers/edit', ManagerCareersEditHandler, name="manager-careers-edit"),
 
 # PARTNER URLS
     webapp2.Route('/partner', PartnerCourseListHandler, name="partner"),

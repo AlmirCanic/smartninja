@@ -1,4 +1,5 @@
 import datetime
+from google.appengine.api import memcache
 from app.handlers.base import Handler
 from app.models.course import Course, CourseApplication
 
@@ -36,7 +37,13 @@ class PublicCoursesSummaryHandler(Handler):
 
 class PublicCareersHandler(Handler):
     def get(self):
-        self.render_template("public/careers.html")
+        forms_id = memcache.get(key="forms-id")
+        height = memcache.get(key="forms-height")
+        text = memcache.get(key="forms-text")
+
+        params = {"form_id": forms_id, "height": height, "text": text}
+
+        self.render_template("public/careers.html", params)
 
 
 class PublicComingSoonHandler(Handler):

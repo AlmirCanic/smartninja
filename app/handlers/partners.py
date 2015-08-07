@@ -16,7 +16,7 @@ class AdminPartnersListHandler(Handler):
     def get(self):
         partners = Partner.query(Partner.deleted == False).fetch()
         params = {"partners": partners}
-        self.render_template("admin/partners_list.html", params)
+        return self.render_template("admin/partners_list.html", params)
 
 
 class AdminPartnerAddHandler(Handler):
@@ -24,7 +24,7 @@ class AdminPartnerAddHandler(Handler):
     def get(self):
         franchises = Franchise.query(Franchise.deleted == False).fetch()
         params = {"franchises": franchises}
-        self.render_template("admin/partner_add.html", params)
+        return self.render_template("admin/partner_add.html", params)
 
     @admin_required
     def post(self):
@@ -41,7 +41,7 @@ class AdminPartnerAddHandler(Handler):
                                  franchise=franchise)
         logga("Partner %s added." % partner.get_id)
 
-        self.redirect_to("admin-partners-list")
+        return self.redirect_to("admin-partners-list")
 
 
 class AdminPartnerDetailsHandler(Handler):
@@ -49,7 +49,7 @@ class AdminPartnerDetailsHandler(Handler):
     def get(self, partner_id):
         partner = Partner.get_by_id(int(partner_id))
         params = {"partner": partner}
-        self.render_template("admin/partner_details.html", params)
+        return self.render_template("admin/partner_details.html", params)
 
 
 class AdminPartnerDeleteHandler(Handler):
@@ -57,7 +57,7 @@ class AdminPartnerDeleteHandler(Handler):
     def get(self, partner_id):
         partner = Partner.get_by_id(int(partner_id))
         params = {"partner": partner}
-        self.render_template("admin/partner_delete.html", params)
+        return self.render_template("admin/partner_delete.html", params)
 
     @admin_required
     def post(self, partner_id):
@@ -65,7 +65,7 @@ class AdminPartnerDeleteHandler(Handler):
         partner.deleted = True
         partner.put()
         logga("Partner %s deleted." % partner_id)
-        self.redirect_to("admin-partners-list")
+        return self.redirect_to("admin-partners-list")
 
 
 class AdminPartnerEditHandler(Handler):
@@ -74,7 +74,7 @@ class AdminPartnerEditHandler(Handler):
         partner = Partner.get_by_id(int(partner_id))
         franchises = Franchise.query(Franchise.deleted == False).fetch()
         params = {"partner": partner, "franchises": franchises}
-        self.render_template("admin/partner_edit.html", params)
+        return self.render_template("admin/partner_edit.html", params)
 
     @admin_required
     def post(self, partner_id):
@@ -93,7 +93,7 @@ class AdminPartnerEditHandler(Handler):
                        description=description, franchise=franchise)
         logga("Partner %s updated." % partner_id)
 
-        self.redirect_to("admin-partner-details", partner_id=partner_id)
+        return self.redirect_to("admin-partner-details", partner_id=partner_id)
 
 
 # Partner User Course
@@ -102,7 +102,7 @@ class AdminPartnerUserCourseList(Handler):
     def get(self):
         pucs = PartnerUserCourse.query().fetch()
         params = {"pucs": pucs}
-        self.render_template("admin/partner_user_course_list.html", params)
+        return self.render_template("admin/partner_user_course_list.html", params)
 
 
 class AdminPartnerUserCourseAdd(Handler):
@@ -110,7 +110,7 @@ class AdminPartnerUserCourseAdd(Handler):
     def get(self):
         courses = Course.query(Course.deleted == False, Course.start_date > datetime.datetime.now()).order(Course.start_date).fetch()
         params = {"courses": courses}
-        self.render_template("admin/partner_user_course_add.html", params)
+        return self.render_template("admin/partner_user_course_add.html", params)
 
     @admin_required
     def post(self):
@@ -137,14 +137,15 @@ class AdminPartnerUserCourseDelete(Handler):
     def get(self, puc_id):
         puc = PartnerUserCourse.get_by_id(int(puc_id))
         params = {"puc": puc}
-        self.render_template("admin/partner_user_course_delete.html", params)
+        return self.render_template("admin/partner_user_course_delete.html", params)
+
     @admin_required
     def post(self, puc_id):
         puc = PartnerUserCourse.get_by_id(int(puc_id))
         #PartnerUserCourse.delete(puc=puc)
         puc.key.delete()  # delete directly from the database, because not that important
         logga("PartnerUserCourse %s deleted." % puc_id)
-        self.redirect_to("admin-partner-user-course-list")
+        return self.redirect_to("admin-partner-user-course-list")
 
 
 # MANAGER
@@ -156,7 +157,7 @@ class ManagerPartnersListHandler(Handler):
 
         partners = Partner.query(Partner.deleted == False, Partner.franchise_id == manager.franchise_id).fetch()
         params = {"partners": partners}
-        self.render_template("manager/partners_list.html", params)
+        return self.render_template("manager/partners_list.html", params)
 
 
 class ManagerPartnerDetailsHandler(Handler):
@@ -164,13 +165,13 @@ class ManagerPartnerDetailsHandler(Handler):
     def get(self, partner_id):
         partner = Partner.get_by_id(int(partner_id))
         params = {"partner": partner}
-        self.render_template("manager/partner_details.html", params)
+        return self.render_template("manager/partner_details.html", params)
 
 
 class ManagerPartnerAddHandler(Handler):
     @manager_required
     def get(self):
-        self.render_template("manager/partner_add.html")
+        return self.render_template("manager/partner_add.html")
 
     @manager_required
     def post(self):
@@ -190,7 +191,7 @@ class ManagerPartnerAddHandler(Handler):
 
         logga("Partner %s added." % partner.get_id)
 
-        self.redirect_to("manager-partners-list")
+        return self.redirect_to("manager-partners-list")
 
 
 class ManagerPartnerEditHandler(Handler):
@@ -198,7 +199,7 @@ class ManagerPartnerEditHandler(Handler):
     def get(self, partner_id):
         partner = Partner.get_by_id(int(partner_id))
         params = {"partner": partner}
-        self.render_template("manager/partner_edit.html", params)
+        return self.render_template("manager/partner_edit.html", params)
 
     @manager_required
     def post(self, partner_id):
@@ -220,7 +221,7 @@ class ManagerPartnerEditHandler(Handler):
 
         logga("Partner %s updated." % partner_id)
 
-        self.redirect_to("manager-partner-details", partner_id=partner_id)
+        return self.redirect_to("manager-partner-details", partner_id=partner_id)
 
 
 class ManagerPartnerDeleteHandler(Handler):
@@ -228,7 +229,7 @@ class ManagerPartnerDeleteHandler(Handler):
     def get(self, partner_id):
         partner = Partner.get_by_id(int(partner_id))
         params = {"partner": partner}
-        self.render_template("manager/partner_delete.html", params)
+        return self.render_template("manager/partner_delete.html", params)
 
     @manager_required
     def post(self, partner_id):
@@ -241,7 +242,7 @@ class ManagerPartnerDeleteHandler(Handler):
             partner.put()
             logga("Partner %s deleted." % partner_id)
 
-        self.redirect_to("manager-partners-list")
+        return self.redirect_to("manager-partners-list")
 
 
 # PUBLIC
@@ -249,7 +250,7 @@ class PublicPartnersHandler(Handler):
     def get(self):
         partners = Partner.query(Partner.deleted == False).fetch()
         params = {"partners": partners}
-        self.render_template("public/partners.html", params=params)
+        return self.render_template("public/partners.html", params=params)
 
 
 # PARTNER
@@ -276,7 +277,7 @@ class PartnerCourseListHandler(Handler):
                 else:
                     past_courses.append(course)
             params = {"future_courses": future_courses, "past_courses": past_courses}
-            self.render_template("partner/course_list.html", params)
+            return self.render_template("partner/course_list.html", params)
 
 
 class PartnerCourseDetailsHandler(Handler):
@@ -326,7 +327,7 @@ class PartnerProfileDetailsHandler(Handler):
             return self.redirect_to("forbidden")
 
         params = {"profile": profile}
-        self.render_template("partner/profile.html", params)
+        return self.render_template("partner/profile.html", params)
 
 
 class PartnerProfileEditHandler(Handler):
@@ -339,7 +340,7 @@ class PartnerProfileEditHandler(Handler):
             return self.redirect_to("forbidden")
         else:
             params = {"profile": profile}
-            self.render_template("partner/profile_edit.html", params)
+            return self.render_template("partner/profile_edit.html", params)
 
     @partner_required
     def post(self):
@@ -359,4 +360,4 @@ class PartnerProfileEditHandler(Handler):
             User.update(user=profile, first_name=first_name, last_name=last_name, address=address, phone_number=phone_number,
                     summary=summary, photo_url=photo_url, dob=dob)
             logga("Partner %s profile edited." % profile.get_id)
-            self.redirect_to("partner-profile")
+            return self.redirect_to("partner-profile")
