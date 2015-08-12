@@ -7,7 +7,16 @@ class Instructor(ndb.Model):
     user_id = ndb.IntegerProperty()
     email = ndb.StringProperty()
     franchises = ndb.StructuredProperty(modelclass=FranchiseList, repeated=True)
+    city = ndb.StringProperty()
+    manager_notes = ndb.TextProperty()
+    manager_grade = ndb.IntegerProperty()
+    last_graded_by_manager_id = ndb.IntegerProperty()  # The ID of the manager/user that last graded the instructor
+    last_graded_by_manager_name = ndb.StringProperty()
+    last_graded_by_manager_date = ndb.DateTimeProperty()
+    skills = ndb.StringProperty(repeated=True)  # programming skills that instructor has (e.g.: PHP, Python, SQL, ...)
+    active = ndb.BooleanProperty(default=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
+    deleted = ndb.BooleanProperty(default=False)
 
     @property
     def get_id(self):
