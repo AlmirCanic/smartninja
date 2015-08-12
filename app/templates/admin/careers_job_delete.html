@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Edit job{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers">Careers</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers/job/{{job.get_id}}">{{job.title}}</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  Delete job
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Delete job {{job.title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/admin/careers/job/{{job.get_id}}/delete" method="post">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3">
+            <a href="/admin/careers/job/{{job.get_id}}"><button class="btn btn-default">Cancel</button></a>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

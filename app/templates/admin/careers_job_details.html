@@ -1,0 +1,152 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{job.title}}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers">Careers</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  {{job.title}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                {{job.title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    {% if not job.active %}
+    <h3 style="color: red;">This job is deactivated!</h3>
+    {% endif %}
+
+    <!-- Job details -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Job details</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Franchise</th>
+                            <th>City</th>
+                            <th>Curriculum</th>
+                            <th>Created</th>
+                            <th>Applied</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ job.franchise_title }} </td>
+                            <td>{{ job.city }}</td>
+                            <td><a href="/admin/course/type/{{job.curriculum_id}}">{{job.curriculum_title}}</a></td>
+                            <td>{{ job.created.strftime('%d.%m.%Y') }} </td>
+                            <td>{{ job.applied }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- End Job details -->
+
+    <!-- Buttons -->
+    <a href="/careers/job/{{job.get_id}}"><button class="btn btn-primary">See on public page</button></a>
+
+    {% if job.active %}
+    <button class="btn btn-danger" data-toggle="modal" data-target="#deactivateJobModal">Deactivate job</button>
+    {% else %}
+    <button class="btn btn-success" data-toggle="modal" data-target="#deactivateJobModal">Activate job</button>
+    {% endif %}
+
+    <a href="/admin/careers/job/{{job.get_id}}/edit"><button class="btn btn-info">Edit job</button></a>
+    <!-- End Buttons -->
+
+    <!-- Job description -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Job description</h3>
+            <p>{{job.description|nl2br}}</p>
+        </div>
+    </div><!-- End Job description -->
+
+    <!-- Job applications -->
+    <h3>Job applications</h3>
+    {% if applications %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Date</th>
+                    <th>Linkedin</th>
+                    <th>Contacted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td><a href="/careers/job/{{job.get_id}}/application/{{application.get_id}}">{{ application.full_name }}</a></td>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.city }}</td>
+                    <td>{{ application.created.strftime('%d.%m.%Y') }} </td>
+                    <td><a href="{{ application.linkedin_url }}">{{ application.linkedin_url }}</a></td>
+                    <td>{{ application.contacted }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No job applications</p>
+    {% endif %}
+    <!-- End Job applications -->
+
+    <!-- Modal - deactivate job -->
+    <div class="modal fade" id="deactivateJobModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/admin/careers/job/{{job.get_id}}/deactivate">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Job de/activation</h4>
+                    </div>
+
+
+                    <div class="modal-body">
+                        {% if job.active %}
+                        <p>Do you really want to deactivate this job? This means it won't be shown publicly, but it won't be
+                        completely deleted. You can still activate it later.</p>
+                        {% else %}
+                        <p>If you activate the job, it will be shown publicly again.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="modal-footer">
+                        {% if job.active %}
+                        <button type="submit" class="btn btn-danger">Deactivate job</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success">Activate job</button>
+                        {% endif %}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End modal - deactivate job -->
+
+    <br>
+</div>
+{% endblock main_content %}

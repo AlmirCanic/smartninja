@@ -2,6 +2,7 @@ import datetime
 from google.appengine.api import memcache
 from app.handlers.base import Handler
 from app.models.course import Course, CourseApplication
+from app.models.job import Job
 
 
 class MainHandler(Handler):
@@ -17,38 +18,36 @@ class MainHandler(Handler):
             courses.append(course)
 
         params = {"courses": courses}
-        self.render_template("public/main.html", params=params)
+        return self.render_template("public/main.html", params=params)
 
 
 class PublicAboutHandler(Handler):
     def get(self):
-        self.render_template("public/about.html")
+        return self.render_template("public/about.html")
 
 
 class PublicFaqHandler(Handler):
     def get(self):
-        self.render_template("public/faq.html")
+        return self.render_template("public/faq.html")
 
 
 class PublicCoursesSummaryHandler(Handler):
     def get(self):
-        self.render_template("public/courses_summary.html")
+        return self.render_template("public/courses_summary.html")
 
 
 class PublicCareersHandler(Handler):
     def get(self):
-        forms_id = memcache.get(key="forms-id")
-        height = memcache.get(key="forms-height")
-        text = memcache.get(key="forms-text")
+        jobs = Job.query(Job.deleted == False, Job.active == True).fetch()
 
-        params = {"form_id": forms_id, "height": height, "text": text}
+        params = {"jobs": jobs}
 
-        self.render_template("public/careers.html", params)
+        return self.render_template("public/careers.html", params)
 
 
 class PublicComingSoonHandler(Handler):
     def get(self):
-        self.render_template("public/coming_soon.html")
+        return self.render_template("public/coming_soon.html")
 
 
 class PublicApplyThankYouHandler(Handler):
@@ -62,14 +61,14 @@ class PublicApplyThankYouHandler(Handler):
 
         params = {"course_app": course_app, "ts": ts, "final_date": final_date, "price_str": price_str}
 
-        self.render_template("public/apply_thank_you.html", params=params)
+        return self.render_template("public/apply_thank_you.html", params=params)
 
 
 class PublicNewsletterThankYouHandler(Handler):
     def get(self):
-        self.render_template("public/newsletter_thank_you_1.html")
+        return self.render_template("public/newsletter_thank_you_1.html")
 
 
 class PublicNewsletterThankYou2Handler(Handler):
     def get(self):
-        self.render_template("public/newsletter_thank_you_2.html")
+        return self.render_template("public/newsletter_thank_you_2.html")
