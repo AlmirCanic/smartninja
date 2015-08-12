@@ -34,3 +34,10 @@ class Job(ndb.Model):
         job.description = description
         job.put()
         return job
+
+    @classmethod
+    def delete(cls, job):
+        job.active = False
+        job.deleted = True
+        job.put()
+        return True

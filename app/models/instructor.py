@@ -10,9 +10,6 @@ class Instructor(ndb.Model):
     city = ndb.StringProperty()
     manager_notes = ndb.TextProperty()
     manager_grade = ndb.IntegerProperty()
-    last_graded_by_manager_id = ndb.IntegerProperty()  # The ID of the manager/user that last graded the instructor
-    last_graded_by_manager_name = ndb.StringProperty()
-    last_graded_by_manager_date = ndb.DateTimeProperty()
     skills = ndb.StringProperty(repeated=True)  # programming skills that instructor has (e.g.: PHP, Python, SQL, ...)
     active = ndb.BooleanProperty(default=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
@@ -23,13 +20,13 @@ class Instructor(ndb.Model):
         return self.key.id()
 
     @classmethod
-    def create(cls, full_name, user_id, email, franchises):
-        instructor = cls(full_name=full_name, user_id=user_id, email=email.lower(), franchises=franchises)
+    def create(cls, full_name, user_id, email, franchises, city=None):
+        instructor = cls(full_name=full_name, user_id=user_id, email=email.lower(), franchises=franchises, city=city)
         instructor.put()
         return instructor
 
     @classmethod
-    def add_or_create(cls, full_name, user_id, email, franchises):
+    def add_or_create(cls, full_name, user_id, email, franchises, city=None):
         instructor = cls.query(Instructor.email == email).get()
 
         if instructor:
@@ -37,8 +34,10 @@ class Instructor(ndb.Model):
             if franchises[0] not in existing_franchises:
                 existing_franchises.append(franchises[0])
                 instructor.franchises = existing_franchises
+                if not instructor.city:
+                    instructor.city = city
                 instructor.put()
         else:
-            instructor = cls.create(full_name=full_name, email=email, user_id=user_id, franchises=franchises)
+            instructor = cls.create(full_name=full_name, email=email, user_id=user_id, franchises=franchises, city=city)
 
         return instructor
