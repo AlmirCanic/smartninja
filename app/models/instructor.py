@@ -9,7 +9,7 @@ class Instructor(ndb.Model):
     franchises = ndb.StructuredProperty(modelclass=FranchiseList, repeated=True)
     city = ndb.StringProperty()
     manager_notes = ndb.TextProperty()
-    manager_grade = ndb.IntegerProperty()
+    manager_grade = ndb.IntegerProperty()  # manager grades instructor about these exact job requirements
     skills = ndb.StringProperty(repeated=True)  # programming skills that instructor has (e.g.: PHP, Python, SQL, ...)
     active = ndb.BooleanProperty(default=False)
     created = ndb.DateTimeProperty(auto_now_add=True)

@@ -42,7 +42,7 @@
     <!-- End Tabs -->
 
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <h3>Active jobs</h3>
             {% if active_jobs %}
             <div class="table-responsive">
@@ -59,7 +59,7 @@
                     <tbody>
                         {% for job in active_jobs %}
                         <tr>
-                            <td><a href="/careers/job/{{job.get_id}}">{{ job.title }}</a></td>
+                            <td><a href="/admin/careers/job/{{job.get_id}}">{{ job.title }}</a></td>
                             <td>{{ job.city }}</td>
                             <td>{{ job.franchise_title }} </td>
                             <td>{{ job.created.strftime('%d.%m.%Y') }} </td>
@@ -89,7 +89,7 @@
                     <tbody>
                         {% for job in past_jobs %}
                         <tr>
-                            <td><a href="/careers/job/{{job.get_id}}">{{ job.title }}</a></td>
+                            <td><a href="/admin/careers/job/{{job.get_id}}">{{ job.title }}</a></td>
                             <td>{{ job.city }}</td>
                             <td>{{ job.franchise_title }} </td>
                             <td>{{ job.created.strftime('%d.%m.%Y') }} </td>

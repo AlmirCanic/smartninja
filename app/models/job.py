@@ -7,7 +7,7 @@ class Job(ndb.Model):
     curriculum_title = ndb.StringProperty()
     city = ndb.StringProperty()
     franchise_id = ndb.IntegerProperty()
-    franchise_title = ndb.IntegerProperty()
+    franchise_title = ndb.StringProperty()
     description = ndb.TextProperty()
     applied = ndb.IntegerProperty(default=0)  # number of applications
     created = ndb.DateTimeProperty(auto_now_add=True)
@@ -26,12 +26,17 @@ class Job(ndb.Model):
         return job
 
     @classmethod
-    def update(cls, job, title, curriculum, city, description):
+    def update(cls, job, title, curriculum, city, description, franchise=None):
         job.title = title
         job.curriculum_id = curriculum.get_id
         job.curriculum_title = curriculum.title
         job.city = city
         job.description = description
+
+        if franchise:
+            job.franchise_id = franchise.get_id
+            job.franchise_title = franchise.title
+
         job.put()
         return job
 
