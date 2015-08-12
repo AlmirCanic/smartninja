@@ -20,7 +20,8 @@ from app.handlers.blog import PublicBlogHandler, AdminBlogListHandler, AdminBlog
 from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandidateDetailsHandler, \
     EmployerContactedCandidatesListHandler, AdminContactedCandidatesListHandler, AdminSuccessfullyEmployedHandler, \
     EmployerCandidateCVDownloadHandler, ManagerContactedCandidatesListHandler, ManagerSuccessfullyEmployedHandler
-from app.handlers.careers import ManagerCareersDetailsHandler, ManagerCareersEditHandler
+from app.handlers.careers import ManagerCareersDetailsHandler, ManagerCareersEditHandler, AdminCareersJobsListHandler, \
+    AdminCareersJobAddHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler, \
     ManagerUserChangeEmailHandler, ManagerUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
@@ -105,21 +106,21 @@ app = webapp2.WSGIApplication([
 
 
 # ADMIN URLS
-    # fake localhost data
+    # admin fake localhost data
     webapp2.Route('/load-fake-data', LocalhostFakeDataHandler, name="admin-load-fake-data"),
 
-    # basic
+    # admin basic
     webapp2.Route('/admin', AdminHandler, name="admin"),
     webapp2.Route('/admin/profile', ProfileHandler, name='profile'),
 
-    # franchises
+    # admin franchises
     webapp2.Route('/admin/franchises', AdminFranchiseListHandler, name="admin-franchise-list"),
     webapp2.Route('/admin/franchise/add', AdminFranchiseAddHandler, name="admin-franchise-add"),
     webapp2.Route('/admin/franchise/<franchise_id:\d+>', AdminFranchiseDetailsHandler, name="admin-franchise-details"),
     webapp2.Route('/admin/franchise/<franchise_id:\d+>/edit', AdminFranchiseEditHandler, name="admin-franchise-edit"),
     webapp2.Route('/admin/franchise/<franchise_id:\d+>/delete', AdminFranchiseDeleteHandler, name="admin-franchise-delete"),
 
-    # courses
+    # admin courses
     webapp2.Route('/admin/courses', AdminCourseListHandler, name="course-list"),
     webapp2.Route('/admin/courses/past', AdminCoursesPastListHandler, name="admin-past-course-list"),
     webapp2.Route('/admin/course/<course_id:\d+>', AdminCourseDetailsHandler, name="course-details"),
@@ -128,31 +129,31 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/course/<course_id:\d+>/export', AdminCourseExportDataHandler, name="course-export"),
     webapp2.Route('/admin/course/add', AdminCourseAddHandler, name="course-add"),
 
-    # course applications
+    # admin course applications
     webapp2.Route('/admin/application/<application_id:\d+>', AdminCourseApplicationDetailsHandler, name="application-details"),
     webapp2.Route('/admin/application/<application_id:\d+>/delete', AdminCourseApplicationDeleteHandler, name="application-delete"),
     webapp2.Route('/admin/application/<application_id:\d+>/move-student', AdminCourseApplicationMoveStudentHandler, name="application-move-student"),
 
-    # reports
+    # admin reports
     webapp2.Route('/admin/reports', AdminReportsListHandler, name="admin-reports-list"),
     webapp2.Route('/admin/reports/past', AdminReportsPastListHandler, name="admin-reports-past-list"),
     webapp2.Route('/admin/course/<course_id:\d+>/reports', AdminCourseReportsHandler, name="admin-course-reports"),
     webapp2.Route('/admin/report/<report_id:\d+>', AdminReportDetailsHandler, name="admin-report-details"),
 
-    # course types/curriculums
+    # admin course types/curriculums
     webapp2.Route('/admin/course/types', AdminCourseTypesListHandler, name="course-types-list"),
     webapp2.Route('/admin/course/type/<course_type_id:\d+>', AdminCourseTypeDetailsHandler, name="course-type-details"),
     webapp2.Route('/admin/course/type/<course_type_id:\d+>/edit', AdminCourseTypeEditHandler, name="course-type-edit"),
     webapp2.Route('/admin/course/type/<course_type_id:\d+>/delete', AdminCourseTypeDeleteHandler, name="course-type-delete"),
     webapp2.Route('/admin/course/type/add', AdminCourseTypeAddHandler, name="course-type-add"),
 
-    # lessons
+    # admin lessons
     webapp2.Route('/admin/course/type/<course_type_id:\d+>/add-lesson', AdminLessonAddHandler, name="admin-lesson-add"),
     webapp2.Route('/admin/lesson/<lesson_id:\d+>', AdminLessonDetailsHandler, name="admin-lesson-details"),
     webapp2.Route('/admin/lesson/<lesson_id:\d+>/edit', AdminLessonEditHandler, name="admin-lesson-edit"),
     webapp2.Route('/admin/lesson/<lesson_id:\d+>/delete', AdminLessonDeleteHandler, name="admin-lesson-delete"),
 
-    # users
+    # admin users
     webapp2.Route('/admin/users', AdminUsersListHandler, name="users-list"),
     webapp2.Route('/admin/users/all', AdminUsersAllListHandler, name="users-all-list"),
     webapp2.Route('/admin/user/<user_id:\d+>', AdminUserDetailsHandler, name="user-details"),
@@ -165,61 +166,65 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/user/<user_id:\d+>/photo', AdminUserPhotoHandler, name="admin-user-photo"),
     webapp2.Route('/admin/user/<user_id:\d+>/photo/upload', AdminUserPhotoUploadHandler, name="admin-user-photo-upload"),
 
-    # instructors
+    # admin instructors
     webapp2.Route('/admin/users/instructors', AdminInstructorsListHandler, name="admin-instructors-list"),
     webapp2.Route('/admin/users/instructor/add', AdminInstructorAddHandler, name="admin-instructor-add"),
     webapp2.Route('/admin/users/instructor/<instructor_id:\d+>/delete', AdminInstructorDeleteHandler, name="admin-instructor-delete"),
 
-    # managers
+    # admin managers
     webapp2.Route('/admin/users/managers', AdminManagersListHandler, name="admin-managers-list"),
     webapp2.Route('/admin/users/manager/add', AdminManagerAddHandler, name="admin-manager-add"),
     webapp2.Route('/admin/users/manager/<manager_id:\d+>/delete', AdminManagerDeleteHandler, name="admin-manager-delete"),
 
-    # employers
+    # admin employers
     webapp2.Route('/admin/users/employers', AdminEmployersListHandler, name="admin-employers-list"),
     webapp2.Route('/admin/users/employer/add', AdminEmployerAddHandler, name="admin-employer-add"),
     webapp2.Route('/admin/users/employer/<employer_id:\d+>/delete', AdminEmployerDeleteHandler, name="admin-employer-delete"),
 
-    # partners
+    # admin partners
     webapp2.Route('/admin/partners', AdminPartnersListHandler, name="admin-partners-list"),
     webapp2.Route('/admin/partner/add', AdminPartnerAddHandler, name="admin-partner-add"),
     webapp2.Route('/admin/partner/<partner_id:\d+>', AdminPartnerDetailsHandler, name="admin-partner-details"),
     webapp2.Route('/admin/partner/<partner_id:\d+>/delete', AdminPartnerDeleteHandler, name="admin-partner-delete"),
     webapp2.Route('/admin/partner/<partner_id:\d+>/edit', AdminPartnerEditHandler, name="admin-partner-edit"),
 
-    # partner user course
+    # admin partner user course
     webapp2.Route('/admin/partner-courses', AdminPartnerUserCourseList, name="admin-partner-user-course-list"),
     webapp2.Route('/admin/partner-course/add', AdminPartnerUserCourseAdd, name="admin-partner-user-course-add"),
     webapp2.Route('/admin/partner-course/<puc_id:\d+>/delete', AdminPartnerUserCourseDelete, name="admin-partner-user-course-delete"),
 
-    # student access to courses
+    # admin student access to courses
     webapp2.Route('/admin/users/students', AdminStudentCourseList, name="admin-student-course-list"),
     webapp2.Route('/admin/users/students/past-courses', AdminStudentPastCoursesList, name="admin-student-past-course-list"),
     webapp2.Route('/admin/users/students/add', AdminStudentCourseAdd, name="admin-student-course-add"),
     webapp2.Route('/admin/users/students/<student_id:\d+>/delete', AdminStudentCourseDelete, name="admin-student-course-delete"),
     webapp2.Route('/admin/course/<course_id:\d+>/student-access', AdminStudentCourseAccessHandler, name="admin-student-course-access"),
 
-    # blog
+    # admin blog
     webapp2.Route('/admin/blog', AdminBlogListHandler, name="admin-blog-list"),
     webapp2.Route('/admin/blog/add', AdminBlogAddHandler, name="admin-blog-add"),
     webapp2.Route('/admin/blog/<post_id:\d+>', AdminBlogDetailsHandler, name="admin-blog-details"),
     webapp2.Route('/admin/blog/<post_id:\d+>/edit', AdminBlogEditHandler, name="admin-blog-edit"),
     webapp2.Route('/admin/blog/<post_id:\d+>/delete', AdminBlogDeleteHandler, name="admin-blog-delete"),
 
-    # grades for students
+    # admin grades for students
     webapp2.Route('/admin/grades', AdminGradesListHandler, name="admin-grades-list"),
     webapp2.Route('/admin/course/<course_id:\d+>/grades', AdminCourseGradesHandler, name="admin-course-grades"),
     webapp2.Route('/admin/grade/<application_id:\d+>', AdminGradeStudentDetailsHandler, name="admin-grade-student"),
 
-    # contacted
+    # admin contacted
     webapp2.Route('/admin/contacted', AdminContactedCandidatesListHandler, name="admin-contacted-list"),
     webapp2.Route('/admin/contacted/<contacted_candidate_id:\d+>/success', AdminSuccessfullyEmployedHandler, name="admin-successfully-employed"),
 
-    # lesson surveys
+    # admin lesson surveys
     webapp2.Route('/admin/lesson-surveys', AdminLessonSurveyList, name="admin-lesson-survey-list"),
     webapp2.Route('/admin/lesson-surveys/past', AdminLessonSurveyPastList, name="admin-lesson-survey-past-list"),
     webapp2.Route('/admin/course/<course_id:\d+>/surveys', AdminCourseSurveysHandler, name="admin-course-surveys"),
     webapp2.Route('/admin/lesson-survey/<lesson_survey_id:\d+>', AdminLessonSurveyDetails, name="admin-lesson-survey-details"),
+
+    # admin careers/jobs
+    webapp2.Route('/admin/careers', AdminCareersJobsListHandler, name="admin-careers-jobs-list"),
+    webapp2.Route('/admin/careers/job/add', AdminCareersJobAddHandler, name="admin-careers-job-add"),
 
 # MANAGER URLS
     webapp2.Route('/manager', ManagerCourseListHandler, name="manager"),

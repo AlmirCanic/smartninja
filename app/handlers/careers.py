@@ -1,10 +1,56 @@
 from google.appengine.api import memcache
 from app.handlers.base import Handler
-from app.utils.decorators import manager_required
+from app.models.course import CourseType
+from app.models.franchise import Franchise
+from app.models.job import Job
+from app.utils.decorators import manager_required, admin_required
 
 
+# ADMIN
+class AdminCareersJobsListHandler(Handler):
+    @admin_required
+    def get(self):
+        jobs = Job.query(Job.deleted == False).fetch()
+
+        active_jobs = []
+        past_jobs = []
+
+        for job in jobs:
+            if job.active:
+                active_jobs.append(job)
+            else:
+                past_jobs.append(job)
+
+        return self.render_template("admin/careers_jobs_list.html")
+
+
+class AdminCareersJobAddHandler(Handler):
+    @admin_required
+    def get(self):
+        franchises = Franchise.query(Franchise.deleted == False).fetch()
+        curriculums = CourseType.query(CourseType.deleted == False).fetch()
+        params = {"franchises": franchises, "curriculums": curriculums}
+        return self.render_template("admin/careers_job_add.html", params)
+
+    @admin_required
+    def post(self):
+        title = self.request.get("title")
+        city = self.request.get("city")
+        curriculum_id = self.request.get("curriculum")
+        franchise_id = self.request.get("franchise")
+        description = self.request.get("description")
+
+        curriculum = CourseType.get_by_id(int(curriculum_id))
+        franchise = Franchise.get_by_id(int(franchise_id))
+
+        Job.create(title=title, city=city, curriculum=curriculum, description=description, franchise=franchise)
+
+        return self.redirect_to("admin-careers-jobs-list")
+
+
+# MANAGER
 class ManagerCareersDetailsHandler(Handler):
-    """TEMPORARY: Remove this handler when loacl websites are ready"""
+    """TEMPORARY: Remove this handler when local websites are ready"""
     @manager_required
     def get(self):
         forms_id = memcache.get(key="forms-id")
@@ -17,7 +63,7 @@ class ManagerCareersDetailsHandler(Handler):
 
 
 class ManagerCareersEditHandler(Handler):
-    """TEMPORARY: Remove this handler when loacl websites are ready"""
+    """TEMPORARY: Remove this handler when local websites are ready"""
     @manager_required
     def post(self):
         forms_id = self.request.get("forms-id")
