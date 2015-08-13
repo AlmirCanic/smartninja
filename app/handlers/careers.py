@@ -150,6 +150,34 @@ class AdminCareersJobApplicationDetailsHandler(Handler):
         return self.render_template("admin/careers_job_application_details.html", params)
 
 
+class AdminCareersJobApplicationGradeHandler(Handler):
+    @admin_required
+    def post(self, job_id, application_id):
+        application = JobApplication.get_by_id(int(application_id))
+
+        grade = self.request.get("score")
+        notes = self.request.get("notes")
+
+        application.manager_grade = int(grade)
+        application.manager_notes = notes
+        application.put()
+
+        return self.redirect_to("admin-careers-application-details", job_id=job_id, application_id=application_id)
+
+
+class AdminCareersJobApplicationContactApproveHandler(Handler):
+    @admin_required
+    def post(self, job_id, application_id):
+        application = JobApplication.get_by_id(int(application_id))
+
+        contacted = self.request.get("contacted")
+        approved = self.request.get("approved")
+
+        JobApplication.contacted_and_approved(application=application, contacted=bool(contacted), approved=bool(approved))
+
+        return self.redirect_to("admin-careers-application-details", job_id=job_id, application_id=application_id)
+
+
 # MANAGER
 class ManagerCareersDetailsHandler(Handler):
     """TEMPORARY: Remove this handler when local websites are ready"""

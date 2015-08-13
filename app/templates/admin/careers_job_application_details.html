@@ -41,6 +41,8 @@
                     <th>Applied on</th>
                     <th>Linkedin</th>
                     <th>GitHub</th>
+                    <th>Contacted</th>
+                    <th>Approved</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,6 +53,8 @@
                     <td>{{ application.created.strftime('%d.%m.%Y') }} </td>
                     <td><a href="{{ application.linkedin_url }}" target="_blank">{{ application.linkedin_url }}</a></td>
                     <td><a href="{{ application.github_url }}" target="_blank">{{ application.github_url }}</a></td>
+                    <td>{{ application.contacted }}</td>
+                    <td>{{ application.approved }}</td>
                 </tr>
             </tbody>
         </table>
@@ -58,6 +62,7 @@
     <!-- End Job application details -->
 
     <!-- Buttons -->
+    <button class="btn btn-success" data-toggle="modal" data-target="#contactApproveModal">Contacted & approved</button>
     <a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/edit"><button class="btn btn-info">Edit application</button></a>
     <a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/delete"><button class="btn btn-danger">Delete application</button></a>
     <!-- End Buttons -->
@@ -77,6 +82,127 @@
             <p>{{application.other_info|nl2br}}</p>
         </div>
     </div><!-- End Other info -->
+
+    <!-- Grade -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Grade</h3>
+            <p>
+                <strong>Score:</strong>
+
+                {% if application.manager_grade == 0 %}
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.manager_grade == 1 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.manager_grade == 2 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.manager_grade == 3 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif application.manager_grade == 4 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                {% endif %}
+                ({{application.manager_grade}}/4)
+            </p>
+            <p><strong>Notes:</strong> {{application.manager_notes|nl2br}}</p>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#gradeApplicantModal">Grade applicant</button>
+        </div>
+    </div><!-- End grade -->
+
+    <!-- Modal - grade applicant -->
+    <div class="modal fade" id="gradeApplicantModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/grade">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Grade</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Grade applicant's knowledge of the technologies needed for the job and his ability to teach.</p>
+
+                        <div class="form-group">
+                            <label>Score (1-4)</label>
+                            <select class="form-control" name="score">
+                                <option value="4" selected>4 - Excellent</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Bad</option>
+                                <option value="1">1 - The worst</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Grade notes</label>
+                            <textarea class="form-control" style="height: 300px;" name="notes"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Grade</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End modal - grade applicant  -->
+
+    <!-- Modal - contact & approve -->
+    <div class="modal fade" id="contactApproveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/contact-approve">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel2">Contacted & approved</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Check, if applicant was contacted and/or approved.</p>
+
+                        <div class="form-group">
+                            <label>Contacted</label>
+                            <br>
+                            <input type="checkbox" name="contacted"
+                                {% if application.contacted %}checked{% endif %}
+                            > Check if already contacted
+                        </div>
+
+                        <div class="form-group">
+                            <label>Approved</label>
+                            <br>
+                            <input type="checkbox" name="approved"
+                                {% if application.approved %}checked{% endif %}
+                            > Check if instructor is approved for this job
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End modal - contact & approve  -->
 
     <br>
 </div>
