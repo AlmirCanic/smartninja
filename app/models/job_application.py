@@ -41,6 +41,15 @@ class JobApplication(ndb.Model):
         return application
 
     @classmethod
+    def update(cls, application, phone, city, linkedin, github):
+        application.phone = phone
+        application.city = city
+        application.linkedin_url = linkedin
+        application.github_url = github
+        application.put()
+        return application
+
+    @classmethod
     def contacted_and_approved(cls, application, contacted, approved):
         """Manager fills a checkbox if user has already been contacted and, after that, if user has been approved to
         be a SmartNinja instructor for this particular job/curriculum"""

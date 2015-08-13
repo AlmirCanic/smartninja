@@ -18,7 +18,7 @@
                     <i class="fa fa-users"></i>  <a href="/admin/careers/job/{{job.get_id}}">{{job.title}}</a>
                 </li>
                 <li>
-                    <i class="fa fa-users"></i>  {{application.full_name}}
+                    <i class="fa fa-user"></i>  {{application.full_name}}
                 </li>
             </ol>
 
@@ -139,7 +139,9 @@
                         <div class="form-group">
                             <label>Score (1-4)</label>
                             <select class="form-control" name="score">
-                                <option value="4" selected>4 - Excellent</option>
+                                <option value="{{application.manager_grade}}" selected>{{application.manager_grade}}</option>
+                                <option disabled>------------------------------</option>
+                                <option value="4">4 - Excellent</option>
                                 <option value="3">3 - Good</option>
                                 <option value="2">2 - Bad</option>
                                 <option value="1">1 - The worst</option>
@@ -148,7 +150,7 @@
 
                         <div class="form-group">
                             <label>Grade notes</label>
-                            <textarea class="form-control" style="height: 300px;" name="notes"></textarea>
+                            <textarea class="form-control" style="height: 300px;" name="notes">{{application.manager_notes}}</textarea>
                         </div>
 
                     </div>

@@ -150,6 +150,29 @@ class AdminCareersJobApplicationDetailsHandler(Handler):
         return self.render_template("admin/careers_job_application_details.html", params)
 
 
+class AdminCareersJobApplicationEditHandler(Handler):
+    @admin_required
+    def get(self, job_id, application_id):
+        application = JobApplication.get_by_id(int(application_id))
+
+        params = {"application": application}
+
+        return self.render_template("admin/careers_job_application_edit.html", params)
+
+    @admin_required
+    def post(self, job_id, application_id):
+        application = JobApplication.get_by_id(int(application_id))
+
+        phone = self.request.get("phone")
+        city = self.request.get("city")
+        linkedin = self.request.get("linkedin")
+        github = self.request.get("github")
+
+        JobApplication.update(application=application, phone=phone, city=city, linkedin=linkedin, github=github)
+
+        return self.redirect_to("admin-careers-application-details", job_id=job_id, application_id=application_id)
+
+
 class AdminCareersJobApplicationGradeHandler(Handler):
     @admin_required
     def post(self, job_id, application_id):

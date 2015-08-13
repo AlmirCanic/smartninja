@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Edit application{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers">Careers</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers/job/{{application.job_id}}">{{application.job_title}}</a>
+                </li>
+                <li>
+                    <i class="fa fa-user"></i>  <a href="/admin/careers/job/{{application.job_id}}/application/{{application.get_id}}">{{application.full_name}}</a>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i>  Edit
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Edit job application by {{application.full_name}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/admin/careers/job/{{application.job_id}}/application/{{application.get_id}}/edit" method="post">
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" value="{{application.phone}}" name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" value="{{application.city}}" name="city">
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn</label>
+                    <input type="text" class="form-control" value="{{application.linkedin_url}}" name="linkedin">
+                </div>
+
+                <div class="form-group">
+                    <label>GitHub</label>
+                    <input type="text" class="form-control" value="{{application.github_url}}" name="github">
+                </div>
+
+                <button type="submit" class="btn btn-success">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}
