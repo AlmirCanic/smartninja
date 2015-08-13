@@ -27,7 +27,7 @@ class Instructor(ndb.Model):
 
     @classmethod
     def add_or_create(cls, full_name, user_id, email, franchises, city=None):
-        instructor = cls.query(Instructor.email == email).get()
+        instructor = cls.query(Instructor.email == email.lower()).get()
 
         if instructor:
             existing_franchises = instructor.franchises
@@ -38,6 +38,6 @@ class Instructor(ndb.Model):
                     instructor.city = city
                 instructor.put()
         else:
-            instructor = cls.create(full_name=full_name, email=email, user_id=user_id, franchises=franchises, city=city)
+            instructor = cls.create(full_name=full_name, email=email.lower(), user_id=user_id, franchises=franchises, city=city)
 
         return instructor

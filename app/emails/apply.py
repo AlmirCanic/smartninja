@@ -10,6 +10,15 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
 
 
 def email_course_app_to_smartninja(course, user, application):
+    if not user.address:
+        user.address = "/"
+
+    if not user.dob:
+        user.dob = "/"
+
+    if not user.phone_number:
+        user.phone_number = "/"
+
     message_body = '''
         New application for {0}!
         Name: {1}
@@ -23,6 +32,12 @@ def email_course_app_to_smartninja(course, user, application):
         T-shirt size: {11}
         Invoice on company: {12} (if True, see application details)
         Other info: {13}
+        ----------------
+        Course info
+        Course title: {14}
+        Course spots taken: {15}/{16}
+        Course start/end date: {17} - {18}
+        Course instructor: {19}
     '''.format(course.title.encode('utf-8'),
                user.get_full_name.encode('utf-8'),
                user.email.encode('utf-8'),
@@ -36,7 +51,13 @@ def email_course_app_to_smartninja(course, user, application):
                application.laptop.encode('utf-8'),
                application.shirt.encode('utf-8'),
                application.company_invoice,
-               application.other_info.encode('utf-8'))
+               application.other_info.encode('utf-8'),
+               course.title.encode('utf-8'),
+               course.taken,
+               course.spots,
+               course.start_date,
+               course.end_date,
+               course.course_instructors[0].name.encode('utf-8'))
 
     html_message_body = '''
         <p>New application for {0}!</p>
@@ -51,6 +72,12 @@ def email_course_app_to_smartninja(course, user, application):
         <p>T-shirt size: {11}</p>
         <p>Invoice on company: {12} (if True, see application details)</p>
         <p>Other info: {13}</p>
+        ----------------
+        <h3>Course info</h3>
+        <p>Course title: {14}</p>
+        <p>Course spots taken: {15}/{16}</p>
+        <p>Course start/end date: {17} - {18}</p>
+        <p>Course instructor: {19}</p>
     '''.format(course.title.encode('utf-8'),
                user.get_full_name.encode('utf-8'),
                user.email.encode('utf-8'),
@@ -64,11 +91,18 @@ def email_course_app_to_smartninja(course, user, application):
                application.laptop.encode('utf-8'),
                application.shirt.encode('utf-8'),
                application.company_invoice,
-               application.other_info.encode('utf-8'))
+               application.other_info.encode('utf-8'),
+               course.title.encode('utf-8'),
+               course.taken,
+               course.spots,
+               course.start_date,
+               course.end_date,
+               course.course_instructors[0].name.encode('utf-8'))
 
     message = mail.EmailMessage(sender="SmartNinja <info@smartninja.org>",
                                 to="info@smartninja.si",
-                                subject="New application for {0}".format(course.title.encode('utf-8')),
+                                subject="New application for {0} ({1})".format(course.title.encode('utf-8'),
+                                                                               course.course_instructors[0].name.encode('utf-8')),
                                 reply_to="%s" % user.email,
                                 body=message_body,
                                 html=html_message_body)
