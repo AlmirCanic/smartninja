@@ -287,7 +287,7 @@ class PublicCareersJobDetailsHandler(Handler):
                                                     other_info=other_info)
             # send email to smartninja.si
             if not is_local():
-                email_careers_to_smartninja_si(full_name=user.get_full_name, email=email, city=city, phone=phone,
+                email_careers_to_smartninja_si(job=job, full_name=user.get_full_name, email=email, city=city, phone=phone,
                                                linkedin=linkedin, github=github, experience=experience, other=other_info)
             return self.render_template("public/careers_job_thank_you.html")
         else:
