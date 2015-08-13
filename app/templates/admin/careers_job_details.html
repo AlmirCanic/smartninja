@@ -60,7 +60,7 @@
     </div><!-- End Job details -->
 
     <!-- Buttons -->
-    <a href="/careers/job/{{job.get_id}}"><button class="btn btn-primary">See on public page</button></a>
+    <a href="/careers/job/{{job.get_id}}" target="_blank"><button class="btn btn-primary">See on public page</button></a>
 
     {% if job.active %}
     <button class="btn btn-danger" data-toggle="modal" data-target="#deactivateJobModal">Deactivate job</button>
@@ -97,7 +97,7 @@
             <tbody>
                 {% for application in applications %}
                 <tr>
-                    <td><a href="/careers/job/{{job.get_id}}/application/{{application.get_id}}">{{ application.full_name }}</a></td>
+                    <td><a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}">{{ application.full_name }}</a></td>
                     <td>{{ application.email }}</td>
                     <td>{{ application.city }}</td>
                     <td>{{ application.created.strftime('%d.%m.%Y') }} </td>

@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{job.title}}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers">Careers</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/careers/job/{{job.get_id}}">{{job.title}}</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  {{application.full_name}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Job application by {{application.full_name}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Job application details -->
+    <h3>Job applications</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>Applied on</th>
+                    <th>Linkedin</th>
+                    <th>GitHub</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.phone }}</td>
+                    <td>{{ application.city }}</td>
+                    <td>{{ application.created.strftime('%d.%m.%Y') }} </td>
+                    <td><a href="{{ application.linkedin_url }}" target="_blank">{{ application.linkedin_url }}</a></td>
+                    <td><a href="{{ application.github_url }}" target="_blank">{{ application.github_url }}</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- End Job application details -->
+
+    <!-- Buttons -->
+    <a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/edit"><button class="btn btn-info">Edit application</button></a>
+    <a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/delete"><button class="btn btn-danger">Delete application</button></a>
+    <!-- End Buttons -->
+
+    <!-- Experience -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Experience</h3>
+            <p>{{application.experience|nl2br}}</p>
+        </div>
+    </div><!-- End Experience -->
+
+    <!-- Other info -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Other info</h3>
+            <p>{{application.other_info|nl2br}}</p>
+        </div>
+    </div><!-- End Other info -->
+
+    <br>
+</div>
+{% endblock main_content %}

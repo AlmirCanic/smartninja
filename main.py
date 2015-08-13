@@ -22,7 +22,7 @@ from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandi
     EmployerCandidateCVDownloadHandler, ManagerContactedCandidatesListHandler, ManagerSuccessfullyEmployedHandler
 from app.handlers.careers import ManagerCareersDetailsHandler, ManagerCareersEditHandler, AdminCareersJobsListHandler, \
     AdminCareersJobAddHandler, AdminCareersJobDetailsHandler, AdminCareersJobEditHandler, AdminCareersJobDeleteHandler, \
-    AdminCareersJobDeactivateHandler, PublicCareersJobDetailsHandler
+    AdminCareersJobDeactivateHandler, PublicCareersJobDetailsHandler, AdminCareersJobApplicationDetailsHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler, \
     ManagerUserChangeEmailHandler, ManagerUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
@@ -232,6 +232,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/careers/job/<job_id:\d+>/edit', AdminCareersJobEditHandler, name="admin-careers-job-edit"),
     webapp2.Route('/admin/careers/job/<job_id:\d+>/delete', AdminCareersJobDeleteHandler, name="admin-careers-job-delete"),
     webapp2.Route('/admin/careers/job/<job_id:\d+>/deactivate', AdminCareersJobDeactivateHandler, name="admin-careers-job-deactivate"),
+    webapp2.Route('/admin/careers/job/<job_id:\d+>/application/<application_id:\d+>', AdminCareersJobApplicationDetailsHandler, name="admin-careers-application-details"),
 
 # MANAGER URLS
     webapp2.Route('/manager', ManagerCourseListHandler, name="manager"),

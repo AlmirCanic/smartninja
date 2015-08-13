@@ -139,6 +139,17 @@ class AdminCareersJobDetailsHandler(Handler):
         return self.render_template("admin/careers_job_details.html", params)
 
 
+class AdminCareersJobApplicationDetailsHandler(Handler):
+    @admin_required
+    def get(self, job_id, application_id):
+        job = Job.get_by_id(int(job_id))
+        application = JobApplication.get_by_id(int(application_id))
+
+        params = {"job": job, "application": application}
+
+        return self.render_template("admin/careers_job_application_details.html", params)
+
+
 # MANAGER
 class ManagerCareersDetailsHandler(Handler):
     """TEMPORARY: Remove this handler when local websites are ready"""
