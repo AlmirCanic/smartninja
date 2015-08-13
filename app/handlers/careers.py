@@ -1,8 +1,14 @@
 from google.appengine.api import memcache
+from app.emails.careers import email_careers_to_smartninja_si
 from app.handlers.base import Handler
+from app.models.auth import User
 from app.models.course import CourseType
-from app.models.franchise import Franchise
+from app.models.franchise import Franchise, FranchiseList
+from app.models.instructor import Instructor
 from app.models.job import Job
+from app.models.job_application import JobApplication
+from app.settings import is_local
+from app.utils.csrf import get_csrf, check_csrf
 from app.utils.decorators import manager_required, admin_required
 from app.utils.other import logga
 
@@ -125,8 +131,10 @@ class AdminCareersJobDetailsHandler(Handler):
     @admin_required
     def get(self, job_id):
         job = Job.get_by_id(int(job_id))
+        applications = JobApplication.query(JobApplication.job_id == int(job_id),
+                                            JobApplication.deleted == False).fetch()
 
-        params = {"job": job}
+        params = {"job": job, "applications": applications}
 
         return self.render_template("admin/careers_job_details.html", params)
 
@@ -158,3 +166,49 @@ class ManagerCareersEditHandler(Handler):
         memcache.set(key="forms-text", value=text)
 
         return self.redirect_to("manager-careers-details")
+
+
+# PUBLIC
+class PublicCareersJobDetailsHandler(Handler):
+    def get(self, job_id):
+        job = Job.get_by_id(int(job_id))
+        jobs = Job.query(Job.deleted == False, Job.active == True).fetch()
+        csrf = get_csrf()
+
+        params = {"job": job, "jobs": jobs, "csrf": csrf}
+
+        return self.render_template("public/careers_job_details.html", params)
+
+    def post(self, job_id):
+        hidden = self.request.get("hidden")
+        csrf = self.request.get("csrf")
+        if hidden:
+            return self.redirect_to("public-careers-job-details", job_id=int(job_id))
+        elif check_csrf(csrf):
+            job = Job.get_by_id(int(job_id))
+
+            first_name = self.request.get("first_name")
+            last_name = self.request.get("last_name")
+            email = self.request.get("email").strip().lower()
+            city = self.request.get("city")
+            phone = self.request.get("phone")
+            linkedin = self.request.get("linkedin")
+            github = self.request.get("github")
+            experience = self.request.get("experience")
+            other_info = self.request.get("other_info")
+
+            # create user, instructor and job_application objects for the applicant
+            user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
+            instructor = Instructor.add_or_create(full_name=user.get_full_name, email=email,
+                                                  franchises=[FranchiseList(franchise_id=job.franchise_id, franchise_title=job.franchise_title)],
+                                                  user_id=user.get_id, city=city)
+            job_application = JobApplication.create(instructor=instructor, city=city, email=email, experience=experience,
+                                                    github_url=github, job=job, linkedin_url=linkedin, phone=phone,
+                                                    other_info=other_info)
+            # send email to smartninja.si
+            if not is_local():
+                email_careers_to_smartninja_si(full_name=user.get_full_name, email=email, city=city, phone=phone,
+                                               linkedin=linkedin, github=github, experience=experience, other=other_info)
+            return self.render_template("public/careers_job_thank_you.html")
+        else:
+            return self.redirect_to("oops")

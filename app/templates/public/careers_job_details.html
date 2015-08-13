@@ -1,0 +1,179 @@
+{% extends "public/base.html" %}
+
+{% block title %}{{job.title}}{% endblock title %}
+
+{% block social %}
+    <!-- START FACEBOOK OPEN GRAPH -->
+    <meta name="og:url" content="http://smartninja.org">
+    <meta name="og:title" content="{{job.title}}">
+    <meta name="og:description" content="{{job.description}}">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://i.imgur.com/Tqudjm4.jpg">
+    <!-- END FACEBOOK OPEN GRAPH -->
+
+    <!-- START TWITTER CARDS -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="{{job.title}}">
+    <meta name="twitter:description" content="{{job.description}} #SmartNinja">
+    <meta name="twitter:creator" content="@smartninjaorg">
+    <meta name="twitter:image" content="http://i.imgur.com/Tqudjm4.jpg">
+    <meta name="twitter:url" content="http://smartninja.org">
+    <!-- END TWITTER CARDS -->
+{% endblock social %}
+
+{% block main_content %}
+<section id="sub-header-small">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 text-center">
+                <h1>Nove moči</h1>
+                <br>
+               	<p class="lead boxed">Te zanima delo v SmartNinja klanu?</p>
+            </div>
+        </div><!-- End row -->
+    </div><!-- End container -->
+    <div class="divider_top"></div>
+</section><!-- End sub-header -->
+
+
+<section id="main_content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2>{{job.title}}</h2>
+
+                <p>{{job.description|nl2br}}</p>
+
+                <hr>
+
+                <!-- Start prijava -->
+                <h3 id="courseApplication">Prijava za inštruktorja</h3>
+                {% if not job.active %}
+                <p>Prijave so zaključene. Če imaš kakšno vprašanje, nam piši
+                    <a href="http://smartninja.org/about#contact-form">prek kontaktnega obrazca</a>.
+                </p>
+                {% else %}
+                <form action="/careers/job/{{job.get_id}}" method="post">
+                    <input type="hidden" name="hidden">
+                    <input type="hidden" name="csrf" value="{{csrf}}">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" id="cd_first_name" class="required form-control" placeholder="Ime"><span class="input-icon"><i class="icon-user"></i></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="last_name" id="cd_last_name" class="required form-control" placeholder="Priimek"><span class="input-icon"><i class="icon-user"></i></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="email" id="cd_email" class="required form-control" placeholder="Email naslov"><span class="input-icon"><i class="icon-email"></i></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="city" id="cd_city" class="required form-control" placeholder="Kraj"><span class="input-icon"><i class="icon-home"></i></span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div><!-- end col-md-6 -->
+
+                        <div class="col-md-6">
+                            <ul class="data-list">
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="phone" id="cd_phone" class="required form-control" placeholder="Telefonska številka"><span class="input-icon"><i class="icon-phone"></i></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="linkedin" id="cd_linkedin" class="required form-control" placeholder="LinkedIn URL ali link do online CV-ja"><span class="input-icon"><i class="icon-linkedin"></i></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" name="github" id="cd_github" class="required form-control" placeholder="GitHub URL"><span class="input-icon"><i class="icon-github"></i></span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div><!-- end col-md-6 -->
+                    </div><!-- end row -->
+
+                    <!-- experience -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="form-group">
+                                        <textarea rows="3" name="experience" class="form-control" placeholder="Opiši svoje izkušnje s tehnologijami, naštetimi v opisu dela, ter s poučevanjem (v kolikor jih imaš)" style="height:100px;"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- end row -->
+
+                    <!-- other info -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="form-group">
+                                        <textarea rows="3" name="other_info" class="form-control" placeholder="Nam želiš še kaj sporočiti?" style="height:100px;"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- end row -->
+
+                    <br>
+
+                    <div class="row">
+                        <div class="submit step" id="complete">
+                            <!--<p>Prijave zaprte</p>-->
+                            <button type="submit" name="process" class="submit" id="cd_submit">Oddaj prijavo</button>
+                            <br>
+                            <p style="color: red;">{{ error }}</p>
+                        </div><!-- end submit step -->
+                    </div>
+
+
+                </form>
+                <!-- End Prijava -->
+                {% endif %}
+            </div><!-- End col-md  -->
+
+
+            <aside class="col-md-4">
+                <div class="box_style_1">
+                    <h4><a href="/courses">Nazaj na seznam delovnih mest <i class="icon-back pull-right"></i></a></h4><br>
+
+                    {% if jobs %}
+                        <h4>Ostale zaposlitve</h4>
+                        <ul class="list_1">
+                            {% for job in jobs %}
+                                <li><a href="/careers/job/{{job.get_id}}">{{job.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif%}
+                </div>
+            </aside> <!-- End col-md-4 -->
+        </div><!-- End row -->
+    </div><!-- End container -->
+</section><!-- End main_content -->
+
+{% endblock main_content %}

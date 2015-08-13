@@ -172,7 +172,7 @@ class ManagerCourseApplicationDetailsHandler(Handler):
         user_id = application.student_id
         user = User.get_by_id(user_id)
         params = {"application": application, "this_user": user}
-        self.render_template("manager/application_details.html", params)
+        return self.render_template("manager/application_details.html", params)
 
     @manager_required
     def post(self, application_id):
@@ -205,7 +205,7 @@ class ManagerCourseApplicationDeleteHandler(Handler):
     def get(self, application_id):
         application = CourseApplication.get_by_id(int(application_id))
         params = {"application": application}
-        self.render_template("manager/application_delete.html", params)
+        return self.render_template("manager/application_delete.html", params)
 
     @manager_required
     def post(self, application_id):
@@ -236,7 +236,7 @@ class ManagerCourseApplicationMoveStudentHandler(Handler):
                                Course.start_date > datetime.datetime.now(),
                                Course.franchise_id == manager.franchise_id).order(Course.start_date).fetch()
         params = {"application": application, "courses": courses}
-        self.render_template("manager/application_move_student.html", params)
+        return self.render_template("manager/application_move_student.html", params)
 
     @manager_required
     def post(self, application_id):
@@ -256,4 +256,4 @@ class ManagerCourseApplicationMoveStudentHandler(Handler):
         CourseApplication.move_student_to_another_course(application=application, old_course=course, new_course=new_course)
 
         logga("Student application %s moved to another course." % application_id)
-        self.redirect_to("manager-course-details", course_id=application.course_id)
+        return self.redirect_to("manager-course-details", course_id=application.course_id)

@@ -64,6 +64,16 @@ class User(ndb.Model):
         return user
 
     @classmethod
+    def get_or_short_create(cls, email, first_name=None, last_name=None):
+        user = cls.get_by_email(email=email.lower())
+        if not user:
+            user = cls(email=email.lower(),
+                       first_name=first_name,
+                       last_name=last_name)
+            user.put()
+        return user
+
+    @classmethod
     def create(cls, first_name, last_name, email, address, phone_number, dob):
         user = cls(first_name=first_name,
                    last_name=last_name,

@@ -101,7 +101,7 @@
                     <td>{{ application.email }}</td>
                     <td>{{ application.city }}</td>
                     <td>{{ application.created.strftime('%d.%m.%Y') }} </td>
-                    <td><a href="{{ application.linkedin_url }}">{{ application.linkedin_url }}</a></td>
+                    <td><a href="{{ application.linkedin_url }}" target="_blank">{{ application.linkedin_url }}</a></td>
                     <td>{{ application.contacted }} </td>
                 </tr>
                 {% endfor %}

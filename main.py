@@ -22,7 +22,7 @@ from app.handlers.candidates import EmployerCandidatesListHandler, EmployerCandi
     EmployerCandidateCVDownloadHandler, ManagerContactedCandidatesListHandler, ManagerSuccessfullyEmployedHandler
 from app.handlers.careers import ManagerCareersDetailsHandler, ManagerCareersEditHandler, AdminCareersJobsListHandler, \
     AdminCareersJobAddHandler, AdminCareersJobDetailsHandler, AdminCareersJobEditHandler, AdminCareersJobDeleteHandler, \
-    AdminCareersJobDeactivateHandler
+    AdminCareersJobDeactivateHandler, PublicCareersJobDetailsHandler
 from app.handlers.change_email import AdminUserChangeEmailHandler, AdminUserJoinAccountsHandler, \
     ManagerUserChangeEmailHandler, ManagerUserJoinAccountsHandler
 from app.handlers.contact import PublicContactUsHandler, PublicContactThankYou
@@ -93,7 +93,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/email_thank_you_2', PublicNewsletterThankYou2Handler, name="newsletter-thank-you-2"),
     webapp2.Route('/contact-thank-you', PublicContactThankYou, name="public-contact-thanks"),
     webapp2.Route('/contact', PublicContactUsHandler, name="public-contact"),
-    webapp2.Route('/careers', PublicCareersHandler, name="public-contact"),
 
     # blog
     webapp2.Route('/blog', PublicBlogHandler, name="blog"),
@@ -105,6 +104,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/course/<course_id:\d+>/apply', PublicCourseApplicationAddHandler, name="public-application-add"),
     webapp2.Route('/courses/summary', PublicCoursesSummaryHandler, name="public-courses-summary"),
 
+    # careers
+    webapp2.Route('/careers', PublicCareersHandler, name="public-contact"),
+    webapp2.Route('/careers/job/<job_id:\d+>', PublicCareersJobDetailsHandler, name="public-careers-job-details"),
 
 # ADMIN URLS
     # admin fake localhost data
