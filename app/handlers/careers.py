@@ -270,6 +270,11 @@ class PublicCareersJobDetailsHandler(Handler):
             first_name = self.request.get("first_name")
             last_name = self.request.get("last_name")
             email = self.request.get("email").strip().lower()
+
+            # simple email validation
+            if not "@" in email or not first_name or not last_name:
+                return self.redirect_to("oops")
+
             city = self.request.get("city")
             phone = self.request.get("phone")
             linkedin = self.request.get("linkedin")
