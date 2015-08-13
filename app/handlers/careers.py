@@ -173,6 +173,24 @@ class AdminCareersJobApplicationEditHandler(Handler):
         return self.redirect_to("admin-careers-application-details", job_id=job_id, application_id=application_id)
 
 
+class AdminCareersJobApplicationDeleteHandler(Handler):
+    @admin_required
+    def get(self, job_id, application_id):
+        application = JobApplication.get_by_id(int(application_id))
+
+        params = {"application": application}
+
+        return self.render_template("admin/careers_job_application_delete.html", params)
+
+    @admin_required
+    def post(self, job_id, application_id):
+        application = JobApplication.get_by_id(int(application_id))
+
+        JobApplication.delete(application=application)
+
+        return self.redirect_to("admin-careers-job-details", job_id=job_id)
+
+
 class AdminCareersJobApplicationGradeHandler(Handler):
     @admin_required
     def post(self, job_id, application_id):
