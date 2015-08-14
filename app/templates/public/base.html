@@ -72,7 +72,27 @@
 
     <script src="//load.sumome.com/" data-sumo-site-id="1cb769f2e894175f341541bbcfce32e2ed9323c603a328ead8017c282064837c" async></script>
 
+    <script>
+        (function() {
+            var _fbq = window._fbq || (window._fbq = []);
+            if (!_fbq.loaded) {
+            var fbds = document.createElement('script');
+            fbds.async = true;
+            fbds.src = '//connect.facebook.net/en_US/fbds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(fbds, s);
+            _fbq.loaded = true;
+            }
+            _fbq.push(['addPixelId', '1827116960847559']);
+        })();
+            window._fbq = window._fbq || [];
+            window._fbq.push(['track', 'PixelInitialized', {}]);
+    </script>
 
+    {% block fbpixel %}
+    {% endblock fbpixel %}
+
+    <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=1827116960847559&amp;ev=PixelInitialized" /></noscript>
   </head>
 
   <body>

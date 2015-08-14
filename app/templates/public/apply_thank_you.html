@@ -2,6 +2,12 @@
 
 {% block title %}Hvala za prijavo na tečaj{% endblock title %}
 
+{% block fbpixel %}
+    <script>
+        _fbq.push(['track','Purchase',{'value':'{{course_app.price}}','currency':'EUR'}]);
+    </script>
+{% endblock fbpixel %}
+
 {% block main_content %}
 <section id="main_content">
     <div class="container">
