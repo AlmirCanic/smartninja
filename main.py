@@ -49,7 +49,8 @@ from app.handlers.grades import InstructorGradeStudentDetailsHandler, Instructor
     ManagerCourseGradesHandler, ManagerGradeStudentDetailsHandler
 from app.handlers.instructors import AdminInstructorsListHandler, AdminInstructorAddHandler, AdminInstructorDeleteHandler, \
     InstructorCourseListHandler, InstructorCourseDetailsHandler, InstructorProfileDetailsHandler, InstructorProfileEditHandler, \
-    ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler
+    ManagerInstructorsListHandler, ManagerInstructorAddHandler, ManagerInstructorDeleteHandler, \
+    AdminInstructorDetailsHandler, AdminInstructorAddAccessCurriculumHandler
 from app.handlers.lesson_surveys import StudentLessonSurveyAdd, AdminLessonSurveyList, AdminLessonSurveyDetails, InstructorLessonSurveyList, InstructorLessonSurveyDetails, \
     AdminLessonSurveyPastList, AdminCourseSurveysHandler, ManagerLessonSurveyList, ManagerLessonSurveyPastList, \
     ManagerCourseSurveysHandler, ManagerLessonSurveyDetails
@@ -175,6 +176,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/users/instructors', AdminInstructorsListHandler, name="admin-instructors-list"),
     webapp2.Route('/admin/users/instructor/add', AdminInstructorAddHandler, name="admin-instructor-add"),
     webapp2.Route('/admin/users/instructor/<instructor_id:\d+>/delete', AdminInstructorDeleteHandler, name="admin-instructor-delete"),
+    webapp2.Route('/admin/users/instructor/<instructor_id:\d+>', AdminInstructorDetailsHandler, name="admin-instructor-details"),
+
+    # admin instructor access to curriculum
+    webapp2.Route('/admin/users/instructor/<instructor_id:\d+>/curriculum/add-access', AdminInstructorAddAccessCurriculumHandler, name="admin-instructor-add-access-curriculum"),
 
     # admin managers
     webapp2.Route('/admin/users/managers', AdminManagersListHandler, name="admin-managers-list"),

@@ -62,6 +62,7 @@
     <!-- End Job application details -->
 
     <!-- Buttons -->
+    <a href="/admin/users/instructor/{{application.instructor_id}}"><button class="btn btn-primary">See instructor profile</button></a>
     <button class="btn btn-success" data-toggle="modal" data-target="#contactApproveModal">Contacted & approved</button>
     <a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/edit"><button class="btn btn-info">Edit application</button></a>
     <a href="/admin/careers/job/{{job.get_id}}/application/{{application.get_id}}/delete"><button class="btn btn-danger">Delete application</button></a>

@@ -1,0 +1,242 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{instructor.full_name}}{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/instructors">Instructor</a>
+                </li>
+                <li>
+                    <i class="fa fa-user"></i>  {{instructor.full_name}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Instructor details for {{instructor.full_name}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Instructor details -->
+    <h3>Info</h3>
+    <p><strong>Active:</strong> {{instructor.active}}</p>
+    <p><strong>Email:</strong> {{instructor.email}}</p>
+    <p><strong>City:</strong> {{instructor.city}}</p>
+    <p><strong>Phone:</strong> {{i_user.phone_number}}</p>
+    <p><strong>Address:</strong> {{i_user.address}}</p>
+    <p><strong>GitHub:</strong> {{i_user.github_url}}</p>
+    <p><strong>LinkedIn:</strong> {{i_user.linkedin_url}}</p>
+    <p><strong>Homepage:</strong> {{i_user.homepage_url}}</p>
+    <p><strong>Date of birth:</strong> {{i_user.dob}}</p>
+    <!-- End Instructor details -->
+
+    <!-- Buttons -->
+    <a href="/admin/user/{{instructor.user_id}}"><button class="btn btn-primary">See user profile</button></a>
+    <a href="/admin/users/instructor/{{instructor.get_id}}/edit"><button class="btn btn-info">Edit instructor</button></a>
+    <a href="/admin/users/instructor/{{instructor.get_id}}/delete"><button class="btn btn-danger">Delete instructor</button></a>
+
+    {% if instructor.active %}
+    <button class="btn btn-danger" data-toggle="modal" data-target="#deactivateModal">Deactivate instructor</button>
+    {% else %}
+    <button class="btn btn-success" data-toggle="modal" data-target="#deactivateModal">Activate instructor</button>
+    {% endif %}
+    <!-- End Buttons -->
+
+    <!-- Grade -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Grade</h3>
+            <p>
+                <strong>Score:</strong>
+
+                {% if instructor.manager_grade == 0 %}
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif instructor.manager_grade == 1 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif instructor.manager_grade == 2 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif instructor.manager_grade == 3 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                {% elif instructor.manager_grade == 4 %}
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                {% endif %}
+                ({{instructor.manager_grade}}/4)
+            </p>
+            <p><strong>Notes:</strong> {{instructor.manager_notes|nl2br}}</p>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#gradeInstructorModal">Grade instructor</button>
+        </div>
+    </div><!-- End grade -->
+
+    <!-- Job applications -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Job applications</h3>
+            {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Job application</th>
+                            <th>Grade</th>
+                            <th>City</th>
+                            <th>Applied</th>
+                            <th>Contacted</th>
+                            <th>Approved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr>
+                            <td><a href="/admin/careers/job/{{application.job_id}}/application/{{application.get_id}}">{{ application.job_title }}</a></td>
+                            <td>{{ application.manager_grade }}</td>
+                            <td>{{ application.city }}</td>
+                            <td>{{ application.created.strftime('%d.%m.%Y') }} </td>
+                            <td>{{ application.contacted }} </td>
+                            <td>{{ application.approved }} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p>No job applications</p>
+            {% endif %}
+        </div>
+    </div><!-- End job applications -->
+
+    <!-- Curriculum access -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Curriculum access</h3>
+            <a href="/admin/users/instructor/{{instructor.get_id}}/curriculum/add-access"><button class="btn btn-success">Add access to curriculum</button></a>
+            {% if instructor.curriculums %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Curriculum</th>
+                            <th>Date</th>
+                            <th>Remove access</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for curriculum in instructor.curriculums %}
+                        <tr>
+                            <td><a href="/admin/course/type/{{curriculum.curriculum_id}}">{{ curriculum.curriculum_title }}</a></td>
+                            <td>{{ curriculum.created.strftime('%d.%m.%Y') }} </td>
+                            <td><a href="/admin/users/instructor/{{instructor.get_id}}/curriculum/{{curriculum.curriculum_id}}/remove-access">Remove</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p>No access to curriculums currently</p>
+            {% endif %}
+        </div>
+    </div><!-- End curriculum access -->
+
+    <!-- Modal - grade instructor -->
+    <div class="modal fade" id="gradeInstructorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/admin/users/instructor/{{instructor.get_id}}/grade">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Grade instructor</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Grade instructor and his ability to teach.</p>
+
+                        <div class="form-group">
+                            <label>Score (1-4)</label>
+                            <select class="form-control" name="score">
+                                <option value="{{instructor.manager_grade}}" selected>{{instructor.manager_grade}}</option>
+                                <option disabled>------------------------------</option>
+                                <option value="4">4 - Excellent</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Bad</option>
+                                <option value="1">1 - The worst</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Grade notes</label>
+                            <textarea class="form-control" style="height: 300px;" name="notes">{{instructor.manager_notes}}</textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Grade</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End modal - grade instructor  -->
+
+    <!-- Modal - deactivate instructor -->
+    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/admin/users/instructor/{{instructor.get_id}}/deactivate">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel2">Instructor de/activation</h4>
+                    </div>
+
+
+                    <div class="modal-body">
+                        {% if instructor.active %}
+                        <p>Do you really want to deactivate this instructor? This means they won't have access to
+                            the Instructor dashboard anymore, but it won't be completely deleted. You can still
+                            activate instructor later.</p>
+                        {% else %}
+                        <p>If you activate the instructor, they will have access to the Instructor dashboard.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="modal-footer">
+                        {% if instructor.active %}
+                        <button type="submit" class="btn btn-danger">Deactivate instructor</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success">Activate instructor</button>
+                        {% endif %}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End modal - deactivate instructor -->
+
+    <br>
+</div>
+{% endblock main_content %}

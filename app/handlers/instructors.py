@@ -3,9 +3,10 @@ import datetime
 from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.auth import User
-from app.models.course import Course, CourseApplication
+from app.models.course import Course, CourseApplication, CourseType
 from app.models.franchise import Franchise, FranchiseList
 from app.models.instructor import Instructor
+from app.models.job_application import JobApplication
 from app.models.manager import Manager
 from app.models.report import Report
 from app.utils.decorators import admin_required, instructor_required, manager_required
@@ -21,6 +22,7 @@ class AdminInstructorsListHandler(Handler):
         return self.render_template("admin/instructor_list.html", params)
 
 
+# TODO: remove
 class AdminInstructorAddHandler(Handler):
     @admin_required
     def get(self):
@@ -66,8 +68,39 @@ class AdminInstructorDeleteHandler(Handler):
         return self.redirect_to("admin-instructors-list")
 
 
-# INSTRUCTOR
+class AdminInstructorDetailsHandler(Handler):
+    @admin_required
+    def get(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        instructor_user = User.get_by_id(int(instructor.user_id))
+        job_applications = JobApplication.query(JobApplication.instructor_id == int(instructor_id)).fetch()
+        params = {"instructor": instructor, "i_user": instructor_user, "applications": job_applications}
+        return self.render_template("admin/instructor_details.html", params)
 
+
+class AdminInstructorAddAccessCurriculumHandler(Handler):
+    @admin_required
+    def get(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        curriculums = CourseType.query().fetch()
+        params = {"instructor": instructor, "curriculums": curriculums}
+        return self.render_template("admin/instructor_add_access_curriculum.html", params)
+
+    @admin_required
+    def post(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+
+        curriculum_id = self.request.get("curriculum")
+
+        if curriculum_id:
+            curriculum = CourseType.get_by_id(int(curriculum_id))
+            Instructor.add_curriculum(instructor=instructor, curriculum=curriculum)
+            return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
+        else:
+            return self.redirect_to("oops")
+
+
+# INSTRUCTOR
 class InstructorCourseListHandler(Handler):
     @instructor_required
     def get(self):

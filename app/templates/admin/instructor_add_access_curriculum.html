@@ -1,0 +1,50 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Add access to curriculum{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/instructors">Instructors</a>
+                </li>
+                <li>
+                    <i class="fa fa-user"></i>  <a href="/admin/users/instructor/{{instructor_get_id}}">{{instructor.full_name}}</a>
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Add access to curriculum
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/admin/users/instructor/{{instructor.get_id}}/curriculum/add-access" method="post">
+
+                <div class="form-group">
+                    <label>Curriculum</label>
+                    <select class="form-control" name="curriculum">
+                        <option value="" selected>Select curriculum</option>
+                        {% for curriculum in curriculums %}
+                            <option value="{{ curriculum.get_id }}">{{ curriculum.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">Add access</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}
