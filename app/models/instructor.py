@@ -51,17 +51,26 @@ class Instructor(ndb.Model):
         return instructor
 
     @classmethod
-    def add_curriculum(cls, instructor, curriculum):
+    def add_curriculum(cls, instructor, curriculum_id, curriculum_title):
         curriculum_exists = False
 
         for curr in instructor.curriculums:
-            if curr.curriculum_id == curriculum.get_id:
+            if curr.curriculum_id == int(curriculum_id):
                 curriculum_exists = True
 
         if not curriculum_exists:
-            instructor_curriculum = InstructorCurriculum(curriculum_title=curriculum.title, curriculum_id=curriculum.get_id)
+            instructor_curriculum = InstructorCurriculum(curriculum_title=curriculum_title, curriculum_id=int(curriculum_id))
             instructor.curriculums.append(instructor_curriculum)
             instructor.put()
             return True
         else:
             return False
+
+    @classmethod
+    def remove_curriculum(cls, instructor, curriculum_id):
+        for curr in instructor.curriculums:
+            if curr.curriculum_id == curriculum_id:
+                instructor.curriculums.remove(curr)
+                instructor.put()
+
+        return True

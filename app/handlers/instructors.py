@@ -54,20 +54,6 @@ class AdminInstructorAddHandler(Handler):
         return self.redirect_to("admin-instructors-list")
 
 
-class AdminInstructorDeleteHandler(Handler):
-    @admin_required
-    def get(self, instructor_id):
-        instructor = Instructor.get_by_id(int(instructor_id))
-        params = {"instructor": instructor}
-        return self.render_template("admin/instructor_delete.html", params)
-    @admin_required
-    def post(self, instructor_id):
-        instructor = Instructor.get_by_id(int(instructor_id))
-        instructor.key.delete()
-        logga("Instructor %s removed." % instructor_id)
-        return self.redirect_to("admin-instructors-list")
-
-
 class AdminInstructorDetailsHandler(Handler):
     @admin_required
     def get(self, instructor_id):
@@ -94,10 +80,25 @@ class AdminInstructorAddAccessCurriculumHandler(Handler):
 
         if curriculum_id:
             curriculum = CourseType.get_by_id(int(curriculum_id))
-            Instructor.add_curriculum(instructor=instructor, curriculum=curriculum)
+            Instructor.add_curriculum(instructor=instructor, curriculum_id=int(curriculum_id), curriculum_title=curriculum.title)
             return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
         else:
             return self.redirect_to("oops")
+
+
+class AdminInstructorRemoveAccessCurriculumHandler(Handler):
+    @admin_required
+    def get(self, instructor_id, curriculum_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        curriculum = CourseType.get_by_id(int(curriculum_id))
+        params = {"instructor": instructor, "curriculum": curriculum}
+        return self.render_template("admin/instructor_remove_access_curriculum.html", params)
+
+    @admin_required
+    def post(self, instructor_id, curriculum_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        Instructor.remove_curriculum(instructor=instructor, curriculum_id=int(curriculum_id))
+        return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
 
 
 # INSTRUCTOR
@@ -246,6 +247,7 @@ class ManagerInstructorAddHandler(Handler):
         return self.redirect_to("manager-instructors-list")
 
 
+"""
 class ManagerInstructorDeleteHandler(Handler):
     @manager_required
     def get(self, instructor_id):
@@ -280,3 +282,4 @@ class ManagerInstructorDeleteHandler(Handler):
             instructor.put()
 
         return self.redirect_to("manager-instructors-list")
+"""

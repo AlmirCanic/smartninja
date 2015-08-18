@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Remove instructor access to curriculum{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/instructors">Instructors</a>
+                </li>
+                <li>
+                    <i class="fa fa-user"></i>  <a href="/admin/users/instructor/{{instructor.get_id}}">{{instructor.full_name}}</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-remove"></i> Remove instructor access to curriculum
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Remove {{instructor.full_name}}'s access to curriculum {{curriculum.title}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-3">
+            <form action="/admin/users/instructor/{{instructor.get_id}}/curriculum/{{curriculum.get_id}}/remove-access" method="post">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3">
+            <a href="/admin/users/instructor/{{instructor.get_id}}"><button class="btn btn-default">Cancel</button></a>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

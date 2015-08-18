@@ -52,20 +52,18 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Franchises</th>
-                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for instructor in instructors %}
                         <tr>
-                            <td><a href="/admin/user/{{instructor.user_id}}">{{ instructor.full_name }}</a></td>
+                            <td><a href="/admin/users/instructor/{{instructor.get_id}}">{{ instructor.full_name }}</a></td>
                             <td>{{ instructor.email }}</td>
                             <td>
                                 {% for franchise in instructor.franchises %}
                                     {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
                                 {% endfor %}
                             </td>
-                            <td><a href="/admin/users/instructor/{{ instructor.get_id }}/delete">Delete</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from app.models.instructor import Instructor
 from app.models.job import Job
 
 
@@ -56,6 +57,11 @@ class JobApplication(ndb.Model):
         application.contacted = contacted
         application.approved = approved
         application.put()
+
+        if approved:
+            instructor = Instructor.get_by_id(application.instructor_id)
+            Instructor.add_curriculum(instructor=instructor, curriculum_id=application.curriculum_id,
+                                      curriculum_title=application.curriculum_title)
         return application
 
     @classmethod

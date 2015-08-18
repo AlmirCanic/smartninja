@@ -49,7 +49,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Franchises</th>
-                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +61,6 @@
                                     {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
                                 {% endfor %}
                             </td>
-                            <td><a href="/manager/users/instructor/{{ instructor.get_id }}/delete">Delete</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
