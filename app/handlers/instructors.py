@@ -54,6 +54,21 @@ class AdminInstructorAddHandler(Handler):
         return self.redirect_to("admin-instructors-list")
 
 
+class AdminInstructorDeleteHandler(Handler):
+    @admin_required
+    def get(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        params = {"instructor": instructor}
+        return self.render_template("admin/instructor_delete.html", params)
+
+    @admin_required
+    def post(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        instructor.deleted = True
+        logga("Instructor %s removed." % instructor_id)
+        return self.redirect_to("admin-instructors-list")
+
+
 class AdminInstructorDetailsHandler(Handler):
     @admin_required
     def get(self, instructor_id):
@@ -247,7 +262,6 @@ class ManagerInstructorAddHandler(Handler):
         return self.redirect_to("manager-instructors-list")
 
 
-"""
 class ManagerInstructorDeleteHandler(Handler):
     @manager_required
     def get(self, instructor_id):
@@ -282,4 +296,3 @@ class ManagerInstructorDeleteHandler(Handler):
             instructor.put()
 
         return self.redirect_to("manager-instructors-list")
-"""

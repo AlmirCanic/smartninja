@@ -72,7 +72,7 @@ def instructor_required(handler):
         user = users.get_current_user()
         if user:
             email = user.email().lower()
-            instructors = Instructor.query(Instructor.email == email).fetch()
+            instructors = Instructor.query(Instructor.email == email, Instructor.active == True).fetch()
             if instructors:
                 return handler(self, *args, **kwargs)
             else:

@@ -62,6 +62,10 @@ class JobApplication(ndb.Model):
             instructor = Instructor.get_by_id(application.instructor_id)
             Instructor.add_curriculum(instructor=instructor, curriculum_id=application.curriculum_id,
                                       curriculum_title=application.curriculum_title)
+        else:
+            instructor = Instructor.get_by_id(application.instructor_id)
+            Instructor.remove_curriculum(instructor=instructor, curriculum_id=application.curriculum_id)
+
         return application
 
     @classmethod
