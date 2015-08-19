@@ -36,10 +36,10 @@ class Handler(webapp2.RequestHandler):
 class AdminHandler(Handler):
     @admin_required
     def get(self):
-        self.redirect_to("course-list")
+        return self.redirect_to("course-list")
 
 
 class SecuredSiteHandler(Handler):
     @admin_required
     def get(self):
-        self.render_template("admin/secured.html")
+        return self.render_template("admin/secured.html")
