@@ -17,8 +17,18 @@ from app.utils.other import logga
 class AdminInstructorsListHandler(Handler):
     @admin_required
     def get(self):
-        instructors = Instructor.query().fetch()
-        params = {"instructors": instructors}
+        instructors = Instructor.query(Instructor.deleted == False).fetch()
+
+        active_instructors = []
+        inactive_instructors = []
+
+        for instructor in instructors:
+            if instructor.active:
+                active_instructors.append(instructor)
+            else:
+                inactive_instructors.append(instructor)
+
+        params = {"active_instructors": active_instructors, "inactive_instructors": inactive_instructors}
         return self.render_template("admin/instructor_list.html", params)
 
 
@@ -113,6 +123,21 @@ class AdminInstructorRemoveAccessCurriculumHandler(Handler):
     def post(self, instructor_id, curriculum_id):
         instructor = Instructor.get_by_id(int(instructor_id))
         Instructor.remove_curriculum(instructor=instructor, curriculum_id=int(curriculum_id))
+        return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
+
+
+class AdminInstructorDeActivateHandler(Handler):
+    @admin_required
+    def post(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+
+        if instructor.active:
+            instructor.active = False
+        else:
+            instructor.active = True
+
+        instructor.put()
+
         return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
 
 

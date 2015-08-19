@@ -86,7 +86,7 @@ class AdminCourseAddHandler(Handler):
     @admin_required
     def get(self):
         course_types = CourseType.query(CourseType.deleted == False).fetch()
-        instructors = Instructor.query().fetch()
+        instructors = Instructor.query(Instructor.deleted == False, Instructor.active == True).fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
         franchise_list = Franchise.query(Franchise.deleted == False).fetch()
         params = {"course_types": course_types, "instructors": instructors, "partners": partners,
@@ -153,7 +153,7 @@ class AdminCourseEditHandler(Handler):
         course_types = CourseType.query(CourseType.deleted == False).fetch()
         course = Course.get_by_id(int(course_id))
         selected_course_type = CourseType.get_by_id(course.course_type)
-        instructors = Instructor.query().fetch()
+        instructors = Instructor.query(Instructor.deleted == False, Instructor.active == True).fetch()
         partners = Partner.query(Partner.deleted == False).fetch()
         franchise_list = Franchise.query(Franchise.deleted == False).fetch()
 
@@ -424,7 +424,8 @@ class ManagerCourseEditHandler(Handler):
                                         CourseType.franchises.franchise_id == manager.franchise_id).fetch()
 
         selected_course_type = CourseType.get_by_id(course.course_type)
-        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id,
+                                       Instructor.deleted == False, Instructor.active == True).fetch()
         partners = Partner.query(Partner.deleted == False, Partner.franchise_id == manager.franchise_id).fetch()
 
         tags = convert_tags_to_string(course.tags)
@@ -510,7 +511,8 @@ class ManagerCourseAddHandler(Handler):
 
         course_types = CourseType.query(CourseType.deleted == False,
                                         CourseType.franchises.franchise_id == manager.franchise_id).fetch()
-        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id).fetch()
+        instructors = Instructor.query(Instructor.franchises.franchise_id == manager.franchise_id,
+                                       Instructor.deleted == False, Instructor.active == True).fetch()
         partners = Partner.query(Partner.deleted == False, Partner.franchise_id == manager.franchise_id).fetch()
         params = {"course_types": course_types, "instructors": instructors, "partners": partners}
         return self.render_template("manager/course_add.html", params)

@@ -72,5 +72,6 @@ class Instructor(ndb.Model):
             if curr.curriculum_id == curriculum_id:
                 instructor.curriculums.remove(curr)
                 instructor.put()
+                break
 
         return True
