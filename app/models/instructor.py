@@ -57,7 +57,8 @@ class Instructor(ndb.Model):
                     instructor.city = city
                 instructor.put()
         else:
-            instructor = cls.create(full_name=full_name, email=email.lower(), user_id=user_id, franchises=franchises, city=city)
+            instructor = cls.create(full_name=full_name, email=email.lower(), user_id=user_id, franchises=franchises,
+                                    city=city)
 
         return instructor
 

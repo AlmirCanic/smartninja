@@ -285,8 +285,13 @@ class PublicCareersJobDetailsHandler(Handler):
             # create user, instructor and job_application objects for the applicant
             user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
             instructor = Instructor.add_or_create(full_name=user.get_full_name, email=email,
-                                                  franchises=[FranchiseList(franchise_id=job.franchise_id, franchise_title=job.franchise_title)],
+                                                  franchises=[FranchiseList(franchise_id=job.franchise_id,
+                                                                            franchise_title=job.franchise_title)],
                                                   user_id=user.get_id, city=city)
+
+            # add other info to the user
+            User.update_none(user=user, current_town=city, phone_number=phone, linkedin=linkedin, github=github)
+
             job_application = JobApplication.create(instructor=instructor, city=city, email=email, experience=experience,
                                                     github_url=github, job=job, linkedin_url=linkedin, phone=phone,
                                                     other_info=other_info)

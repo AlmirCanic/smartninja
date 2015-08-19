@@ -121,3 +121,40 @@ class User(ndb.Model):
         user.dob = dob
         user.put()
         return user
+
+    @classmethod
+    def update_none(cls, user, address=None, phone_number=None, summary=None, photo_url=None, dob=None, email=None,
+                    instructor=None, github=None, job_searching=None, current_town=None, linkedin=None, homepage=None,
+                    started_programming=None, long_description=None, other_skills=None):
+        if address != None:
+            user.address = address
+        if phone_number != None:
+            user.phone_number = phone_number
+        if summary != None:
+            user.summary = summary
+        if email != None:
+            user.email = email.lower()
+        if photo_url != None:
+            user.photo_url = photo_url
+        if instructor != None:
+            user.instructor = instructor
+        if github != None:
+            user.github_url = github
+        if linkedin != None:
+            user.linkedin_url = linkedin
+        if job_searching != None:
+            user.job_searching = job_searching
+        if current_town != None:
+            user.current_town = current_town
+        if homepage != None:
+            user.homepage_url = homepage
+        if started_programming != None:
+            user.started_programming = started_programming
+        if long_description != None:
+            user.long_description = long_description
+        if other_skills != None:
+            user.other_skills = other_skills
+        if dob != None:
+            user.dob = dob
+        user.put()
+        return user

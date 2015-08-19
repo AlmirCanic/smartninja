@@ -125,7 +125,7 @@
                         {% for application in applications %}
                         <tr>
                             <td><a href="/admin/careers/job/{{application.job_id}}/application/{{application.get_id}}">{{ application.job_title }}</a></td>
-                            <td>{{ application.manager_grade }}</td>
+                            <td>{{ application.manager_grade }}/4</td>
                             <td>{{ application.city }}</td>
                             <td>{{ application.created.strftime('%d.%m.%Y') }} </td>
                             <td>{{ application.contacted }} </td>
