@@ -78,6 +78,8 @@ class AdminInstructorEditHandler(Handler):
         linkedin = self.request.get("linkedin")
         homepage = self.request.get("homepage")
         dob = self.request.get("dob")
+        summary = self.request.get("summary")
+        description = self.request.get("long-description")
 
         # update instructor
         instructor = Instructor.get_by_id(int(instructor_id))
@@ -91,6 +93,8 @@ class AdminInstructorEditHandler(Handler):
         user.linkedin_url = linkedin
         user.homepage_url = homepage
         user.dob = dob
+        user.summary = summary
+        user.long_description = description
         user.put()
 
         logga("Instructor %s and user %s edited." % (instructor.get_id, user.get_id))
