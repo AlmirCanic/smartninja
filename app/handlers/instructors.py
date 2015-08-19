@@ -32,7 +32,6 @@ class AdminInstructorsListHandler(Handler):
         return self.render_template("admin/instructor_list.html", params)
 
 
-# TODO: remove
 class AdminInstructorAddHandler(Handler):
     @admin_required
     def get(self):
@@ -51,10 +50,7 @@ class AdminInstructorAddHandler(Handler):
 
         franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
 
-        user = User.get_by_email(email=email)
-
-        if not user:
-            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+        user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
 
         instructor = Instructor.add_or_create(full_name=user.get_full_name, user_id=user.get_id, email=user.email,
                                               franchises=[franchise_list_item])
@@ -62,6 +58,44 @@ class AdminInstructorAddHandler(Handler):
         logga("Instructor %s added to franchise %s." % (instructor.get_id, franchise.get_id))
 
         return self.redirect_to("admin-instructors-list")
+
+
+class AdminInstructorEditHandler(Handler):
+    @admin_required
+    def get(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+        instructor_user = User.get_by_id(int(instructor.user_id))
+        params = {"instructor": instructor, "i_user": instructor_user}
+        return self.render_template("admin/instructor_edit.html", params)
+
+    @admin_required
+    def post(self, instructor_id):
+        email = self.request.get("email")
+        city = self.request.get("city")
+        phone = self.request.get("phone")
+        address = self.request.get("address")
+        github = self.request.get("github")
+        linkedin = self.request.get("linkedin")
+        homepage = self.request.get("homepage")
+        dob = self.request.get("dob")
+
+        # update instructor
+        instructor = Instructor.get_by_id(int(instructor_id))
+        Instructor.update(instructor=instructor, email=email, city=city)
+
+        # update user (that belongs to instructor)
+        user = User.get_by_id(int(instructor.user_id))
+        user.phone_number = phone
+        user.address = address
+        user.github_url = github
+        user.linkedin_url = linkedin
+        user.homepage_url = homepage
+        user.dob = dob
+        user.put()
+
+        logga("Instructor %s and user %s edited." % (instructor.get_id, user.get_id))
+
+        return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
 
 
 class AdminInstructorDeleteHandler(Handler):
@@ -274,10 +308,7 @@ class ManagerInstructorAddHandler(Handler):
 
         franchise_list_item = FranchiseList(franchise_id=franchise.get_id, franchise_title=franchise.title)
 
-        user = User.get_by_email(email=email)
-
-        if not user:
-            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+        user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
 
         instructor = Instructor.add_or_create(full_name=user.get_full_name, user_id=user.get_id, email=user.email,
                                               franchises=[franchise_list_item])
@@ -312,7 +343,8 @@ class ManagerInstructorDeleteHandler(Handler):
                 manager_franchise.append(instructor_franchise)
 
         if not other_franchises:
-            instructor.key.delete()
+            instructor.deleted = True
+            instructor.put()
             logga("Instructor %s removed." % instructor_id)
         elif manager_franchise and other_franchises:
             existing_franchises = instructor.franchises

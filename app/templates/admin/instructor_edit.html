@@ -1,0 +1,96 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Add new instructor{% endblock title %}
+
+{% block main_content %}
+<div class="main">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users">Users</a>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>  <a href="/admin/users/instructors">Instructors</a>
+                </li>
+                <li>
+                    <i class="fa fa-user"></i>  <a href="/admin/users/instructor/{{instructor.get_id}}">{{instructor.full_name}}</a>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i>  Edit instructor {{instructor.full_name}}
+                </li>
+            </ol>
+
+            <h1 class="page-header">
+                Edit instructor {{instructor.full_name}}
+            </h1>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <div class="row">
+        <div class="col-lg-7">
+            <form action="/admin/users/instructor/{{instructor.get_id}}/edit" method="post">
+
+                <div class="form-group">
+                    <label>Instructor email</label>
+                    <input type="text" class="form-control" value="{{instructor.email}}" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" value="{{instructor.city}}" name="city">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" value="{{i_user.phone_number}}" name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" value="{{i_user.address}}" name="address">
+                </div>
+
+                <div class="form-group">
+                    <label>GitHub</label>
+                    <input type="text" class="form-control" value="{{i_user.github_url}}" name="github">
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn</label>
+                    <input type="text" class="form-control" value="{{i_user.linkedin_url}}" name="linkedin">
+                </div>
+
+                <div class="form-group">
+                    <label>Homepage</label>
+                    <input type="text" class="form-control" value="{{i_user.homepage_url}}" name="homepage">
+                </div>
+
+                <div class="form-group">
+                    <label>Date of birth</label>
+                    <input type="text" class="form-control" value="{{i_user.dob}}" name="dob">
+                </div>
+
+                <div class="form-group">
+                    <label>Summary</label>
+                    <p>Short summary of what you do (up to 100 chars)</p>
+                    <input type="text" class="form-control" placeholder="Summary" value="{{i_user.summary}}" name="summary" id="summary">
+                </div>
+
+                <div class="form-group">
+                    <label>Long description</label>
+                    <textarea name="long-description" class="form-control" rows="6">{{i_user.long_description}}</textarea><br>
+                </div>
+
+                <button type="submit" class="btn btn-success">Edit instructor</button>
+            </form>
+            <br>
+            <a href="/admin/users/instructor/{{instructor.get_id}}/delete"><button class="btn btn-danger pull-right">Delete instructor</button></a>
+        </div>
+    </div>
+
+    <br>
+</div>
+{% endblock main_content %}

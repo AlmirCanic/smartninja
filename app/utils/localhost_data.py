@@ -28,7 +28,7 @@ class LocalhostFakeDataHandler(Handler):
                                            curriculum="/", description="/", franchises=[franchise_list_item])
 
             # generate user (out of admin)
-            admin = User.short_create(email="matej.ramuta@gmail.com", first_name="Matej", last_name="Ramuta")
+            admin = User.get_or_short_create(email="matej.ramuta@gmail.com", first_name="Matej", last_name="Ramuta")
             admin.photo_url = "http://smartninja.org/assets/img/public/matej_ramuta.jpg"
             admin.summary = "Experienced web and mobile developer, mostly working with Python and Android."
             admin.put()
@@ -64,8 +64,8 @@ class LocalhostFakeDataHandler(Handler):
                                     tags=convert_tags_to_list("2 days,HTML,Ljubljana"), franchise=franchise, level=1)
 
             # create new users (job searching true)
-            student1 = User.short_create(email="bjanko@gmail.com", first_name="Janko", last_name="Bananko")
-            student2 = User.short_create(email="mpiha@gmail.com", first_name="Miha", last_name="Piha")
+            student1 = User.get_or_short_create(email="bjanko@gmail.com", first_name="Janko", last_name="Bananko")
+            student2 = User.get_or_short_create(email="mpiha@gmail.com", first_name="Miha", last_name="Piha")
 
             student1.job_searching = True
             student1.photo_url = "http://i.imgur.com/ibe57bY.jpg"

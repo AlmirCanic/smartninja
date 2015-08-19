@@ -34,10 +34,21 @@ class Instructor(ndb.Model):
         return instructor
 
     @classmethod
+    def update(cls, instructor, email, city):
+        instructor.email = email.lower()
+        instructor.city = city
+        instructor.put()
+        return instructor
+
+    @classmethod
     def add_or_create(cls, full_name, user_id, email, franchises, city=None):
         instructor = cls.query(Instructor.email == email.lower()).get()
 
         if instructor:
+            if instructor.deleted:
+                instructor.deleted = False
+                instructor.put()
+
             existing_franchises = instructor.franchises
             if franchises[0] not in existing_franchises:
                 existing_franchises.append(franchises[0])

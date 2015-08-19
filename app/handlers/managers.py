@@ -31,10 +31,7 @@ class AdminManagerAddHandler(Handler):
 
         franchise = Franchise.get_by_id(int(franchise_id))
 
-        user = User.get_by_email(email=email)
-
-        if not user:
-            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+        user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
 
         manager = Manager.create(full_name=user.get_full_name, email=email, user_id=user.get_id, franchise=franchise)
         logga("Manager %s added." % manager.get_id)

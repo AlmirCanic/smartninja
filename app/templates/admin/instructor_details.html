@@ -37,12 +37,16 @@
     <p><strong>LinkedIn:</strong> {{i_user.linkedin_url}}</p>
     <p><strong>Homepage:</strong> {{i_user.homepage_url}}</p>
     <p><strong>Date of birth:</strong> {{i_user.dob}}</p>
+    <p><strong>Franchises:</strong>
+        {% for franchise in instructor.franchises %}
+            {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    </p>
     <!-- End Instructor details -->
 
     <!-- Buttons -->
     <a href="/admin/user/{{instructor.user_id}}"><button class="btn btn-primary">See user profile</button></a>
     <a href="/admin/users/instructor/{{instructor.get_id}}/edit"><button class="btn btn-info">Edit instructor</button></a>
-    <a href="/admin/users/instructor/{{instructor.get_id}}/delete"><button class="btn btn-danger">Delete instructor</button></a>
 
     {% if instructor.active %}
     <button class="btn btn-danger" data-toggle="modal" data-target="#deactivateModal">Deactivate instructor</button>
@@ -50,6 +54,15 @@
     <button class="btn btn-success" data-toggle="modal" data-target="#deactivateModal">Activate instructor</button>
     {% endif %}
     <!-- End Buttons -->
+
+    <!-- Description -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Description</h3>
+            <p><strong>Summary:</strong> {{i_user.summary}}</p>
+            <p><strong>Long description:</strong> {{i_user.long_description|nl2br}}</p>
+        </div>
+    </div><!-- End description -->
 
     <!-- Grade -->
     <div class="row">

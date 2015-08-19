@@ -70,10 +70,7 @@ class AdminStudentCourseAdd(Handler):
         last_name = self.request.get("last-name")
         course_id = self.request.get("course")
 
-        user = User.get_by_email(email=email)
-
-        if not user:
-            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+        user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
 
         course = Course.get_by_id(int(course_id))
 
@@ -166,10 +163,7 @@ class ManagerStudentCourseAdd(Handler):
         last_name = self.request.get("last-name")
         course_id = self.request.get("course")
 
-        user = User.get_by_email(email=email)
-
-        if not user:
-            user = User.short_create(email=email, first_name=first_name, last_name=last_name)
+        user = User.get_or_short_create(email=email, first_name=first_name, last_name=last_name)
 
         course = Course.get_by_id(int(course_id))
 

@@ -99,7 +99,6 @@ class PublicCourseApplicationAddHandler(Handler):
             other_info = self.request.get("other_info")
 
             if first_name and last_name and email and address and phone:
-                user = User.get_by_email(email)
 
                 if not shirt:
                     shirt = "/"
@@ -107,10 +106,8 @@ class PublicCourseApplicationAddHandler(Handler):
                 if not dob:
                     dob = "/"
 
-                if not user:
-                    # add user to database
-                    user = User.create(first_name=first_name, last_name=last_name, email=email, address=address,
-                                       dob=dob, phone_number=phone)
+                user = User.create(first_name=first_name, last_name=last_name, email=email, address=address, dob=dob,
+                                   phone_number=phone)
 
                 course = Course.get_by_id(int(course_id))
 
