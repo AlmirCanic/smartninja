@@ -2,6 +2,7 @@ from google.appengine.api import users
 from app.handlers.base import Handler
 from app.models.course import CourseType
 from app.models.franchise import Franchise, FranchiseList
+from app.models.instructor import Instructor
 from app.models.lesson import Lesson
 from app.models.manager import Manager
 from app.utils.decorators import admin_required, instructor_required, manager_required
@@ -189,8 +190,10 @@ class ManagerCourseTypeDeleteHandler(Handler):
 class InstructorCurriculumsListHandler(Handler):
     @instructor_required
     def get(self):
-        course_types = CourseType.query(CourseType.deleted == False).fetch()
-        params = {"course_types": course_types}
+        curr_user = users.get_current_user()
+        instructor = Instructor.query(Instructor.email == curr_user.email().lower()).get()
+
+        params = {"instructor": instructor}
         return self.render_template("instructor/course_types_list.html", params)
 
 
