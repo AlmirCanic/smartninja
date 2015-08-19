@@ -33,9 +33,9 @@
     <p><strong>City:</strong> {{instructor.city}}</p>
     <p><strong>Phone:</strong> {{i_user.phone_number}}</p>
     <p><strong>Address:</strong> {{i_user.address}}</p>
-    <p><strong>GitHub:</strong> {{i_user.github_url}}</p>
-    <p><strong>LinkedIn:</strong> {{i_user.linkedin_url}}</p>
-    <p><strong>Homepage:</strong> {{i_user.homepage_url}}</p>
+    <p><strong>GitHub:</strong> <a href="{{i_user.github_url}}" target="_blank">{{i_user.github_url}}</a></p>
+    <p><strong>LinkedIn:</strong> <a href="{{i_user.linkedin_url}}" target="_blank">{{i_user.linkedin_url}}</a></p>
+    <p><strong>Homepage:</strong> <a href="{{i_user.homepage_url}}" target="_blank">{{i_user.homepage_url}}</a></p>
     <p><strong>Date of birth:</strong> {{i_user.dob}}</p>
     <p><strong>Franchises:</strong>
         {% for franchise in instructor.franchises %}

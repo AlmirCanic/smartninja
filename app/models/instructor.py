@@ -86,3 +86,10 @@ class Instructor(ndb.Model):
                 break
 
         return True
+
+    @classmethod
+    def grade(cls, instructor, score, notes):
+        instructor.manager_grade = int(score)
+        instructor.manager_notes = notes
+        instructor.put()
+        return instructor

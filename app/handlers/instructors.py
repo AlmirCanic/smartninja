@@ -175,6 +175,19 @@ class AdminInstructorDeActivateHandler(Handler):
         return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
 
 
+class AdminInstructorGradeHandler(Handler):
+    @admin_required
+    def post(self, instructor_id):
+        instructor = Instructor.get_by_id(int(instructor_id))
+
+        score = self.request.get("score")
+        notes = self.request.get("notes")
+
+        Instructor.grade(instructor=instructor, score=score, notes=notes)
+
+        return self.redirect_to("admin-instructor-details", instructor_id=instructor_id)
+
+
 # INSTRUCTOR
 class InstructorCourseListHandler(Handler):
     @instructor_required

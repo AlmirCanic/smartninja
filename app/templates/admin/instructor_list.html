@@ -51,6 +51,7 @@
                         <tr class="success">
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Grade</th>
                             <th>Franchises</th>
                             <th>Curriculums</th>
                         </tr>
@@ -60,6 +61,7 @@
                         <tr>
                             <td><a href="/admin/users/instructor/{{instructor.get_id}}">{{ instructor.full_name }}</a></td>
                             <td>{{ instructor.email }}</td>
+                            <td><strong>{{ instructor.manager_grade }}</strong>/4</td>
                             <td>
                                 {% for franchise in instructor.franchises %}
                                     {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
@@ -91,6 +93,7 @@
                         <tr class="danger">
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Grade</th>
                             <th>Franchises</th>
                             <th>Curriculums</th>
                         </tr>
@@ -100,6 +103,7 @@
                         <tr>
                             <td><a href="/admin/users/instructor/{{instructor.get_id}}">{{ instructor.full_name }}</a></td>
                             <td>{{ instructor.email }}</td>
+                            <td><strong>{{ instructor.manager_grade }}</strong>/4</td>
                             <td>
                                 {% for franchise in instructor.franchises %}
                                     {{ franchise.franchise_title }}{% if not loop.last %},{% endif %}
