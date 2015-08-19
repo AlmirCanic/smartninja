@@ -1,6 +1,7 @@
 from google.appengine.ext import ndb
 from app.models.franchise import FranchiseList
 from app.models.partner import Partner, PartnerUserCourse
+from app.models.student import StudentCourse
 from app.utils.course_utils import update_student_grade
 
 
@@ -141,7 +142,7 @@ class CourseApplication(ndb.Model):
     course_title = ndb.StringProperty()
     course_id = ndb.IntegerProperty()
     student_name = ndb.StringProperty()
-    student_id = ndb.IntegerProperty()
+    student_id = ndb.IntegerProperty()  # user ID
     student_email = ndb.StringProperty()
     price = ndb.FloatProperty()
     payment_status = ndb.BooleanProperty(default=False)
@@ -196,6 +197,18 @@ class CourseApplication(ndb.Model):
         application.course_title = new_course.title
         application.course_level = new_course.level
         application.put()
+
+        # set up student course access
+        student_course = StudentCourse.query(StudentCourse.user_id == application.student_id,
+                                             StudentCourse.course_id == old_course.get_id).get()
+        if student_course:
+            student_course.course_id = new_course.get_id
+            student_course.course_title = new_course.title
+            student_course.course_city = new_course.city
+            student_course.course_start_date = new_course.start_date
+            student_course.put()
+
+        # +/- 1 taken space in new/old course
         old_course.taken -= 1
         old_course.put()
         new_course.taken += 1
