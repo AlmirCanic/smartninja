@@ -109,6 +109,7 @@ class AdminInstructorDeleteHandler(Handler):
     def post(self, instructor_id):
         instructor = Instructor.get_by_id(int(instructor_id))
         instructor.deleted = True
+        instructor.put()
         logga("Instructor %s removed." % instructor_id)
         return self.redirect_to("admin-instructors-list")
 
