@@ -64,7 +64,7 @@ class User(ndb.Model):
     @classmethod
     def get_or_short_create(cls, email, first_name=None, last_name=None):
         user = cls.query(User.email == email.lower()).get()
-        if user.deleted:
+        if user and user.deleted:
             user.deleted = False
             user.put()
         elif not user:
