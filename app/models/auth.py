@@ -3,14 +3,14 @@ from app.utils.user_utils import change_name
 
 
 class User(ndb.Model):
-    first_name = ndb.StringProperty()
-    last_name = ndb.StringProperty()
-    email = ndb.StringProperty()
-    address = ndb.StringProperty()
-    current_town = ndb.StringProperty()
-    phone_number = ndb.StringProperty()
-    dob = ndb.StringProperty()  # date of birth
-    created = ndb.DateTimeProperty(auto_now_add=True)
+    first_name = ndb.StringProperty(indexed=True)
+    last_name = ndb.StringProperty(indexed=True)
+    email = ndb.StringProperty(indexed=True)
+    address = ndb.StringProperty(indexed=False)
+    current_town = ndb.StringProperty(indexed=True)
+    phone_number = ndb.StringProperty(indexed=False)
+    dob = ndb.StringProperty(indexed=False)  # date of birth
+    created = ndb.DateTimeProperty(auto_now_add=True, indexed=True)
     instructor = ndb.BooleanProperty(default=False, indexed=False)  # is user an instructor?
     summary = ndb.StringProperty(indexed=False)
     long_description = ndb.TextProperty(indexed=False)
@@ -18,16 +18,16 @@ class User(ndb.Model):
     github_url = ndb.StringProperty(indexed=False)
     linkedin_url = ndb.StringProperty(indexed=False)
     homepage_url = ndb.StringProperty(indexed=False)
-    other_skills = ndb.StringProperty(repeated=True)  # skills put in by the user
+    other_skills = ndb.StringProperty(repeated=True, indexed=True)  # skills put in by the user
     cv_blob = ndb.BlobKeyProperty(indexed=False)
     photo_blob = ndb.BlobKeyProperty(indexed=False)
-    started_programming = ndb.DateProperty()
-    grade_avg_score = ndb.FloatProperty(default=0.0)
-    grade_all_tags = ndb.StringProperty(repeated=True)  # skills user acquired at smartninja courses. Other skills are under other_skills field
-    grade_top_student = ndb.IntegerProperty(default=0)  # How many times did student receive Top student award by instructor
-    job_searching = ndb.BooleanProperty(default=False)
-    contacted_by = ndb.IntegerProperty(repeated=True)  # companies (partner ids) or employers that contacted user for a job opportunity
-    deleted = ndb.BooleanProperty(default=False)
+    started_programming = ndb.DateProperty(indexed=True)
+    grade_avg_score = ndb.FloatProperty(default=0.0, indexed=True)
+    grade_all_tags = ndb.StringProperty(repeated=True, indexed=True)  # skills user acquired at smartninja courses. Other skills are under other_skills field
+    grade_top_student = ndb.IntegerProperty(default=0, indexed=True)  # How many times did student receive Top student award by instructor
+    job_searching = ndb.BooleanProperty(default=False, indexed=True)
+    contacted_by = ndb.IntegerProperty(repeated=True, indexed=True)  # companies (partner ids) or employers that contacted user for a job opportunity
+    deleted = ndb.BooleanProperty(default=False, indexed=True)
 
     @property
     def get_id(self):
