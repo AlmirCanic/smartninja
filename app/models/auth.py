@@ -11,18 +11,16 @@ class User(ndb.Model):
     phone_number = ndb.StringProperty()
     dob = ndb.StringProperty()  # date of birth
     created = ndb.DateTimeProperty(auto_now_add=True)
-    student_courses = ndb.StringProperty(repeated=True)  # list of course IDs where this user is student
-    instructor_courses = ndb.StringProperty(repeated=True)  # list of course IDs where this user is instructor
-    instructor = ndb.BooleanProperty(default=False)  # is user an instructor?
-    summary = ndb.StringProperty()
-    long_description = ndb.TextProperty()
-    photo_url = ndb.StringProperty()
-    github_url = ndb.StringProperty()
-    linkedin_url = ndb.StringProperty()
-    homepage_url = ndb.StringProperty()
+    instructor = ndb.BooleanProperty(default=False, indexed=False)  # is user an instructor?
+    summary = ndb.StringProperty(indexed=False)
+    long_description = ndb.TextProperty(indexed=False)
+    photo_url = ndb.StringProperty(indexed=False)
+    github_url = ndb.StringProperty(indexed=False)
+    linkedin_url = ndb.StringProperty(indexed=False)
+    homepage_url = ndb.StringProperty(indexed=False)
     other_skills = ndb.StringProperty(repeated=True)  # skills put in by the user
-    cv_blob = ndb.BlobKeyProperty()
-    photo_blob = ndb.BlobKeyProperty()
+    cv_blob = ndb.BlobKeyProperty(indexed=False)
+    photo_blob = ndb.BlobKeyProperty(indexed=False)
     started_programming = ndb.DateProperty()
     grade_avg_score = ndb.FloatProperty(default=0.0)
     grade_all_tags = ndb.StringProperty(repeated=True)  # skills user acquired at smartninja courses. Other skills are under other_skills field
